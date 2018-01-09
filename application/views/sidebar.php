@@ -12,7 +12,7 @@
                         <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
                         <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
                             <li class="nav-item start <?=isset($dashboard) ? $dashboard : ''?>">
-                                <a href="home" class="nav-link nav-toggle">
+                                <a href="<?=base_url()?>home" class="nav-link nav-toggle">
                                     <i class="icon-home"></i>
                                     <span class="title">Dashboard</span>
                                 </a>
@@ -33,7 +33,7 @@
                                             <i class="fa fa-table"></i> Data </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                        <a href="<?=base_url()?>histori/dosen" class="nav-link">
                                             <i class="fa fa-trash-o"></i> Histori </a>
                                     </li>
                                 </ul>
