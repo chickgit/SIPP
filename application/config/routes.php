@@ -50,9 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'home';
-$route['histori/(:any)'] = 'histori';
-$route['histori/(:any)/get_data'] = 'histori/get_data';
-$route['histori/(:any)/restore_data'] = 'histori/restore_data';
+$route['histori/(:any)'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
