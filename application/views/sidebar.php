@@ -29,7 +29,7 @@
                                 </a>
                                 <ul class="sub-menu" style="display: <?=isset($dosen) ? 'block' : ''?>;">
                                     <li class="nav-item <?=isset($dosen) ? $dosen : ''?>">
-                                        <a href="dosen" class="nav-link">
+                                        <a href="<?=base_url()?>dosen" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
                                     </li>
                                     <li class="nav-item">
@@ -47,7 +47,7 @@
                                 </a>
                                 <ul class="sub-menu" style="display: <?=isset($mk) ? 'block' : ''?>;">
                                     <li class="nav-item <?=isset($mk) ? $mk : ''?>">
-                                        <a href="matakuliah" class="nav-link">
+                                        <a href="<?=base_url()?>matakuliah" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
                                     </li>
                                     <li class="nav-item">
@@ -65,7 +65,7 @@
                                 </a>
                                 <ul class="sub-menu" style="display: <?=isset($ruangan) ? 'block' : ''?>;">
                                     <li class="nav-item <?=isset($ruangan) ? $ruangan : ''?>">
-                                        <a href="ruangan" class="nav-link">
+                                        <a href="<?=base_url()?>ruangan" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
                                     </li>
                                     <li class="nav-item">
@@ -83,7 +83,7 @@
                                 </a>
                                 <ul class="sub-menu" style="display: <?=isset($waktu) ? 'block' : ''?>;">
                                     <li class="nav-item <?=isset($waktu) ? $waktu : ''?>">
-                                        <a href="waktu" class="nav-link">
+                                        <a href="<?=base_url()?>waktu" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
                                     </li>
                                     <li class="nav-item">
@@ -101,7 +101,7 @@
                                 </a>
                                 <ul class="sub-menu" style="display: <?=isset($jadwal) ? 'block' : ''?>;">
                                     <li class="nav-item <?=isset($jadwal) ? $jadwal : ''?>">
-                                        <a href="jadwal" class="nav-link">
+                                        <a href="<?=base_url()?>jadwal" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
                                     </li>
                                     <li class="nav-item">
