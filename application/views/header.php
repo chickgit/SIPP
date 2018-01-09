@@ -31,25 +31,25 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END LAYOUT FIRST STYLES -->
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <link href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
         <?=isset($css)?$css:''?>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL STYLES -->
-        <link href="assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
-        <link href="assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="<?=base_url()?>assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
         <!-- END THEME GLOBAL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
-        <link href="assets/layouts/layout6/css/layout.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/layouts/layout6/css/custom.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>assets/layouts/layout6/css/layout.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>assets/layouts/layout6/css/custom.min.css" rel="stylesheet" type="text/css" />
         <!-- END THEME LAYOUT STYLES -->
         <link rel="shortcut icon" href="favicon.ico" /> </head>
     <!-- END HEAD -->
@@ -62,7 +62,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="havbar-header">
                         <!-- BEGIN LOGO -->
                         <a id="index" class="navbar-brand" href="start.html">
-                            <img src="assets/layouts/layout6/img/logo.png" alt="Logo"> </a>
+                            <img src="<?=base_url()?>assets/layouts/layout6/img/logo.png" alt="Logo"> </a>
                         <!-- END LOGO -->
                         <!-- BEGIN TOPBAR ACTIONS -->
                         <div class="topbar-actions">
@@ -180,7 +180,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             <!-- BEGIN USER PROFILE -->
                             <div class="btn-group-img btn-group">
                                 <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <img src="assets/layouts/layout5/img/avatar1.jpg" alt=""> </button>
+                                    <img src="<?=base_url()?>assets/layouts/layout5/img/avatar1.jpg" alt=""> </button>
                                 <ul class="dropdown-menu-v2" role="menu">
                                     <li>
                                         <a href="page_user_profile_1.html">
