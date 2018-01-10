@@ -21,7 +21,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #6 | User Login 4</title>
+        <title>Sistem Informasi Penjadwalan Perkuliahan</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #6 for " name="description" />
@@ -60,7 +60,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <div class="content">
             <!-- BEGIN LOGIN FORM -->
             <form class="login-form" action="login/login" method="post">
-                <h3 class="form-title">Login to your account</h3>
+                <h3 class="form-title">Login</h3>
                 <div class="alert alert-danger <?=$this->session->flashdata('error')!=NULL ? '' : 'display-hide'?>">
                     <button class="close" data-close="alert"></button>
                     <!-- <?php echo $view_err; ?> -->
