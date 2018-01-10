@@ -204,9 +204,9 @@
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="del_nid" disabled /> </div>
-                                                                        <input type="hidden" name="del_nid">
-                                                                        <input type="hidden" name="del_table" value="dosen">
+                                                                        <input type="text" class="form-control" name="delete_nid" disabled /> </div>
+                                                                        <input type="hidden" name="delete_nid">
+                                                                        <input type="hidden" name="delete_table" value="dosen">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -216,7 +216,7 @@
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="del_nama" disabled/> </div>
+                                                                        <input type="text" class="form-control" name="delete_nama" disabled/> </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -224,7 +224,7 @@
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
-                                                                        <textarea class="form-control" name="del_alamat" disabled></textarea>
+                                                                        <textarea class="form-control" name="delete_alamat" disabled></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -235,7 +235,7 @@
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="del_telepon" disabled/> </div>
+                                                                        <input type="text" class="form-control" name="delete_telepon" disabled/> </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -348,10 +348,10 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="del_nid"]').val(data.nid);
-                $('input[name="del_nama"]').val(data.nama);
-                $('textarea[name="del_alamat"]').val(data.alamat);
-                $('input[name="del_telepon"]').val(data.telepon);
+                $('input[name="delete_nid"]').val(data.nid);
+                $('input[name="delete_nama"]').val(data.nama);
+                $('textarea[name="delete_alamat"]').val(data.alamat);
+                $('input[name="delete_telepon"]').val(data.telepon);
                 $('#modal_delete_dosen').modal('show');
                 // console.log(data);
             },
