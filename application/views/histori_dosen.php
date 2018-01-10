@@ -97,7 +97,7 @@
                                                         <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
                                                             <i class="fa fa-angle-down"></i>
                                                         </button>
-                                                        <ul class="dropdown-menu pull-left" role="menu">
+                                                        <ul class="dropdown-menu" role="menu" style="position: inherit;">
                                                             <li>
                                                                 <a id="restore_dosen" data-val="<?=$row->nid?>">
                                                                     <i class="icon-docs"></i> Kembalikan </a>
