@@ -21,7 +21,7 @@
                                 <h3 class="uppercase">KAPRODI</h3>
                             </li>
                             <!-- MENU DOSEN -->
-                            <li class="nav-item <?=isset($dosen) ? $dosen : ''?>">
+                            <li class="nav-item <?=isset($dosen) ? $dosen : ''?><?=isset($histori_dosen) ? $histori_dosen : ''?>">
                                 <a href="javascript:;" class="nav-link nav-toggle">
                                     <i class="fa fa-user"></i>
                                     <span class="title">Dosen</span>
@@ -32,7 +32,7 @@
                                         <a href="<?=base_url()?>dosen" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item <?=isset($histori_dosen) ? $histori_dosen : ''?>">
                                         <a href="<?=base_url()?>histori/dosen" class="nav-link">
                                             <i class="fa fa-trash-o"></i> Histori </a>
                                     </li>
