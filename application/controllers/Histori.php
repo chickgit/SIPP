@@ -22,9 +22,9 @@ class Histori extends CI_Controller {
     
 	public function index()
 	{
-		$data['list_dosen'] = $this->histori_model->get_histori($this->segment());
+		$data['list_histori'] = $this->histori_model->get_histori($this->segment());
 
-		$data['dosen'] = 'active open';
+		$data['histori_'.$this->segment()] = 'active open';
 		$data['header']['title'] = 'Histori '.ucwords($this->segment());
 		$data['header']['css'] = '
 			<link href="'.base_url().'assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
@@ -52,10 +52,10 @@ class Histori extends CI_Controller {
 		exit();
 	}
 
-	public function delete_histori_dosen()
+	public function delete_data()
 	{
-		$data['delete_histori_dosen'] = $this->histori_model->delete_histori_dosen($_POST['del_nid']);
-		echo $data['delete_histori_dosen'];
+		$data['delete_data'] = $this->histori_model->delete_data($_POST['delete_table'], $_POST['delete_nid']);
+		echo $data['delete_data'];
 		exit();
 	}
 

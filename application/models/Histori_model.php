@@ -26,6 +26,14 @@ class Histori_model extends CI_Model {
         echo "OK";
     }
 
+    public function delete_data($table, $nid)
+    {
+        $this->db->where('nid', $nid);
+        $this->db->delete($table);
+        // $this->db->delete('dosen');
+        echo "OK";
+    }
+
     public function get_data($a, $nid)
     {
         $query = $this->db->query('SELECT * FROM '.$a.' WHERE nid = '.$nid);

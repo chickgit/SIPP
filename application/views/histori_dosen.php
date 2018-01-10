@@ -79,7 +79,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                            foreach($list_dosen as $row)
+                                            foreach($list_histori as $row)
                                             {
                                                 ?>
                                             <tr class="odd gradeX">
@@ -206,6 +206,7 @@
                                                                         <i class="fa"></i>
                                                                         <input type="text" class="form-control" name="del_nid" disabled /> </div>
                                                                         <input type="hidden" name="del_nid">
+                                                                        <input type="hidden" name="del_table" value="dosen">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -317,9 +318,9 @@ jQuery(document).ready(function() {
                         });
                     },
                     success: function(data) {
-                        // success4.hide();
-                        // location.reload();
-                        console.log(data);
+                        success4.hide();
+                        location.reload();
+                        // console.log(data);
                     },
                     complete: function(){
                         App.unblockUI();
@@ -330,10 +331,13 @@ jQuery(document).ready(function() {
     })
     $('a#delete_dosen').on('click', function(){
         $.ajax({
-            url: "dosen/get_dosen", 
+            url: "<?=base_url()?>histori/dosen/get_data", 
             type: "POST",
             dataType: "json",
-            data: {nid : $(this).data('val')},
+            data: {
+                table : 'dosen', 
+                nid : $(this).data('val')
+            },
             beforeSend: function(){
                 App.blockUI({
                     // target: '#form_tambah_dosen',
@@ -362,7 +366,7 @@ jQuery(document).ready(function() {
         form4.validate({
             submitHandler: function (form) {
                 $.ajax({
-                    url: "dosen/delete_dosen", 
+                    url: "<?=base_url()?>histori/dosen/delete_data", 
                     type: "POST",
                     data: $(form).serialize(),
                     cache: false,             
