@@ -20,10 +20,11 @@ class Dosen extends CI_Controller {
 		$data['list_dosen'] = $this->dosen_model->get_data();
 
 		$data['dosen'] = 'active open';
+		
 		$data['header']['title'] = 'Data Dosen';
 		$data['header']['css'] = '
-			<link href="assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-			<link href="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />';
+			<link href="'.base_url().'assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+			<link href="'.base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />';
 
 		$data['menu'] = $this->load->view('sidebar',$data,TRUE);
 		$data['footer'] = $this->load->view('footer',NULL,TRUE);
