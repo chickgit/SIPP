@@ -353,7 +353,7 @@ jQuery(document).ready(function() {
             rules: {
                 nid: {
                     required: true,
-                    remote: "dosen/check_nid"
+                    remote: "<?=base_url()?>dosen/check_nid"
                 },
                 nama: {
                     required: true,
@@ -457,7 +457,7 @@ jQuery(document).ready(function() {
     })
     $('a#upd_dosen').on('click', function(){
         $.ajax({
-            url: "dosen/get_dosen", 
+            url: "<?=base_url()?>dosen/get_dosen", 
             type: "POST",
             dataType: "json",
             data: {nid : $(this).data('val')},
@@ -591,7 +591,7 @@ jQuery(document).ready(function() {
     })
     $('a#delete_dosen').on('click', function(){
         $.ajax({
-            url: "dosen/get_dosen", 
+            url: "<?=base_url()?>dosen/get_dosen", 
             type: "POST",
             dataType: "json",
             data: {nid : $(this).data('val')},
@@ -623,7 +623,7 @@ jQuery(document).ready(function() {
         form4.validate({
             submitHandler: function (form) {
                 $.ajax({
-                    url: "dosen/delete_dosen", 
+                    url: "<?=base_url()?>dosen/delete_dosen", 
                     type: "POST",
                     data: $(form).serialize(),
                     cache: false,             

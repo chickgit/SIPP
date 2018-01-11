@@ -15,28 +15,32 @@ class Histori_model extends CI_Model {
     	return $query->result();
     }
 
-    public function restore_data($table, $nid)
+    public function restore_data($arr)
     {
         $data = array(
             'isDelete' => 0
         );
-        $this->db->where('nid', $nid);
-        $this->db->update($table, $data);
+        $arr2 = array(
+            $arr['restore_1'] => $arr['restore_0']
+        );
+        $this->db->update($arr['restore_2'], $data, $arr2);
         // $this->db->delete('dosen');
         echo "OK";
     }
 
-    public function delete_data($table, $nid)
+    public function delete_data($arr)
     {
-        $this->db->where('nid', $nid);
-        $this->db->delete($table);
+        $arr2 = array(
+            $arr['delete_1'] => $arr['delete_0']
+        );
+        $this->db->delete($arr['delete_2'],$arr2);
         // $this->db->delete('dosen');
         echo "OK";
     }
 
-    public function get_data($a, $nid)
+    public function get_data($table, $arr)
     {
-        $query = $this->db->query('SELECT * FROM '.$a.' WHERE nid = '.$nid);
+        $query = $this->db->get_where($table,$arr);
         return $query->row();
     }
 }

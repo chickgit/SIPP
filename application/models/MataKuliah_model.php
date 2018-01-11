@@ -8,15 +8,20 @@ class MataKuliah_model extends CI_Model {
         // Your own constructor code
     }
 
+    private function session_username()
+    {
+        return $this->session->userdata('Login')['username'];
+    }
+
     public function get_data()
     {
-    	$query = $this->db->query('SELECT * FROM matakuliah');
+        $query = $this->db->get_where('matakuliah', array('isDelete' => 0, 'isShow' => 1));
     	return $query->result();
     }
 
     public function check_kode_mk($kode_mk)
     {
-        $query = $this->db->query('SELECT kode_mk FROM matakuliah WHERE kode_mk = '.$kode_mk);
+        $query = $this->db->query('SELECT kode_mk FROM matakuliah WHERE kode_mk = "'.$kode_mk.'"');
         return $query->row();
     }
 
@@ -27,26 +32,26 @@ class MataKuliah_model extends CI_Model {
         echo "OK";
     }
 
-    public function get_dosen($nid)
+    public function get_mk($kode_mk)
     {
-        $query = $this->db->query('SELECT * FROM dosen WHERE nid = '.$nid);
+        $query = $this->db->query('SELECT * FROM matakuliah WHERE kode_mk = "'.$kode_mk.'"');
         return $query->row();
     }
 
-    public function update_dosen($arr = array())
+    public function update_mk($arr = array())
     {
-        $sql = ("UPDATE dosen SET nama = ?, alamat = ?, telepon = ? WHERE nid = ?");
-        $this->db->query($sql, array($arr['upd_nama'],$arr['upd_alamat'],$arr['upd_telepon'],$arr['upd_nid']));
+        $sql = ("UPDATE matakuliah SET nama_mk = ?, sks_mk = ?, semester_mk = ?, modified_date = ?, modified_by = ? WHERE kode_mk = ?");
+        $this->db->query($sql, array($arr['upd_nama_mk'],$arr['upd_sks_mk'],$arr['upd_semester_mk'],date('Y-m-d H:i:s'),$this->session_username(),$arr['upd_kode_mk']));
         echo "OK";
     }
 
-    public function delete_dosen($nid)
+    public function delete_mk($kode_mk)
     {
         $data = array(
             'isDelete' => 1
         );
-        $this->db->where('nid',$nid);
-        $this->db->update('dosen',$data);
+        $this->db->where('kode_mk',$kode_mk);
+        $this->db->update('matakuliah',$data);
         // $this->db->delete('dosen');
         echo "OK";
     }

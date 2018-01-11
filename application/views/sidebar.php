@@ -39,7 +39,7 @@
                                 </ul>
                             </li>
                             <!-- MENU MATA KULIAH -->
-                            <li class="nav-item <?=isset($mk) ? $mk : ''?>">
+                            <li class="nav-item <?=isset($mk) ? $mk : ''?><?=isset($histori_matakuliah) ? $histori_matakuliah : ''?>">
                                 <a href="javascript:;" class="nav-link nav-toggle">
                                     <i class="fa fa-book"></i>
                                     <span class="title">Mata Kuliah</span>
@@ -50,14 +50,14 @@
                                         <a href="<?=base_url()?>matakuliah" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                    <li class="nav-item <?=isset($histori_matakuliah) ? $histori_matakuliah : ''?>">
+                                        <a href="<?=base_url()?>histori/matakuliah" class="nav-link">
                                             <i class="fa fa-trash-o"></i> Histori </a>
                                     </li>
                                 </ul>
                             </li>
                             <!-- MENU RUANGAN -->
-                            <li class="nav-item <?=isset($ruangan) ? $ruangan : ''?>">
+                            <li class="nav-item <?=isset($ruangan) ? $ruangan : ''?><?=isset($histori_ruangan) ? $histori_ruangan : ''?>">
                                 <a href="javascript:;" class="nav-link nav-toggle">
                                     <i class="fa fa-group"></i>
                                     <span class="title">Ruangan</span>
@@ -68,8 +68,8 @@
                                         <a href="<?=base_url()?>ruangan" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                    <li class="nav-item <?=isset($histori_ruangan) ? $histori_ruangan : ''?>">
+                                        <a href="<?=base_url()?>histori/ruangan" class="nav-link">
                                             <i class="fa fa-trash-o"></i> Histori </a>
                                     </li>
                                 </ul>

@@ -41,20 +41,20 @@ class Histori extends CI_Controller {
 
 	public function get_data()
 	{
-		$data['get_data'] = $this->histori_model->get_data($_POST['table'], $_POST['nid']);
+		$data['get_data'] = $this->histori_model->get_data($_POST[0], $_POST[1]);
 		echo json_encode($data['get_data']);
 	}
 
 	public function restore_data()
 	{
-		$data['restore_data'] = $this->histori_model->restore_data($_POST['restore_table'], $_POST['restore_nid']);
+		$data['restore_data'] = $this->histori_model->restore_data($_POST);
 		echo $data['restore_data'];
 		exit();
 	}
 
 	public function delete_data()
 	{
-		$data['delete_data'] = $this->histori_model->delete_data($_POST['delete_table'], $_POST['delete_nid']);
+		$data['delete_data'] = $this->histori_model->delete_data($_POST);
 		echo $data['delete_data'];
 		exit();
 	}

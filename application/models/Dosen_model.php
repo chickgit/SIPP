@@ -8,9 +8,13 @@ class Dosen_model extends CI_Model {
         // Your own constructor code
     }
 
+    private function session_username()
+    {
+        return $this->session->userdata('Login')['username'];
+    }
+
     public function get_data()
     {
-    	// $query = $this->db->query('SELECT * FROM dosen');
         $query = $this->db->get_where('dosen', array('isDelete' => 0, 'isShow' => 1));
     	return $query->result();
     }
@@ -36,8 +40,8 @@ class Dosen_model extends CI_Model {
 
     public function update_dosen($arr = array())
     {
-        $sql = ("UPDATE dosen SET nama = ?, alamat = ?, telepon = ? WHERE nid = ?");
-        $this->db->query($sql, array($arr['upd_nama'],$arr['upd_alamat'],$arr['upd_telepon'],$arr['upd_nid']));
+        $sql = ("UPDATE dosen SET nama = ?, alamat = ?, telepon = ?, modified_date = ?, modified_by = ? WHERE nid = ?");
+        $this->db->query($sql, array($arr['upd_nama'],$arr['upd_alamat'],$arr['upd_telepon'],date('Y-m-d H:i:s'),$this->session_username(),$arr['upd_nid']));
         echo "OK";
     }
 

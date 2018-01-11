@@ -8,7 +8,7 @@
                     <!-- BEGIN BREADCRUMBS -->
                     <ul class="page-breadcrumb">
                         <li>Kaprodi</li>
-                        <li>Dosen</li>
+                        <li>Mata Kuliah</li>
                     </ul>
                     <!-- END BREADCRUMBS -->
                     <div class="content-header-menu">
@@ -56,7 +56,7 @@
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class=" icon-layers font-green"></i>
-                                        <span class="caption-subject font-green sbold uppercase">Histori Dosen</span>
+                                        <span class="caption-subject font-green sbold uppercase">Histori Mata Kuliah</span>
                                     </div>
                                     <div class="actions">
                                     </div>
@@ -65,10 +65,10 @@
                                     <table class="table table-striped table-bordered table-hover order-column" id="sample_2">
                                         <thead>
                                             <tr>
-                                                <th> NID </th>
-                                                <th> Nama </th>
-                                                <th> Alamat </th>
-                                                <th> Telepon </th>
+                                                <th> Kode Mata Kuliah </th>
+                                                <th> Nama Mata Kuliah </th>
+                                                <th> SKS </th>
+                                                <th> Semester </th>
                                                 <th> Created Date </th>
                                                 <th> Created By </th>
                                                 <th> Modified Date </th>
@@ -83,10 +83,10 @@
                                             {
                                                 ?>
                                             <tr class="odd gradeX">
-                                                <td> <?=$row->nid?> </td>
-                                                <td> <?=$row->nama?> </td>
-                                                <td> <?=$row->alamat?> </td>
-                                                <td> <?=$row->telepon?> </td>
+                                                <td> <?=$row->kode_mk?> </td>
+                                                <td> <?=$row->nama_mk?> </td>
+                                                <td> <?=$row->sks_mk?> </td>
+                                                <td> <?=$row->semester_mk?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
                                                 <td> <?=$row->modified_date?> </td>
@@ -99,11 +99,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu" style="position: inherit;">
                                                             <li>
-                                                                <a id="restore_dosen" data-val="<?=$row->nid?>">
+                                                                <a id="restore_mk" data-val="<?=$row->kode_mk?>">
                                                                     <i class="icon-docs"></i> Kembalikan </a>
                                                             </li>
                                                             <li>
-                                                                <a id="delete_dosen" data-val="<?=$row->nid?>">
+                                                                <a id="delete_mk" data-val="<?=$row->kode_mk?>">
                                                                     <i class="icon-trash"></i> Hapus </a>
                                                             </li>
                                                         </ul>
@@ -115,22 +115,22 @@
                                             ?>
                                         </tbody>
                                     </table>
-                                    <!-- MODAL DELETE -->
-                                    <div class="modal fade " id="modal_restore_dosen" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog " id="modal_dialog_new_dosen"> 
+                                    <!-- MODAL RESTORE -->
+                                    <div class="modal fade " id="modal_restore_mk" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog " id="modal_dialog_new_mk"> 
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Mengembalikan Dosen</h4>
+                                                    <h4 class="modal-title">Mengembalikan Mata Kuliah</h4>
                                                 </div>
-                                                <form id="form_restore_dosen" class="form-horizontal">
+                                                <form id="form_restore_mk" class="form-horizontal">
                                                     <div class="modal-body"> 
                                                         <!-- BEGIN FORM-->
                                                         <div class="form-body">
                                                             <div class="alert alert-danger alert-danger-delete">
                                                                 Anda yakin ingin mengembalikan data berikut ? </div>
                                                             <div class="form-group ">
-                                                                <label class="control-label col-md-3">NID
+                                                                <label class="control-label col-md-3">Kode Mata Kuliah
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-9">
@@ -138,37 +138,37 @@
                                                                         <i class="fa"></i>
                                                                         <input type="text" class="form-control" name="restore_0" disabled /> </div>
                                                                         <input type="hidden" name="restore_0">
-                                                                        <input type="hidden" name="restore_1" value="nid">
+                                                                        <input type="hidden" name="restore_1" value="kode_mk">
                                                                         <input type="hidden" name="restore_2" value="matakuliah">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-3">Nama
+                                                                <label class="control-label col-md-3">Nama Mata Kuliah
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="restore_nama" disabled/> </div>
+                                                                        <input type="text" class="form-control" name="restore_nama_mk" disabled/> </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-3">Alamat
+                                                                <label class="control-label col-md-3">SKS
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
-                                                                        <textarea class="form-control" name="restore_alamat" disabled></textarea>
+                                                                        <textarea class="form-control" name="restore_sks_mk" disabled></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-3">Telepon
+                                                                <label class="control-label col-md-3">Semester
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="restore_telepon" disabled/> </div>
+                                                                        <input type="text" class="form-control" name="restore_semester_mk" disabled/> </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -185,59 +185,59 @@
                                         <!-- /.modal-dialog -->
                                     </div>
                                     <!-- MODAL DELETE -->
-                                    <div class="modal fade " id="modal_delete_dosen" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog " id="modal_dialog_new_dosen"> 
+                                    <div class="modal fade " id="modal_delete_mk" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog " id="modal_dialog_new_mk"> 
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Hapus Dosen</h4>
+                                                    <h4 class="modal-title">Hapus Mata Kuliah</h4>
                                                 </div>
-                                                <form id="form_delete_dosen" class="form-horizontal">
+                                                <form id="form_delete_mk" class="form-horizontal">
                                                     <div class="modal-body"> 
                                                         <!-- BEGIN FORM-->
                                                         <div class="form-body">
                                                             <div class="alert alert-danger alert-danger-delete">
                                                                 Anda yakin ingin menghapus ? </div>
                                                             <div class="form-group ">
-                                                                <label class="control-label col-md-3">NID
+                                                                <label class="control-label col-md-3">Kode Mata Kuliah
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
                                                                         <input type="text" class="form-control" name="delete_0" disabled /> </div>
-                                                                        <<input type="hidden" name="delete_0">
-                                                                        <input type="hidden" name="delete_1" value="nid">
+                                                                        <input type="hidden" name="delete_0">
+                                                                        <input type="hidden" name="delete_1" value="kode_mk">
                                                                         <input type="hidden" name="delete_2" value="matakuliah">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-3">Nama
+                                                                <label class="control-label col-md-3">Nama Mata Kuliah
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="delete_nama" disabled/> </div>
+                                                                        <input type="text" class="form-control" name="delete_nama_mk" disabled/> </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-3">Alamat
+                                                                <label class="control-label col-md-3">SKS
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
-                                                                        <textarea class="form-control" name="delete_alamat" disabled></textarea>
+                                                                        <textarea class="form-control" name="delete_sks_mk" disabled></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-3">Telepon
+                                                                <label class="control-label col-md-3">Semester
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="delete_telepon" disabled/> </div>
+                                                                        <input type="text" class="form-control" name="delete_semester_mk" disabled/> </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -269,15 +269,15 @@
 <script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
-    $('a#restore_dosen').on('click', function(){
+    $('a#restore_mk').on('click', function(){
         $.ajax({
-            url: "<?=base_url()?>histori/dosen/get_data", 
+            url: "<?=base_url()?>histori/matakuliah/get_data", 
             type: "POST",
             dataType: "json",
             data: {
-                0 : 'dosen', 
+                0 : 'matakuliah', 
                 1 : {
-                    nid : $(this).data('val')
+                    kode_mk : $(this).data('val')
                 }
             },
             beforeSend: function(){
@@ -290,11 +290,11 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="restore_0"]').val(data.nid);
-                $('input[name="restore_nama"]').val(data.nama);
-                $('textarea[name="restore_alamat"]').val(data.alamat);
-                $('input[name="restore_telepon"]').val(data.telepon);
-                $('#modal_restore_dosen').modal('show');
+                $('input[name="restore_0"]').val(data.kode_mk);
+                $('input[name="restore_nama_mk"]').val(data.nama_mk);
+                $('textarea[name="restore_sks_mk"]').val(data.sks_mk);
+                $('input[name="restore_semester_mk"]').val(data.semester_mk);
+                $('#modal_restore_mk').modal('show');
                 // console.log(data);
             },
             complete: function(){
@@ -302,13 +302,14 @@ jQuery(document).ready(function() {
             }
         });
 
-        var form4 = $('#form_restore_dosen');
+        var form4 = $('#form_restore_mk');
         var success4 = $('.alert-danger-delete', form4);
 
         form4.validate({
             submitHandler: function (form) {
+                // var formData = JSON.parse($(form).serializeArray());
                 $.ajax({
-                    url: "<?=base_url()?>histori/dosen/restore_data", 
+                    url: "<?=base_url()?>histori/matakuliah/restore_data", 
                     type: "POST",
                     data: $(form).serialize(),
                     cache: false,             
@@ -333,15 +334,15 @@ jQuery(document).ready(function() {
             }
         });
     })
-    $('a#delete_dosen').on('click', function(){
+    $('a#delete_mk').on('click', function(){
         $.ajax({
-            url: "<?=base_url()?>histori/dosen/get_data", 
+            url: "<?=base_url()?>histori/matakuliah/get_data", 
             type: "POST",
             dataType: "json",
             data: {
-                0 : 'dosen', 
+                0 : 'matakuliah', 
                 1 : {
-                    nid : $(this).data('val')
+                    kode_mk : $(this).data('val')
                 }
             },
             beforeSend: function(){
@@ -354,11 +355,11 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="delete_0"]').val(data.nid);
-                $('input[name="delete_nama"]').val(data.nama);
-                $('textarea[name="delete_alamat"]').val(data.alamat);
-                $('input[name="delete_telepon"]').val(data.telepon);
-                $('#modal_delete_dosen').modal('show');
+                $('input[name="delete_0"]').val(data.kode_mk);
+                $('input[name="delete_nama_mk"]').val(data.nama_mk);
+                $('textarea[name="delete_sks_mk"]').val(data.sks_mk);
+                $('input[name="delete_semester_mk"]').val(data.semester_mk);
+                $('#modal_delete_mk').modal('show');
                 // console.log(data);
             },
             complete: function(){
@@ -366,13 +367,13 @@ jQuery(document).ready(function() {
             }
         });
 
-        var form4 = $('#form_delete_dosen');
+        var form4 = $('#form_delete_mk');
         var success4 = $('.alert-danger-delete', form4);
 
         form4.validate({
             submitHandler: function (form) {
                 $.ajax({
-                    url: "<?=base_url()?>histori/dosen/delete_data", 
+                    url: "<?=base_url()?>histori/matakuliah/delete_data", 
                     type: "POST",
                     data: $(form).serialize(),
                     cache: false,             

@@ -72,6 +72,11 @@
                                                 <th> Nama Mata Kuliah </th>
                                                 <th> SKS </th>
                                                 <th> Semester </th>
+                                                <th> Created Date </th>
+                                                <th> Created By </th>
+                                                <th> Modified Date </th>
+                                                <th> Modified By </th>
+                                                <th> Show </th>
                                                 <th> Actions </th>
                                             </tr>
                                         </thead>
@@ -85,12 +90,17 @@
                                                 <td> <?=$row->nama_mk?> </td>
                                                 <td> <?=$row->sks_mk?> </td>
                                                 <td> <?=$row->semester_mk?> </td>
+                                                <td> <?=$row->created_date?> </td>
+                                                <td> <?=$row->created_by?> </td>
+                                                <td> <?=$row->modified_date?> </td>
+                                                <td> <?=$row->modified_by?> </td>
+                                                <td> <?=($row->isShow == 1)? "Ya" : "Tidak"?> </td>
                                                 <td>
-                                                    <div class="btn-group">
+                                                    <div class="btn-group" style="position: relative;">
                                                         <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
                                                             <i class="fa fa-angle-down"></i>
                                                         </button>
-                                                        <ul class="dropdown-menu pull-left" role="menu">
+                                                        <ul class="dropdown-menu" role="menu" style="position: inherit;">
                                                             <li>
                                                                 <a id="update_mk" data-val="<?=$row->kode_mk?>">
                                                                     <i class="icon-docs"></i> Ubah </a>
@@ -125,42 +135,43 @@
                                                             <div class="alert alert-success display-hide">
                                                                 <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
                                                             <div class="form-group ">
-                                                                <label class="control-label col-md-3">NID
+                                                                <label class="control-label col-md-4">Kode Mata Kuliah
                                                                     <span class="required"> * </span>
                                                                 </label>
-                                                                <div class="col-md-9">
+                                                                <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="nid" /> </div>
+                                                                        <input type="text" class="form-control" name="kode_mk" /> </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-3">Nama
+                                                                <label class="control-label col-md-4">Nama Mata Kuliah
                                                                     <span class="required"> * </span>
                                                                 </label>
-                                                                <div class="col-md-9">
+                                                                <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="nama" /> </div>
+                                                                        <input type="text" class="form-control" name="nama_mk" /> </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-3">Alamat
+                                                                <label class="control-label col-md-4">SKS
+                                                                    <span class="required"> * </span>
                                                                 </label>
-                                                                <div class="col-md-9">
+                                                                <div class="col-md-8">
                                                                     <div class="input-icon right">
-                                                                        <textarea class="form-control" name="alamat"></textarea>
-                                                                    </div>
+                                                                        <i class="fa"></i>
+                                                                        <input type="number" class="form-control" name="sks_mk" min="1" /> </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-3">Telepon
+                                                                <label class="control-label col-md-4">Semester
                                                                     <span class="required"> * </span>
                                                                 </label>
-                                                                <div class="col-md-9">
+                                                                <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="telepon" placeholder="0821XXXXXXXX" /> </div>
+                                                                        <input type="number" class="form-control" name="semester_mk" min="1" max="8" /> </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -169,6 +180,146 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
                                                         <button type="submit" class="btn green">Tambah</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                    <!-- MODAL UPDATE -->
+                                    <div class="modal fade " id="modal_update_mk" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog " id="modal_dialog_update_mk"> 
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                    <h4 class="modal-title">Update Mata Kuliah</h4>
+                                                </div>
+                                                <form id="form_update_mk" class="form-horizontal">
+                                                    <div class="modal-body"> 
+                                                        <!-- BEGIN FORM-->
+                                                        <div class="form-body">
+                                                            <div class="alert alert-danger display-hide">
+                                                                <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. </div>
+                                                            <div class="alert alert-success display-hide">
+                                                                <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
+                                                            <div class="form-group ">
+                                                                <label class="control-label col-md-4">Kode Mata Kuliah
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="upd_kode_mk" disabled/> 
+                                                                        <input type="hidden" name="upd_kode_mk">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Nama Mata Kuliah
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="upd_nama_mk" /> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">SKS
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="number" class="form-control" name="upd_sks_mk" min="1" /> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Semester
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="number" class="form-control" name="upd_semester_mk" min="1" max="8" /> </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- END FORM-->
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
+                                                        <button type="submit" class="btn green">Ubah</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                    <!-- MODAL DELETE -->
+                                    <div class="modal fade " id="modal_delete_mk" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog " id="modal_dialog_delete_mk"> 
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                    <h4 class="modal-title">Hapus Mata Kuliah</h4>
+                                                </div>
+                                                <form id="form_delete_mk" class="form-horizontal">
+                                                    <div class="modal-body"> 
+                                                        <!-- BEGIN FORM-->
+                                                        <div class="form-body">
+                                                            <div class="alert alert-danger alert-danger-delete">
+                                                                Anda yakin ingin menghapus ? </div>
+                                                            <div class="form-group ">
+                                                                <label class="control-label col-md-4">Kode Mata Kuliah
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="del_kode_mk" disabled/> 
+                                                                        <input type="hidden" name="del_kode_mk">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Nama Mata Kuliah
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="del_nama_mk" disabled/> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">SKS
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="number" class="form-control" name="del_sks_mk" min="1" disabled/> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Semester
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="number" class="form-control" name="del_semester_mk" min="1" max="8" disabled/> </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- END FORM-->
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
+                                                        <button type="submit" class="btn green">Hapus</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -188,6 +339,8 @@
 <script src="<?=base_url()?>assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
 <script src="<?=base_url()?>assets/pages/scripts/table-datatables-managed.js" type="text/javascript"></script>
+<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
     $('#tambah_mk').on('click', function(){
@@ -203,35 +356,45 @@ jQuery(document).ready(function() {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
             rules: {
-                nid: {
+                kode_mk: {
                     required: true,
-                    remote: "<?=base_url()?>dosen/check_nid"
+                    remote: "<?=base_url()?>matakuliah/check_kode_mk"
                 },
-                nama: {
+                nama_mk: {
                     required: true,
-                    maxlength: 50,
+                    maxlength: 100,
                 },
-                telepon: {
+                sks_mk: {
                     required: true,
-                    number: true,
-                    minlength : 12,
-                    maxlength : 15
+                    digits: true,
+                    minlength : 1
+                },
+                semester_mk: {
+                    required: true,
+                    digits: true,
+                    minlength : 1,
+                    maxlength : 8
                 },
             },
             messages: {
-                nid: {
-                    required: "NID harus di isi",
-                    remote: "NID sudah terpakai"
+                kode_mk: {
+                    required: "Kode mata kuliah harus di isi",
+                    remote: "Kode mata kuliah sudah terpakai"
                 },
-                nama: {
-                    required: "Nama harus di isi",
-                    maxlength: "Harap isi tidak lebih dari 50 karakter",
+                nama_mk: {
+                    required: "Nama mata kuliah harus di isi",
+                    maxlength: "Harap isi tidak lebih dari 100 karakter",
                 },
-                telepon: {
-                    required: "Telepon harus di isi",
-                    number: "Hanya angka yang dibolehkan",
-                    minlength : "Harap isi minimal 12 digit",
-                    maxlength : "Harap isi maksimal 15 digit"
+                sks_mk: {
+                    required: "SKS harus di isi",
+                    digits: "Hanya angka yang dibolehkan",
+                    minlength : "Harap isi minimal 1 digit",
+                },
+                semester_mk: {
+                    required: "Semester harus di isi",
+                    digits: "Hanya angka yang dibolehkan",
+                    minlength : "Harap isi minimal 1 digit",
+                    maxlength : "Harap isi maksimal 8 digit"
                 },
             },
 
@@ -266,7 +429,7 @@ jQuery(document).ready(function() {
                 error4.hide();
                 // console.log($(form).serialize());
                 $.ajax({
-                    url: "dosen/insert_dosen", 
+                    url: "<?=base_url()?>matakuliah/insert_matakuliah", 
                     type: "POST",             
                     data: $(form).serialize(),
                     cache: false,             
@@ -286,6 +449,10 @@ jQuery(document).ready(function() {
                     },
                     complete: function(){
                         App.unblockUI();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
                     }
                 });
                 return false;
@@ -295,9 +462,9 @@ jQuery(document).ready(function() {
             }
         });
     });
-    $('#modal_new_dosen').on('hidden.bs.modal', function (e) {
+    $('#modal_new_mk').on('hidden.bs.modal', function (e) {
         console.log('modal hide');
-        var idform = $('#form_tambah_dosen');
+        var idform = $('#form_tambah_mk');
         idform.find('.has-error').removeClass('has-error');
         idform.find('.has-success').removeClass('has-success');
         idform.find('.fa-warning').removeClass('fa-warning');
@@ -305,14 +472,13 @@ jQuery(document).ready(function() {
         idform.find('.alert-danger').css('display','none');
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
-        idform.find('textarea').val('');
     })
-    $('a#upd_dosen').on('click', function(){
+    $('a#update_mk').on('click', function(){
         $.ajax({
-            url: "dosen/get_dosen", 
+            url: "<?=base_url()?>matakuliah/get_mk", 
             type: "POST",
             dataType: "json",
-            data: {nid : $(this).data('val')},
+            data: {kode_mk : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
                     // target: '#form_tambah_dosen',
@@ -323,11 +489,11 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="upd_nid"]').val(data.nid);
-                $('input[name="upd_nama"]').val(data.nama);
-                $('textarea[name="upd_alamat"]').val(data.alamat);
-                $('input[name="upd_telepon"]').val(data.telepon);
-                $('#modal_update_dosen').modal('show');
+                $('input[name="upd_kode_mk"]').val(data.kode_mk);
+                $('input[name="upd_nama_mk"]').val(data.nama_mk);
+                $('input[name="upd_sks_mk"]').val(data.sks_mk);
+                $('input[name="upd_semester_mk"]').val(data.semester_mk);
+                $('#modal_update_mk').modal('show');
                 // console.log(data);
             },
             complete: function(){
@@ -335,7 +501,7 @@ jQuery(document).ready(function() {
             }
         });
 
-        var form4 = $('#form_update_dosen');
+        var form4 = $('#form_update_mk');
         var error4 = $('.alert-update-danger', form4);
         var success4 = $('.alert-update-success', form4);
 
@@ -345,27 +511,37 @@ jQuery(document).ready(function() {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
             rules: {
-                upd_nama: {
+                nama_mk: {
                     required: true,
-                    maxlength: 50,
+                    maxlength: 100,
                 },
-                upd_telepon: {
+                sks_mk: {
                     required: true,
-                    number: true,
-                    minlength : 12,
-                    maxlength : 15
+                    digits: true,
+                    minlength : 1
+                },
+                semester_mk: {
+                    required: true,
+                    digits: true,
+                    minlength : 1,
+                    maxlength : 8
                 },
             },
             messages: {
-                upd_nama: {
-                    required: "Nama harus di isi",
-                    maxlength: "Harap isi tidak lebih dari 50 karakter",
+                nama_mk: {
+                    required: "Nama mata kuliah harus di isi",
+                    maxlength: "Harap isi tidak lebih dari 100 karakter",
                 },
-                upd_telepon: {
-                    required: "Telepon harus di isi",
-                    number: "Hanya angka yang dibolehkan",
-                    minlength : "Harap isi minimal 12 digit",
-                    maxlength : "Harap isi maksimal 15 digit"
+                sks_mk: {
+                    required: "SKS harus di isi",
+                    digits: "Hanya angka yang dibolehkan",
+                    minlength : "Harap isi minimal 1 digit",
+                },
+                semester_mk: {
+                    required: "Semester harus di isi",
+                    digits: "Hanya angka yang dibolehkan",
+                    minlength : "Harap isi minimal 1 digit",
+                    maxlength : "Harap isi maksimal 8 digit"
                 },
             },
 
@@ -400,7 +576,7 @@ jQuery(document).ready(function() {
                 error4.hide();
                 // console.log($(form).serialize());
                 $.ajax({
-                    url: "dosen/update_dosen", 
+                    url: "<?=base_url()?>matakuliah/update_mk", 
                     type: "POST",             
                     data: $(form).serialize(),
                     cache: false,             
@@ -429,9 +605,9 @@ jQuery(document).ready(function() {
             }
         });
     });
-    $('#modal_update_dosen').on('hidden.bs.modal', function (e) {
+    $('#modal_update_mk').on('hidden.bs.modal', function (e) {
         console.log('modal hide');
-        var idform = $('#form_tambah_dosen');
+        var idform = $('#form_update_mk');
         idform.find('.has-error').removeClass('has-error');
         idform.find('.has-success').removeClass('has-success');
         idform.find('.fa-warning').removeClass('fa-warning');
@@ -439,14 +615,13 @@ jQuery(document).ready(function() {
         idform.find('.alert-danger').css('display','none');
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
-        idform.find('textarea').val('');
     })
-    $('a#delete_dosen').on('click', function(){
+    $('a#delete_mk').on('click', function(){
         $.ajax({
-            url: "dosen/get_dosen", 
+            url: "<?=base_url()?>matakuliah/get_mk", 
             type: "POST",
             dataType: "json",
-            data: {nid : $(this).data('val')},
+            data: {kode_mk : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
                     // target: '#form_tambah_dosen',
@@ -457,11 +632,11 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="del_nid"]').val(data.nid);
-                $('input[name="del_nama"]').val(data.nama);
-                $('textarea[name="del_alamat"]').val(data.alamat);
-                $('input[name="del_telepon"]').val(data.telepon);
-                $('#modal_delete_dosen').modal('show');
+                $('input[name="del_kode_mk"]').val(data.kode_mk);
+                $('input[name="del_nama_mk"]').val(data.nama_mk);
+                $('input[name="del_sks_mk"]').val(data.sks_mk);
+                $('input[name="del_semester_mk"]').val(data.semester_mk);
+                $('#modal_delete_mk').modal('show');
                 // console.log(data);
             },
             complete: function(){
@@ -469,13 +644,13 @@ jQuery(document).ready(function() {
             }
         });
 
-        var form4 = $('#form_delete_dosen');
+        var form4 = $('#form_delete_mk');
         var success4 = $('.alert-danger-delete', form4);
 
         form4.validate({
             submitHandler: function (form) {
                 $.ajax({
-                    url: "dosen/delete_dosen", 
+                    url: "<?=base_url()?>matakuliah/delete_mk", 
                     type: "POST",
                     data: $(form).serialize(),
                     cache: false,             
