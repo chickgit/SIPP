@@ -102,11 +102,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu" style="position: inherit;">
                                                             <li>
-                                                                <a id="update_rg" data-val="<?=$row->kode_rg?>">
+                                                                <a id="update_rg" class="btn-update" data-val="<?=$row->kode_rg?>">
                                                                     <i class="icon-docs"></i> Ubah </a>
                                                             </li>
                                                             <li>
-                                                                <a id="delete_rg" data-val="<?=$row->kode_rg?>">
+                                                                <a id="delete_rg" class="btn-delete" data-val="<?=$row->kode_rg?>">
                                                                     <i class="icon-trash"></i> Hapus </a>
                                                             </li>
                                                         </ul>
@@ -464,8 +464,8 @@ jQuery(document).ready(function() {
         idform.find('.alert-danger').css('display','none');
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
-    })
-    $('a#update_rg').on('click', function(){
+    });
+    $('#sample_2').on('click', '#update_rg', function(){
         $.ajax({
             url: "<?=base_url()?>ruangan/get_rg", 
             type: "POST",
@@ -599,8 +599,8 @@ jQuery(document).ready(function() {
         idform.find('.alert-danger').css('display','none');
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
-    })
-    $('a#delete_rg').on('click', function(){
+    });
+    $('#sample_2').on('click', '#delete_rg', function(){
         $.ajax({
             url: "<?=base_url()?>ruangan/get_rg", 
             type: "POST",
@@ -658,6 +658,6 @@ jQuery(document).ready(function() {
                 });
             }
         });
-    })
+    });
 });
 </script>
