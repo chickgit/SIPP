@@ -269,7 +269,7 @@
 <script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
-    $('a#restore_dosen').on('click', function(){
+    $('#sample_2').on('click', '#restore_dosen', function(){
         $.ajax({
             url: "<?=base_url()?>histori/dosen/get_data", 
             type: "POST",
@@ -333,7 +333,7 @@ jQuery(document).ready(function() {
             }
         });
     })
-    $('a#delete_dosen').on('click', function(){
+    $('#sample_2').on('click', '#delete_dosen', function(){
         $.ajax({
             url: "<?=base_url()?>histori/dosen/get_data", 
             type: "POST",

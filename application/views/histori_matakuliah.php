@@ -269,7 +269,7 @@
 <script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
-    $('a#restore_mk').on('click', function(){
+    $('#sample_2').on('click', '#restore_mk', function(){
         $.ajax({
             url: "<?=base_url()?>histori/matakuliah/get_data", 
             type: "POST",
@@ -334,7 +334,7 @@ jQuery(document).ready(function() {
             }
         });
     })
-    $('a#delete_mk').on('click', function(){
+    $('#sample_2').on('click', '#delete_mk', function(){
         $.ajax({
             url: "<?=base_url()?>histori/matakuliah/get_data", 
             type: "POST",
