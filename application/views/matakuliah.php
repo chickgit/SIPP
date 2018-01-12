@@ -358,7 +358,8 @@ jQuery(document).ready(function() {
             rules: {
                 kode_mk: {
                     required: true,
-                    remote: "<?=base_url()?>matakuliah/check_kode_mk"
+                    remote: "<?=base_url()?>matakuliah/check_kode_mk",
+                    maxlength: 8
                 },
                 nama_mk: {
                     required: true,
@@ -379,7 +380,8 @@ jQuery(document).ready(function() {
             messages: {
                 kode_mk: {
                     required: "Kode mata kuliah harus di isi",
-                    remote: "Kode mata kuliah sudah terpakai"
+                    remote: "Kode mata kuliah sudah terpakai",
+                    maxlength: "Kode mata kuliah maksimal 8 karakter "
                 },
                 nama_mk: {
                     required: "Nama mata kuliah harus di isi",
@@ -511,16 +513,16 @@ jQuery(document).ready(function() {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
             rules: {
-                nama_mk: {
+                upd_nama_mk: {
                     required: true,
                     maxlength: 100,
                 },
-                sks_mk: {
+                upd_sks_mk: {
                     required: true,
                     digits: true,
                     minlength : 1
                 },
-                semester_mk: {
+                upd_semester_mk: {
                     required: true,
                     digits: true,
                     minlength : 1,
@@ -528,16 +530,16 @@ jQuery(document).ready(function() {
                 },
             },
             messages: {
-                nama_mk: {
+                upd_nama_mk: {
                     required: "Nama mata kuliah harus di isi",
                     maxlength: "Harap isi tidak lebih dari 100 karakter",
                 },
-                sks_mk: {
+                upd_sks_mk: {
                     required: "SKS harus di isi",
                     digits: "Hanya angka yang dibolehkan",
                     minlength : "Harap isi minimal 1 digit",
                 },
-                semester_mk: {
+                upd_semester_mk: {
                     required: "Semester harus di isi",
                     digits: "Hanya angka yang dibolehkan",
                     minlength : "Harap isi minimal 1 digit",
