@@ -473,7 +473,7 @@ jQuery(document).ready(function() {
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
     })
-    $('a#update_mk').on('click', function(){
+    $('#sample_2').on('click', '#update_mk', function(){
         $.ajax({
             url: "<?=base_url()?>matakuliah/get_mk", 
             type: "POST",
@@ -616,7 +616,7 @@ jQuery(document).ready(function() {
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
     })
-    $('a#delete_mk').on('click', function(){
+    $('#sample_2').on('click', '#delete_mk', function(){
         $.ajax({
             url: "<?=base_url()?>matakuliah/get_mk", 
             type: "POST",
