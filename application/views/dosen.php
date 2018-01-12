@@ -353,7 +353,9 @@ jQuery(document).ready(function() {
             rules: {
                 nid: {
                     required: true,
-                    remote: "<?=base_url()?>dosen/check_nid"
+                    remote: "<?=base_url()?>dosen/check_nid",
+                    maxlength: 11,
+                    digits: true
                 },
                 nama: {
                     required: true,
@@ -369,7 +371,9 @@ jQuery(document).ready(function() {
             messages: {
                 nid: {
                     required: "NID harus di isi",
-                    remote: "NID sudah terpakai"
+                    remote: "NID sudah terpakai",
+                    maxlength: "NID maksimal 11 digit",
+                    digits: "Hanya digit yang dibolehkan"
                 },
                 nama: {
                     required: "Nama harus di isi",
