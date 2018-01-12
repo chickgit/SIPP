@@ -455,7 +455,7 @@ jQuery(document).ready(function() {
         idform.find('input').val('');
         idform.find('textarea').val('');
     })
-    $('a#upd_dosen').on('click', function(){
+    $('#sample_2').on('click', '#upd_dosen', function(){
         $.ajax({
             url: "<?=base_url()?>dosen/get_dosen", 
             type: "POST",
@@ -589,7 +589,7 @@ jQuery(document).ready(function() {
         idform.find('input').val('');
         idform.find('textarea').val('');
     })
-    $('a#delete_dosen').on('click', function(){
+    $('#sample_2').on('click', '#delete_dosen', function(){
         $.ajax({
             url: "<?=base_url()?>dosen/get_dosen", 
             type: "POST",
