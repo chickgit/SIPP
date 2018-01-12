@@ -102,11 +102,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu" style="position: inherit;">
                                                             <li>
-                                                                <a id="update_rg" class="btn-update" data-val="<?=$row->kode_rg?>">
+                                                                <a id="update_rg" data-val="<?=$row->kode_rg?>">
                                                                     <i class="icon-docs"></i> Ubah </a>
                                                             </li>
                                                             <li>
-                                                                <a id="delete_rg" class="btn-delete" data-val="<?=$row->kode_rg?>">
+                                                                <a id="delete_rg" data-val="<?=$row->kode_rg?>">
                                                                     <i class="icon-trash"></i> Hapus </a>
                                                             </li>
                                                         </ul>
@@ -358,7 +358,8 @@ jQuery(document).ready(function() {
             rules: {
                 kode_rg: {
                     required: true,
-                    remote: "<?=base_url()?>ruangan/check_kode_rg"
+                    remote: "<?=base_url()?>ruangan/check_kode_rg",
+                    maxlength: 6
                 },
                 gedung: {
                     required: true,
@@ -375,7 +376,8 @@ jQuery(document).ready(function() {
             messages: {
                 kode_rg: {
                     required: "Kode ruangan harus di isi",
-                    remote: "Kode ruangan sudah terpakai"
+                    remote: "Kode ruangan sudah terpakai",
+                    maxlength: "Kode ruangan maksimal 6 karakter"
                 },
                 gedung: {
                     required: "Gedung harus di isi",
@@ -503,26 +505,26 @@ jQuery(document).ready(function() {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
             rules: {
-                gedung: {
+                upd_gedung: {
                     required: true,
                 },
-                jenis: {
+                upd_jenis: {
                     required: true,
                 },
-                kapasitas: {
+                upd_kapasitas: {
                     required: true,
                     digits: true,
                     minlength : 1
                 },
             },
             messages: {
-                gedung: {
+                upd_gedung: {
                     required: "Gedung harus di isi",
                 },
-                jenis: {
+                upd_jenis: {
                     required: "Jenis harus di isi",
                 },
-                kapasitas: {
+                upd_kapasitas: {
                     required: "Kapasitas harus di isi",
                     digits: "Hanya angka yang dibolehkan",
                     minlength : "Harap isi minimal 1 digit",
@@ -648,9 +650,9 @@ jQuery(document).ready(function() {
                         });
                     },
                     success: function(data) {
-                        // success4.hide();
-                        // location.reload();
-                        console.log(data);
+                        success4.hide();
+                        location.reload();
+                        // console.log(data);
                     },
                     complete: function(){
                         App.unblockUI();
