@@ -75,7 +75,7 @@
                                 </ul>
                             </li>
                             <!-- MENU WAKTU -->
-                            <li class="nav-item <?=isset($waktu) ? $waktu : ''?>">
+                            <li class="nav-item <?=isset($waktu) ? $waktu : ''?> <?=isset($histori_waktu) ? $histori_waktu : ''?>">
                                 <a href="javascript:;" class="nav-link nav-toggle">
                                     <i class="fa fa-clock-o"></i>
                                     <span class="title">Waktu</span>
@@ -86,8 +86,8 @@
                                         <a href="<?=base_url()?>waktu" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                    <li class="nav-item <?=isset($histori_waktu) ? $histori_waktu : ''?>">
+                                        <a href="<?=base_url()?>histori/waktu" class="nav-link">
                                             <i class="fa fa-trash-o"></i> Histori </a>
                                     </li>
                                 </ul>
