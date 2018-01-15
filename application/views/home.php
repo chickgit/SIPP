@@ -7,7 +7,7 @@
                         <li>
                             <a href="#">Dashboard</a>
                         </li>
-                        <li>Admin Dashboard</li>
+                        <li><?=$session['nama']?></li>
                     </ul>
                     <!-- END BREADCRUMBS -->
                     <div class="content-header-menu">

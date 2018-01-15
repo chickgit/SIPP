@@ -15,8 +15,11 @@ class Home extends CI_Controller {
     
 	public function index()
 	{
-		// print_r($this->session->userdata('Login'));
+		// $arr = array('Login', 'Detail');
+		// $this->session->unset_userdata($arr);
+		// print_r($this->session->userdata());
 		// exit();
+		$data['session'] = $this->session->userdata('Detail');
 		$data['dashboard'] = 'active open';
 		$data['menu'] = $this->load->view('sidebar',$data,TRUE);
 		
