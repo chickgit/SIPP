@@ -1,3 +1,4 @@
+<?=$header?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
             <div class="page-content page-content-popup">
@@ -59,7 +60,7 @@
                                 <div class="portlet light profile-sidebar-portlet bordered">
                                     <!-- SIDEBAR USERPIC -->
                                     <div class="profile-userpic">
-                                        <img src="../assets/pages/media/profile/profile_user.jpg" class="img-responsive" alt=""> </div>
+                                        <img src="<?=$session_detail['gambar_ava'] == NULL ? base_url()."assets/pages/media/profile/profile_user.jpg" : $session_detail['gambar_ava']?>" class="img-responsive" alt=""> </div>
                                     <!-- END SIDEBAR USERPIC -->
                                     <!-- SIDEBAR USER TITLE -->
                                     <div class="profile-usertitle">
@@ -127,19 +128,35 @@
                                                 <div class="tab-content">
                                                     <!-- PERSONAL INFO TAB -->
                                                     <div class="tab-pane active" id="tab_1_1">
-                                                        <form role="form" action="#">
+                                                        <form role="form" action="#" id="form_update_personal">
+                                                            <div class="alert alert-danger display-hide alert-update-danger">
+                                                                <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. </div>
+                                                            <div class="alert alert-success display-hide alert-update-success">
+                                                                <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
                                                             <div class="form-group">
                                                                 <label class="control-label">Nama</label>
-                                                                <input type="text" placeholder="John" class="form-control" name="upd_nama" value="<?=$session_detail['nama']?>" /></div>
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i>
+                                                                    <input type="text" placeholder="John" class="form-control" name="upd_nama" value="<?=$session_detail['nama']?>" />
+                                                                </div>
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label class="control-label">Alamat</label>
-                                                                <textarea class="form-control" name="upd_alamat"><?=$session_detail['alamat']?></textarea></div>
+                                                                <div class="input-icon right">
+                                                                    <textarea class="form-control" name="upd_alamat"><?=$session_detail['alamat']?></textarea>
+                                                                </div>
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label class="control-label">Telepon</label>
-                                                                <input type="text" placeholder="+1 646 580 DEMO (6284)" class="form-control" name="upd_telepon" value="<?=$session_detail['telepon']?>" /> </div>
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i>
+                                                                    <input type="text" placeholder="+1 646 580 DEMO (6284)" class="form-control" name="upd_telepon" value="<?=$session_detail['telepon']?>" /> 
+                                                                </div>
+                                                            </div>
                                                             <div class="margiv-top-10">
-                                                                <a href="javascript:;" class="btn green"> Save Changes </a>
-                                                                <a href="javascript:;" class="btn default"> Cancel </a>
+                                                                <input type="hidden" name="upd_nid" value="<?=$session_detail['nid']?>">
+                                                                <button class="btn green" type="submit"> Save Changes </button>
+                                                                <button class="btn default" type="reset" id="cancel_personal"> Cancel </button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -176,19 +193,33 @@
                                                     <!-- END CHANGE AVATAR TAB -->
                                                     <!-- CHANGE PASSWORD TAB -->
                                                     <div class="tab-pane" id="tab_1_3">
-                                                        <form action="#">
+                                                        <form action="#" id="form_update_password">
+                                                            <div class="alert alert-danger display-hide alert-update-password-danger">
+                                                                <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. </div>
+                                                            <div class="alert alert-success display-hide alert-update-password-success">
+                                                                <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
                                                             <div class="form-group">
                                                                 <label class="control-label">Current Password</label>
-                                                                <input type="password" class="form-control" /> </div>
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i>
+                                                                    <input type="password" class="form-control" name="upd_old_password" /> </div>
+                                                                </div>
                                                             <div class="form-group">
                                                                 <label class="control-label">New Password</label>
-                                                                <input type="password" class="form-control" /> </div>
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i>
+                                                                    <input type="password" class="form-control" name="upd_new_password" id="upd_new_password" /> </div>
+                                                                </div>
                                                             <div class="form-group">
                                                                 <label class="control-label">Re-type New Password</label>
-                                                                <input type="password" class="form-control" /> </div>
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i>
+                                                                    <input type="password" class="form-control" name="upd_new_password_conf" /> </div>
+                                                                </div>
                                                             <div class="margin-top-10">
-                                                                <a href="javascript:;" class="btn green"> Change Password </a>
-                                                                <a href="javascript:;" class="btn default"> Cancel </a>
+                                                                <input type="hidden" name="upd_id" value="<?=$session_login['id']?>">
+                                                                <button class="btn green" type="submit"> Change Password </button>
+                                                                <button class="btn default" type="reset"> Cancel </button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -277,4 +308,215 @@
                     </div>
                     <!-- END PAGE BASE CONTENT -->
                 </div>
-                
+<?=$footer?>
+<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    var form_personal = $('#form_update_personal');
+    var error_personal = $('.alert-update-danger', form_personal);
+    var success_personal = $('.alert-update-success', form_personal);
+    form_personal.validate({
+        debug: true,
+        errorElement: 'span', //default input error message container
+        errorClass: 'help-block help-block-error', // default input error message class
+        focusInvalid: false, // do not focus the last invalid input
+        ignore: "",  // validate all fields including form hidden input
+        rules: {
+            upd_nama: {
+                required    : true,
+                maxlength   : 50
+            },
+            upd_alamat: {
+                required    : true,
+                maxlength   : 200
+            },
+            upd_telepon: {
+                required    : true,
+                digits      : true,
+                maxlength   : 15
+            },
+        },
+        messages: {
+            upd_nama: {
+                required    : "Nama harus di isi",
+                maxlength   : "Maksimal 50 karakter"
+            },
+            upd_alamat: {
+                required    : "Alamat harus di isi",
+                maxlength   : "Maksimal 200 karakter"
+            },
+            upd_telepon: {
+                required    : "Nomor telepon harus di isi",
+                digits      : "Hanya angka yang dibolehkan",
+                maxlength   : "Maksimal 15 digit"
+            },
+        },
+
+        invalidHandler: function (event, validator) { //display error alert on form submit              
+            success_personal.hide();
+            error_personal.show();
+            App.scrollTo(error_personal, -200);
+        },
+
+        errorPlacement: function (error, element) { // render error placement for each input type
+            var icon = $(element).parent('.input-icon').children('i');
+            icon.removeClass('fa-check').addClass("fa-warning");  
+            icon.attr("data-original-title", error.text()).tooltip();
+        },
+
+        highlight: function (element) { // hightlight error inputs
+            $(element)
+                .closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
+        },
+
+        unhighlight: function (element) { // revert the change done by hightlight
+            
+        },
+
+        success: function (label, element) {
+            var icon = $(element).parent('.input-icon').children('i');
+            $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+            icon.removeClass("fa-warning").addClass("fa-check");
+        },
+
+        submitHandler: function (form) {
+            error_personal.hide();
+            // console.log($(form).serialize());
+            $.ajax({
+                url: "<?=base_url()?>user/update_personal", 
+                type: "POST",             
+                data: $(form).serialize(),
+                cache: false,             
+                processData: false,      
+                beforeSend: function(){
+                    App.blockUI({
+                        // target: '#form_tambah_dosen',
+                        // overlayColor: 'none',
+                        // animate: true,
+                        zIndex: 20000,
+                    });
+                },
+                success: function(data) {
+                    success_personal.show();
+                    // location.reload();
+                    // $('#modal-small').modal('show');
+                    console.log(data);
+                },
+                complete: function(){
+                    App.unblockUI();
+                }
+            });
+            return false;
+            // success_personal.show();
+            // error_personal.hide();
+            //form.submit(); // submit the form
+        }
+    });
+    // $('#cancel_personal').on('click', function(e){
+    //     e.preventDefault();
+    //     form_personal.resetForm();
+    //     // $('form').get(0).reset();
+    // })
+
+    var form_password = $('#form_update_password');
+    var error_password = $('.alert-update-password-danger', form_password);
+    var success_password = $('.alert-update-password-success', form_password);
+    form_password.validate({
+        debug: true,
+        errorElement: 'span', //default input error message container
+        errorClass: 'help-block help-block-error', // default input error message class
+        focusInvalid: false, // do not focus the last invalid input
+        ignore: "",  // validate all fields including form hidden input
+        rules: {
+            upd_old_password: {
+                required    : true,
+            },
+            upd_new_password: {
+                required    : true,
+            },
+            upd_new_password_conf: {
+                equalTo     : '#upd_new_password'
+            },
+        },
+        messages: {
+            upd_old_password: {
+                required    : "Password harus di isi",
+            },
+            upd_new_password: {
+                required    : "Password baru harus di isi",
+            },
+            upd_new_password_conf: {
+                equalTo     : "Harus sesuai dengan password baru"
+            },
+        },
+
+        invalidHandler: function (event, validator) { //display error alert on form submit              
+            success_password.hide();
+            error_password.show();
+            App.scrollTo(error_password, -200);
+        },
+
+        errorPlacement: function (error, element) { // render error placement for each input type
+            var icon = $(element).parent('.input-icon').children('i');
+            icon.removeClass('fa-check').addClass("fa-warning");  
+            icon.attr("data-original-title", error.text()).tooltip();
+        },
+
+        highlight: function (element) { // hightlight error inputs
+            $(element)
+                .closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
+        },
+
+        unhighlight: function (element) { // revert the change done by hightlight
+            
+        },
+
+        success: function (label, element) {
+            var icon = $(element).parent('.input-icon').children('i');
+            $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+            icon.removeClass("fa-warning").addClass("fa-check");
+        },
+
+        submitHandler: function (form) {
+            error_password.hide();
+            // console.log($(form).serialize());
+            $.ajax({
+                url: "<?=base_url()?>user/update_password", 
+                type: "POST",             
+                data: $(form).serialize(),
+                cache: false,             
+                processData: false,      
+                beforeSend: function(){
+                    App.blockUI({
+                        // target: '#form_tambah_dosen',
+                        // overlayColor: 'none',
+                        // animate: true,
+                        zIndex: 20000,
+                    });
+                },
+                success: function(data) {
+                    if (data == 'OK') {
+                        success_password.show();
+                        error_password.hide();
+                    }else{
+                        success_password.hide();
+                        error_password.show();
+                        alert(data);
+                    }
+                    // location.reload();
+                    // $('#modal-small').modal('show');
+                    console.log(data);
+                },
+                complete: function(){
+                    App.unblockUI();
+                }
+            });
+            return false;
+            // success_password.show();
+            // error_password.hide();
+            //form.submit(); // submit the form
+        }
+    });                
+});
+</script>

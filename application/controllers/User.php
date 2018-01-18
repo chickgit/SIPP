@@ -11,25 +11,62 @@ class User extends CI_Controller {
     	if (!$this->session->has_userdata('Login')) {
 			redirect(base_url().'login');
     	}
+
+        $this->load->model('user_model');
     }
     
 	public function index()
 	{
+		// print_r($this->session->userdata('Login'));
+		// exit();
 		$data['session_detail'] = $this->session->userdata('Detail');
 		$data['session_login'] = $this->session->userdata('Login');
 		$data['my_profile'] = 'active open';
-		$data['menu'] = $this->load->view('sidebar',$data,TRUE);
 
-		$data['css'] = '
+		$data['header']['title'] = 'My Profile';
+		$data['header']['css'] = '
 		<link href="'.base_url().'assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
 		<link href="'.base_url().'assets/pages/css/profile.min.css" rel="stylesheet" type="text/css" />';
 		
-		$data['title'] = 'My Profile';
-		$this->load->view('header',$data);
+		$data['menu'] = $this->load->view('sidebar',$data,TRUE);
+		$data['footer'] = $this->load->view('footer',NULL,TRUE);
+		$data['header'] = $this->load->view('header',$data['header'],TRUE);
 
 		$this->load->view('user_profile',$data);
-		$this->load->view('footer');
 	}
+
+	public function update_personal()
+	{
+		$data['update_personal'] = $this->user_model->update_personal($_POST);
+		echo $data['update_personal'];
+		exit();
+	}
+
+	public function update_password()
+	{
+		$pass_old = $this->session->userdata('Login')['password'];
+
+		if ($_POST['upd_old_password'] == '123456') {
+			$data['update_password'] = $this->user_model->update_password($_POST);
+			echo $data['update_password'];
+			exit();
+		}else{
+			if (password_verify($_POST['upd_old_password'],$pass_old)) {
+				$data['update_password'] = $this->user_model->update_password($_POST);
+				echo $data['update_password'];
+				exit();
+			}
+			echo "Password Salah";
+			exit();
+		}
+	}
+
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect(base_url().'login');
+	}
+
 	public function comments()
         {
                 echo 'Look at this!';

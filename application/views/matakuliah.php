@@ -72,6 +72,8 @@
                                                 <th> Nama Mata Kuliah </th>
                                                 <th> SKS </th>
                                                 <th> Semester </th>
+                                                <th> Program Studi </th>
+                                                <th> Peminatan </th>
                                                 <th> Created Date </th>
                                                 <th> Created By </th>
                                                 <th> Modified Date </th>
@@ -90,6 +92,22 @@
                                                 <td> <?=$row->nama_mk?> </td>
                                                 <td> <?=$row->sks_mk?> </td>
                                                 <td> <?=$row->semester_mk?> </td>
+                                                <td> <?=$row->program_studi?> </td>
+                                                <td> <?php
+                                                $peminatan = Array(
+                                                  '0' => 'Umum',
+                                                  '1' => 'EIS',
+                                                  '2' => 'MM',
+                                                  '3' => 'JarKom',
+                                                  '4' => 'MobA',
+                                                );
+
+                                                $color_type = null;
+                                                if (array_key_exists($row->peminatan, $peminatan))
+                                                {
+                                                  echo $peminatan[$row->peminatan];
+                                                }
+                                                ?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
                                                 <td> <?=$row->modified_date?> </td>
@@ -174,6 +192,40 @@
                                                                         <input type="number" class="form-control" name="semester_mk" min="1" max="8" /> </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Program Studi
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <select name="program_studi" class="form-control">
+                                                                            <option value="pilih">Pilih Prodi</option>
+                                                                            <option value="SI">SI</option>
+                                                                            <option value="TI">TI</option>
+                                                                            <option value="SI/TI">SI/TI</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Peminatan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <select name="peminatan" class="form-control">
+                                                                            <option value="pilih">Pilih Peminatan</option>
+                                                                            <option value="0">Umum</option>
+                                                                            <option value="1">Enterprise Information System</option>
+                                                                            <option value="2">Multimedia</option>
+                                                                            <option value="3">Jaringan Komputer</option>
+                                                                            <option value="4">Mobile Application</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
@@ -245,6 +297,40 @@
                                                                         <input type="number" class="form-control" name="upd_semester_mk" min="1" max="8" /> </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Program Studi
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <select name="upd_program_studi" class="form-control">
+                                                                            <option value="pilih">Pilih Prodi</option>
+                                                                            <option value="SI">SI</option>
+                                                                            <option value="TI">TI</option>
+                                                                            <option value="SI/TI">SI/TI</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Peminatan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <select name="upd_peminatan" class="form-control">
+                                                                            <option value="pilih">Pilih Peminatan</option>
+                                                                            <option value="0">Umum</option>
+                                                                            <option value="1">Enterprise Information System</option>
+                                                                            <option value="2">Multimedia</option>
+                                                                            <option value="3">Jaringan Komputer</option>
+                                                                            <option value="4">Mobile Application</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
@@ -314,6 +400,28 @@
                                                                         <input type="number" class="form-control" name="del_semester_mk" min="1" max="8" disabled/> </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Program Studi
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" name="del_program_studi" class="form-control" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Peminatan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" name="del_peminatan" class="form-control" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
@@ -343,6 +451,11 @@
 <script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
+    // add the rule here
+ $.validator.addMethod("valueNotEquals", function(value, element, arg){
+  return arg !== value;
+ }, "Value must not equal arg.");
+
     $('#tambah_mk').on('click', function(){
         //console.log('clicked');
         // validation using icons
@@ -357,47 +470,59 @@ jQuery(document).ready(function() {
             ignore: "",  // validate all fields including form hidden input
             rules: {
                 kode_mk: {
-                    required: true,
-                    remote: "<?=base_url()?>matakuliah/check_kode_mk",
-                    maxlength: 8
+                    required    : true,
+                    remote      : "<?=base_url()?>matakuliah/check_kode_mk",
+                    maxlength   : 8
                 },
                 nama_mk: {
-                    required: true,
-                    maxlength: 100,
+                    required    : true,
+                    maxlength   : 100,
                 },
                 sks_mk: {
-                    required: true,
-                    digits: true,
-                    minlength : 1
+                    required    : true,
+                    digits      : true,
+                    minlength   : 1
                 },
                 semester_mk: {
-                    required: true,
-                    digits: true,
-                    minlength : 1,
-                    maxlength : 8
+                    required    : true,
+                    digits      : true,
+                    minlength   : 1,
+                    maxlength   : 8
                 },
+                program_studi: {
+                    valueNotEquals :"pilih"
+                },
+                peminatan: {
+                    valueNotEquals :"pilih"
+                }
             },
             messages: {
                 kode_mk: {
-                    required: "Kode mata kuliah harus di isi",
-                    remote: "Kode mata kuliah sudah terpakai",
-                    maxlength: "Kode mata kuliah maksimal 8 karakter "
+                    required    : "Kode mata kuliah harus di isi",
+                    remote      : "Kode mata kuliah sudah terpakai",
+                    maxlength   : "Kode mata kuliah maksimal 8 karakter "
                 },
                 nama_mk: {
-                    required: "Nama mata kuliah harus di isi",
-                    maxlength: "Harap isi tidak lebih dari 100 karakter",
+                    required    : "Nama mata kuliah harus di isi",
+                    maxlength   : "Harap isi tidak lebih dari 100 karakter",
                 },
                 sks_mk: {
-                    required: "SKS harus di isi",
-                    digits: "Hanya angka yang dibolehkan",
-                    minlength : "Harap isi minimal 1 digit",
+                    required    : "SKS harus di isi",
+                    digits      : "Hanya angka yang dibolehkan",
+                    minlength   : "Harap isi minimal 1 digit",
                 },
                 semester_mk: {
-                    required: "Semester harus di isi",
-                    digits: "Hanya angka yang dibolehkan",
-                    minlength : "Harap isi minimal 1 digit",
-                    maxlength : "Harap isi maksimal 8 digit"
+                    required    : "Semester harus di isi",
+                    digits      : "Hanya angka yang dibolehkan",
+                    minlength   : "Harap isi minimal 1 digit",
+                    maxlength   : "Harap isi maksimal 8 digit"
                 },
+                program_studi: {
+                    valueNotEquals    :"Pilih Program Studi",
+                },
+                peminatan: {
+                    valueNotEquals    :"Pilih Peminatan",
+                }
             },
 
             invalidHandler: function (event, validator) { //display error alert on form submit              
@@ -474,6 +599,7 @@ jQuery(document).ready(function() {
         idform.find('.alert-danger').css('display','none');
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
+        idform.find('select').val('pilih');
     })
     $('#sample_2').on('click', '#update_mk', function(){
         $.ajax({
@@ -495,6 +621,8 @@ jQuery(document).ready(function() {
                 $('input[name="upd_nama_mk"]').val(data.nama_mk);
                 $('input[name="upd_sks_mk"]').val(data.sks_mk);
                 $('input[name="upd_semester_mk"]').val(data.semester_mk);
+                $('select[name="upd_program_studi"]').val(data.program_studi);
+                $('select[name="upd_peminatan"]').val(data.peminatan);
                 $('#modal_update_mk').modal('show');
                 // console.log(data);
             },
@@ -528,6 +656,12 @@ jQuery(document).ready(function() {
                     minlength : 1,
                     maxlength : 8
                 },
+                upd_program_studi: {
+                    valueNotEquals :"pilih"
+                },
+                upd_peminatan: {
+                    valueNotEquals :"pilih"
+                }
             },
             messages: {
                 upd_nama_mk: {
@@ -545,6 +679,12 @@ jQuery(document).ready(function() {
                     minlength : "Harap isi minimal 1 digit",
                     maxlength : "Harap isi maksimal 8 digit"
                 },
+                upd_program_studi: {
+                    valueNotEquals    :"Pilih Program Studi",
+                },
+                upd_peminatan: {
+                    valueNotEquals    :"Pilih Peminatan",
+                }
             },
 
             invalidHandler: function (event, validator) { //display error alert on form submit              
@@ -617,6 +757,7 @@ jQuery(document).ready(function() {
         idform.find('.alert-danger').css('display','none');
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
+        idform.find('select').val('pilih');
     })
     $('#sample_2').on('click', '#delete_mk', function(){
         $.ajax({
@@ -638,6 +779,8 @@ jQuery(document).ready(function() {
                 $('input[name="del_nama_mk"]').val(data.nama_mk);
                 $('input[name="del_sks_mk"]').val(data.sks_mk);
                 $('input[name="del_semester_mk"]').val(data.semester_mk);
+                $('input[name="del_program_studi"]').val(data.program_studi);
+                $('input[name="del_peminatan"]').val(data.peminatan);
                 $('#modal_delete_mk').modal('show');
                 // console.log(data);
             },

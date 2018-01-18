@@ -27,8 +27,8 @@ class MataKuliah_model extends CI_Model {
 
     public function insert_data($arr = array())
     {
-        $sql = ("INSERT INTO matakuliah(kode_mk, nama_mk, sks_mk, semester_mk) VALUES (?, ?, ?, ?)");
-        $this->db->query($sql, array($arr['kode_mk'],$arr['nama_mk'],$arr['sks_mk'],$arr['semester_mk']));
+        $sql = ("INSERT INTO matakuliah(kode_mk, nama_mk, sks_mk, semester_mk, program_studi, peminatan) VALUES (?, ?, ?, ?, ?, ?)");
+        $this->db->query($sql, array($arr['kode_mk'],$arr['nama_mk'],$arr['sks_mk'],$arr['semester_mk'],$arr['program_studi'],$arr['peminatan']));
         echo "OK";
     }
 
@@ -40,8 +40,8 @@ class MataKuliah_model extends CI_Model {
 
     public function update_mk($arr = array())
     {
-        $sql = ("UPDATE matakuliah SET nama_mk = ?, sks_mk = ?, semester_mk = ?, modified_date = ?, modified_by = ? WHERE kode_mk = ?");
-        $this->db->query($sql, array($arr['upd_nama_mk'],$arr['upd_sks_mk'],$arr['upd_semester_mk'],date('Y-m-d H:i:s'),$this->session_username(),$arr['upd_kode_mk']));
+        $sql = ("UPDATE matakuliah SET nama_mk = ?, sks_mk = ?, semester_mk = ?, program_studi = ?, peminatan = ?, modified_date = ?, modified_by = ? WHERE kode_mk = ?");
+        $this->db->query($sql, array($arr['upd_nama_mk'],$arr['upd_sks_mk'],$arr['upd_semester_mk'],$arr['upd_program_studi'],$arr['upd_peminatan'],date('Y-m-d H:i:s'),$this->session_username(),$arr['upd_kode_mk']));
         echo "OK";
     }
 

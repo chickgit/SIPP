@@ -26,7 +26,7 @@ class Login_model extends CI_Model {
         }
 
         // print_r($hasil);
-        if ( ($hasil['password'] == '123456789') && ($arr['password'] == '123456789')  ) 
+        if ( ($hasil['password'] == '123456') && ($arr['password'] == '123456')  ) 
         {
             return $hasil_akhir_suc;
         }
