@@ -7,13 +7,13 @@
                 <div class="page-content-fixed-header">
                     <!-- BEGIN BREADCRUMBS -->
                     <ul class="page-breadcrumb">
-                        <li>Kaprodi</li>
+                        <li><?=$role?></li>
                         <li>Dosen</li>
                     </ul>
                     <!-- END BREADCRUMBS -->
                     <div class="content-header-menu">
                         <!-- BEGIN DROPDOWN AJAX MENU -->
-                        <div class="dropdown-ajax-menu btn-group">
+                        <!-- <div class="dropdown-ajax-menu btn-group">
                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <i class="fa fa-circle"></i>
                                 <i class="fa fa-circle"></i>
@@ -33,7 +33,7 @@
                                     <a href="start.html">Settings</a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
                         <!-- END DROPDOWN AJAX MENU -->
                         <!-- BEGIN MENU TOGGLER -->
                         <button type="button" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">

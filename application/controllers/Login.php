@@ -27,7 +27,7 @@ class Login extends CI_Controller {
 
 		// print_r($data['login_res']);
 		// exit();
-		if ($data['login_res']['error']) 
+		if (isset($data['login_res']['error'])) 
 		{
 			$this->session->set_flashdata('error', $data['login_res']['error']);
 			redirect(base_url().'login');
@@ -35,7 +35,7 @@ class Login extends CI_Controller {
 		else
 		{
 			$this->session->set_userdata(array('Login' => $data['login_res']['login']));
-			$data['get_identity'] = $this->login_model->get_data_user($this->session->userdata('Login')['id_sebagai']);
+			$data['get_identity'] = $this->login_model->get_data_user($this->session->userdata('Login'));
 			$this->session->set_userdata(array('Detail' => $data['get_identity']));
 			redirect(base_url().'home');
 		}

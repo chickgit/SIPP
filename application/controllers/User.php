@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User extends CI_Controller {
+class User extends MY_Controller {
 
 	public function __construct()
     {
@@ -17,10 +17,11 @@ class User extends CI_Controller {
     
 	public function index()
 	{
-		// print_r($this->session->userdata('Login'));
+		// print_r($this->session->userdata());
 		// exit();
 		$data['session_detail'] = $this->session->userdata('Detail');
 		$data['session_login'] = $this->session->userdata('Login');
+		$data['role'] = $this->get_role_user();
 		$data['my_profile'] = 'active open';
 
 		$data['header']['title'] = 'My Profile';

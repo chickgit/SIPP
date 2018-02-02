@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Histori extends CI_Controller {
+class Histori extends MY_Controller {
 
 	public function __construct()
     {
@@ -24,6 +24,7 @@ class Histori extends CI_Controller {
 	{
 		$data['list_histori'] = $this->histori_model->get_histori($this->segment());
 
+		$data['role'] = $this->get_role_user();
 		$data['histori_'.$this->segment()] = 'active open';
 		$data['header']['title'] = 'Histori '.ucwords($this->segment());
 		$data['header']['css'] = '

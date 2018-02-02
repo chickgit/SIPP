@@ -61,13 +61,13 @@ License: You must have a valid license purchased only from themeforest(the above
                 <div class="container-fluid">
                     <div class="havbar-header">
                         <!-- BEGIN LOGO -->
-                        <a id="index" class="navbar-brand" href="start.html">
+                        <a id="index" class="navbar-brand" href="#">
                             <img src="<?=base_url()?>assets/layouts/layout6/img/logo.png" alt="Logo"> </a>
                         <!-- END LOGO -->
                         <!-- BEGIN TOPBAR ACTIONS -->
                         <div class="topbar-actions">
                             <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
-                            <form class="search-form" action="extra_search.html" method="GET">
+                            <!-- <form class="search-form" action="extra_search.html" method="GET">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Search here" name="query">
                                     <span class="input-group-btn">
@@ -76,10 +76,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                         </a>
                                     </span>
                                 </div>
-                            </form>
+                            </form> -->
                             <!-- END HEADER SEARCH BOX -->
                             <!-- BEGIN GROUP NOTIFICATION -->
-                            <div class="btn-group-notification btn-group" id="header_notification_bar">
+                            <!-- <div class="btn-group-notification btn-group" id="header_notification_bar">
                                 <button type="button" class="btn md-skip dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <span class="badge">9</span>
                                 </button>
@@ -175,7 +175,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         </ul>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
                             <!-- END GROUP NOTIFICATION -->
                             <!-- BEGIN USER PROFILE -->
                             <div class="btn-group-img btn-group">
@@ -185,9 +185,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <li>
                                         <a href="<?=base_url()?>user" >
                                             <i class="icon-user"></i> My Profile
-                                            <span class="badge badge-danger">1</span>
+                                            <span class="badge badge-danger"></span>
                                         </a>
-                                    </li>
+                                    <!-- </li>
                                     <li>
                                         <a href="app_calendar.html">
                                             <i class="icon-calendar"></i> My Calendar </a>
@@ -209,7 +209,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <a href="page_user_lock_1.html">
                                             <i class="icon-lock"></i> Lock Screen </a>
                                     </li>
-                                    <li>
+                                    <li> -->
                                         <a href="<?=base_url()?>user/logout">
                                             <i class="icon-key"></i> Log Out </a>
                                     </li>

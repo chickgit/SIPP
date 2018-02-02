@@ -40,9 +40,13 @@ class Login_model extends CI_Model {
         }
     }
 
-    public function get_data_user($id)
+    public function get_data_user($id = array())
     {
-        $query = $this->db->get_where('dosen', array('nid' => $id));
+        if ($id['sebagai'] == 0 || $id['sebagai'] == 1) {
+            $query = $this->db->get_where('dosen', array('nid' => $id['id_sebagai']));
+        }else{
+            $query = $this->db->get_where('mahasiswa', array('nim' => $id['id_sebagai']));
+        }
         return $query->row_array();
     }
 

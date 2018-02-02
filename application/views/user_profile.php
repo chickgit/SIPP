@@ -13,27 +13,7 @@
                     <!-- END BREADCRUMBS -->
                     <div class="content-header-menu">
                         <!-- BEGIN DROPDOWN AJAX MENU -->
-                        <div class="dropdown-ajax-menu btn-group">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                            </button>
-                            <ul class="dropdown-menu-v2">
-                                <li>
-                                    <a href="start.html">Application</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Reports</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Templates</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Settings</a>
-                                </li>
-                            </ul>
-                        </div>
+                        
                         <!-- END DROPDOWN AJAX MENU -->
                         <!-- BEGIN MENU TOGGLER -->
                         <button type="button" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
@@ -154,7 +134,10 @@
                                                                 </div>
                                                             </div>
                                                             <div class="margiv-top-10">
-                                                                <input type="hidden" name="upd_nid" value="<?=$session_detail['nid']?>">
+                                                                <?php //print_r($session_detail)?>
+                                                                <input type="hidden" name="id" value="<?=($session_login['sebagai'] == 2) ? 'nim' : 'nid'?>">
+                                                                <input type="hidden" name="table" value="<?=($session_login['sebagai'] == 2) ? 'mahasiswa' : 'dosen'?>">
+                                                                <input type="hidden" name="upd_id" value="<?=($session_login['sebagai'] == 2) ? $session_detail['nim'] : $session_detail['nid']?>">
                                                                 <button class="btn green" type="submit"> Save Changes </button>
                                                                 <button class="btn default" type="reset" id="cancel_personal"> Cancel </button>
                                                             </div>
@@ -217,6 +200,8 @@
                                                                     <input type="password" class="form-control" name="upd_new_password_conf" /> </div>
                                                                 </div>
                                                             <div class="margin-top-10">
+                                                                <input type="hidden" name="id" value="<?=($session_login['sebagai'] == 1) ? 'nid' : 'nim'?>">
+                                                                <input type="hidden" name="table" value="<?=($session_login['sebagai'] == 1) ? 'dosen' : 'mahasiswa'?>">
                                                                 <input type="hidden" name="upd_id" value="<?=$session_login['id']?>">
                                                                 <button class="btn green" type="submit"> Change Password </button>
                                                                 <button class="btn default" type="reset"> Cancel </button>

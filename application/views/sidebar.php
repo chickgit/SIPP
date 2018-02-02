@@ -1,4 +1,5 @@
-<div class="page-sidebar-wrapper">
+                
+                <div class="page-sidebar-wrapper">
                     <!-- BEGIN SIDEBAR -->
                     <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
                     <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
@@ -11,6 +12,11 @@
                         <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
                         <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
                         <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                            
+                            <?php
+                            switch ($role) {
+                                case 'Kaprodi':
+                                    ?>
                             <li class="nav-item start <?=isset($dashboard) ? $dashboard : ''?>">
                                 <a href="<?=base_url()?>home" class="nav-link nav-toggle">
                                     <i class="icon-home"></i>
@@ -18,7 +24,7 @@
                                 </a>
                             </li>
                             <li class="heading">
-                                <h3 class="uppercase">KAPRODI</h3>
+                                <h3 class="uppercase"><?=strtoupper($role)?></h3>
                             </li>
                             <!-- MENU DOSEN -->
                             <li class="nav-item <?=isset($dosen) ? $dosen : ''?><?=isset($histori_dosen) ? $histori_dosen : ''?>">
@@ -92,6 +98,24 @@
                                     </li>
                                 </ul>
                             </li>
+                            <!-- MENU HARI -->
+                            <li class="nav-item <?=isset($hari) ? $hari : ''?> <?=isset($histori_hari) ? $histori_hari : ''?>">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <i class="fa fa-calendar"></i>
+                                    <span class="title">Hari</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu" style="display: <?=isset($hari) ? 'block' : ''?>;">
+                                    <li class="nav-item <?=isset($hari) ? $hari : ''?>">
+                                        <a href="<?=base_url()?>hari" class="nav-link">
+                                            <i class="fa fa-table"></i> Data </a>
+                                    </li>
+                                    <li class="nav-item <?=isset($histori_hari) ? $histori_hari : ''?>">
+                                        <a href="<?=base_url()?>histori/hari" class="nav-link">
+                                            <i class="fa fa-trash-o"></i> Histori </a>
+                                    </li>
+                                </ul>
+                            </li>
                             <!-- MENU JADWAL -->
                             <li class="nav-item <?=isset($jadwal) ? $jadwal : ''?>">
                                 <a href="javascript:;" class="nav-link nav-toggle">
@@ -119,6 +143,51 @@
                                     <span class="title">Jadwal Perkuliahan</span>
                                 </a>
                             </li>
+                                    <?php
+                                    break;
+
+                                case 'Mahasiswa':
+                                    ?>
+                            <li class="heading">
+                                <h3 class="uppercase"><?=strtoupper($role)?></h3>
+                            </li>
+                            <!-- MENU MAHASISWA -->
+                            <li class="nav-item <?=isset($amk) ? $amk : ''?><?=isset($histori_matakuliah) ? $histori_matakuliah : ''?>">
+                                <a href="<?=base_url()?>ambil_matakuliah" class="nav-link nav-toggle">
+                                    <i class="fa fa-book"></i>
+                                    <span class="title">Mata Kuliah</span>
+                                    <!-- <span class="arrow"></span> -->
+                                </a>
+                                <!-- <ul class="sub-menu" style="display: <?=isset($mk) ? 'block' : ''?>;">
+                                    <li class="nav-item <?=isset($mk) ? $mk : ''?>">
+                                        <a href="<?=base_url()?>ambil_matakuliah" class="nav-link">
+                                            <i class="fa fa-th-list"></i> Ambil </a>
+                                    </li>
+                                    <li class="nav-item <?=isset($histori_matakuliah) ? $histori_matakuliah : ''?>">
+                                        <a href="<?=base_url()?>histori/matakuliah" class="nav-link">
+                                            <i class="fa fa-table"></i> Lihat </a>
+                                    </li>
+                                </ul> -->
+                            </li>
+                            <li class="heading">
+                                <h3 class="uppercase">JADWAL</h3>
+                            </li>
+                            <li class="nav-item <?=isset($jadwalP) ? $jadwalP : ''?> ">
+                                <a href="jadwalP" class="nav-link nav-toggle">
+                                    <i class="icon-calendar"></i>
+                                    <span class="title">Jadwal Perkuliahan</span>
+                                </a>
+                            </li>
+                                    <?php
+                                    break;
+                                
+                                default:
+                                    ?>
+                                    <?php
+                                    break;
+                            }
+                            ?>
+                            
                         </ul>
                         <!-- END SIDEBAR MENU -->
                     </div>

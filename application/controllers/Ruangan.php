@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Ruangan extends CI_Controller {
+class Ruangan extends MY_Controller {
 
 	public function __construct()
     {
@@ -18,6 +18,7 @@ class Ruangan extends CI_Controller {
 	{
 		$data['list_ruangan'] = $this->ruangan_model->get_data();
 
+		$data['role'] = $this->get_role_user();
 		$data['ruangan'] = 'active open';
 
 		$data['header']['title'] = 'Data Ruangan';

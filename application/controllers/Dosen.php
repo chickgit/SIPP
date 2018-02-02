@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dosen extends CI_Controller {
+class Dosen extends MY_Controller {
 
 	public function __construct()
     {
@@ -18,6 +18,8 @@ class Dosen extends CI_Controller {
 	public function index()
 	{
 		$data['list_dosen'] = $this->dosen_model->get_data();
+
+		$data['role'] = $this->get_role_user();
 
 		$data['dosen'] = 'active open';
 		

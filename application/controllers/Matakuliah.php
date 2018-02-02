@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Matakuliah extends CI_Controller {
+class Matakuliah extends MY_Controller {
 
 	public function __construct()
     {
@@ -17,6 +17,8 @@ class Matakuliah extends CI_Controller {
 	public function index()
 	{
 		$data['list_mk'] = $this->matakuliah_model->get_data();
+
+		$data['role'] = $this->get_role_user();
 
 		$data['mk'] = 'active open';
 

@@ -15,16 +15,28 @@ class User_model extends CI_Model {
     
     public function update_personal($arr = array())
     {
-    	$sql = ("UPDATE dosen SET nama = ?, alamat = ?, telepon = ?, modified_date = ?, modified_by = ? WHERE nid = ?");
-        $this->db->query($sql, array($arr['upd_nama'],$arr['upd_alamat'],$arr['upd_telepon'],date('Y-m-d H:i:s'),$this->session_username(),$arr['upd_nid']));
+        $data = array(
+            "nama"              => $arr['upd_nama'],
+            "alamat"            => $arr['upd_alamat'],
+            "telepon"           => $arr['upd_telepon'],
+            "modified_date"     => date('Y-m-d H:i:s'),
+            "modified_by"       => $this->session_username()
+        );
+        $this->db->where($arr['id'], $arr['upd_id']);
+        $this->db->update($arr['table'], $data);
         echo "OK";
     }
 
     public function update_password($arr = array())
     {
     	$new_pass = password_hash($arr['upd_new_password'],PASSWORD_BCRYPT);
-    	$sql = ("UPDATE user SET password = ? WHERE id = ?");
-        $this->db->query($sql, array($new_pass,$arr['upd_id']));
+        $data = array(
+            "password"          => $new_pass,
+            "modified_date"     => date('Y-m-d H:i:s'),
+            "modified_by"       => $this->session_username()
+        );
+        $this->db->where($arr['id'], $arr['upd_id']);
+        $this->db->update($arr['table'], $data);
         echo "OK";
     }
 

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Waktu extends CI_Controller {
+class Waktu extends MY_Controller {
 
 	public function __construct()
     {
@@ -17,6 +17,7 @@ class Waktu extends CI_Controller {
 	public function index()
 	{
 		$data['list_waktu'] = $this->waktu_model->get_data();
+		$data['role'] = $this->get_role_user();
 
 		$data['waktu'] = 'active open';
 
