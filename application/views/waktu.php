@@ -71,6 +71,8 @@
                                                 <th> Kode Waktu </th>
                                                 <th> Waktu Awal </th>
                                                 <th> Waktu Akhir </th>
+                                                <th> Identitas Waktu </th>
+                                                <th> SKS Waktu </th>
                                                 <th> Created Date </th>
                                                 <th> Created By </th>
                                                 <th> Modified Date </th>
@@ -88,6 +90,8 @@
                                                 <td> <?=$row->kode_wk?> </td>
                                                 <td> <?=$row->waktu_aw?> </td>
                                                 <td> <?=$row->waktu_ak?> </td>
+                                                <td> <?=$row->role?> </td>
+                                                <td> <?=$row->sks?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
                                                 <td> <?=$row->modified_date?> </td>
@@ -132,7 +136,7 @@
                                                                 <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. </div>
                                                             <div class="alert alert-success display-hide">
                                                                 <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
-                                                            <div class="form-group ">
+                                                            <!-- <div class="form-group ">
                                                                 <label class="control-label col-md-4">Kode Waktu
                                                                     <span class="required"> * </span>
                                                                 </label>
@@ -141,7 +145,7 @@
                                                                         <i class="fa"></i>
                                                                         <input type="text" class="form-control" name="kode_wk" id="" /> </div>
                                                                 </div>
-                                                            </div>
+                                                            </div> -->
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Waktu Awal
                                                                     <span class="required"> * </span>
@@ -160,6 +164,33 @@
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
                                                                         <input type="time" class="form-control" name="akhir_wk" id="akhir_wk" /> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Identitas Waktu
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <select name="id_wk" class="form-control">
+                                                                            <option value="pilih">Pilih Identitas</option>
+                                                                            <option value="PP">PP (Pagi-Pagi)</option>
+                                                                            <option value="PS">PS (Pagi-Siang)</option>
+                                                                            <option value="SS">SS (Siang-Siang)</option>
+                                                                            <option value="SP">SP (Siang-Petang)</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">SKS Waktu
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="number" class="form-control" name="sks_wk" id="sks_wk" /> </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -191,7 +222,7 @@
                                                                 <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. </div>
                                                             <div class="alert alert-success display-hide">
                                                                 <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
-                                                            <div class="form-group ">
+                                                            <!-- <div class="form-group ">
                                                                 <label class="control-label col-md-4">Kode Waktu
                                                                     <span class="required"> * </span>
                                                                 </label>
@@ -202,7 +233,7 @@
                                                                         <input type="hidden" name="upd_kode_wk">
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div> -->
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Waktu Awal
                                                                     <span class="required"> * </span>
@@ -223,11 +254,39 @@
                                                                         <input type="time" class="form-control" name="upd_akhir_wk" /> </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Identitas Waktu
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <select name="upd_id_wk" class="form-control">
+                                                                            <option value="pilih">Pilih Identitas</option>
+                                                                            <option value="PP">PP (Pagi-Pagi)</option>
+                                                                            <option value="PS">PS (Pagi-Siang)</option>
+                                                                            <option value="SS">SS (Siang-Siang)</option>
+                                                                            <option value="SP">SP (Siang-Petang)</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">SKS Waktu
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="number" class="form-control" name="upd_sks_wk" id="upd_sks_wk" /> </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
+                                                        <input type="hidden" name="upd_kode_wk">
                                                         <button type="submit" class="btn green">Ubah</button>
                                                     </div>
                                                 </form>
@@ -311,9 +370,13 @@
 <script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
-    jQuery.validator.addMethod("notEqual", function(value, element, param) {
+    $.validator.addMethod("notEqual", function(value, element, param) {
       return this.optional(element) || value != $(param).val();
     }, "Please specify a different (non-default) value");
+    $.validator.addMethod("valueNotEquals", function(value, element, arg){
+        return arg !== value;
+    }, "Value must not equal arg.");
+
     $('#tambah_wk').on('click', function(){
         //console.log('clicked');
         // validation using icons
@@ -339,6 +402,13 @@ jQuery(document).ready(function() {
                 akhir_wk: {
                     required: true,
                     notEqual: "#awal_wk"
+                },
+                id_wk: {
+                    valueNotEquals : 'pilih'
+                },
+                sks_wk: {
+                    required: true,
+                    range : [1,3]
                 }
             },
             messages: {
@@ -354,6 +424,13 @@ jQuery(document).ready(function() {
                 akhir_wk: {
                     required: "Waktu akhir harus di isi",
                     notEqual: "Waktu awal dan waktu akhir tidak boleh sama"
+                },
+                id_wk: {
+                    valueNotEquals : "Harap pilih identitas waktu"
+                },
+                sks_wk: {
+                    required : "Masukkan SKS waktu",
+                    range : "Masukkan SKS antara 1 dan 3"
                 }
             },
 
@@ -431,6 +508,7 @@ jQuery(document).ready(function() {
         idform.find('.alert-danger').css('display','none');
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
+        idform.find('select').val('pilih');
     });
     $('#sample_2').on('click', '#update_wk', function(){
         $.ajax({
@@ -451,6 +529,8 @@ jQuery(document).ready(function() {
                 $('input[name="upd_kode_wk"]').val(data.kode_wk);
                 $('input[name="upd_awal_wk"]').val(data.waktu_aw);
                 $('input[name="upd_akhir_wk"]').val(data.waktu_ak);
+                $('select[name="upd_id_wk"]').val(data.role);
+                $('input[name="upd_sks_wk"]').val(data.sks);
                 $('#modal_update_wk').modal('show');
                 // console.log(data);
             },
@@ -475,6 +555,13 @@ jQuery(document).ready(function() {
                 upd_akhir_wk: {
                     required: true,
                 },
+                upd_id_wk: {
+                    valueNotEquals : 'pilih'
+                },
+                upd_sks_wk: {
+                    required: true,
+                    range : [1,3]
+                }
             },
             messages: {
                 upd_awal_wk: {
@@ -483,6 +570,13 @@ jQuery(document).ready(function() {
                 upd_akhir_wk: {
                     required: "Akhir waktu harus di isi",
                 },
+                upd_id_wk: {
+                    valueNotEquals : "Pilih identitas waktu"
+                },
+                upd_sks_wk: {
+                    required: "SKS waktu harus di isi",
+                    range : "SKS waktu antara 1 dan 3"
+                }
             },
 
             invalidHandler: function (event, validator) { //display error alert on form submit              

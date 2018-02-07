@@ -25,10 +25,15 @@ class Waktu_model extends CI_Model {
         return $query->row();
     }
 
-    public function insert_data($arr = array())
+    public function insert_data()
     {
-        $sql = ("INSERT INTO waktu(kode_wk, waktu_aw, waktu_ak) VALUES (?, ?, ?)");
-        $this->db->query($sql, array($arr['kode_wk'],$arr['awal_wk'],$arr['akhir_wk']));
+        $data = array(
+            "waktu_aw"  => $this->input->post('awal_wk'),
+            "waktu_ak"  => $this->input->post('akhir_wk'),
+            "role"      => $this->input->post('id_wk'),
+            "sks"       => $this->input->post('sks_wk')
+        );
+        $this->db->insert('waktu', $data);
         echo "OK";
     }
 
@@ -38,10 +43,18 @@ class Waktu_model extends CI_Model {
         return $query->row();
     }
 
-    public function update_wk($arr = array())
+    public function update_wk()
     {
-        $sql = ("UPDATE waktu SET waktu_aw = ?, waktu_ak = ?, modified_date = ?, modified_by = ? WHERE kode_wk = ?");
-        $this->db->query($sql, array($arr['upd_awal_wk'],$arr['upd_akhir_wk'],date('Y-m-d H:i:s'),$this->session_username(),$arr['upd_kode_wk']));
+        $data = array(
+            "waktu_aw"      => $this->input->post('upd_awal_wk'),
+            "waktu_ak"      => $this->input->post('upd_akhir_wk'),
+            "role"          => $this->input->post('upd_id_wk'),
+            "sks"           => $this->input->post('upd_sks_wk'),
+            "modified_date" => date('Y-m-d H:i:s'),
+            "modified_by"   => $this->session_username()
+        );
+        $this->db->where("kode_wk", $this->input->post('upd_kode_wk'));
+        $this->db->update('waktu', $data);
         echo "OK";
     }
 

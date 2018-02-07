@@ -47,6 +47,8 @@
                                                 <th> Kode Waktu </th>
                                                 <th> Waktu Awal </th>
                                                 <th> Waktu Akhir </th>
+                                                <th> Identitas Waktu </th>
+                                                <th> SKS Waktu </th>
                                                 <th> Created Date </th>
                                                 <th> Created By </th>
                                                 <th> Modified Date </th>
@@ -64,6 +66,8 @@
                                                 <td> <?=$row->kode_wk?> </td>
                                                 <td> <?=$row->waktu_aw?> </td>
                                                 <td> <?=$row->waktu_ak?> </td>
+                                                <td> <?=$row->role?> </td>
+                                                <td> <?=$row->sks?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
                                                 <td> <?=$row->modified_date?> </td>
@@ -139,6 +143,26 @@
                                                                         <input type="time" class="form-control" name="restore_akhir_wk" disabled /> </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Identitas Waktu
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="restore_id_wk" disabled /> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">SKS Waktu
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="number" class="form-control" name="restore_sks_wk" disabled /> </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
@@ -199,6 +223,26 @@
                                                                         <input type="time" class="form-control" name="delete_akhir_wk" disabled /> </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Identitas Waktu
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="delete_id_wk" disabled /> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">SKS Waktu
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="number" class="form-control" name="delete_sks_wk" disabled /> </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
@@ -252,6 +296,8 @@ jQuery(document).ready(function() {
                 $('input[name="restore_0"]').val(data.kode_wk);
                 $('input[name="restore_awal_wk"]').val(data.waktu_aw);
                 $('input[name="restore_akhir_wk"]').val(data.waktu_ak);
+                $('input[name="restore_id_wk"]').val(data.role);
+                $('input[name="restore_sks_wk"]').val(data.sks);
                 $('#modal_restore_wk').modal('show');
                 // console.log(data);
             },
@@ -316,6 +362,8 @@ jQuery(document).ready(function() {
                 $('input[name="delete_0"]').val(data.kode_wk);
                 $('input[name="delete_awal_wk"]').val(data.waktu_aw);
                 $('input[name="delete_akhir_wk"]').val(data.waktu_ak);
+                $('input[name="delete_id_wk"]').val(data.role);
+                $('input[name="delete_sks_wk"]').val(data.sks);
                 $('#modal_delete_wk').modal('show');
                 // console.log(data);
             },

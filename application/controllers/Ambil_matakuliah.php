@@ -38,6 +38,8 @@ class Ambil_matakuliah extends MY_Controller {
 		$data['header'] 			= $this->load->view('header',$data['header'],TRUE);
 
 		// $data['list_dosen'] = $this->dosen_model->
+		// json_encode(print_r($data['list_mk']));
+		// exit();
 
 		$this->load->view('ambil_matakuliah',$data);
 		

@@ -29,25 +29,25 @@ class MY_Controller extends CI_Controller {
 			if ($this->session->userdata('Login')['sebagai'] != $as) {
 				echo "alert('Anda tidak memiliki hak akses')";
 			}
-			switch () {
-				case 0:
-					# code...
-					break;
+			// switch () {
+			// 	case 0:
+			// 		# code...
+			// 		break;
 				
-				case 1:
-					# code...
-					break;
+			// 	case 1:
+			// 		# code...
+			// 		break;
 
-				case 2:
-					# code...
-					break;
-				default:
-					# code...
-					break;
-			}
-			if ( == 0) {
-				# code...
-			}
+			// 	case 2:
+			// 		# code...
+			// 		break;
+			// 	default:
+			// 		# code...
+			// 		break;
+			// }
+			// if ( == 0) {
+			// 	# code...
+			// }
 			
 		}
 	}

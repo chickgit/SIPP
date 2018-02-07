@@ -38,7 +38,7 @@ class Waktu extends MY_Controller {
 
 	public function insert_wk()
 	{
-		$data['insert_wk'] = $this->waktu_model->insert_data($_POST);
+		$data['insert_wk'] = $this->waktu_model->insert_data();
 		echo $data['insert_wk'];
 		exit();
 	}
@@ -61,7 +61,7 @@ class Waktu extends MY_Controller {
 
 	public function update_wk()
 	{
-		$data['update_wk'] = $this->waktu_model->update_wk($_POST);
+		$data['update_wk'] = $this->waktu_model->update_wk();
 		echo $data['update_wk'];
 		exit();
 	}

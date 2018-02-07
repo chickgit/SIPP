@@ -27,20 +27,21 @@ class Algo extends CI_Controller {
 
 		// HARI - WAKTU - MATA KULIAH - SEMESTER - DOSEN - RUANGAN
 		// HARI
-        $query_hari = $this->db->get_where('hari', array('isDelete' => 0, 'isShow' => 1));
-        $hasil_hari = $query_hari->result_array();
+        $query_hari         = $this->db->get_where('hari', array('isDelete' => 0, 'isShow' => 1));
+        $hasil_hari         = $query_hari->result_array();
         // WAKTU
-        $query_waktu = $this->db->get_where('waktu', array('isDelete' => 0, 'isShow' => 1));
-        $hasil_waktu = $query_waktu->result_array();
+        $query_waktu        = $this->db->get_where('waktu', array('isDelete' => 0, 'isShow' => 1));
+        $hasil_waktu        = $query_waktu->result_array();
         // MATKUL
-		$matkul = array_combine(range(1,52),range(9,60));
+		$query_matkul       = $this->db->get_where('matakuliah', array('isDelete' => 0, 'isShow' => 1));
+        $hasil_matkul       = $query_matkul->result_array();
 		// SEMESTER
-        $semester = array(1,3,5,7,8);
+        // $semester           = array(1,3,5,7,8);
         // DOSEN
-		$dosen = array_combine(range(53, 82), range(61,90));
+		$dosen              = array_combine(range(53, 82), range(61,90));
 		// RUANGAN
-        $query_ruangan = $this->db->get_where('ruangan', array('isDelete' => 0, 'isShow' => 1, 'gedung_rg' => 'A'));
-        $hasil_ruangan = $query_ruangan->result_array();
+        $query_ruangan      = $this->db->get_where('ruangan', array('isDelete' => 0, 'isShow' => 1, 'gedung_rg' => 'A'));
+        $hasil_ruangan      = $query_ruangan->result_array();
 
         // $query_dosen = $this->db->get_where('ruangan', array('isDelete' => 0, 'isShow' => 1, 'gedung_rg' => 'A'));
 		// $new_arr['Waktu'] = array();
@@ -62,28 +63,37 @@ class Algo extends CI_Controller {
       //   	}
       //   	// $this->json_view($hasil_hari[$key]['id']);
       //   }
-        // RANDOM HARI
-        $rand_hari = array_rand($hasil_hari);
-        // RANDOM WAKTU
-        $rand_waktu = array_rand($hasil_waktu);
-        // RANDOM MATKUL
-        $rand_matkul = array_rand($matkul);
-        // RANDOM SEMESTER
-        $rand_semester = array_rand($semester);
-        // RANDOM DOSEN
-        $rand_dosen = array_rand($dosen);
-        // RANDOM RUANGAN
-        $rand_ruangan = array_rand($hasil_ruangan);
 
         // POPULASI/TARGET/KROMOSOM
-        $TARGET = array(
-        	"HARI"		=> array($hasil_hari[$rand_hari]),
-        	"WAKTU"		=> array($hasil_waktu[$rand_waktu]),
-        	"MATKUL" 	=> array($matkul[$rand_matkul]),
-        	"SEMESTER"	=> array($semester[$rand_semester]),
-        	"DOSEN"		=> array($dosen[$rand_dosen]),
-        	"RUANGAN"	=> array($hasil_ruangan[$rand_ruangan])
-        );
+        $TARGET = array();
+        for ($i=1; $i <= count($hasil_matkul); $i++) { 
+            // RANDOM HARI
+            $rand_hari = array_rand($hasil_hari);
+            // RANDOM WAKTU
+            $rand_waktu = array_rand($hasil_waktu);
+            // RANDOM MATKUL
+            $rand_matkul = array_rand($hasil_matkul);
+            // RANDOM SEMESTER
+            // $rand_semester = array_rand($semester);
+            // RANDOM DOSEN
+            $rand_dosen = array_rand($dosen);
+            // RANDOM RUANGAN
+            $rand_ruangan = array_rand($hasil_ruangan);
+
+            $arr = array(
+            "HARI"      => $hasil_hari[$rand_hari]['id'],
+            "JADWAL"    => array(
+                $i          => array(
+                    "WAKTU"     => $hasil_waktu[$rand_waktu],
+                    "MATKUL"    => $hasil_matkul[$rand_matkul],
+                    "SEMESTER"  => $hasil_matkul[$rand_matkul]['sks_mk'],
+                    // "DOSEN"     => $dosen[$rand_dosen],
+                    "RUANGAN"   => $hasil_ruangan[$rand_ruangan]
+                    )
+                )
+            );
+            $TARGET[] = $arr;
+        }
 
         $this->json_view($TARGET);
         // $this->json_view($hasil_hari);
