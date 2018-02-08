@@ -24,21 +24,62 @@ class Algo extends CI_Controller {
 	public function index()
 	{
 		$new_arr = array();
+        $tahun_ajaran = '2017/2018';
 
 		// HARI - WAKTU - MATA KULIAH - SEMESTER - DOSEN - RUANGAN
 		// HARI
         $query_hari         = $this->db->get_where('hari', array('isDelete' => 0, 'isShow' => 1));
         $hasil_hari         = $query_hari->result_array();
+
         // WAKTU
         $query_waktu        = $this->db->get_where('waktu', array('isDelete' => 0, 'isShow' => 1));
         $hasil_waktu        = $query_waktu->result_array();
+
         // MATKUL
-		$query_matkul       = $this->db->get_where('matakuliah', array('isDelete' => 0, 'isShow' => 1));
+        // GET MATKUL YANG TELAH DI AMBIL MAHASISWA
+        $query_matkul_ambil = $this->db->get_where('ambil_matakuliah', array('tahun_ajaran' => $tahun_ajaran,'isDelete' => 0, 'isShow' => 1));
+        $hasil_matkul_ambil = $query_matkul_ambil->result_array();
+
+        $matkul = array();
+        foreach ($hasil_matkul_ambil as $row) {
+            $new = explode(';', $row['kode_mk']);
+            foreach ($new as $value) {
+                if (array_key_exists($value, $matkul)) 
+                {
+                    $matkul[$value] = $matkul[$value] + 1;
+                }
+                else
+                {
+                    $matkul[$value] = 1;
+                }
+            }
+        }
+        // HAPUS MATKUL JIKA MAHASISWA KURANG DARI 5
+        foreach ($matkul as $key => $value) {
+            if ($value < 5) {
+                unset($matkul[$key]);
+            }
+        }
+        // AMBIL DETAIL MATKUL FIX
+        $this->db->where_in('kode_mk',array_keys($matkul));
+        $this->db->where('isDelete', 0);
+        $this->db->where('isShow', 1);
+        $query_matkul       = $this->db->get('matakuliah');
         $hasil_matkul       = $query_matkul->result_array();
+        // MEMASUKKAN JUMLAH PESERTA KE DALAM DETAIL MATKUL
+        foreach ($hasil_matkul as $key =>$value) {
+            foreach ($matkul as $key_mk => $value_mk) {
+                if ($key_mk == $value['kode_mk']) {
+                    $hasil_matkul[$key]['jumlah_mhs'] = $value_mk;
+                }
+            }
+        }
+
 		// SEMESTER
         // $semester           = array(1,3,5,7,8);
         // DOSEN
 		$dosen              = array_combine(range(53, 82), range(61,90));
+
 		// RUANGAN
         $query_ruangan      = $this->db->get_where('ruangan', array('isDelete' => 0, 'isShow' => 1, 'gedung_rg' => 'A'));
         $hasil_ruangan      = $query_ruangan->result_array();
@@ -65,10 +106,15 @@ class Algo extends CI_Controller {
       //   }
 
         // POPULASI/TARGET/KROMOSOM
+        $JADWAL = array();
+        // while (count($JADWAL) <= count($hasil_matkul)) {
+        //     break;
+        // }
         $TARGET = array();
+        // HARI
+        $TARGET = $hasil_hari;
         for ($i=1; $i <= count($hasil_matkul); $i++) { 
-            // RANDOM HARI
-            $rand_hari = array_rand($hasil_hari);
+            $rand = rand(0,5);
             // RANDOM WAKTU
             $rand_waktu = array_rand($hasil_waktu);
             // RANDOM MATKUL
@@ -81,22 +127,35 @@ class Algo extends CI_Controller {
             $rand_ruangan = array_rand($hasil_ruangan);
 
             $arr = array(
-            "HARI"      => $hasil_hari[$rand_hari]['id'],
-            "JADWAL"    => array(
-                $i          => array(
-                    "WAKTU"     => $hasil_waktu[$rand_waktu],
-                    "MATKUL"    => $hasil_matkul[$rand_matkul],
-                    "SEMESTER"  => $hasil_matkul[$rand_matkul]['sks_mk'],
-                    // "DOSEN"     => $dosen[$rand_dosen],
-                    "RUANGAN"   => $hasil_ruangan[$rand_ruangan]
-                    )
-                )
+                "WAKTU"     => $hasil_waktu[$rand_waktu]['waktu_aw'],
+                "WAKTU_ROLE"=> $hasil_waktu[$rand_waktu]['role'],
+                "MATKUL"    => $hasil_matkul[$rand_matkul]['kode_mk'],
+                "SEMESTER"  => $hasil_matkul[$rand_matkul]['sks_mk'],
+                // "DOSEN"     => $dosen[$rand_dosen],
+                "RUANGAN"   => $hasil_ruangan[$rand_ruangan]['kode_rg'],
+                "PESERTA"   => $hasil_matkul[$rand_matkul]['jumlah_mhs'],
+                "KAPASITAS_RUANGAN" => $hasil_ruangan[$rand_ruangan]['kapasitas_rg']
             );
-            $TARGET[] = $arr;
+
+            $TARGET[$rand]['JADWAL'][] = $arr;
+            // JIKA DALAM 1 HARI, 1 WAKTU SAMA 1 RUANGAN
+            // foreach ($TARGET[$rand]['JADWAL'] as $key => $value) {
+            //     if ($value['WAKTU'] == $arr['WAKTU']) {
+            //         # code...
+            //     }
+            // }
+            // if ($TARGET[$rand]['JADWAL'][]) {
+            //     # code...
+            // }
+
+            // foreach ($TARGET as $key => $value) {
+            //     $TARGET[$key]['JADWAL'] = $arr;
+            // }
+
         }
 
         $this->json_view($TARGET);
-        // $this->json_view($hasil_hari);
+        // $this->json_view($hasil_matkul_ambil);
 		exit();
 		$data['list_dosen'] = $this->dosen_model->get_data();
 
