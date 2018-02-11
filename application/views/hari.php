@@ -248,7 +248,7 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="time" class="form-control" name="del_nama_hari" />
+                                                                        <input type="text" class="form-control" name="del_nama_hari" disabled />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -509,7 +509,7 @@ jQuery(document).ready(function() {
     });
     $('#sample_2').on('click', '#delete_hr', function(){
         $.ajax({
-            url: "<?=base_url()?>waktu/get_hr", 
+            url: "<?=base_url()?>hari/get_hr", 
             type: "POST",
             dataType: "json",
             data: {id : $(this).data('val')},
@@ -525,7 +525,7 @@ jQuery(document).ready(function() {
                 // success4.show();
                 $('input[name="del_id_hari"]').val(data.id);
                 $('input[name="del_nama_hari"]').val(data.nama_hari);
-                $('#modal_delete_wk').modal('show');
+                $('#modal_delete_hr').modal('show');
                 // console.log(data);
             },
             complete: function(){

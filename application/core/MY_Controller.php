@@ -7,6 +7,9 @@ class MY_Controller extends CI_Controller {
     {
     	parent::__construct();
     	
+  //   	ini_set('max_execution_time', 0); 
+		// ini_set('memory_limit','2048M');
+    	
     }
     
 	public function get_role_user()

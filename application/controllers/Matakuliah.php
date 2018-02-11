@@ -42,7 +42,7 @@ class Matakuliah extends MY_Controller {
 		// print_r($_GET);
 		// print_r($_POST['nid']);
 		// json_encode($_POST);
-		$data['insert_matakuliah'] = $this->matakuliah_model->insert_data($_POST);
+		$data['insert_matakuliah'] = $this->matakuliah_model->insert_data();
 		echo $data['insert_matakuliah'];
 		exit();
 	}
@@ -65,7 +65,7 @@ class Matakuliah extends MY_Controller {
 
 	public function update_mk()
 	{
-		$data['update_mk'] = $this->matakuliah_model->update_mk($_POST);
+		$data['update_mk'] = $this->matakuliah_model->update_mk();
 		echo $data['update_mk'];
 		exit();
 	}

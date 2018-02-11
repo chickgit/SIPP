@@ -48,6 +48,9 @@
                                                 <th> Nama Mata Kuliah </th>
                                                 <th> SKS </th>
                                                 <th> Semester </th>
+                                                <th> Program Studi </th>
+                                                <th> Peminatan </th>
+                                                <th> Jenis Ruangan </th>
                                                 <th> Created Date </th>
                                                 <th> Created By </th>
                                                 <th> Modified Date </th>
@@ -66,6 +69,23 @@
                                                 <td> <?=$row->nama_mk?> </td>
                                                 <td> <?=$row->sks_mk?> </td>
                                                 <td> <?=$row->semester_mk?> </td>
+                                                <td> <?=$row->program_studi?> </td>
+                                                <td> <?php
+                                                $peminatan = Array(
+                                                  '0' => 'Umum',
+                                                  '1' => 'EIS',
+                                                  '2' => 'MM',
+                                                  '3' => 'JarKom',
+                                                  '4' => 'MobA',
+                                                );
+
+                                                $color_type = null;
+                                                if (array_key_exists($row->peminatan, $peminatan))
+                                                {
+                                                  echo $peminatan[$row->peminatan];
+                                                }
+                                                ?> </td>
+                                                <td> <?=$row->jenis_rg?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
                                                 <td> <?=$row->modified_date?> </td>
@@ -150,6 +170,36 @@
                                                                         <input type="text" class="form-control" name="restore_semester_mk" disabled/> </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Program Studi
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="restore_program_studi" disabled/> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Peminatan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="restore_peminatan" disabled/> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Jenis Ruangan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="restore_jenis_rg" disabled/> </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
@@ -219,6 +269,36 @@
                                                                         <input type="text" class="form-control" name="delete_semester_mk" disabled/> </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Program Studi
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="delete_program_studi" disabled/> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Peminatan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="delete_peminatan" disabled/> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Jenis Ruangan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="delete_jenis_rg" disabled/> </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
@@ -273,6 +353,9 @@ jQuery(document).ready(function() {
                 $('input[name="restore_nama_mk"]').val(data.nama_mk);
                 $('textarea[name="restore_sks_mk"]').val(data.sks_mk);
                 $('input[name="restore_semester_mk"]').val(data.semester_mk);
+                $('input[name="restore_program_studi"]').val(data.program_studi);
+                $('input[name="restore_peminatan"]').val(data.peminatan);
+                $('input[name="restore_jenis_rg"]').val(data.jenis_rg);
                 $('#modal_restore_mk').modal('show');
                 // console.log(data);
             },
@@ -338,6 +421,9 @@ jQuery(document).ready(function() {
                 $('input[name="delete_nama_mk"]').val(data.nama_mk);
                 $('textarea[name="delete_sks_mk"]').val(data.sks_mk);
                 $('input[name="delete_semester_mk"]').val(data.semester_mk);
+                $('input[name="delete_program_studi"]').val(data.program_studi);
+                $('input[name="delete_peminatan"]').val(data.peminatan);
+                $('input[name="delete_jenis_rg"]').val(data.jenis_rg);
                 $('#modal_delete_mk').modal('show');
                 // console.log(data);
             },

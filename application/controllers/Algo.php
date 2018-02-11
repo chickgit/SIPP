@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Algo extends CI_Controller {
+class Algo extends MY_Controller {
 
 	public function __construct()
     {
@@ -23,139 +23,177 @@ class Algo extends CI_Controller {
 
 	public function index()
 	{
-		$new_arr = array();
+		$jadwal = array();
         $tahun_ajaran = '2017/2018';
+        /*
+        UNTUK MELAKUKAN GENERATE JADWAL PERKULIAHAN SECARA OTOMATIS
+        1. HARI
+            # PENGAMBILAN DATA HARI DARI DB
+            */
+            $query_hari         = $this->db->get_where('hari', array('isDelete' => 0, 'isShow' => 1));
+            $hasil_hari         = $query_hari->result_array();
+            $jadwal             = $hasil_hari;
+        /*
+        2. WAKTU
+            # PENGAMBILAN DATA WAKTU DARI DB
+            */
+            $query_waktu        = $this->db->get_where('waktu', array('isDelete' => 0, 'isShow' => 1));
+            $hasil_waktu        = $query_waktu->result_array();
+            /*
+            # PENYEMATAN MASING-MASING WAKTU KE SETIAP HARI
+                HASIL DI INGINKAN : 
+                    SENIN
+                        08.00-10.30
+                        10.45-13.15
+                        13.30-16.00
+                        dst
+            */
+            foreach ($jadwal as $key_jadwal => $value_jadwal) {
+                $jadwal[$key_jadwal]['WAKTU'] = $hasil_waktu;
+            }
+        /*
+        3.RUANGAN
+            # PENGAMBILAN DATA RUANGAN DARI DB
+            */
+            $query_ruangan      = $this->db->get_where('ruangan', array('isDelete' => 0, 'isShow' => 1, 'gedung_rg' => 'A'));
+            $hasil_ruangan      = $query_ruangan->result_array();
+            /*
+            # PENYEMATAN MASING-MASING RUANGAN DI SETIAP WAKTU DI SETIAP HARI
+                HASIL DI INGINKAN : 
+                    SENIN
+                        08.00-10.30
+                            LR-1
+                            ...
+                            OCR-1
+                            ...
+                            IMAC
+                            CISCO
+                        10.45-13.15
+                            LR-1
+                            dst
+                        dst
+            */
+            foreach ($jadwal as $key_jadwal => $value_jadwal) {
+                foreach ($value_jadwal['WAKTU'] as $key_waktu => $value_waktu) {
+                    $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN'] = $hasil_ruangan;
+                }
+            }
+        /*
+        4. MATA KULIAH
+            # PENGAMBILAN DATA MATA KULIAH YANG DIAMBIL MAHASISWA
+            */
+            $query_matkul_ambil = $this->db->get_where('ambil_matakuliah', array('tahun_ajaran' => $tahun_ajaran,'isDelete' => 0, 'isShow' => 1));
+            $hasil_matkul_ambil = $query_matkul_ambil->result_array();
 
-		// HARI - WAKTU - MATA KULIAH - SEMESTER - DOSEN - RUANGAN
-		// HARI
-        $query_hari         = $this->db->get_where('hari', array('isDelete' => 0, 'isShow' => 1));
-        $hasil_hari         = $query_hari->result_array();
-
-        // WAKTU
-        $query_waktu        = $this->db->get_where('waktu', array('isDelete' => 0, 'isShow' => 1));
-        $hasil_waktu        = $query_waktu->result_array();
-
-        // MATKUL
-        // GET MATKUL YANG TELAH DI AMBIL MAHASISWA
-        $query_matkul_ambil = $this->db->get_where('ambil_matakuliah', array('tahun_ajaran' => $tahun_ajaran,'isDelete' => 0, 'isShow' => 1));
-        $hasil_matkul_ambil = $query_matkul_ambil->result_array();
-
-        $matkul = array();
-        foreach ($hasil_matkul_ambil as $row) {
-            $new = explode(';', $row['kode_mk']);
-            foreach ($new as $value) {
-                if (array_key_exists($value, $matkul)) 
+            /*
+            # MENJUMLAHKAN MAHASISWA YANG TELAH MENGAMBIL MATA KULIAH
+            */
+            $matkul = array();
+            foreach ($hasil_matkul_ambil as $row) {
+                $new = explode(';', $row['kode_mk']);
+                foreach ($new as $value) {
+                    if (array_key_exists($value, $matkul)) 
+                    {
+                        $matkul[$value] = $matkul[$value] + 1;
+                    }
+                    else
+                    {
+                        $matkul[$value] = 1;
+                    }
+                }
+            }
+            /*
+            # MEMBUANG MATA KULIAH YANG MEMILIKI MAHASISWA DI BAWAH 5
+            */
+            foreach ($matkul as $key => $value) {
+                if ($value < 5) {
+                    unset($matkul[$key]);
+                }
+            }
+            /*
+            # PENYATUAN DATA DETAIL MATA KULIAH DAN SISA MATA KULIAH YANG MEMILIKI PESERTA DIATAS 5 BERDASARKAN KODE_MK
+            */
+            $this->db->where_in('kode_mk',array_keys($matkul));
+            $this->db->where('isDelete', 0);
+            $this->db->where('isShow', 1);
+            $query_matkul       = $this->db->get('matakuliah');
+            $hasil_matkul       = $query_matkul->result_array();
+            /*
+            # MEMASUKKAN JUMLAH MAHASISWA KE DALAM DATA MATA KULIAH
+            */
+            foreach ($hasil_matkul as $key =>$value) {
+                foreach ($matkul as $key_mk => $value_mk) {
+                    if ($key_mk == $value['kode_mk']) {
+                        $hasil_matkul[$key]['JUMLAH_MHS'] = $value_mk;
+                    }
+                }
+            }
+            /*
+            # PENYEMATAN MASING-MASING MATA KULIAH SECARA RANDOM KE DALAM SETIAP HARI DI SETIAP WAKTU DI SETIAP RUANGAN DENGAN SYARAT:
+                + MASING-MASING RUANGAN HANYA MEMILIKI 1 MATA KULIAH (done)
+                + 1 MATA KULIAH HANYA 1X PERTEMUAN (KECUALI EXTENSI) PER PEKAN
+                + 1 WAKTU TIDAK BOLEH MEMILIKI BEBERAPA MATA KULIAH DI SETIAP RUANGAN DENGAN SEMESTER YANG SAMA
+                    E.G : 08.00-10.30
+                            LR-1
+                                MATKUL A SMSTR 1
+                            LR-2
+                                MATKUL B SMSTR 1 (TIDAK BOLEH, KARENA MEMILIKI SEMESTER YANG SAMA)
+                         SEHARUSNYA
+                         08.00-10.30
+                            LR-1
+                                MATKUL A SMSTR 1
+                         10.45-13.15
+                            LR-2
+                                MATKUL B SMSTR 1 (TIDAK BOLEH, KARENA MEMILIKI SEMESTER YANG SAMA)
+            */
+            while (!empty($hasil_matkul)) 
+            {
+                # code...
+                foreach ($jadwal as $key_jadwal => $value_jadwal) 
                 {
-                    $matkul[$value] = $matkul[$value] + 1;
-                }
-                else
-                {
-                    $matkul[$value] = 1;
+                    $rand_index_jadwal = array_rand($jadwal);
+                    if ($rand_index_jadwal == $key_jadwal) 
+                    {
+                        foreach ($value_jadwal['WAKTU'] as $key_waktu => $value_waktu) 
+                        {
+                            $rand_index_waktu = array_rand($jadwal[$key_jadwal]['WAKTU']);
+                            if ($rand_index_waktu == $key_waktu) 
+                            {
+                                foreach ($value_waktu['RUANGAN'] as $key_ruangan => $value_ruangan) 
+                                {
+                                    $rand_index_ruangan = array_rand($jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN']);
+                                    $rand_index_matkul = array_rand($hasil_matkul);
+                                    // print_r($hasil_matkul[$rand_index_matkul]['JUMLAH_MHS']);
+                                    // exit();
+                                    if (($rand_index_ruangan == $key_ruangan) && (array_key_exists($rand_index_matkul, $hasil_matkul))) 
+                                    {
+                                        $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN'][$key_ruangan]['MATKUL'] = $hasil_matkul[$rand_index_matkul];
+                                        unset($hasil_matkul[$rand_index_matkul]);
+                                    }
+                                    // else
+                                    // {
+                                    //     break;
+                                    // }
+                                }
+                            }
+                            // else
+                            // {
+                            //     break;
+                            // }
+                        }
+                    }
+                    // else
+                    // {
+                    //     break;
+                    // }
                 }
             }
-        }
-        // HAPUS MATKUL JIKA MAHASISWA KURANG DARI 5
-        foreach ($matkul as $key => $value) {
-            if ($value < 5) {
-                unset($matkul[$key]);
-            }
-        }
-        // AMBIL DETAIL MATKUL FIX
-        $this->db->where_in('kode_mk',array_keys($matkul));
-        $this->db->where('isDelete', 0);
-        $this->db->where('isShow', 1);
-        $query_matkul       = $this->db->get('matakuliah');
-        $hasil_matkul       = $query_matkul->result_array();
-        // MEMASUKKAN JUMLAH PESERTA KE DALAM DETAIL MATKUL
-        foreach ($hasil_matkul as $key =>$value) {
-            foreach ($matkul as $key_mk => $value_mk) {
-                if ($key_mk == $value['kode_mk']) {
-                    $hasil_matkul[$key]['jumlah_mhs'] = $value_mk;
-                }
-            }
-        }
-
-		// SEMESTER
-        // $semester           = array(1,3,5,7,8);
-        // DOSEN
-		$dosen              = array_combine(range(53, 82), range(61,90));
-
-		// RUANGAN
-        $query_ruangan      = $this->db->get_where('ruangan', array('isDelete' => 0, 'isShow' => 1, 'gedung_rg' => 'A'));
-        $hasil_ruangan      = $query_ruangan->result_array();
-
-        // $query_dosen = $this->db->get_where('ruangan', array('isDelete' => 0, 'isShow' => 1, 'gedung_rg' => 'A'));
-		// $new_arr['Waktu'] = array();
-
-        // $query_waktu = $this->db->get_where('waktu', array('isDelete' => 0, 'isShow' => 1));
-
-
-      //   foreach ($hasil_hari as $key_hari => $value_hari) {
-      //   	$arr1 = array(
-    		// 	"Hari" => $value_hari['nama_hari']
-    		// );
-      //   	array_push($new_arr, $arr1);
-      //   	$new_arr[$key_hari]['Kode_Waktu'] = array();
-      //   	foreach ($hasil_waktu as $key => $value) {
-      //   		$arr2 = array(
-      //   			"Kode_Waktu" => $value['kode_wk']
-      //   		);
-      //   		array_push($new_arr[$key_hari]['Kode_Waktu'], $value['kode_wk']);
-      //   	}
-      //   	// $this->json_view($hasil_hari[$key]['id']);
-      //   }
-
-        // POPULASI/TARGET/KROMOSOM
-        $JADWAL = array();
-        // while (count($JADWAL) <= count($hasil_matkul)) {
-        //     break;
-        // }
-        $TARGET = array();
-        // HARI
-        $TARGET = $hasil_hari;
-        for ($i=1; $i <= count($hasil_matkul); $i++) { 
-            $rand = rand(0,5);
-            // RANDOM WAKTU
-            $rand_waktu = array_rand($hasil_waktu);
-            // RANDOM MATKUL
-            $rand_matkul = array_rand($hasil_matkul);
-            // RANDOM SEMESTER
-            // $rand_semester = array_rand($semester);
-            // RANDOM DOSEN
-            $rand_dosen = array_rand($dosen);
-            // RANDOM RUANGAN
-            $rand_ruangan = array_rand($hasil_ruangan);
-
-            $arr = array(
-                "WAKTU"     => $hasil_waktu[$rand_waktu]['waktu_aw'],
-                "WAKTU_ROLE"=> $hasil_waktu[$rand_waktu]['role'],
-                "MATKUL"    => $hasil_matkul[$rand_matkul]['kode_mk'],
-                "SEMESTER"  => $hasil_matkul[$rand_matkul]['sks_mk'],
-                // "DOSEN"     => $dosen[$rand_dosen],
-                "RUANGAN"   => $hasil_ruangan[$rand_ruangan]['kode_rg'],
-                "PESERTA"   => $hasil_matkul[$rand_matkul]['jumlah_mhs'],
-                "KAPASITAS_RUANGAN" => $hasil_ruangan[$rand_ruangan]['kapasitas_rg']
-            );
-
-            $TARGET[$rand]['JADWAL'][] = $arr;
-            // JIKA DALAM 1 HARI, 1 WAKTU SAMA 1 RUANGAN
-            // foreach ($TARGET[$rand]['JADWAL'] as $key => $value) {
-            //     if ($value['WAKTU'] == $arr['WAKTU']) {
-            //         # code...
-            //     }
-            // }
-            // if ($TARGET[$rand]['JADWAL'][]) {
-            //     # code...
-            // }
-
-            // foreach ($TARGET as $key => $value) {
-            //     $TARGET[$key]['JADWAL'] = $arr;
-            // }
-
-        }
-
-        $this->json_view($TARGET);
-        // $this->json_view($hasil_matkul_ambil);
+        /*
+        SELESAI
+        */
+        $this->json_view($jadwal);
+        // $this->json_view(count($hasil_matkul));
+        // $this->json_view($hasil_matkul[array_rand($hasil_matkul,1)]);
 		exit();
 		$data['list_dosen'] = $this->dosen_model->get_data();
 

@@ -74,6 +74,7 @@
                                                 <th> Semester </th>
                                                 <th> Program Studi </th>
                                                 <th> Peminatan </th>
+                                                <th> Jenis Ruangan </th>
                                                 <th> Created Date </th>
                                                 <th> Created By </th>
                                                 <th> Modified Date </th>
@@ -108,6 +109,7 @@
                                                   echo $peminatan[$row->peminatan];
                                                 }
                                                 ?> </td>
+                                                <td> <?=$row->jenis_rg?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
                                                 <td> <?=$row->modified_date?> </td>
@@ -226,6 +228,23 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Jenis Ruangan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <select name="jenis_rg" class="form-control">
+                                                                            <option value="pilih">Pilih Jenis</option>
+                                                                            <option value="CISCO">CISCO</option>
+                                                                            <option value="OCR">OCR</option>
+                                                                            <option value="LR">LR</option>
+                                                                            <option value="IMAC">IMAC</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
@@ -331,6 +350,23 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Jenis Ruangan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <select name="upd_jenis_rg" class="form-control">
+                                                                            <option value="pilih">Pilih Jenis</option>
+                                                                            <option value="CISCO">CISCO</option>
+                                                                            <option value="OCR">OCR</option>
+                                                                            <option value="LR">LR</option>
+                                                                            <option value="IMAC">IMAC</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
@@ -422,6 +458,17 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Jenis Ruangan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" name="del_jenis_rg" class="form-control" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
@@ -494,6 +541,9 @@ jQuery(document).ready(function() {
                 },
                 peminatan: {
                     valueNotEquals :"pilih"
+                },
+                jenis_rg: {
+                    valueNotEquals :"pilih"
                 }
             },
             messages: {
@@ -522,6 +572,9 @@ jQuery(document).ready(function() {
                 },
                 peminatan: {
                     valueNotEquals    :"Pilih Peminatan",
+                },
+                jenis_rg: {
+                    valueNotEquals    :"Pilih Jenis Ruangan",
                 }
             },
 
@@ -623,6 +676,7 @@ jQuery(document).ready(function() {
                 $('input[name="upd_semester_mk"]').val(data.semester_mk);
                 $('select[name="upd_program_studi"]').val(data.program_studi);
                 $('select[name="upd_peminatan"]').val(data.peminatan);
+                $('select[name="upd_jenis_rg"]').val(data.jenis_rg);
                 $('#modal_update_mk').modal('show');
                 // console.log(data);
             },
@@ -661,6 +715,9 @@ jQuery(document).ready(function() {
                 },
                 upd_peminatan: {
                     valueNotEquals :"pilih"
+                },
+                upd_jenis_rg: {
+                    valueNotEquals :"pilih"
                 }
             },
             messages: {
@@ -684,6 +741,9 @@ jQuery(document).ready(function() {
                 },
                 upd_peminatan: {
                     valueNotEquals    :"Pilih Peminatan",
+                },
+                upd_jenis_rg: {
+                    valueNotEquals :"Pilih Jenis Ruangan"
                 }
             },
 
@@ -781,6 +841,7 @@ jQuery(document).ready(function() {
                 $('input[name="del_semester_mk"]').val(data.semester_mk);
                 $('input[name="del_program_studi"]').val(data.program_studi);
                 $('input[name="del_peminatan"]').val(data.peminatan);
+                $('input[name="del_jenis_rg"]').val(data.jenis_rg);
                 $('#modal_delete_mk').modal('show');
                 // console.log(data);
             },

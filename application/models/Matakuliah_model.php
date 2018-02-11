@@ -25,10 +25,18 @@ class MataKuliah_model extends CI_Model {
         return $query->row();
     }
 
-    public function insert_data($arr = array())
+    public function insert_data()
     {
-        $sql = ("INSERT INTO matakuliah(kode_mk, nama_mk, sks_mk, semester_mk, program_studi, peminatan) VALUES (?, ?, ?, ?, ?, ?)");
-        $this->db->query($sql, array($arr['kode_mk'],$arr['nama_mk'],$arr['sks_mk'],$arr['semester_mk'],$arr['program_studi'],$arr['peminatan']));
+        $data = array(
+            "kode_mk"       => $this->input->post('kode_mk'),
+            "nama_mk"       => $this->input->post('nama_mk'),
+            "sks_mk"        => $this->input->post('sks_mk'),
+            "semester_mk"   => $this->input->post('semester_mk'),
+            "program_studi" => $this->input->post('program_studi'),
+            "peminatan"     => $this->input->post('peminatan'),
+            "jenis_rg"      => $this->input->post('jenis_rg')
+        );
+        $this->db->insert('matakuliah', $data);
         echo "OK";
     }
 
@@ -38,10 +46,20 @@ class MataKuliah_model extends CI_Model {
         return $query->row();
     }
 
-    public function update_mk($arr = array())
+    public function update_mk()
     {
-        $sql = ("UPDATE matakuliah SET nama_mk = ?, sks_mk = ?, semester_mk = ?, program_studi = ?, peminatan = ?, modified_date = ?, modified_by = ? WHERE kode_mk = ?");
-        $this->db->query($sql, array($arr['upd_nama_mk'],$arr['upd_sks_mk'],$arr['upd_semester_mk'],$arr['upd_program_studi'],$arr['upd_peminatan'],date('Y-m-d H:i:s'),$this->session_username(),$arr['upd_kode_mk']));
+        $data = array(
+            "nama_mk"       => $this->input->post('upd_nama_mk'),
+            "sks_mk"        => $this->input->post('upd_sks_mk'),
+            "semester_mk"   => $this->input->post('upd_semester_mk'),
+            "program_studi" => $this->input->post('upd_program_studi'),
+            "peminatan"     => $this->input->post('upd_peminatan'),
+            "jenis_rg"      => $this->input->post('upd_jenis_rg'),
+            "modified_date" => date('Y-m-d H:i:s'),
+            "modified_by"   => $this->session_username()
+        );
+        $this->db->where("kode_mk", $this->input->post('upd_kode_mk'));
+        $this->db->update('matakuliah', $data);
         echo "OK";
     }
 
