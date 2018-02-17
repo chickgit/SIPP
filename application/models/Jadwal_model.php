@@ -5,6 +5,8 @@ class Jadwal_model extends CI_Model {
     {
         parent::__construct();
         $this->load->database();
+
+        $this->load->library('algo');
         // Your own constructor code
     }
 
@@ -13,9 +15,81 @@ class Jadwal_model extends CI_Model {
         return $this->session->userdata('Login')['username'];
     }
 
-    public function get_data()
+    public function generate_jadwal()
     {
-        $query = $this->db->get_where('matakuliah', array('isDelete' => 0, 'isShow' => 1));
+        $query = $this->db->get('buka_tahun_ajaran');
+        $row_ta = $query->row();
+
+        $query = $this->db->get_where('jadwal_temp', array('tahun_ajaran' => $row_ta->tahun_ajaran));
+        $rows = $query->num_rows();
+
+        // var_dump($this->input->post());
+        // exit();
+        
+        if ($this->input->post('data') == 'NEW') 
+        {
+            // NOTHING TO DO
+        }
+        elseif ($this->input->post('data') == 'ULANG') 
+        {
+            // BERSIHKAN TABEL
+            $this->db->truncate('jadwal_temp');
+        }
+        // INSERT DATA BARU
+        $jadwal = $this->algo->generate_jadwal($row_ta->tahun_ajaran);
+        $peminatan = Array(
+          '0' => 'Umum',
+          '1' => 'EIS',
+          '2' => 'MM',
+          '3' => 'JarKom',
+          '4' => 'MobA',
+        );
+        foreach ($jadwal as $key_hr => $value_hr) {
+            foreach ($value_hr['WAKTU'] as $key_wk => $value_wk) {
+                foreach ($value_wk['RUANGAN'] as $key_rg => $value_rg) {
+                    # code...
+                    $a = isset($value_rg['MATKUL']) ? $value_rg['MATKUL']['program_studi'] : NULL;
+                    if (isset($value_rg['MATKUL']) && array_key_exists($value_rg['MATKUL']['peminatan'], $peminatan)) {
+                        $b = $peminatan[$value_rg['MATKUL']['peminatan']];
+                    }
+                    else
+                    {
+                        $b = NULL;
+                    }
+                    $peserta = $a.' | '.$b;
+                    $data = array(
+                        "tahun_ajaran"  => $row_ta->tahun_ajaran,
+                        "id_hari"       => $value_hr['id'],
+                        "kode_wk"       => $value_wk['kode_wk'],
+                        "kode_rg"       => $value_rg['kode_rg'],
+                        "kode_mk"       => isset($value_rg['MATKUL']) ? $value_rg['MATKUL']['kode_mk'] : NULL,
+                        "nid"           => isset($value_rg['DOSEN']) ? $value_rg['DOSEN']['nid'] : NULL,
+                        "peserta"       => $peserta
+                    );
+                    $this->db->insert('jadwal_temp', $data);
+                }
+            }
+        }
+
+        $query = $this->db->get('jadwal_temp');
+        return $query->result_array();
+    }
+
+    public function get_data_temp()
+    {
+        $query = $this->db->select('jadwal_temp.tahun_ajaran, jadwal_temp.peserta,
+            hari.id, hari.nama_hari, 
+            waktu.kode_wk, waktu.waktu_aw, waktu.waktu_ak, 
+            ruangan.kode_rg, 
+            matakuliah.kode_mk, matakuliah.nama_mk, matakuliah.sks_mk, matakuliah.semester_mk, matakuliah.program_studi, matakuliah.peminatan,
+            dosen.nid, dosen.nama')
+                        ->from('jadwal_temp')
+                        ->join('hari', 'hari.id = jadwal_temp.id_hari', 'left')
+                        ->join('waktu', 'waktu.kode_wk = jadwal_temp.kode_wk', 'left')
+                        ->join('ruangan', 'ruangan.kode_rg = jadwal_temp.kode_rg', 'left')
+                        ->join('matakuliah', 'matakuliah.kode_mk = jadwal_temp.kode_mk', 'left')
+                        ->join('dosen', 'dosen.nid = jadwal_temp.nid', 'left')
+                        ->get();
     	return $query->result();
     }
 

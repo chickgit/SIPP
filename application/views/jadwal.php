@@ -59,8 +59,8 @@
                                         <span class="caption-subject font-green sbold uppercase">Data Jadwal</span>
                                     </div>
                                     <div class="actions">
-                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" href="#modal_new_mk" title="Tambah Mata Kuliah" id="tambah_mk">
-                                            <i class="fa fa-plus"></i>
+                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Generate Jadwal" id="generate">
+                                            <i class="fa fa-random"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -85,47 +85,30 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                            foreach ($jp as $key_a => $value_a) {
-                                                foreach ($value_a['WAKTU'] as $key_b => $value_b) {
-                                                    foreach ($value_b['RUANGAN'] as $key_c => $value_c) {
-                                                        ?>
-                                                        <tr class="odd gradeX">
-                                                            <td> <?=$value_a['nama_hari']?> </td>
-                                                            <td> <?=$value_c['MATKUL']['nama_mk']?> </td>
-                                                            <td> <?=$value_c['MATKUL']['sks_mk']?> </td>
-                                                            <td> <?=$value_c['MATKUL']['semester_mk']?> </td>
-                                                            <td> <?=date('H:i', strtotime($value_b['waktu_aw']))?> - <?=date('H:i', strtotime($value_b['waktu_ak']))?> </td>
-                                                            <td> Dosen </td>
-                                                            <td> <?=$value_c['kode_rg']?> </td>
-                                                            <?php
-                                                            $peminatan = Array(
-                                                              '0' => 'Umum',
-                                                              '1' => 'EIS',
-                                                              '2' => 'MM',
-                                                              '3' => 'JarKom',
-                                                              '4' => 'MobA',
-                                                            );
-                                                            ?>
-                                                            <td> <?=$value_c['MATKUL']['program_studi']?> | <?php 
-                                                            if (array_key_exists($value_c['MATKUL']['peminatan'], $peminatan)) {
-                                                                echo $peminatan[$value_c['MATKUL']['peminatan']];
-                                                            }
-                                                            ?> </td>
-                                                        </tr>
-                                                        <?php
-                                                    }
-                                                }
+                                            foreach ($list_jw as $row) {
+                                                ?>
+                                                <tr class="odd gradeX">
+                                                    <td> <?=$row->nama_hari?> </td>
+                                                    <td> <?=$row->nama_mk?> </td>
+                                                    <td> <?=$row->sks_mk?> </td>
+                                                    <td> <?=$row->semester_mk?> </td>
+                                                    <td> <?php echo date('H:i', strtotime($row->waktu_aw)).' - '.date('H:i', strtotime($row->waktu_ak)); ?> </td>
+                                                    <td> <?=$row->nama?> </td>
+                                                    <td> <?=$row->kode_rg?> </td>
+                                                    <td> <?=$row->peserta?> </td>
+                                                </tr>
+                                                <?php
                                             }
                                             ?>
                                         </tbody>
                                     </table>
-                                    <!-- MODAL INSERT -->
+                                    <!-- MODAL VALIDASI GENERATE -->
                                     <div class="modal fade " id="modal_new_mk" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog " id="modal_dialog_new_mk"> 
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Tambah Mata Kuliah</h4>
+                                                    <h4 class="modal-title">GENERATE MATA</h4>
                                                 </div>
                                                 <form id="form_tambah_mk" class="form-horizontal">
                                                     <div class="modal-body"> 
@@ -361,101 +344,28 @@
                                         </div>
                                         <!-- /.modal-dialog -->
                                     </div>
-                                    <!-- MODAL DELETE -->
-                                    <div class="modal fade " id="modal_delete_mk" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <!-- MODAL VALIDASI GENERATE -->
+                                    <div class="modal fade " id="modal_generate" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog " id="modal_dialog_delete_mk"> 
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Hapus Mata Kuliah</h4>
+                                                    <h4 class="modal-title">Generate Jadwal</h4>
                                                 </div>
-                                                <form id="form_delete_mk" class="form-horizontal">
+                                                <form id="form_generate" class="form-horizontal">
                                                     <div class="modal-body"> 
                                                         <!-- BEGIN FORM-->
                                                         <div class="form-body">
                                                             <div class="alert alert-danger alert-danger-delete">
-                                                                Anda yakin ingin menghapus ? </div>
-                                                            <div class="form-group ">
-                                                                <label class="control-label col-md-4">Kode Mata Kuliah
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="del_kode_mk" disabled/> 
-                                                                        <input type="hidden" name="del_kode_mk">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Nama Mata Kuliah
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="del_nama_mk" disabled/> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">SKS
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="number" class="form-control" name="del_sks_mk" min="1" disabled/> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Semester
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="number" class="form-control" name="del_semester_mk" min="1" max="8" disabled/> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Program Studi
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" name="del_program_studi" class="form-control" disabled>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Peminatan
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" name="del_peminatan" class="form-control" disabled>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Jenis Ruangan
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" name="del_jenis_rg" class="form-control" disabled>
-                                                                    </div>
-                                                                </div>
+                                                                Anda yakin ingin meng-generate ulang jadwal ? 
                                                             </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
-                                                        <button type="submit" class="btn green">Hapus</button>
+                                                        <input type="hidden" name="data" value="ULANG">
+                                                        <button type="submit" class="btn green">Generate</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -479,149 +389,155 @@
 <script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
+    var JADWAL = "<?=count($list_jw)?>";
     // add the rule here
  $.validator.addMethod("valueNotEquals", function(value, element, arg){
   return arg !== value;
  }, "Value must not equal arg.");
 
-    $('#tambah_mk').on('click', function(){
-        //console.log('clicked');
+console.log(JADWAL);
+    $('#generate').on('click', function(){
+        if (JADWAL > 0) 
+        {
+            $('#modal_generate').modal('show');
+            var form = $('#form_generate');
+            form.validate({
+                submitHandler: function (form) {
+                    $.ajax({
+                        url: "<?=base_url()?>jadwal/generate", 
+                        type: "POST",             
+                        // data: {data : "ULANG"},
+                        data: $(form).serialize(),
+                        cache: false,             
+                        processData: false,      
+                        beforeSend: function(){
+                            App.blockUI({
+                                // target: '#form_tambah_dosen',
+                                // overlayColor: 'none',
+                                // animate: true,
+                                zIndex: 20000,
+                            });
+                        },
+                        success: function(data) {
+                            // success4.show();
+                            location.reload();
+                            console.log(data);
+                        },
+                        complete: function(){
+                            App.unblockUI();
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert(xhr.status);
+                            alert(thrownError);
+                        }
+                    });
+                }
+            });
+        }
+        else
+        {
+            $.ajax({
+                url: "<?=base_url()?>jadwal/generate", 
+                type: "POST",             
+                data: {data : 'NEW'},
+                cache: false,             
+                processData: false,      
+                beforeSend: function(){
+                    App.blockUI({
+                        // target: '#form_tambah_dosen',
+                        // overlayColor: 'none',
+                        // animate: true,
+                        zIndex: 20000,
+                    });
+                },
+                success: function(data) {
+                    // success4.show();
+                    location.reload();
+                    console.log(data);
+                },
+                complete: function(){
+                    App.unblockUI();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
+        }
         // validation using icons
-        var form4 = $('#form_tambah_mk');
-        var error4 = $('.alert-danger', form4);
-        var success4 = $('.alert-success', form4);
+        // var form4 = $('#form_tambah_mk');
+        // var error4 = $('.alert-danger', form4);
+        // var success4 = $('.alert-success', form4);
 
-        form4.validate({
-            errorElement: 'span', //default input error message container
-            errorClass: 'help-block help-block-error', // default input error message class
-            focusInvalid: false, // do not focus the last invalid input
-            ignore: "",  // validate all fields including form hidden input
-            rules: {
-                kode_mk: {
-                    required    : true,
-                    remote      : "<?=base_url()?>matakuliah/check_kode_mk",
-                    maxlength   : 8
-                },
-                nama_mk: {
-                    required    : true,
-                    maxlength   : 100,
-                },
-                sks_mk: {
-                    required    : true,
-                    digits      : true,
-                    minlength   : 1
-                },
-                semester_mk: {
-                    required    : true,
-                    digits      : true,
-                    minlength   : 1,
-                    maxlength   : 8
-                },
-                program_studi: {
-                    valueNotEquals :"pilih"
-                },
-                peminatan: {
-                    valueNotEquals :"pilih"
-                },
-                jenis_rg: {
-                    valueNotEquals :"pilih"
-                }
-            },
-            messages: {
-                kode_mk: {
-                    required    : "Kode mata kuliah harus di isi",
-                    remote      : "Kode mata kuliah sudah terpakai",
-                    maxlength   : "Kode mata kuliah maksimal 8 karakter "
-                },
-                nama_mk: {
-                    required    : "Nama mata kuliah harus di isi",
-                    maxlength   : "Harap isi tidak lebih dari 100 karakter",
-                },
-                sks_mk: {
-                    required    : "SKS harus di isi",
-                    digits      : "Hanya angka yang dibolehkan",
-                    minlength   : "Harap isi minimal 1 digit",
-                },
-                semester_mk: {
-                    required    : "Semester harus di isi",
-                    digits      : "Hanya angka yang dibolehkan",
-                    minlength   : "Harap isi minimal 1 digit",
-                    maxlength   : "Harap isi maksimal 8 digit"
-                },
-                program_studi: {
-                    valueNotEquals    :"Pilih Program Studi",
-                },
-                peminatan: {
-                    valueNotEquals    :"Pilih Peminatan",
-                },
-                jenis_rg: {
-                    valueNotEquals    :"Pilih Jenis Ruangan",
-                }
-            },
+        // form4.validate({
+        //     errorElement: 'span', //default input error message container
+        //     errorClass: 'help-block help-block-error', // default input error message class
+        //     focusInvalid: false, // do not focus the last invalid input
+        //     ignore: "",  // validate all fields including form hidden input
 
-            invalidHandler: function (event, validator) { //display error alert on form submit              
-                success4.hide();
-                error4.show();
-                App.scrollTo(error4, -200);
-            },
+        //     invalidHandler: function (event, validator) { //display error alert on form submit              
+        //         success4.hide();
+        //         error4.show();
+        //         App.scrollTo(error4, -200);
+        //     },
 
-            errorPlacement: function (error, element) { // render error placement for each input type
-                var icon = $(element).parent('.input-icon').children('i');
-                icon.removeClass('fa-check').addClass("fa-warning");  
-                icon.attr("data-original-title", error.text()).tooltip();
-            },
+        //     errorPlacement: function (error, element) { // render error placement for each input type
+        //         var icon = $(element).parent('.input-icon').children('i');
+        //         icon.removeClass('fa-check').addClass("fa-warning");  
+        //         icon.attr("data-original-title", error.text()).tooltip();
+        //     },
 
-            highlight: function (element) { // hightlight error inputs
-                $(element)
-                    .closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
-            },
+        //     highlight: function (element) { // hightlight error inputs
+        //         $(element)
+        //             .closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
+        //     },
 
-            unhighlight: function (element) { // revert the change done by hightlight
+        //     unhighlight: function (element) { // revert the change done by hightlight
                 
-            },
+        //     },
 
-            success: function (label, element) {
-                var icon = $(element).parent('.input-icon').children('i');
-                $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
-                icon.removeClass("fa-warning").addClass("fa-check");
-            },
+        //     success: function (label, element) {
+        //         var icon = $(element).parent('.input-icon').children('i');
+        //         $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+        //         icon.removeClass("fa-warning").addClass("fa-check");
+        //     },
 
-            submitHandler: function (form) {
-                error4.hide();
-                // console.log($(form).serialize());
-                $.ajax({
-                    url: "<?=base_url()?>matakuliah/insert_matakuliah", 
-                    type: "POST",             
-                    data: $(form).serialize(),
-                    cache: false,             
-                    processData: false,      
-                    beforeSend: function(){
-                        App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
-                            zIndex: 20000,
-                        });
-                    },
-                    success: function(data) {
-                        success4.show();
-                        location.reload();
-                        // console.log(data);
-                    },
-                    complete: function(){
-                        App.unblockUI();
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        alert(xhr.status);
-                        alert(thrownError);
-                    }
-                });
-                return false;
-                // success4.show();
-                // error4.hide();
-                //form.submit(); // submit the form
-            }
-        });
+        //     submitHandler: function (form) {
+        //         error4.hide();
+        //         // console.log($(form).serialize());
+        //         $.ajax({
+        //             url: "<?=base_url()?>matakuliah/insert_matakuliah", 
+        //             type: "POST",             
+        //             data: $(form).serialize(),
+        //             cache: false,             
+        //             processData: false,      
+        //             beforeSend: function(){
+        //                 App.blockUI({
+        //                     // target: '#form_tambah_dosen',
+        //                     // overlayColor: 'none',
+        //                     // animate: true,
+        //                     zIndex: 20000,
+        //                 });
+        //             },
+        //             success: function(data) {
+        //                 success4.show();
+        //                 location.reload();
+        //                 // console.log(data);
+        //             },
+        //             complete: function(){
+        //                 App.unblockUI();
+        //             },
+        //             error: function (xhr, ajaxOptions, thrownError) {
+        //                 alert(xhr.status);
+        //                 alert(thrownError);
+        //             }
+        //         });
+        //         return false;
+        //         // success4.show();
+        //         // error4.hide();
+        //         //form.submit(); // submit the form
+        //     }
+        // });
     });
     $('#modal_new_mk').on('hidden.bs.modal', function (e) {
         console.log('modal hide');

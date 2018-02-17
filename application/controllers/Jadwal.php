@@ -17,11 +17,11 @@ class Jadwal extends MY_Controller {
     }
 	public function index()
 	{
-		$data['jp'] = $this->algo->generate_jadwal();
-		print_r(json_encode($data['jp']));
-		exit();
+		// $data['jp'] = $this->algo->generate_jadwal('2017/2018');
+		// print_r(json_encode($data['jp']));
+		// exit();
 
-		$data['list_jw'] = $this->jadwal_model->get_data();
+		$data['list_jw'] = $this->jadwal_model->get_data_temp();
 
 		$data['role'] = $this->get_role_user();
 
@@ -40,6 +40,13 @@ class Jadwal extends MY_Controller {
 
 		$this->load->view('jadwal',$data);
 		
+	}
+
+	public function generate()
+	{
+		$data['jp'] = $this->jadwal_model->generate_jadwal();
+		echo json_encode($data['jp']);
+		// echo json_encode($this->input->post('data'));
 	}
 
 	public function insert_matakuliah()

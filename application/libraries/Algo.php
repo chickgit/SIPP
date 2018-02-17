@@ -23,10 +23,10 @@ class Algo{
     	print_r(json_encode($arr));
     }
 
-	public function generate_jadwal()
+	public function generate_jadwal($tahun_ajaran)
 	{
 		$jadwal = array();
-        $tahun_ajaran = '2017/2018';
+        $tahun_ajaran = $tahun_ajaran;
         /*
         UNTUK MELAKUKAN GENERATE JADWAL PERKULIAHAN SECARA OTOMATIS
         1. HARI
@@ -156,84 +156,139 @@ class Algo{
             $z = 0;
             while (!empty($hasil_matkul)) #1
             {
-                # code...
-                foreach ($jadwal as $key_jadwal => $value_jadwal) #2 => 3
+                # V1
+                // foreach ($jadwal as $key_jadwal => $value_jadwal) #2 => 3
+                // {
+                //     /*
+                //     VALIDASI : JIKA INDEX JADWAL == RANDOM INDEX JADWAL
+                //     */
+                //     $rand_index_jadwal = array_rand($jadwal);
+                //     if ($rand_index_jadwal == $key_jadwal) 
+                //     {
+                //         foreach ($value_jadwal['WAKTU'] as $key_waktu => $value_waktu) #3 => 2
+                //         {
+                //             $rand_index_waktu = array_rand($jadwal[$key_jadwal]['WAKTU']);
+                //             /*
+                //             VALIDASI : 
+                //             1. JIKA INDEX WAKTU == RANDOM INDEX WAKTU
+                //             2. [TIDAK BOLEH ADA MATKUL MEMILIKI SEMESTER SAMA DALAM 1 WAKTU - SUDAH]
+                //             */
+                //             if ($rand_index_waktu == $key_waktu) 
+                //             {
+                //                 foreach ($value_waktu['RUANGAN'] as $key_ruangan => $value_ruangan) #4 => 1
+                //                 {
+                //                     $rand_index_ruangan = array_rand($jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN']);
+                //                     $rand_index_matkul = array_rand($hasil_matkul);
+                //                     /*
+                //                     VALIDASI : TIDAK BOLEH ADA MATKUL MEMILIKI SMSTR SAMA DALAM 1 WAKTU
+                //                     */
+                //                     if (isset($value_waktu['SMSTR'])) 
+                //                     {
+                //                         # code...
+                //                         $search_value = $hasil_matkul[$rand_index_matkul]['semester_mk'];
+
+
+                //                         if (in_array($search_value,$value_waktu['SMSTR']))
+                //                         {
+                //                             break 3;
+                //                         }
+                //                         else
+                //                         {
+                //                             /*
+                //                             VALIDASI :
+                //                             1. JIKA INDEX RUANGAN ==  RANDOM INDEX RUANGAN
+                //                             2. JIKA TERDAPAT RANDOM INDEX MATKUL DALAM ARRAY $HASIL_MATKUL
+                //                             3. JENIS RUANGAN(RUANGAN) == JENIS RUANGAN(MATKUL)
+                //                             4. KAPASITAS RUANGAN >= JUMLAH MHS MATKUL
+                //                             */
+                //                             if (($rand_index_ruangan == $key_ruangan) && (array_key_exists($rand_index_matkul, $hasil_matkul)) && ($value_ruangan['jenis_rg'] == $hasil_matkul[$rand_index_matkul]['jenis_rg']) && ($value_ruangan['kapasitas_rg'] >= $hasil_matkul[$rand_index_matkul]['JUMLAH_MHS'])) 
+                //                             {
+                //                                 $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['SMSTR'][] = $hasil_matkul[$rand_index_matkul]['semester_mk'];
+                //                                 $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN'][$key_ruangan]['MATKUL'] = $hasil_matkul[$rand_index_matkul];
+                //                                 $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN'][$key_ruangan]['MATKUL']['YES'] = $z;
+                //                                 unset($hasil_matkul[$rand_index_matkul]);
+                //                                 $z = $z+1;
+                //                                 break 3;
+                //                             }
+
+                //                         }
+                //                     }
+                //                     else
+                //                     {
+                //                         /*
+                //                         VALIDASI :
+                //                         1. JIKA INDEX RUANGAN ==  RANDOM INDEX RUANGAN
+                //                         2. JIKA TERDAPAT RANDOM INDEX MATKUL DALAM ARRAY $HASIL_MATKUL
+                //                         3. JENIS RUANGAN(RUANGAN) == JENIS RUANGAN(MATKUL)
+                //                         4. KAPASITAS RUANGAN >= JUMLAH MHS MATKUL
+                //                         */
+                //                         if (($rand_index_ruangan == $key_ruangan) && (array_key_exists($rand_index_matkul, $hasil_matkul)) && ($value_ruangan['jenis_rg'] == $hasil_matkul[$rand_index_matkul]['jenis_rg']) && ($value_ruangan['kapasitas_rg'] >= $hasil_matkul[$rand_index_matkul]['JUMLAH_MHS'])) 
+                //                         {
+                //                             $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['SMSTR'][] = $hasil_matkul[$rand_index_matkul]['semester_mk'];
+                //                             $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN'][$key_ruangan]['MATKUL'] = $hasil_matkul[$rand_index_matkul];
+                //                             $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN'][$key_ruangan]['MATKUL']['YES'] = $z;
+                //                             unset($hasil_matkul[$rand_index_matkul]);
+                //                                 $z = $z+1;
+                //                             break 3;
+                //                         }
+                //                     }
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
+                # V2
+                $rand_hari = array_rand($jadwal);
+                $hari = $jadwal[$rand_hari];
+
+                $rand_waktu = array_rand($hari['WAKTU']);
+                $waktu = $hari['WAKTU'][$rand_waktu];
+
+                $rand_ruangan = array_rand($waktu['RUANGAN']);
+                $ruangan = $waktu['RUANGAN'][$rand_ruangan];
+                $tujuan = $jadwal[$rand_hari]['WAKTU'][$rand_waktu]['RUANGAN'][$rand_ruangan];
+
+                $rand_matkul = array_rand($hasil_matkul);
+                $matkul = $hasil_matkul[$rand_matkul];
+
+                // 1 WAKTU HANYA MEMILIKI 1 MATKUL UNTUK 1 JENIS SMSTR
+                if (isset($waktu['SMSTR']) && !in_array($matkul['semester_mk'], $waktu['SMSTR'])) 
                 {
-                    /*
-                    VALIDASI : JIKA INDEX JADWAL == RANDOM INDEX JADWAL
-                    */
-                    $rand_index_jadwal = array_rand($jadwal);
-                    if ($rand_index_jadwal == $key_jadwal) 
+                    //1 RUANGAN 1 MATKUL
+                    if (!isset($ruangan['MATKUL'])) 
                     {
-                        foreach ($value_jadwal['WAKTU'] as $key_waktu => $value_waktu) #3 => 2
+                        // JUMLAH MHS TIDAK BOLEH MELEBIHI KAPASITAS RUANGAN
+                        if ($ruangan['kapasitas_rg'] >= $matkul['JUMLAH_MHS']) 
                         {
-                            $rand_index_waktu = array_rand($jadwal[$key_jadwal]['WAKTU']);
-                            /*
-                            VALIDASI : 
-                            1. JIKA INDEX WAKTU == RANDOM INDEX WAKTU
-                            2. [TIDAK BOLEH ADA MATKUL MEMILIKI SEMESTER SAMA DALAM 1 WAKTU - SUDAH]
-                            */
-                            if ($rand_index_waktu == $key_waktu) 
+                            // JENIS RUANGAN HARUS SAMA DENGAN JENIS MATKUL
+                            if ($ruangan['jenis_rg'] == $matkul['jenis_rg']) 
                             {
-                                foreach ($value_waktu['RUANGAN'] as $key_ruangan => $value_ruangan) #4 => 1
-                                {
-                                    $rand_index_ruangan = array_rand($jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN']);
-                                    $rand_index_matkul = array_rand($hasil_matkul);
-                                    /*
-                                    VALIDASI : TIDAK BOLEH ADA MATKUL MEMILIKI SMSTR SAMA DALAM 1 WAKTU
-                                    */
-                                    if (isset($value_waktu['SMSTR'])) 
-                                    {
-                                        # code...
-                                        $search_value = $hasil_matkul[$rand_index_matkul]['semester_mk'];
+                                // MEMASUKKAN MATKUL
+                                $jadwal[$rand_hari]['WAKTU'][$rand_waktu]['RUANGAN'][$rand_ruangan]['MATKUL'] = $matkul;
+                                $tujuan['MATKUL'] = $matkul;
 
-
-                                        if (in_array($search_value,$value_waktu['SMSTR']))
-                                        {
-                                            break 3;
-                                        }
-                                        else
-                                        {
-                                            /*
-                                            VALIDASI :
-                                            1. JIKA INDEX RUANGAN ==  RANDOM INDEX RUANGAN
-                                            2. JIKA TERDAPAT RANDOM INDEX MATKUL DALAM ARRAY $HASIL_MATKUL
-                                            3. JENIS RUANGAN(RUANGAN) == JENIS RUANGAN(MATKUL)
-                                            4. KAPASITAS RUANGAN >= JUMLAH MHS MATKUL
-                                            */
-                                            if (($rand_index_ruangan == $key_ruangan) && (array_key_exists($rand_index_matkul, $hasil_matkul)) && ($value_ruangan['jenis_rg'] == $hasil_matkul[$rand_index_matkul]['jenis_rg']) && ($value_ruangan['kapasitas_rg'] >= $hasil_matkul[$rand_index_matkul]['JUMLAH_MHS'])) 
-                                            {
-                                                $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['SMSTR'][] = $hasil_matkul[$rand_index_matkul]['semester_mk'];
-                                                $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN'][$key_ruangan]['MATKUL'] = $hasil_matkul[$rand_index_matkul];
-                                                $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN'][$key_ruangan]['MATKUL']['YES'] = $z;
-                                                unset($hasil_matkul[$rand_index_matkul]);
-                                                $z = $z+1;
-                                                break 3;
-                                            }
-
-                                        }
-                                    }
-                                    else
-                                    {
-                                        /*
-                                        VALIDASI :
-                                        1. JIKA INDEX RUANGAN ==  RANDOM INDEX RUANGAN
-                                        2. JIKA TERDAPAT RANDOM INDEX MATKUL DALAM ARRAY $HASIL_MATKUL
-                                        3. JENIS RUANGAN(RUANGAN) == JENIS RUANGAN(MATKUL)
-                                        4. KAPASITAS RUANGAN >= JUMLAH MHS MATKUL
-                                        */
-                                        if (($rand_index_ruangan == $key_ruangan) && (array_key_exists($rand_index_matkul, $hasil_matkul)) && ($value_ruangan['jenis_rg'] == $hasil_matkul[$rand_index_matkul]['jenis_rg']) && ($value_ruangan['kapasitas_rg'] >= $hasil_matkul[$rand_index_matkul]['JUMLAH_MHS'])) 
-                                        {
-                                            $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['SMSTR'][] = $hasil_matkul[$rand_index_matkul]['semester_mk'];
-                                            $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN'][$key_ruangan]['MATKUL'] = $hasil_matkul[$rand_index_matkul];
-                                            $jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN'][$key_ruangan]['MATKUL']['YES'] = $z;
-                                            unset($hasil_matkul[$rand_index_matkul]);
-                                                $z = $z+1;
-                                            break 3;
-                                        }
-                                    }
-                                }
+                                // TANDA UNTUK 1 SMSTR 1 WAKTU
+                                $jadwal[$rand_hari]['WAKTU'][$rand_waktu]['SMSTR'][] = $matkul['semester_mk'];
+                                unset($hasil_matkul[$rand_matkul]);
                             }
+                        }
+                    }
+                }
+                else
+                {
+                    // JUMLAH MHS TIDAK BOLEH MELEBIHI KAPASITAS RUANGAN
+                    if ($ruangan['kapasitas_rg'] >= $matkul['JUMLAH_MHS']) 
+                    {
+                        // JENIS RUANGAN HARUS SAMA DENGAN JENIS MATKUL
+                        if ($ruangan['jenis_rg'] == $matkul['jenis_rg']) 
+                        {
+                            // MEMASUKKAN MATKUL
+                            $jadwal[$rand_hari]['WAKTU'][$rand_waktu]['RUANGAN'][$rand_ruangan]['MATKUL'] = $matkul;
+                            $tujuan['MATKUL'] = $matkul;
+
+                            // TANDA UNTUK 1 SMSTR 1 WAKTU
+                            $jadwal[$rand_hari]['WAKTU'][$rand_waktu]['SMSTR'][] = $matkul['semester_mk'];
+                            unset($hasil_matkul[$rand_matkul]);
                         }
                     }
                 }
@@ -242,17 +297,16 @@ class Algo{
         5. FINISHING
             MEMBUANG DATA YANG TIDAK DI BUTUHKAN
             */
-            $final = array();
-            foreach ($jadwal as $key_jadwal => $value_jadwal) {
-                foreach ($value_jadwal['WAKTU'] as $key_waktu => $value_waktu) {
-                    foreach ($value_waktu['RUANGAN'] as $key_ruangan => $value_ruangan) {
-                        if (!isset($value_ruangan['MATKUL'])) 
-                        {
-                            unset($jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN'][$key_ruangan]);
-                        }
-                    }
-                }
-            }
+            // foreach ($jadwal as $key_jadwal => $value_jadwal) {
+            //     foreach ($value_jadwal['WAKTU'] as $key_waktu => $value_waktu) {
+            //         foreach ($value_waktu['RUANGAN'] as $key_ruangan => $value_ruangan) {
+            //             if (!isset($value_ruangan['MATKUL'])) 
+            //             {
+            //                 unset($jadwal[$key_jadwal]['WAKTU'][$key_waktu]['RUANGAN'][$key_ruangan]);
+            //             }
+            //         }
+            //     }
+            // }
         /*
         SELESAI
         */
