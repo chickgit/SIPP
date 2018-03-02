@@ -27,12 +27,17 @@ class Histori extends MY_Controller {
 		$data['role'] = $this->get_role_user();
 		$data['histori_'.$this->segment()] = 'active open';
 		$data['header']['title'] = 'Histori '.ucwords($this->segment());
-		$data['header']['css'] = '
+		$data['header']['css_page_plugin'] = '
 			<link href="'.base_url().'assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 			<link href="'.base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />';
 
+		$data['footer']['footer_page_plugin'] = '
+			';
+		$data['footer']['footer_page_scripts'] = '
+			';
+
 		$data['menu'] = $this->load->view('sidebar',$data,TRUE);
-		$data['footer'] = $this->load->view('footer',NULL,TRUE);
+		$data['footer'] = $this->load->view('footer',$data['footer'],TRUE);
 		$data['header'] = $this->load->view('header',$data['header'],TRUE);
 
 

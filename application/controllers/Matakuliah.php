@@ -37,6 +37,12 @@ class Matakuliah extends MY_Controller {
 		
 	}
 
+	public function get_all_data()
+	{
+		$data['list_matkul'] = $this->matakuliah_model->get_data();
+		echo json_encode($data['list_matkul']);
+	}
+
 	public function insert_matakuliah()
 	{
 		// print_r($_GET);

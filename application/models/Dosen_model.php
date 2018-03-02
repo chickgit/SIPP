@@ -27,9 +27,45 @@ class Dosen_model extends CI_Model {
 
     public function insert_data($arr = array())
     {
-        $sql = ("INSERT INTO dosen(nid, nama, alamat, telepon) VALUES (?, ?, ?, ?)");
-        $this->db->query($sql, array($arr['nid'],$arr['nama'],$arr['alamat'],$arr['telepon']));
+        if ($this->input->post('ketersediaan_hari')) {
+            # code...
+            $hari = '';
+            foreach ($this->input->post('ketersediaan_hari') as $key => $value) {
+                $hari = $hari.$value.';';
+            }
+            $hari = rtrim($hari,';');
+        }
+        else{
+            $hari = $this->input->post('ketersediaan_hari');
+        }
+
+        if ($this->input->post('wawasan_matkul')) {
+            $matkul = '';
+            foreach ($this->input->post('wawasan_matkul') as $key => $value) {
+                $value = explode('_', $value);
+                $matkul = $matkul.$value[0].';';
+            }
+            $matkul = rtrim($matkul,';');
+        }
+        else{
+            $matkul = $this->input->post('wawasan_matkul');
+        }
+        // echo json_encode($matkul);
+        // exit();
+        $data = array(
+            "nid" => $this->input->post('nid'),
+            "nama" => $this->input->post('nama'),
+            "alamat" => $this->input->post('alamat'),
+            "telepon" => $this->input->post('telepon'),
+            "gambar_ava" => $this->input->post('gambar_ava'),
+            "ketersediaan_hari" => $hari,
+            "wawasan_matkul" => $matkul,
+        );
+        $this->db->insert('dosen', $data);
         echo "OK";
+        // $sql = ("INSERT INTO dosen(nid, nama, alamat, telepon, gambar_ava, ketersediaan_hari, wawasan_matkul) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        // $this->db->query($sql, array($arr['nid'],$arr['nama'],$arr['alamat'],$arr['telepon']));
+        // echo "OK";
     }
 
     public function get_dosen($nid)

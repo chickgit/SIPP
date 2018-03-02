@@ -22,12 +22,17 @@ class Hari extends MY_Controller {
 		$data['hari'] = 'active open';
 
 		$data['header']['title'] = 'Data Hari';
-		$data['header']['css'] = '
+		$data['header']['css_page_plugin'] = '
 			<link href="'.base_url().'assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 			<link href="'.base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />';
 
+		$data['footer']['footer_page_plugin'] = '
+			';
+		$data['footer']['footer_page_scripts'] = '
+			';
+
 		$data['menu'] = $this->load->view('sidebar',$data,TRUE);
-		$data['footer'] = $this->load->view('footer',NULL,TRUE);
+		$data['footer'] = $this->load->view('footer',$data['footer'],TRUE);
 		$data['header'] = $this->load->view('header',$data['header'],TRUE);
 
 		// $data['list_dosen'] = $this->dosen_model->
@@ -57,6 +62,12 @@ class Hari extends MY_Controller {
 		$data['get_hr'] = $this->hari_model->get_hr($_POST['id']);
 		echo json_encode($data['get_hr']);
 		// print_r($data['get_dosen']);
+	}
+
+	public function get_all_data()
+	{
+		$data['list_hari'] = $this->hari_model->get_data();
+		echo json_encode($data['list_hari']);
 	}
 
 	public function update_hr()

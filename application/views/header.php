@@ -37,11 +37,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="<?=base_url()?>assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <?=isset($css)?$css:''?>
-        <link href="<?=base_url()?>assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
-        <link href="<?=base_url()?>assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
-        <link href="<?=base_url()?>assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
-        <link href="<?=base_url()?>assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
+        <?=isset($css_page_plugin)?$css_page_plugin:''?>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL STYLES -->
         <link href="<?=base_url()?>assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />

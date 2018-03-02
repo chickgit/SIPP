@@ -1,6 +1,12 @@
 <!-- <link href="<?=base_url()?>assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
+<?php
+function cmp($a,$b)
+{
+    return strcmp(strtolower($a->nama_mk), strtolower($b->nama_mk));
+}
+?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
             <div class="page-content page-content-popup">
@@ -72,6 +78,9 @@
                                                 <th> Nama </th>
                                                 <th> Alamat </th>
                                                 <th> Telepon </th>
+                                                <th> Foto Profil </th>
+                                                <th> Ketersediaan Hari </th>
+                                                <th> Matakuliah </th>
                                                 <th> Created Date </th>
                                                 <th> Created By </th>
                                                 <th> Modified Date </th>
@@ -90,6 +99,9 @@
                                                 <td> <?=$row->nama?> </td>
                                                 <td> <?=$row->alamat?> </td>
                                                 <td> <?=$row->telepon?> </td>
+                                                <td> <?=$row->gambar_ava?> </td>
+                                                <td> <?=$row->ketersediaan_hari?> </td>
+                                                <td> <?=$row->wawasan_matkul?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
                                                 <td> <?=$row->modified_date?> </td>
@@ -119,8 +131,8 @@
                                         </tbody>
                                     </table>
                                     <!-- MODAL INSERT -->
-                                    <div class="modal fade " id="modal_new_dosen" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog " id="modal_dialog_new_dosen"> 
+                                    <div class="modal fade bs-modal-lg" id="modal_new_dosen" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" id="modal_dialog_new_dosen"> 
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -173,12 +185,62 @@
                                                                         <input type="text" class="form-control" name="telepon" placeholder="0821XXXXXXXX" /> </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Ketersediaan Hari
+                                                                    <!-- <span class="required"> * </span> -->
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <div class="mt-checkbox-inline" id="cb-hari-inline">
+                                                                        <?php
+                                                                        // echo json_encode($list_hari);
+                                                                        foreach ($list_hari as $key => $value) {
+                                                                            ?>
+                                                                            <label class="mt-checkbox">
+                                                                                <input type="checkbox" id="<?=$value->id?>" value="<?=$value->id?>" name="ketersediaan_hari[]"> <?=$value->nama_hari?>
+                                                                                <span></span>
+                                                                            </label>
+                                                                            <?php
+                                                                        }
+                                                                        ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Matakuliah
+                                                                    <!-- <span class="required"> * </span> -->
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <div class="input-group select2-bootstrap-append">
+                                                                            <select id="multi-append" class="form-control select2" multiple name="wawasan_matkul[]">
+                                                                                <?php
+                                                                                
+                                                                                usort($list_matakuliah, "cmp");
+                                                                                // sort($list_matakuliah);
+                                                                                foreach ($list_matakuliah as $key => $value) {
+                                                                                    ?>
+                                                                                <option value="<?=$value->kode_mk?>_<?=$value->sks_mk?>"><?=$value->nama_mk?> | <?=$value->sks_mk?> SKS | Semester <?=$value->semester_mk?> | <?=$value->program_studi?></option>
+                                                                                    <?php
+                                                                                }
+                                                                                ?>
+                                                                            </select>
+                                                                            <span class="input-group-btn">
+                                                                                <button class="btn btn-default" type="button" data-select2-open="multi-append">
+                                                                                    <span class="glyphicon glyphicon-search"></span>
+                                                                                </button>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="help-block" id="help-block-matkul-multiple"> 0 SKS | Min :  9 SKS </div>
+                                                                </div>
+                                                            </div>
                                                         <!-- END FORM-->
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
-                                                        <button type="submit" class="btn green">Tambah</button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
+                                                            <button type="submit" class="btn green">Tambah</button>
+                                                        </div>
                                                     </div>
                                                 </form>
                                             </div>
@@ -187,8 +249,8 @@
                                         <!-- /.modal-dialog -->
                                     </div>
                                     <!-- MODAL UPDATE -->
-                                    <div class="modal fade " id="modal_update_dosen" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog " id="modal_dialog_new_dosen"> 
+                                    <div class="modal fade bs-modal-lg" id="modal_update_dosen" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" id="modal_dialog_new_dosen"> 
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -240,6 +302,55 @@
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
                                                                         <input type="text" class="form-control" name="upd_telepon"/> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Ketersediaan Hari
+                                                                    <!-- <span class="required"> * </span> -->
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <div class="mt-checkbox-inline" id="cb-hari-inline">
+                                                                        <?php
+                                                                        // echo json_encode($list_hari);
+                                                                        foreach ($list_hari as $key => $value) {
+                                                                            ?>
+                                                                            <label class="mt-checkbox">
+                                                                                <input type="checkbox" id="<?=$value->id?>" value="<?=$value->id?>" name="upd_ketersediaan_hari[]"> <?=$value->nama_hari?>
+                                                                                <span></span>
+                                                                            </label>
+                                                                            <?php
+                                                                        }
+                                                                        ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Matakuliah
+                                                                    <!-- <span class="required"> * </span> -->
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <div class="input-group select2-bootstrap-append">
+                                                                            <select id="multi-append" class="form-control select2" multiple name="upd_wawasan_matkul[]">
+                                                                                <?php
+                                                                                usort($list_matakuliah, "cmp");
+                                                                                // sort($list_matakuliah);
+                                                                                foreach ($list_matakuliah as $key => $value) {
+                                                                                    ?>
+                                                                                <option value="<?=$value->kode_mk?>_<?=$value->sks_mk?>"><?=$value->nama_mk?> | <?=$value->sks_mk?> SKS | Semester <?=$value->semester_mk?> | <?=$value->program_studi?></option>
+                                                                                    <?php
+                                                                                }
+                                                                                ?>
+                                                                            </select>
+                                                                            <span class="input-group-btn">
+                                                                                <button class="btn btn-default" type="button" data-select2-open="multi-append">
+                                                                                    <span class="glyphicon glyphicon-search"></span>
+                                                                                </button>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="help-block" id="help-block-matkul-multiple"> 0 SKS | Min :  9 SKS </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -330,20 +441,31 @@
                     <!-- END PAGE BASE CONTENT -->
                 </div>
 <?=$footer?>
-<script src="<?=base_url()?>assets/global/scripts/datatable.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/pages/scripts/table-datatables-managed.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+
+
 <script type="text/javascript">
 jQuery(document).ready(function() {
+    $('.select2').select2({
+        // placeholder : 'Pilih matakuliah yang dapat anda ajarkan. Min : 19 SKS',
+        width: null
+    });
+
     $('#tambah_dosen').on('click', function(){
         //console.log('clicked');
         // validation using icons
         var form4 = $('#form_tambah_dosen');
         var error4 = $('.alert-danger', form4);
         var success4 = $('.alert-success', form4);
+
+        form4.find('#multi-append').change(function(){
+            var sks = 0;
+            $.each($(this).val(), function(index,value){
+                value.split('_');
+                sks += parseInt(value[1]);
+            })
+            form4.find('#help-block-matkul-multiple').text(sks+' SKS | Min: 9 SKS');
+            console.log(sks);
+        })
 
         form4.validate({
             errorElement: 'span', //default input error message container
@@ -458,6 +580,9 @@ jQuery(document).ready(function() {
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
         idform.find('textarea').val('');
+        idform.find('#cb-hari-inline').text('');
+        idform.find('#multi-append').text('');
+        idform.find('#help-block-matkul-multiple').text('0 SKS | Min: 9 SKS');
     })
     $('#sample_2').on('click', '#upd_dosen', function(){
         $.ajax({
@@ -479,6 +604,14 @@ jQuery(document).ready(function() {
                 $('input[name="upd_nama"]').val(data.nama);
                 $('textarea[name="upd_alamat"]').val(data.alamat);
                 $('input[name="upd_telepon"]').val(data.telepon);
+                var hari = data.ketersediaan_hari.split(';');
+                $.each(hari, function(index_hr,value_hr){
+                    $.each($('input[type=checkbox][name="upd_ketersediaan_hari[]"]'), function(index_hr_cb,value_hr_cb){
+                        if (value_hr == value_hr_cb.value) {
+                            $('input[type=checkbox][name="upd_ketersediaan_hari[]"][value='+value_hr+']').prop('checked',true);
+                        }
+                    })
+                })
                 $('#modal_update_dosen').modal('show');
                 // console.log(data);
             },

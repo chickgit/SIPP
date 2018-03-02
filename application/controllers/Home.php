@@ -46,12 +46,24 @@ class Home extends MY_Controller {
 		$data['count_waktu'] = $this->waktu_model->get_data();
 		$data['count_hari'] = $this->hari_model->get_data();
 
+        $data['footer_page_plugin'] = '
+            <script src="'.base_url().'assets/global/plugins/moment.min.js" type="text/javascript"></script>
+            <script src="'.base_url().'assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+            <script src="'.base_url().'assets/global/plugins/morris/morris.min.js" type="text/javascript"></script>
+            <script src="'.base_url().'assets/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
+            <script src="'.base_url().'assets/global/plugins/counterup/jquery.waypoints.min.js" type="text/javascript"></script>
+            <script src="'.base_url().'assets/global/plugins/counterup/jquery.counterup.min.js" type="text/javascript"></script>
+        ';
+        $data['footer_page_scripts'] = '
+            <script src="'.base_url().'assets/pages/scripts/dashboard.min.js" type="text/javascript"></script>
+        ';
+
 		$data['bta'] = $this->db->get('buka_tahun_ajaran')->row();
 
 		$this->load->view('header',$data);
 
 		$this->load->view('home',$data);
-		$this->load->view('footer');
+		$this->load->view('footer',$data);
 	}
 
 	public function update()
