@@ -100,8 +100,28 @@ function cmp($a,$b)
                                                 <td> <?=$row->alamat?> </td>
                                                 <td> <?=$row->telepon?> </td>
                                                 <td> <?=$row->gambar_ava?> </td>
-                                                <td> <?=$row->ketersediaan_hari?> </td>
-                                                <td> <?=$row->wawasan_matkul?> </td>
+                                                <td> <?php
+                                                $id_hari = explode(';', $row->ketersediaan_hari);
+                                                foreach ($id_hari as $value_id) {
+                                                	foreach ($list_hari as $key => $value) {
+                                                		if ($value->id == $value_id) {
+                                                			echo $value->nama_hari.'<br>';
+                                                		}
+                                                	}
+                                                }
+                                                ?> </td>
+                                                <td> <?php
+                                                // print_r($row->wawasan_matkul);
+                                                $id_mk = explode(';', $row->wawasan_matkul);
+                                                foreach ($id_mk as $value_id) {
+                                                    foreach ($list_matakuliah as $key => $value) {
+                                                        $id_mk2 = explode('_', $value_id);
+                                                        if ($value->kode_mk == $id_mk2[0]) {
+                                                            echo $value->nama_mk.',<br>';
+                                                        }
+                                                    }
+                                                }
+                                                ?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
                                                 <td> <?=$row->modified_date?> </td>
@@ -232,7 +252,7 @@ function cmp($a,$b)
                                                                             </span>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="help-block" id="help-block-matkul-multiple"> 0 SKS | Min :  9 SKS </div>
+                                                                    <!-- <div class="help-block" id="help-block-matkul-multiple"> 0 SKS | Min :  9 SKS </div> -->
                                                                 </div>
                                                             </div>
                                                         <!-- END FORM-->
@@ -350,7 +370,7 @@ function cmp($a,$b)
                                                                             </span>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="help-block" id="help-block-matkul-multiple"> 0 SKS | Min :  9 SKS </div>
+                                                                    <!-- <div class="help-block" id="help-block-matkul-multiple"> 0 SKS | Min :  9 SKS </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -457,15 +477,15 @@ jQuery(document).ready(function() {
         var error4 = $('.alert-danger', form4);
         var success4 = $('.alert-success', form4);
 
-        form4.find('#multi-append').change(function(){
-            var sks = 0;
-            $.each($(this).val(), function(index,value){
-                value.split('_');
-                sks += parseInt(value[1]);
-            })
-            form4.find('#help-block-matkul-multiple').text(sks+' SKS | Min: 9 SKS');
-            console.log(sks);
-        })
+        // form4.find('#multi-append').change(function(){
+        //     var sks = 0;
+        //     $.each($(this).val(), function(index,value){
+        //         value.split('_');
+        //         sks += parseInt(value[1]);
+        //     })
+        //     form4.find('#help-block-matkul-multiple').text(sks+' SKS | Min: 9 SKS');
+        //     console.log(sks);
+        // })
 
         form4.validate({
             errorElement: 'span', //default input error message container
@@ -580,9 +600,9 @@ jQuery(document).ready(function() {
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
         idform.find('textarea').val('');
-        idform.find('#cb-hari-inline').text('');
-        idform.find('#multi-append').text('');
-        idform.find('#help-block-matkul-multiple').text('0 SKS | Min: 9 SKS');
+        idform.find('[name="ketersediaan_hari[]"]').prop('checked',false);
+        idform.find('select[name="wawasan_matkul[]"]').val(null).trigger('change');
+        // idform.find('#help-block-matkul-multiple').text('0 SKS | Min: 9 SKS');
     })
     $('#sample_2').on('click', '#upd_dosen', function(){
         $.ajax({
@@ -604,6 +624,7 @@ jQuery(document).ready(function() {
                 $('input[name="upd_nama"]').val(data.nama);
                 $('textarea[name="upd_alamat"]').val(data.alamat);
                 $('input[name="upd_telepon"]').val(data.telepon);
+
                 var hari = data.ketersediaan_hari.split(';');
                 $.each(hari, function(index_hr,value_hr){
                     $.each($('input[type=checkbox][name="upd_ketersediaan_hari[]"]'), function(index_hr_cb,value_hr_cb){
@@ -612,8 +633,15 @@ jQuery(document).ready(function() {
                         }
                     })
                 })
+
+                var matkul = data.wawasan_matkul.split(';');
+                $('select[name="upd_wawasan_matkul[]"]').val(matkul).trigger('change');
+                // $.each(matkul, function(index_mk,value_mk){
+                //     // $.each($('select[name=upd_wawasan_matkul[]]'))
+                // })
+
                 $('#modal_update_dosen').modal('show');
-                // console.log(data);
+                console.log(matkul);
             },
             complete: function(){
                 App.unblockUI();

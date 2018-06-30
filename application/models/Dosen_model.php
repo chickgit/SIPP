@@ -13,10 +13,61 @@ class Dosen_model extends CI_Model {
         return $this->session->userdata('Login')['username'];
     }
 
+    private function ketersediaan_hari()
+    {
+        if ($this->uri->segment(2) == 'update_dosen') {
+            $arr_hari = $this->input->post('upd_ketersediaan_hari');
+        }
+        else
+        {
+            $arr_hari = $this->input->post('ketersediaan_hari');
+        }
+
+        if ($arr_hari) {
+            # code...
+            $hari = '';
+            foreach ($arr_hari as $key => $value) {
+                $hari = $hari.$value.';';
+            }
+            $hari = rtrim($hari,';');
+        }
+        else{
+            $hari = $arr_hari;
+        }
+
+        return $hari;
+    }
+
+    private function wawasan_matkul()
+    {
+        if ($this->uri->segment(2) == 'update_dosen') {
+            $arr_matkul = $this->input->post('upd_wawasan_matkul');
+        }
+        else
+        {
+            $arr_matkul = $this->input->post('wawasan_matkul');
+        }
+
+        if ($arr_matkul) {
+            $matkul = '';
+            foreach ($arr_matkul as $key => $value) {
+                // $value = explode('_', $value);
+                // $matkul = $matkul.$value[0].';';
+                $matkul = $matkul.$value.';';
+            }
+            $matkul = rtrim($matkul,';');
+        }
+        else{
+            $matkul = $arr_matkul;
+        }
+
+        return $matkul;
+    }
+
     public function get_data()
     {
         $query = $this->db->get_where('dosen', array('isDelete' => 0, 'isShow' => 1));
-    	return $query->result();
+        return $query->result();
     }
 
     public function check_nid($nid)
@@ -27,45 +78,18 @@ class Dosen_model extends CI_Model {
 
     public function insert_data($arr = array())
     {
-        if ($this->input->post('ketersediaan_hari')) {
-            # code...
-            $hari = '';
-            foreach ($this->input->post('ketersediaan_hari') as $key => $value) {
-                $hari = $hari.$value.';';
-            }
-            $hari = rtrim($hari,';');
-        }
-        else{
-            $hari = $this->input->post('ketersediaan_hari');
-        }
-
-        if ($this->input->post('wawasan_matkul')) {
-            $matkul = '';
-            foreach ($this->input->post('wawasan_matkul') as $key => $value) {
-                $value = explode('_', $value);
-                $matkul = $matkul.$value[0].';';
-            }
-            $matkul = rtrim($matkul,';');
-        }
-        else{
-            $matkul = $this->input->post('wawasan_matkul');
-        }
-        // echo json_encode($matkul);
-        // exit();
         $data = array(
             "nid" => $this->input->post('nid'),
             "nama" => $this->input->post('nama'),
             "alamat" => $this->input->post('alamat'),
             "telepon" => $this->input->post('telepon'),
             "gambar_ava" => $this->input->post('gambar_ava'),
-            "ketersediaan_hari" => $hari,
-            "wawasan_matkul" => $matkul,
+            "ketersediaan_hari" => $this->ketersediaan_hari(),
+            "wawasan_matkul" => $this->wawasan_matkul(),
         );
         $this->db->insert('dosen', $data);
         echo "OK";
-        // $sql = ("INSERT INTO dosen(nid, nama, alamat, telepon, gambar_ava, ketersediaan_hari, wawasan_matkul) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        // $this->db->query($sql, array($arr['nid'],$arr['nama'],$arr['alamat'],$arr['telepon']));
-        // echo "OK";
+        // echo json_encode($data);
     }
 
     public function get_dosen($nid)
@@ -76,8 +100,24 @@ class Dosen_model extends CI_Model {
 
     public function update_dosen($arr = array())
     {
-        $sql = ("UPDATE dosen SET nama = ?, alamat = ?, telepon = ?, modified_date = ?, modified_by = ? WHERE nid = ?");
-        $this->db->query($sql, array($arr['upd_nama'],$arr['upd_alamat'],$arr['upd_telepon'],date('Y-m-d H:i:s'),$this->session_username(),$arr['upd_nid']));
+        // echo json_encode($this->input->post());
+        // exit();
+        $data = array(
+            "nama" => $this->input->post('upd_nama'),
+            "alamat" => $this->input->post('upd_alamat'),
+            "telepon" => $this->input->post('upd_telepon'),
+            "gambar_ava" => $this->input->post('upd_gambar_ava'),
+            "ketersediaan_hari" => $this->ketersediaan_hari(),
+            "wawasan_matkul" => $this->wawasan_matkul(),
+            "modified_date" => date('Y-m-d H:i:s'),
+            "modified_by" => $this->session_username()
+        );
+
+        $this->db->where("nid", $this->input->post('upd_nid'));
+        $this->db->update("dosen", $data);
+
+        // $sql = ("UPDATE dosen SET nama = ?, alamat = ?, telepon = ?, modified_date = ?, modified_by = ? WHERE nid = ?");
+        // $this->db->query($sql, array($arr['upd_nama'],$arr['upd_alamat'],$arr['upd_telepon'],date('Y-m-d H:i:s'),$this->session_username(),$arr['upd_nid']));
         echo "OK";
     }
 

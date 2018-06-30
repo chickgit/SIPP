@@ -62,7 +62,7 @@ class Dosen extends MY_Controller {
 	{
 		// print_r($_GET);
 		// print_r($_POST['nid']);
-		// json_encode($_POST);
+		// echo json_encode($_POST);
 		$data['insert_dosen'] = $this->dosen_model->insert_data($_POST);
 		echo $data['insert_dosen'];
 		exit();
