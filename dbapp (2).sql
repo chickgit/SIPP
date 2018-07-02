@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 30, 2018 at 01:26 PM
+-- Generation Time: Jul 02, 2018 at 07:49 AM
 -- Server version: 5.7.22-0ubuntu0.16.04.1
 -- PHP Version: 7.0.30-0ubuntu0.16.04.1
 
@@ -26,6 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `ambil_matakuliah`
 --
 
+DROP TABLE IF EXISTS `ambil_matakuliah`;
 CREATE TABLE `ambil_matakuliah` (
   `id` int(11) NOT NULL,
   `nim` int(9) NOT NULL,
@@ -39,6 +40,11 @@ CREATE TABLE `ambil_matakuliah` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncate table before insert `ambil_matakuliah`
+--
+
+TRUNCATE TABLE `ambil_matakuliah`;
 --
 -- Dumping data for table `ambil_matakuliah`
 --
@@ -143,6 +149,7 @@ INSERT INTO `ambil_matakuliah` (`id`, `nim`, `tahun_ajaran`, `kode_mk`, `created
 -- Table structure for table `buka_tahun_ajaran`
 --
 
+DROP TABLE IF EXISTS `buka_tahun_ajaran`;
 CREATE TABLE `buka_tahun_ajaran` (
   `id` int(1) NOT NULL,
   `tahun_ajaran` varchar(9) NOT NULL,
@@ -157,6 +164,11 @@ CREATE TABLE `buka_tahun_ajaran` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Truncate table before insert `buka_tahun_ajaran`
+--
+
+TRUNCATE TABLE `buka_tahun_ajaran`;
+--
 -- Dumping data for table `buka_tahun_ajaran`
 --
 
@@ -169,6 +181,7 @@ INSERT INTO `buka_tahun_ajaran` (`id`, `tahun_ajaran`, `semester`, `batas_akhir`
 -- Table structure for table `dosen`
 --
 
+DROP TABLE IF EXISTS `dosen`;
 CREATE TABLE `dosen` (
   `nid` int(11) NOT NULL,
   `nama` varchar(50) NOT NULL,
@@ -185,6 +198,11 @@ CREATE TABLE `dosen` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0=tidak,1=ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncate table before insert `dosen`
+--
+
+TRUNCATE TABLE `dosen`;
 --
 -- Dumping data for table `dosen`
 --
@@ -220,6 +238,7 @@ INSERT INTO `dosen` (`nid`, `nama`, `alamat`, `telepon`, `gambar_ava`, `ketersed
 -- Table structure for table `hari`
 --
 
+DROP TABLE IF EXISTS `hari`;
 CREATE TABLE `hari` (
   `id` int(11) NOT NULL,
   `nama_hari` varchar(6) NOT NULL,
@@ -231,6 +250,11 @@ CREATE TABLE `hari` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncate table before insert `hari`
+--
+
+TRUNCATE TABLE `hari`;
 --
 -- Dumping data for table `hari`
 --
@@ -249,6 +273,7 @@ INSERT INTO `hari` (`id`, `nama_hari`, `created_date`, `created_by`, `modified_d
 -- Table structure for table `jadwal_temp`
 --
 
+DROP TABLE IF EXISTS `jadwal_temp`;
 CREATE TABLE `jadwal_temp` (
   `id` int(11) NOT NULL,
   `tahun_ajaran` varchar(9) NOT NULL,
@@ -260,6 +285,11 @@ CREATE TABLE `jadwal_temp` (
   `peserta` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncate table before insert `jadwal_temp`
+--
+
+TRUNCATE TABLE `jadwal_temp`;
 --
 -- Dumping data for table `jadwal_temp`
 --
@@ -587,6 +617,7 @@ INSERT INTO `jadwal_temp` (`id`, `tahun_ajaran`, `id_hari`, `kode_wk`, `kode_rg`
 -- Table structure for table `mahasiswa`
 --
 
+DROP TABLE IF EXISTS `mahasiswa`;
 CREATE TABLE `mahasiswa` (
   `nim` int(9) NOT NULL,
   `nama` varchar(50) NOT NULL,
@@ -603,6 +634,11 @@ CREATE TABLE `mahasiswa` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncate table before insert `mahasiswa`
+--
+
+TRUNCATE TABLE `mahasiswa`;
 --
 -- Dumping data for table `mahasiswa`
 --
@@ -714,6 +750,7 @@ INSERT INTO `mahasiswa` (`nim`, `nama`, `alamat`, `telepon`, `gambar_ava`, `prog
 -- Table structure for table `matakuliah`
 --
 
+DROP TABLE IF EXISTS `matakuliah`;
 CREATE TABLE `matakuliah` (
   `kode_mk` varchar(8) NOT NULL,
   `nama_mk` varchar(100) NOT NULL,
@@ -730,6 +767,11 @@ CREATE TABLE `matakuliah` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncate table before insert `matakuliah`
+--
+
+TRUNCATE TABLE `matakuliah`;
 --
 -- Dumping data for table `matakuliah`
 --
@@ -853,6 +895,7 @@ INSERT INTO `matakuliah` (`kode_mk`, `nama_mk`, `sks_mk`, `semester_mk`, `progra
 -- Table structure for table `ruangan`
 --
 
+DROP TABLE IF EXISTS `ruangan`;
 CREATE TABLE `ruangan` (
   `kode_rg` varchar(6) NOT NULL,
   `gedung_rg` char(1) NOT NULL,
@@ -866,6 +909,11 @@ CREATE TABLE `ruangan` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncate table before insert `ruangan`
+--
+
+TRUNCATE TABLE `ruangan`;
 --
 -- Dumping data for table `ruangan`
 --
@@ -891,6 +939,7 @@ INSERT INTO `ruangan` (`kode_rg`, `gedung_rg`, `jenis_rg`, `kapasitas_rg`, `crea
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
@@ -905,6 +954,11 @@ CREATE TABLE `user` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='semua user yang terhubung ke app, termasuk admin';
 
+--
+-- Truncate table before insert `user`
+--
+
+TRUNCATE TABLE `user`;
 --
 -- Dumping data for table `user`
 --
@@ -1017,6 +1071,7 @@ INSERT INTO `user` (`id`, `username`, `password`, `sebagai`, `id_sebagai`, `crea
 -- Table structure for table `waktu`
 --
 
+DROP TABLE IF EXISTS `waktu`;
 CREATE TABLE `waktu` (
   `kode_wk` int(11) NOT NULL,
   `waktu_aw` time NOT NULL,
@@ -1031,6 +1086,11 @@ CREATE TABLE `waktu` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncate table before insert `waktu`
+--
+
+TRUNCATE TABLE `waktu`;
 --
 -- Dumping data for table `waktu`
 --
