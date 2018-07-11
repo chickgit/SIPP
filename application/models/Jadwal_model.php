@@ -36,7 +36,7 @@ class Jadwal_model extends CI_Model {
             $this->db->truncate('jadwal_temp');
         }
         // INSERT DATA BARU
-        $jadwal = $this->algo->generate_jadwal($row_ta->tahun_ajaran);
+        $jadwal = $this->algo->generate_jadwal($row_ta->tahun_ajaran, $row_ta->semester);
         $peminatan = Array(
           '0' => 'Umum',
           '1' => 'EIS',
@@ -64,7 +64,8 @@ class Jadwal_model extends CI_Model {
                         "kode_rg"       => $value_rg['kode_rg'],
                         "kode_mk"       => isset($value_rg['MATKUL']) ? $value_rg['MATKUL']['kode_mk'] : NULL,
                         "nid"           => isset($value_rg['DOSEN']) ? $value_rg['DOSEN']['nid'] : NULL,
-                        "peserta"       => $peserta
+                        "peserta"       => $peserta,
+                        "ket"           => $row_ta->semester
                     );
                     $this->db->insert('jadwal_temp', $data);
                 }
