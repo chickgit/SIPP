@@ -92,7 +92,12 @@
                                                     <td> <?=$row->nama_mk?> </td>
                                                     <td> <?=$row->sks_mk?> </td>
                                                     <td> <?=$row->semester_mk?> </td>
-                                                    <td> <?php echo date('H:i', strtotime($row->waktu_aw)).' - '.date('H:i', strtotime($row->waktu_ak)); ?> </td>
+                                                    <td> <?php 
+                                                    if ((isset($row->waktu_aw)) && (isset($row->waktu_ak))) {
+                                                        # code...
+                                                        echo date('H:i', strtotime($row->waktu_aw)).' - '.date('H:i', strtotime($row->waktu_ak)); 
+                                                    }
+                                                    ?> </td>
                                                     <td> <?=$row->nama?> </td>
                                                     <td> <?=$row->kode_rg?> </td>
                                                     <td> <?=$row->peserta?> </td>
