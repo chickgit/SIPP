@@ -44,6 +44,22 @@ class Jadwal_model extends CI_Model {
           '3' => 'JarKom',
           '4' => 'MobA',
         );
+
+        if (isset($jadwal['FLAG_TERTINGGAL'])) {
+            # code...
+            foreach ($jadwal['FLAG_TERTINGGAL'] as $key_flag => $value_flag) {
+                # code...
+                $data = array(
+                    "tahun_ajaran"  => $row_ta->tahun_ajaran,
+                    "kode_mk"       => $value_flag['kode_mk'],
+                    "ket"           => $row_ta->semester
+                );
+                $this->db->insert('jadwal_temp', $data);
+            }
+        }
+
+        unset($jadwal['FLAG_TERTINGGAL']);
+
         foreach ($jadwal as $key_hr => $value_hr) {
             foreach ($value_hr['WAKTU'] as $key_wk => $value_wk) {
                 foreach ($value_wk['RUANGAN'] as $key_rg => $value_rg) {
@@ -63,7 +79,7 @@ class Jadwal_model extends CI_Model {
                         "kode_wk"       => $value_wk['kode_wk'],
                         "kode_rg"       => $value_rg['kode_rg'],
                         "kode_mk"       => isset($value_rg['MATKUL']) ? $value_rg['MATKUL']['kode_mk'] : NULL,
-                        "nid"           => isset($value_rg['DOSEN']) ? $value_rg['DOSEN']['nid'] : NULL,
+                        "nid"           => isset($value_rg['DOSEN']) ? $value_rg['DOSEN'] : NULL,
                         "peserta"       => $peserta,
                         "ket"           => $row_ta->semester
                     );
