@@ -28,12 +28,28 @@ class Jadwal extends MY_Controller {
 		$data['jadwal'] = 'active open';
 
 		$data['header']['title'] = 'Data Jadwal';
-		$data['header']['css'] = '
+		$data['header']['css_page_plugin'] = '
 			<link href="'.base_url().'assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-			<link href="'.base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />';
+			<link href="'.base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+			<link href="'.base_url().'assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+			<link href="'.base_url().'assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />';
+
+		$data['footer']['footer_page_plugin'] = '
+			<script src="'.base_url().'assets/global/scripts/datatable.js" type="text/javascript"></script>
+			<script src="'.base_url().'assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+			<script src="'.base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+			<script src="'.base_url().'assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+			<script src="'.base_url().'assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+        	<script src="'.base_url().'assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+			';
+		$data['footer']['footer_page_scripts'] = '
+			<script src="'.base_url().'assets/pages/scripts/table-datatables-jadwal.js" type="text/javascript"></script>
+        	<script src="'.base_url().'assets/pages/scripts/components-select2.js" type="text/javascript"></script>
+			';
+			// <script src="'.base_url().'assets/pages/scripts/table-datatables-managed.js" type="text/javascript"></script>
 			
 		$data['menu'] = $this->load->view('sidebar',$data,TRUE);
-		$data['footer'] = $this->load->view('footer',NULL,TRUE);
+		$data['footer'] = $this->load->view('footer',$data['footer'],TRUE);
 		$data['header'] = $this->load->view('header',$data['header'],TRUE);
 
 		// $data['list_dosen'] = $this->dosen_model->
@@ -47,6 +63,13 @@ class Jadwal extends MY_Controller {
 		$data['jp'] = $this->jadwal_model->generate_jadwal();
 		echo json_encode($data['jp']);
 		// echo json_encode($this->input->post('data'));
+	}
+
+	public function hapus()
+	{
+		$data['hapus_jp'] = $this->jadwal_model->hapus_jadwal();
+		echo $data['hapus_jp'];
+		exit();
 	}
 
 	public function insert_matakuliah()

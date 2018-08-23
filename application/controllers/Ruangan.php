@@ -22,7 +22,7 @@ class Ruangan extends MY_Controller {
 		$data['ruangan'] = 'active open';
 
 		$data['header']['title'] = 'Data Ruangan';
-		$data['header']['css'] = '
+		$data['header']['css_page_plugin'] = '
 			<link href="'.base_url().'assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 			<link href="'.base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />';
 

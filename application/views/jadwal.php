@@ -62,10 +62,149 @@
                                         <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Generate Jadwal" id="generate">
                                             <i class="fa fa-random"></i>
                                         </a>
+                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Hapus Tabel" id="hapus">
+                                            <i class="fa fa-remove"></i>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <table class="table table-striped table-bordered table-hover order-column" id="sample_2">
+                                    <div class="panel-group accordion" id="accordion3">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion3" href="#collapse_3_1" aria-expanded="true"> Cari </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse_3_1" class="panel-collapse collapse in" aria-expanded="true" style="">
+                                                <div class="panel-body">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control input-sm global_filter" id="global_filter">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_3_2" aria-expanded="false"> Pencarian Lanjutan </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse_3_2" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                <div class="panel-body" style="height:200px; overflow-y:auto;">
+                                                    <table class="table" border="0">
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <button class="btn red btn-sm pull-right clear_search_all" type="button">
+                                                                    <i class="fa fa-remove"></i>
+                                                                    Clear All
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr data-column="0">
+                                                            <td>Hari</td>
+                                                            <td>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control column_filter input-sm" id="col0_filter">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr data-column="1">
+                                                            <td>Mata Kuliah</td>
+                                                            <td>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control column_filter input-sm" id="col1_filter">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr data-column="2">
+                                                            <td>SKS</td>
+                                                            <td>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control column_filter input-sm" id="col2_filter">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr data-column="3">
+                                                            <td>Semester</td>
+                                                            <td>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control column_filter input-sm" id="col3_filter">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr data-column="4">
+                                                            <td>Waktu</td>
+                                                            <td>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control column_filter input-sm" id="col4_filter">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr data-column="5">
+                                                            <td>Dosen</td>
+                                                            <td>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control column_filter input-sm" id="col5_filter">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr data-column="6">
+                                                            <td>Ruang</td>
+                                                            <td>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control column_filter input-sm" id="col6_filter">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr data-column="7">
+                                                            <td>Peserta</td>
+                                                            <td>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control column_filter input-sm" id="col7_filter">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <button class="btn red btn-sm pull-right clear_search_all" type="button">
+                                                                    <i class="fa fa-remove"></i>
+                                                                    Clear All
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="table table-striped table-bordered table-hover" id="sample_2">
                                         <thead>
                                             <tr>
                                                 <th> Hari </th>
@@ -76,6 +215,7 @@
                                                 <th> Dosen </th>
                                                 <th> Ruang </th>
                                                 <th> Peserta </th>
+                                                <th> Actions </th>
                                                 <!-- <th> Created By </th>
                                                 <th> Modified Date </th>
                                                 <th> Modified By </th>
@@ -101,6 +241,14 @@
                                                     <td> <?=$row->nama?> </td>
                                                     <td> <?=$row->kode_rg?> </td>
                                                     <td> <?=$row->peserta?> </td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-justified">
+                                                            <a id="update_jw" data-val="<?=$row->id_j_t?>" class="btn btn-sm green">
+                                                                <i class="icon-docs"></i> Ubah</a>
+                                                            <a id="delete_jw" data-val="<?=$row->id_j_t?>" class="btn btn-sm red">
+                                                                <i class="icon-trash"></i> Hapus</a>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                                 <?php
                                             }
@@ -378,6 +526,35 @@
                                         </div>
                                         <!-- /.modal-dialog -->
                                     </div>
+                                    <!-- MODAL VALIDASI GENERATE -->
+                                    <div class="modal fade " id="modal_hapus" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog "> 
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                    <h4 class="modal-title">Hapus Tabel</h4>
+                                                </div>
+                                                <form id="form_hapus" class="form-horizontal">
+                                                    <div class="modal-body"> 
+                                                        <!-- BEGIN FORM-->
+                                                        <div class="form-body">
+                                                            <div class="alert alert-danger alert-danger-delete">
+                                                                Anda yakin ingin menghapus tabel jadwal ? 
+                                                            </div>
+                                                        </div>
+                                                        <!-- END FORM-->
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
+                                                        <input type="hidden" name="data" value="HAPUS">
+                                                        <button type="submit" class="btn green">Hapus</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
                                 </div>
                             </div>
                             <!-- END EXAMPLE TABLE PORTLET-->
@@ -386,12 +563,7 @@
                     <!-- END PAGE BASE CONTENT -->
                 </div>
 <?=$footer?>
-<script src="<?=base_url()?>assets/global/scripts/datatable.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/pages/scripts/table-datatables-managed.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 jQuery(document).ready(function() {
     var JADWAL = "<?=count($list_jw)?>";
@@ -544,6 +716,43 @@ console.log(JADWAL);
         //     }
         // });
     });
+    
+    $('#hapus').on('click', function(){
+        $('#modal_hapus').modal('show');
+        var form = $('#form_hapus');
+        form.validate({
+            submitHandler: function (form) {
+                $.ajax({
+                    url: "<?=base_url()?>jadwal/hapus", 
+                    type: "POST",             
+                    // data: {data : "ULANG"},
+                    data: $(form).serialize(),
+                    cache: false,             
+                    processData: false,      
+                    beforeSend: function(){
+                        App.blockUI({
+                            // target: '#form_tambah_dosen',
+                            // overlayColor: 'none',
+                            // animate: true,
+                            zIndex: 20000,
+                        });
+                    },
+                    success: function(data) {
+                        // success4.show();
+                        location.reload();
+                        console.log(data);
+                    },
+                    complete: function(){
+                        App.unblockUI();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                    }
+                });
+            }
+        });
+    })
     $('#modal_new_mk').on('hidden.bs.modal', function (e) {
         console.log('modal hide');
         var idform = $('#form_tambah_mk');

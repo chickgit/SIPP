@@ -153,7 +153,8 @@ class Algo{
                     # memasukkan kesiapan dosen di setiap hari
                     $jadwal[$key_jadwal]['DOSEN_SIAP'][] = array(
                         "nid"       => $value_dosen['nid'],
-                        "wawasan"   => $value_dosen['wawasan_matkul']
+                        "wawasan"   => $value_dosen['wawasan_matkul'],
+                        "flag_role" => array()
                     );
                 }
             }
@@ -162,11 +163,144 @@ class Algo{
         return $jadwal;
     }
 
+    public function jadwal($jadwal,$matkul)
+    {
+        /*
+        # PENYEMATAN MASING-MASING MATA KULIAH SECARA RANDOM KE DALAM SETIAP HARI DI SETIAP WAKTU DI SETIAP RUANGAN DENGAN SYARAT:
+            + (DONE)MASING-MASING RUANGAN HANYA MEMILIKI 1 MATA KULIAH
+            + 1 MATA KULIAH HANYA 1X PERTEMUAN (KECUALI EXTENSI) PER PEKAN
+            + (DONE)1 WAKTU TIDAK BOLEH MEMILIKI MATA KULIAH LEBIH DARI SATU DENGAN SEMESTER YANG SAMA MESKIPUN BERBEDA RUANGAN
+                E.G : 08.00-10.30
+                        LR-1
+                            MATKUL A SMSTR 1
+                        LR-2
+                            MATKUL B SMSTR 1 (TIDAK BOLEH, KARENA MEMILIKI SEMESTER YANG SAMA)
+                     SEHARUSNYA
+                     08.00-10.30
+                        LR-1
+                            MATKUL A SMSTR 1
+                     10.45-13.15
+                        LR-2
+                            MATKUL B SMSTR 1 
+            + 1 waktu tidak boleh memiliki mata kuliah lebih dari satu dengan dosen yang sama meskipun beda ruangan
+                E.G : 08.00-10.30
+                        LR-1
+                            MATKUL A DOSEN X
+                        LR-2
+                            MATKUL B DOSEN X (TIDAK BOLEH, KARENA MEMILIKI SEMESTER YANG SAMA)
+                     SEHARUSNYA
+                     08.00-10.30
+                        LR-1
+                            MATKUL A DOSEN X
+                     10.45-13.15
+                        LR-2
+                            MATKUL B DOSEN Y 
+
+        */
+        $x = 0;
+        # PENJABARAN MATKUL
+        foreach ($matkul as $key_mk => $value_mk) 
+        {
+            # PENJABARAN JADWAL MENJADI HARI
+            foreach ($jadwal as $key_jw => $value_hr) 
+            {
+                # PENJABARAN DOSEN
+                foreach ($value_hr['DOSEN_SIAP'] as $key_dosen => $value_dosen) 
+                {
+                    # PENJABARAN HARI MENJADI WAKTU
+                    foreach ($value_hr['WAKTU'] as $key_wk => $value_wk) 
+                    {
+                        # PENJABARAN WAKTU MENJADI RUANGAN
+                        foreach ($value_wk['RUANGAN'] as $key_rg => $value_rg) 
+                        {
+                            # CEK APAKAH DOSEN TERSEDIA PADA HARI INI
+                            if (in_array($value_mk['kode_mk'], $value_dosen['wawasan'])) 
+                            {
+                                # SKS WAKTU SAMA DENGAN SKS MATKUL
+                                if ($value_wk['sks'] == $value_mk['sks_mk']) 
+                                {
+                                    # 1 ROLE WAKTU(PP/PS/SS) HANYA MEMILIKI 1 MATKUL UNTUK 1 SMSTR
+                                    # CEK APAKAH TERDAPAT ROLE WAKTU DI ARRAY SMSTR
+                                    if (array_key_exists($value_wk['role'], $value_hr['SMSTR'])) 
+                                    {
+                                        # CEK APAKAH SUDAH ADA SEMESTER YANG DIAMBIL DALAM ROLE TSB
+                                        if (!in_array($value_mk['semester_mk'], $value_hr['SMSTR'][$value_wk['role']])) 
+                                        {
+                                            # 1 RUANGAN 1 MATKUL
+                                            if (!isset($value_rg['MATKUL'])) 
+                                            {
+                                                # JUMLAH MHS TIDAK BOLEH MELEBIHI KAPASITAS RUANGAN
+                                                if ($value_rg['kapasitas_rg'] >= $value_mk['JUMLAH_MHS'])
+                                                {
+                                                    # JENIS RUANGAN HARUS SAMA DENGAN JENIS MATKUL
+                                                    if ($value_rg['jenis_rg'] == $value_mk['jenis_rg'])
+                                                    {
+                                                        # CEK APAKAH MATKUL TERSEDIA DI ARRAY
+                                                        if (isset($matkul[$key_mk])) 
+                                                        {
+                                                                    $x++;
+                                                            # MEMASUKKAN MATKUL
+                                                            $jadwal[$key_jw]['WAKTU'][$key_wk]['RUANGAN'][$key_rg]['MATKUL'] = $matkul[$key_mk];
+                                                            // $jadwal[$key_jw]['WAKTU'][$key_wk]['RUANGAN'][$key_rg]['MATKUL'] = $value_mk;
+                                                            // $tujuan['MATKUL'] = $matkul;
+
+                                                            # MEMASUKKAN DOSEN
+                                                            $jadwal[$key_jw]['WAKTU'][$key_wk]['RUANGAN'][$key_rg]['DOSEN'] = $value_dosen['nid'];
+
+                                                            # TANDA UNTUK 1 SMSTR 1 WAKTU
+                                                            array_push($jadwal[$key_jw]['SMSTR'][$value_wk['role']], $value_mk['semester_mk']);
+
+                                                            # Hapus matkul dari array matkul
+                                                            unset($matkul[$key_mk]);
+
+                                                            # Hapus kesiapan dosen dari array jadwal
+                                                            foreach ($jadwal as $key_jw2 => $value_hr2) 
+                                                            {
+                                                                foreach ($value_hr2['DOSEN_SIAP'] as $key_dosen2 => $value_dosen2) 
+                                                                {
+                                                                    foreach ($value_dosen2['wawasan'] as $key_wwsn => $value_wwsn) 
+                                                                    {
+                                                                        if (($value_dosen['nid'] == $value_dosen2['nid']) && ($value_wwsn == $value_mk['kode_mk'])) 
+                                                                        {
+                                                                            unset($jadwal[$key_jw2]['DOSEN_SIAP'][$key_dosen2]['wawasan'][$key_wwsn]);
+                                                                        }
+                                                                    }
+
+                                                                    if (empty($value_dosen2['wawasan'])) 
+                                                                    {
+                                                                        unset($jadwal[$key_jw2]['DOSEN_SIAP'][$key_dosen2]);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
+
+        if (isset($matkul)) {
+            # code...
+            $jadwal['FLAG_TERTINGGAL'] = $matkul;
+            unset($matkul);
+        }
+        return $jadwal;
+    }
+
 	public function generate_jadwal($tahun_ajaran, $semester_mk)
 	{
-        $jadwal_raw     = $this->jadwal_raw();
-        $matkul         = $this->matkul_raw($tahun_ajaran);
-        $hasil_jadwal   = $this->jadwal($jadwal_raw,$matkul);
+        $jadwal_raw     = $this->jadwal_raw();                  //Generate jadwal frame(kasarnya)
+        $matkul         = $this->matkul_raw($tahun_ajaran);     //Generate matkul frame(kasarnya)
+        return $jadwal_raw;
+        $hasil_jadwal   = $this->jadwal($jadwal_raw,$matkul);   //Generate jadwal | combine jadwal_raw & matkul
 
         $start = microtime(true);
         $time_elapsed_secs = microtime(true) - $start;
@@ -461,129 +595,6 @@ class Algo{
         // $jadwal[0][0] = $time_elapsed_secs;
         // return $jadwal[0];
 	}
-
-    public function jadwal($jadwal,$matkul)
-    {
-        /*
-        # PENYEMATAN MASING-MASING MATA KULIAH SECARA RANDOM KE DALAM SETIAP HARI DI SETIAP WAKTU DI SETIAP RUANGAN DENGAN SYARAT:
-            + MASING-MASING RUANGAN HANYA MEMILIKI 1 MATA KULIAH (done)
-            + 1 MATA KULIAH HANYA 1X PERTEMUAN (KECUALI EXTENSI) PER PEKAN
-            + 1 WAKTU TIDAK BOLEH MEMILIKI MATA KULIAH LEBIH DARI SATU DENGAN SEMESTER YANG SAMA MESKIPUN BERBEDA RUANGAN
-                E.G : 08.00-10.30
-                        LR-1
-                            MATKUL A SMSTR 1
-                        LR-2
-                            MATKUL B SMSTR 1 (TIDAK BOLEH, KARENA MEMILIKI SEMESTER YANG SAMA)
-                     SEHARUSNYA
-                     08.00-10.30
-                        LR-1
-                            MATKUL A SMSTR 1
-                     10.45-13.15
-                        LR-2
-                            MATKUL B SMSTR 1 
-
-        MASIH ADA KESALAHAN PADA ARRAY SMSTR
-        SEHARUSNYA
-            1. URUTAN SMSTR TERGANTUNG PADA MATKUL PERTAMA YG MASUK DI ARRAY, TIDAK TERBALIK
-            2. BANYAKNYA SMSTR DAN BANYAKNYA MATKUL TERKADANG TIDAK SAMA
-        */
-        $x = 0;
-        # PENJABARAN MATKUL
-        foreach ($matkul as $key_mk => $value_mk) 
-        {
-            # PENJABARAN JADWAL MENJADI HARI
-            foreach ($jadwal as $key_jw => $value_hr) 
-            {
-                # PENJABARAN DOSEN
-                foreach ($value_hr['DOSEN_SIAP'] as $key_dosen => $value_dosen) 
-                {
-                    # PENJABARAN HARI MENJADI WAKTU
-                    foreach ($value_hr['WAKTU'] as $key_wk => $value_wk) 
-                    {
-                        # PENJABARAN WAKTU MENJADI RUANGAN
-                        foreach ($value_wk['RUANGAN'] as $key_rg => $value_rg) 
-                        {
-                            # CEK APAKAH DOSEN TERSEDIA PADA HARI INI
-                            if (in_array($value_mk['kode_mk'], $value_dosen['wawasan'])) 
-                            {
-                                # SKS WAKTU SAMA DENGAN SKS MATKUL
-                                if ($value_wk['sks'] == $value_mk['sks_mk']) 
-                                {
-                                    # 1 ROLE WAKTU(PP/PS/SS) HANYA MEMILIKI 1 MATKUL UNTUK 1 SMSTR
-                                    # CEK APAKAH TERDAPAT ROLE WAKTU DI ARRAY SMSTR
-                                    if (array_key_exists($value_wk['role'], $value_hr['SMSTR'])) 
-                                    {
-                                        # CEK APAKAH SUDAH ADA SEMESTER YANG DIAMBIL DALAM ROLE TSB
-                                        if (!in_array($value_mk['semester_mk'], $value_hr['SMSTR'][$value_wk['role']])) 
-                                        {
-                                            # 1 RUANGAN 1 MATKUL
-                                            if (!isset($value_rg['MATKUL'])) 
-                                            {
-                                                # JUMLAH MHS TIDAK BOLEH MELEBIHI KAPASITAS RUANGAN
-                                                if ($value_rg['kapasitas_rg'] >= $value_mk['JUMLAH_MHS'])
-                                                {
-                                                    # JENIS RUANGAN HARUS SAMA DENGAN JENIS MATKUL
-                                                    if ($value_rg['jenis_rg'] == $value_mk['jenis_rg'])
-                                                    {
-                                                        # CEK APAKAH MATKUL TERSEDIA DI ARRAY
-                                                        if (isset($matkul[$key_mk])) 
-                                                        {
-                                                                    $x++;
-                                                            # MEMASUKKAN MATKUL
-                                                            $jadwal[$key_jw]['WAKTU'][$key_wk]['RUANGAN'][$key_rg]['MATKUL'] = $matkul[$key_mk];
-                                                            // $jadwal[$key_jw]['WAKTU'][$key_wk]['RUANGAN'][$key_rg]['MATKUL'] = $value_mk;
-                                                            // $tujuan['MATKUL'] = $matkul;
-
-                                                            # MEMASUKKAN DOSEN
-                                                            $jadwal[$key_jw]['WAKTU'][$key_wk]['RUANGAN'][$key_rg]['DOSEN'] = $value_dosen['nid'];
-
-                                                            # TANDA UNTUK 1 SMSTR 1 WAKTU
-                                                            array_push($jadwal[$key_jw]['SMSTR'][$value_wk['role']], $value_mk['semester_mk']);
-
-                                                            # Hapus matkul dari array matkul
-                                                            unset($matkul[$key_mk]);
-
-                                                            # Hapus kesiapan dosen dari array jadwal
-                                                            foreach ($jadwal as $key_jw2 => $value_hr2) 
-                                                            {
-                                                                foreach ($value_hr2['DOSEN_SIAP'] as $key_dosen2 => $value_dosen2) 
-                                                                {
-                                                                    foreach ($value_dosen2['wawasan'] as $key_wwsn => $value_wwsn) 
-                                                                    {
-                                                                        if (($value_dosen['nid'] == $value_dosen2['nid']) && ($value_wwsn == $value_mk['kode_mk'])) 
-                                                                        {
-                                                                            unset($jadwal[$key_jw2]['DOSEN_SIAP'][$key_dosen2]['wawasan'][$key_wwsn]);
-                                                                        }
-                                                                    }
-
-                                                                    if (empty($value_dosen2['wawasan'])) 
-                                                                    {
-                                                                        unset($jadwal[$key_jw2]['DOSEN_SIAP'][$key_dosen2]);
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            
-                        }
-                    }
-                }
-            }
-        }
-
-        if (isset($matkul)) {
-            # code...
-            $jadwal['FLAG_TERTINGGAL'] = $matkul;
-            unset($matkul);
-        }
-        return $jadwal;
-    }
 
     function array_solo_random($arr)
     {
