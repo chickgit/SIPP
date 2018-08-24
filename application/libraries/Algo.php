@@ -217,9 +217,7 @@ class Algo{
                             if (in_array($value_mk['kode_mk'], $value_dosen['wawasan'])) 
                             {
                                 # CEK APAKAH BELUM ADA ROLE WAKTU YANG DIMILIKI SEORANG DOSEN
-                                // return empty($value_dosen['flag_role']);
-                                return var_dump(!in_array($value_wk['role'], $value_dosen['flag_role']));
-                                if (!in_array($value_wk['role'], $value_dosen['flag_role'],TRUE)) 
+                                if (!in_array($value_wk['role'], $value_dosen['flag_role'])) 
                                 {
                                     # SKS WAKTU SAMA DENGAN SKS MATKUL
                                     if ($value_wk['sks'] == $value_mk['sks_mk']) 
@@ -252,7 +250,7 @@ class Algo{
                                                                 # MEMASUKKAN DOSEN
                                                                 $jadwal[$key_jw]['WAKTU'][$key_wk]['RUANGAN'][$key_rg]['DOSEN'] = $value_dosen['nid'];
                                                                 # MEMASUKKAN ROLE WAKTU KE ARRAY KESIAPAN DOSEN
-                                                                 $jadwal[$key_jw]['DOSEN_SIAP'][$key_dosen]['flag_role'] = $value_wk['role'];
+                                                                array_push($jadwal[$key_jw]['DOSEN_SIAP'][$key_dosen]['flag_role'], $value_wk['role']);
 
                                                                 # TANDA UNTUK 1 SMSTR 1 WAKTU
                                                                 array_push($jadwal[$key_jw]['SMSTR'][$value_wk['role']], $value_mk['semester_mk']);
@@ -307,9 +305,7 @@ class Algo{
 	{
         $jadwal_raw     = $this->jadwal_raw();                  //Generate jadwal frame(kasarnya)
         $matkul         = $this->matkul_raw($tahun_ajaran);     //Generate matkul frame(kasarnya)
-        // return $jadwal_raw;
         $hasil_jadwal   = $this->jadwal($jadwal_raw,$matkul);   //Generate jadwal | combine jadwal_raw & matkul
-        return $hasil_jadwal;
 
         $start = microtime(true);
         $time_elapsed_secs = microtime(true) - $start;

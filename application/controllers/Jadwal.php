@@ -17,9 +17,9 @@ class Jadwal extends MY_Controller {
     }
 	public function index()
 	{
-		$data['jp'] = $this->algo->generate_jadwal('2017/2018','GANJIL');
-		print_r(json_encode($data['jp']));
-		exit();
+		// $data['jp'] = $this->algo->generate_jadwal('2017/2018','GANJIL');
+		// print_r(json_encode($data['jp']));
+		// exit();
 
 		$data['list_jw'] = $this->jadwal_model->get_data_temp();
 
