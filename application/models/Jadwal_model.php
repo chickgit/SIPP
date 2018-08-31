@@ -122,6 +122,64 @@ class Jadwal_model extends CI_Model {
     	return $query->result();
     }
 
+    public function get_detail_jw($id_jw)
+    {
+        // Ambil induk data jadwal_temp
+        $this->db->where('id_j_t',$id_jw);
+        $query          = $this->db->get('jadwal_temp');
+        $jadwal_temp    = $query->row_array();
+        // return $query->row();
+
+        // Masukkan detail setiap dosen yang berhak mengajar ke dalam jadwal_temp
+        // $dosen          = $this->get_dosen();
+        // foreach ($dosen as $k => $v) {
+        //     if (in_array($jadwal_temp['kode_mk'], $v['wawasan_matkul'])) {
+        //         $jadwal_temp['DETAIL']['dosen'][] = $v;
+        //     }
+        // }
+
+        return $jadwal_temp;
+    }
+
+    public function get_data($table)
+    {
+        $this->db->where('isDelete', 0);
+        $this->db->where('isShow', 1);
+        $query  = $this->db->get($table);
+        $data   = $query->result_array();
+
+        return $data;
+    }
+
+    private function get_hari()
+    {
+        $this->db->where('isDelete', 0);
+        $this->db->where('isShow', 1);
+        $query = $this->db->get('hari');
+        $hari = $query->result_array();
+
+        return $hari;
+    }
+
+    private function get_dosen()
+    {
+        $this->db->where('isDelete', 0);
+        $this->db->where('isShow', 1);
+        $query = $this->db->get('dosen');
+        $dosen = $query->result_array();
+
+        foreach ($dosen as $k => $v) {
+            $a = explode(';', $v['wawasan_matkul']);
+            $dosen[$k]['wawasan_matkul'] = array();
+            foreach ($a as $k_n => $v_n) {
+                $b = explode('_', $v_n);
+                $dosen[$k]['wawasan_matkul'][] = $b[0];
+            }
+        }
+
+        return $dosen;
+    }
+
     public function check_kode_mk($kode_mk)
     {
         $query = $this->db->query('SELECT kode_mk FROM matakuliah WHERE kode_mk = "'.$kode_mk.'"');

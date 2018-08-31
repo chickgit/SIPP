@@ -22,6 +22,13 @@ class Jadwal extends MY_Controller {
 		// exit();
 
 		$data['list_jw'] = $this->jadwal_model->get_data_temp();
+		$data['all_data'] = array(
+			"hari" 			=> $this->jadwal_model->get_data('hari'),
+			"matakuliah" 	=> $this->jadwal_model->get_data('matakuliah'),
+			"waktu" 		=> $this->jadwal_model->get_data('waktu'),
+			"dosen" 		=> $this->jadwal_model->get_data('dosen'),
+			"ruangan" 		=> $this->jadwal_model->get_data('ruangan')
+		);
 
 		$data['role'] = $this->get_role_user();
 
@@ -72,6 +79,13 @@ class Jadwal extends MY_Controller {
 		exit();
 	}
 
+	public function get_detail_jw()
+	{
+		$data['get_detail_jw'] = $this->jadwal_model->get_detail_jw($_POST['kode_jw']);
+		echo json_encode($data['get_detail_jw']);
+		// print_r($data['get_dosen']);
+	}
+
 	public function insert_matakuliah()
 	{
 		// print_r($_GET);
@@ -88,14 +102,6 @@ class Jadwal extends MY_Controller {
 		$data['check_kode_mk'] = $this->jadwal_model->check_kode_mk($_GET['kode_mk']);
 		isset($data['check_kode_mk']) ? $a="false" : $a="true";
 		echo $a;
-	}
-
-	public function get_mk()
-	{
-		// print_r($_GET);
-		$data['get_mk'] = $this->jadwal_model->get_mk($_POST['kode_mk']);
-		echo json_encode($data['get_mk']);
-		// print_r($data['get_dosen']);
 	}
 
 	public function update_mk()

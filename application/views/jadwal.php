@@ -59,10 +59,10 @@
                                         <span class="caption-subject font-green sbold uppercase">Data Jadwal</span>
                                     </div>
                                     <div class="actions">
-                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Generate Jadwal" id="generate">
+                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Generate Jadwal" id="generate_table_jadwal">
                                             <i class="fa fa-random"></i>
                                         </a>
-                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Hapus Tabel" id="hapus">
+                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Hapus Tabel" id="delete_table_jadwal">
                                             <i class="fa fa-remove"></i>
                                         </a>
                                     </div>
@@ -255,135 +255,15 @@
                                             ?>
                                         </tbody>
                                     </table>
-                                    <!-- MODAL VALIDASI GENERATE -->
-                                    <div class="modal fade " id="modal_new_mk" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog " id="modal_dialog_new_mk"> 
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">GENERATE MATA</h4>
-                                                </div>
-                                                <form id="form_tambah_mk" class="form-horizontal">
-                                                    <div class="modal-body"> 
-                                                        <!-- BEGIN FORM-->
-                                                        <div class="form-body">
-                                                            <div class="alert alert-danger display-hide">
-                                                                <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. </div>
-                                                            <div class="alert alert-success display-hide">
-                                                                <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
-                                                            <div class="form-group ">
-                                                                <label class="control-label col-md-4">Kode Mata Kuliah
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="kode_mk" /> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Nama Mata Kuliah
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="nama_mk" /> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">SKS
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="number" class="form-control" name="sks_mk" min="1" /> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Semester
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="number" class="form-control" name="semester_mk" min="1" max="8" /> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Program Studi
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <select name="program_studi" class="form-control">
-                                                                            <option value="pilih">Pilih Prodi</option>
-                                                                            <option value="SI">SI</option>
-                                                                            <option value="TI">TI</option>
-                                                                            <option value="SI/TI">SI/TI</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Peminatan
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <select name="peminatan" class="form-control">
-                                                                            <option value="pilih">Pilih Peminatan</option>
-                                                                            <option value="0">Umum</option>
-                                                                            <option value="1">Enterprise Information System</option>
-                                                                            <option value="2">Multimedia</option>
-                                                                            <option value="3">Jaringan Komputer</option>
-                                                                            <option value="4">Mobile Application</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Jenis Ruangan
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <select name="jenis_rg" class="form-control">
-                                                                            <option value="pilih">Pilih Jenis</option>
-                                                                            <option value="CISCO">CISCO</option>
-                                                                            <option value="OCR">OCR</option>
-                                                                            <option value="LR">LR</option>
-                                                                            <option value="IMAC">IMAC</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- END FORM-->
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
-                                                        <button type="submit" class="btn green">Tambah</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- /.modal-content -->
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
                                     <!-- MODAL UPDATE -->
-                                    <div class="modal fade " id="modal_update_mk" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog " id="modal_dialog_update_mk"> 
+                                    <div class="modal fade " id="modal_update_jw" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog " id="modal_dialog_update_jw"> 
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Update Mata Kuliah</h4>
+                                                    <h4 class="modal-title">Update Jadwal</h4>
                                                 </div>
-                                                <form id="form_update_mk" class="form-horizontal">
+                                                <form id="form_update_jw" class="form-horizontal">
                                                     <div class="modal-body"> 
                                                         <!-- BEGIN FORM-->
                                                         <div class="form-body">
@@ -391,26 +271,44 @@
                                                                 <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. </div>
                                                             <div class="alert alert-success display-hide">
                                                                 <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
-                                                            <div class="form-group ">
-                                                                <label class="control-label col-md-4">Kode Mata Kuliah
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Hari
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="upd_kode_mk" disabled/> 
-                                                                        <input type="hidden" name="upd_kode_mk">
+                                                                        <select name="upd_hari_jw" class="form-control">
+                                                                            <option value="">Pilih Hari</option>
+                                                                        <?php
+                                                                        foreach ($all_data['hari'] as $value) {
+                                                                            ?>
+                                                                            <option value="<?=$value['id']?>"><?=$value['nama_hari']?></option>
+                                                                            <?php
+                                                                        }
+                                                                        ?>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4">Nama Mata Kuliah
+                                                                <label class="control-label col-md-4">Mata Kuliah
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="upd_nama_mk" /> </div>
+                                                                        <select name="upd_mk_jw" class="form-control">
+                                                                            <option value="">Pilih Mata Kuliah</option>
+                                                                        <?php
+                                                                        foreach ($all_data['matakuliah'] as $value) {
+                                                                            ?>
+                                                                            <option value="<?=$value['kode_mk']?>"><?=$value['nama_mk']?></option>
+                                                                            <?php
+                                                                        }
+                                                                        ?>
+                                                                        </select>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -420,7 +318,7 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="number" class="form-control" name="upd_sks_mk" min="1" /> </div>
+                                                                        <input type="number" class="form-control" name="upd_sks_jw" min="1" max="8" /> </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -430,57 +328,77 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="number" class="form-control" name="upd_semester_mk" min="1" max="8" /> </div>
+                                                                        <input type="number" class="form-control" name="upd_semester_jw" min="1" max="8" /> </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4">Program Studi
+                                                                <label class="control-label col-md-4">Waktu
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select name="upd_program_studi" class="form-control">
-                                                                            <option value="pilih">Pilih Prodi</option>
-                                                                            <option value="SI">SI</option>
-                                                                            <option value="TI">TI</option>
-                                                                            <option value="SI/TI">SI/TI</option>
+                                                                        <select name="upd_waktu_jw" class="form-control">
+                                                                            <option value="">Pilih Waktu</option>
+                                                                        <?php
+                                                                        foreach ($all_data['waktu'] as $value) {
+                                                                            ?>
+                                                                            <option value="<?=$value['kode_wk']?>"><?=$value['waktu_aw']?> - <?=$value['waktu_ak']?></option>
+                                                                            <?php
+                                                                        }
+                                                                        ?>
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4">Peminatan
+                                                                <label class="control-label col-md-4">Dosen
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select name="upd_peminatan" class="form-control">
-                                                                            <option value="pilih">Pilih Peminatan</option>
-                                                                            <option value="0">Umum</option>
-                                                                            <option value="1">Enterprise Information System</option>
-                                                                            <option value="2">Multimedia</option>
-                                                                            <option value="3">Jaringan Komputer</option>
-                                                                            <option value="4">Mobile Application</option>
+                                                                        <select name="upd_dosen_jw" class="form-control">
+                                                                            <option value="">Pilih Dosen</option>
+                                                                        <?php
+                                                                        foreach ($all_data['dosen'] as $value) {
+                                                                            ?>
+                                                                            <option value="<?=$value['nid']?>"><?=$value['nama']?></option>
+                                                                            <?php
+                                                                        }
+                                                                        ?>
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4">Jenis Ruangan
+                                                                <label class="control-label col-md-4">Ruangan
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select name="upd_jenis_rg" class="form-control">
-                                                                            <option value="pilih">Pilih Jenis</option>
-                                                                            <option value="CISCO">CISCO</option>
-                                                                            <option value="OCR">OCR</option>
-                                                                            <option value="LR">LR</option>
-                                                                            <option value="IMAC">IMAC</option>
+                                                                        <select name="upd_ruang_jw" class="form-control">
+                                                                            <option value="">Pilih Ruangan</option>
+                                                                        <?php
+                                                                        foreach ($all_data['ruangan'] as $value) {
+                                                                            ?>
+                                                                            <option value="<?=$value['kode_rg']?>"><?=$value['jenis_rg']?></option>
+                                                                            <?php
+                                                                        }
+                                                                        ?>
                                                                         </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Peserta
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="upd_peserta_jw" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -498,7 +416,7 @@
                                         <!-- /.modal-dialog -->
                                     </div>
                                     <!-- MODAL VALIDASI GENERATE -->
-                                    <div class="modal fade " id="modal_generate" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal fade " id="modal_generate_table_jadwal" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog " id="modal_dialog_delete_mk"> 
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -527,7 +445,7 @@
                                         <!-- /.modal-dialog -->
                                     </div>
                                     <!-- MODAL VALIDASI GENERATE -->
-                                    <div class="modal fade " id="modal_hapus" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal fade " id="modal_delete_table_jadwal" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog "> 
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -573,10 +491,10 @@ jQuery(document).ready(function() {
  }, "Value must not equal arg.");
 
 console.log(JADWAL);
-    $('#generate').on('click', function(){
+    $('#generate_table_jadwal').on('click', function(){
         if (JADWAL > 0) 
         {
-            $('#modal_generate').modal('show');
+            $('#modal_generate_table_jadwal').modal('show');
             var form = $('#form_generate');
             form.validate({
                 submitHandler: function (form) {
@@ -717,8 +635,8 @@ console.log(JADWAL);
         // });
     });
     
-    $('#hapus').on('click', function(){
-        $('#modal_hapus').modal('show');
+    $('#delete_table_jadwal').on('click', function(){
+        $('#modal_delete_table_jadwal').modal('show');
         var form = $('#form_hapus');
         form.validate({
             submitHandler: function (form) {
@@ -753,24 +671,13 @@ console.log(JADWAL);
             }
         });
     })
-    $('#modal_new_mk').on('hidden.bs.modal', function (e) {
-        console.log('modal hide');
-        var idform = $('#form_tambah_mk');
-        idform.find('.has-error').removeClass('has-error');
-        idform.find('.has-success').removeClass('has-success');
-        idform.find('.fa-warning').removeClass('fa-warning');
-        idform.find('.fa-check').removeClass('fa-check');
-        idform.find('.alert-danger').css('display','none');
-        idform.find('.alert-success').css('display','none');
-        idform.find('input').val('');
-        idform.find('select').val('pilih');
-    })
-    $('#sample_2').on('click', '#update_mk', function(){
+
+    $('#sample_2').on('click', '#update_jw', function(){
         $.ajax({
-            url: "<?=base_url()?>matakuliah/get_mk", 
+            url: "<?=base_url()?>jadwal/get_detail_jw", 
             type: "POST",
             dataType: "json",
-            data: {kode_mk : $(this).data('val')},
+            data: {kode_jw : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
                     // target: '#form_tambah_dosen',
@@ -781,15 +688,21 @@ console.log(JADWAL);
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="upd_kode_mk"]').val(data.kode_mk);
-                $('input[name="upd_nama_mk"]').val(data.nama_mk);
-                $('input[name="upd_sks_mk"]').val(data.sks_mk);
-                $('input[name="upd_semester_mk"]').val(data.semester_mk);
-                $('select[name="upd_program_studi"]').val(data.program_studi);
-                $('select[name="upd_peminatan"]').val(data.peminatan);
-                $('select[name="upd_jenis_rg"]').val(data.jenis_rg);
-                $('#modal_update_mk').modal('show');
-                // console.log(data);
+                $('select[name="upd_hari_jw"]').val(data.id_hari);
+                $('select[name="upd_mk_jw"]').val(data.kode_mk);
+                $('select[name="upd_waktu_jw"]').val(data.kode_wk);
+                $('select[name="upd_dosen_jw"]').val(data.nid);
+                $('select[name="upd_ruangan_jw"]').val(data.kode_rg);
+                $('input[name="upd_peserta_jw"]').val(data.peserta);
+                // $('input[name="upd_kode_mk"]').val(data.kode_mk);
+                // $('input[name="upd_nama_mk"]').val(data.nama_mk);
+                // $('input[name="upd_sks_mk"]').val(data.sks_mk);
+                // $('input[name="upd_semester_mk"]').val(data.semester_mk);
+                // $('select[name="upd_program_studi"]').val(data.program_studi);
+                // $('select[name="upd_peminatan"]').val(data.peminatan);
+                // $('select[name="upd_jenis_rg"]').val(data.jenis_rg);
+                $('#modal_update_jw').modal('show');
+                console.log(data);
             },
             complete: function(){
                 App.unblockUI();
@@ -800,123 +713,123 @@ console.log(JADWAL);
         var error4 = $('.alert-update-danger', form4);
         var success4 = $('.alert-update-success', form4);
 
-        form4.validate({
-            errorElement: 'span', //default input error message container
-            errorClass: 'help-block help-block-error', // default input error message class
-            focusInvalid: false, // do not focus the last invalid input
-            ignore: "",  // validate all fields including form hidden input
-            rules: {
-                upd_nama_mk: {
-                    required: true,
-                    maxlength: 100,
-                },
-                upd_sks_mk: {
-                    required: true,
-                    digits: true,
-                    minlength : 1
-                },
-                upd_semester_mk: {
-                    required: true,
-                    digits: true,
-                    minlength : 1,
-                    maxlength : 8
-                },
-                upd_program_studi: {
-                    valueNotEquals :"pilih"
-                },
-                upd_peminatan: {
-                    valueNotEquals :"pilih"
-                },
-                upd_jenis_rg: {
-                    valueNotEquals :"pilih"
-                }
-            },
-            messages: {
-                upd_nama_mk: {
-                    required: "Nama mata kuliah harus di isi",
-                    maxlength: "Harap isi tidak lebih dari 100 karakter",
-                },
-                upd_sks_mk: {
-                    required: "SKS harus di isi",
-                    digits: "Hanya angka yang dibolehkan",
-                    minlength : "Harap isi minimal 1 digit",
-                },
-                upd_semester_mk: {
-                    required: "Semester harus di isi",
-                    digits: "Hanya angka yang dibolehkan",
-                    minlength : "Harap isi minimal 1 digit",
-                    maxlength : "Harap isi maksimal 8 digit"
-                },
-                upd_program_studi: {
-                    valueNotEquals    :"Pilih Program Studi",
-                },
-                upd_peminatan: {
-                    valueNotEquals    :"Pilih Peminatan",
-                },
-                upd_jenis_rg: {
-                    valueNotEquals :"Pilih Jenis Ruangan"
-                }
-            },
+        // form4.validate({
+        //     errorElement: 'span', //default input error message container
+        //     errorClass: 'help-block help-block-error', // default input error message class
+        //     focusInvalid: false, // do not focus the last invalid input
+        //     ignore: "",  // validate all fields including form hidden input
+        //     rules: {
+        //         upd_nama_mk: {
+        //             required: true,
+        //             maxlength: 100,
+        //         },
+        //         upd_sks_mk: {
+        //             required: true,
+        //             digits: true,
+        //             minlength : 1
+        //         },
+        //         upd_semester_mk: {
+        //             required: true,
+        //             digits: true,
+        //             minlength : 1,
+        //             maxlength : 8
+        //         },
+        //         upd_program_studi: {
+        //             valueNotEquals :"pilih"
+        //         },
+        //         upd_peminatan: {
+        //             valueNotEquals :"pilih"
+        //         },
+        //         upd_jenis_rg: {
+        //             valueNotEquals :"pilih"
+        //         }
+        //     },
+        //     messages: {
+        //         upd_nama_mk: {
+        //             required: "Nama mata kuliah harus di isi",
+        //             maxlength: "Harap isi tidak lebih dari 100 karakter",
+        //         },
+        //         upd_sks_mk: {
+        //             required: "SKS harus di isi",
+        //             digits: "Hanya angka yang dibolehkan",
+        //             minlength : "Harap isi minimal 1 digit",
+        //         },
+        //         upd_semester_mk: {
+        //             required: "Semester harus di isi",
+        //             digits: "Hanya angka yang dibolehkan",
+        //             minlength : "Harap isi minimal 1 digit",
+        //             maxlength : "Harap isi maksimal 8 digit"
+        //         },
+        //         upd_program_studi: {
+        //             valueNotEquals    :"Pilih Program Studi",
+        //         },
+        //         upd_peminatan: {
+        //             valueNotEquals    :"Pilih Peminatan",
+        //         },
+        //         upd_jenis_rg: {
+        //             valueNotEquals :"Pilih Jenis Ruangan"
+        //         }
+        //     },
 
-            invalidHandler: function (event, validator) { //display error alert on form submit              
-                success4.hide();
-                error4.show();
-                App.scrollTo(error4, -200);
-            },
+        //     invalidHandler: function (event, validator) { //display error alert on form submit              
+        //         success4.hide();
+        //         error4.show();
+        //         App.scrollTo(error4, -200);
+        //     },
 
-            errorPlacement: function (error, element) { // render error placement for each input type
-                var icon = $(element).parent('.input-icon').children('i');
-                icon.removeClass('fa-check').addClass("fa-warning");  
-                icon.attr("data-original-title", error.text()).tooltip();
-            },
+        //     errorPlacement: function (error, element) { // render error placement for each input type
+        //         var icon = $(element).parent('.input-icon').children('i');
+        //         icon.removeClass('fa-check').addClass("fa-warning");  
+        //         icon.attr("data-original-title", error.text()).tooltip();
+        //     },
 
-            highlight: function (element) { // hightlight error inputs
-                $(element)
-                    .closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
-            },
+        //     highlight: function (element) { // hightlight error inputs
+        //         $(element)
+        //             .closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
+        //     },
 
-            unhighlight: function (element) { // revert the change done by hightlight
+        //     unhighlight: function (element) { // revert the change done by hightlight
                 
-            },
+        //     },
 
-            success: function (label, element) {
-                var icon = $(element).parent('.input-icon').children('i');
-                $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
-                icon.removeClass("fa-warning").addClass("fa-check");
-            },
+        //     success: function (label, element) {
+        //         var icon = $(element).parent('.input-icon').children('i');
+        //         $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+        //         icon.removeClass("fa-warning").addClass("fa-check");
+        //     },
 
-            submitHandler: function (form) {
-                error4.hide();
-                // console.log($(form).serialize());
-                $.ajax({
-                    url: "<?=base_url()?>matakuliah/update_mk", 
-                    type: "POST",             
-                    data: $(form).serialize(),
-                    cache: false,             
-                    processData: false,      
-                    beforeSend: function(){
-                        App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
-                            zIndex: 20000,
-                        });
-                    },
-                    success: function(data) {
-                        success4.show();
-                        location.reload();
-                        // console.log(data);
-                    },
-                    complete: function(){
-                        App.unblockUI();
-                    }
-                });
-                return false;
-                // success4.show();
-                // error4.hide();
-                //form.submit(); // submit the form
-            }
-        });
+        //     submitHandler: function (form) {
+        //         error4.hide();
+        //         // console.log($(form).serialize());
+        //         $.ajax({
+        //             url: "<?=base_url()?>matakuliah/update_mk", 
+        //             type: "POST",             
+        //             data: $(form).serialize(),
+        //             cache: false,             
+        //             processData: false,      
+        //             beforeSend: function(){
+        //                 App.blockUI({
+        //                     // target: '#form_tambah_dosen',
+        //                     // overlayColor: 'none',
+        //                     // animate: true,
+        //                     zIndex: 20000,
+        //                 });
+        //             },
+        //             success: function(data) {
+        //                 success4.show();
+        //                 location.reload();
+        //                 // console.log(data);
+        //             },
+        //             complete: function(){
+        //                 App.unblockUI();
+        //             }
+        //         });
+        //         return false;
+        //         // success4.show();
+        //         // error4.hide();
+        //         //form.submit(); // submit the form
+        //     }
+        // });
     });
     $('#modal_update_mk').on('hidden.bs.modal', function (e) {
         console.log('modal hide');
