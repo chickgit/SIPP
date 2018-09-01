@@ -273,7 +273,7 @@
                                                                 <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Hari
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
@@ -293,7 +293,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Mata Kuliah
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
@@ -313,27 +313,28 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">SKS
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="number" class="form-control" name="upd_sks_jw" min="1" max="8" /> </div>
+                                                                        <input type="text" class="form-control" name="upd_sks_jw" readonly title="Mengikuti mata kuliah" /> 
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Semester
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="number" class="form-control" name="upd_semester_jw" min="1" max="8" /> </div>
+                                                                        <input type="number" class="form-control" name="upd_semester_jw" readonly title="Mengikuti mata kuliah" /> </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Waktu
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
@@ -353,7 +354,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Dosen
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
@@ -373,17 +374,17 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Ruangan
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select name="upd_ruang_jw" class="form-control">
+                                                                        <select name="upd_ruangan_jw" class="form-control">
                                                                             <option value="">Pilih Ruangan</option>
                                                                         <?php
                                                                         foreach ($all_data['ruangan'] as $value) {
                                                                             ?>
-                                                                            <option value="<?=$value['kode_rg']?>"><?=$value['jenis_rg']?></option>
+                                                                            <option value="<?=$value['kode_rg']?>"><?=$value['kode_rg']?></option>
                                                                             <?php
                                                                         }
                                                                         ?>
@@ -393,12 +394,12 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Peserta
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="upd_peserta_jw" />
+                                                                        <input type="text" class="form-control" name="upd_peserta_jw" title="Mengikuti mata kuliah" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -690,17 +691,12 @@ console.log(JADWAL);
                 // success4.show();
                 $('select[name="upd_hari_jw"]').val(data.id_hari);
                 $('select[name="upd_mk_jw"]').val(data.kode_mk);
+                $('input[name="upd_sks_jw"]').val(data.DETAIL.matkul.sks_mk);
+                $('input[name="upd_semester_jw"]').val(data.DETAIL.matkul.semester_mk);
                 $('select[name="upd_waktu_jw"]').val(data.kode_wk);
                 $('select[name="upd_dosen_jw"]').val(data.nid);
                 $('select[name="upd_ruangan_jw"]').val(data.kode_rg);
                 $('input[name="upd_peserta_jw"]').val(data.peserta);
-                // $('input[name="upd_kode_mk"]').val(data.kode_mk);
-                // $('input[name="upd_nama_mk"]').val(data.nama_mk);
-                // $('input[name="upd_sks_mk"]').val(data.sks_mk);
-                // $('input[name="upd_semester_mk"]').val(data.semester_mk);
-                // $('select[name="upd_program_studi"]').val(data.program_studi);
-                // $('select[name="upd_peminatan"]').val(data.peminatan);
-                // $('select[name="upd_jenis_rg"]').val(data.jenis_rg);
                 $('#modal_update_jw').modal('show');
                 console.log(data);
             },

@@ -124,19 +124,60 @@ class Jadwal_model extends CI_Model {
 
     public function get_detail_jw($id_jw)
     {
-        // Ambil induk data jadwal_temp
+        // Ambil induk data JADWAL_TEMP
         $this->db->where('id_j_t',$id_jw);
         $query          = $this->db->get('jadwal_temp');
         $jadwal_temp    = $query->row_array();
         // return $query->row();
 
-        // Masukkan detail setiap dosen yang berhak mengajar ke dalam jadwal_temp
-        // $dosen          = $this->get_dosen();
-        // foreach ($dosen as $k => $v) {
-        //     if (in_array($jadwal_temp['kode_mk'], $v['wawasan_matkul'])) {
-        //         $jadwal_temp['DETAIL']['dosen'][] = $v;
-        //     }
-        // }
+        // Masukkan detail HARI ke dalam JADWAL_TEMP
+        $hari           = $this->get_data('hari');
+        foreach ($hari as $k => $v) {
+            if ($jadwal_temp['id_hari'] == $v['id']) {
+                $jadwal_temp['DETAIL']['hari'] = $v;
+            }
+        }
+
+        // Masukkan detail MATA KULIAH ke dalam JADWAL_TEMP
+        $matkul         = $this->get_data('matakuliah');
+        foreach ($matkul as $k => $v) {
+            if ($jadwal_temp['kode_mk'] == $v['kode_mk']) {
+                $jadwal_temp['DETAIL']['matkul'] = $v;
+            }
+        }
+
+        // Masukkan detail WAKTU ke dalam JADWAL_TEMP
+        $waktu          = $this->get_data('waktu');
+        foreach ($waktu as $k => $v) {
+            if ($jadwal_temp['kode_wk'] == $v['kode_wk']) {
+                $jadwal_temp['DETAIL']['waktu'] = $v;
+            }
+        }
+
+        // Masukkan detail setiap dosen yang berhak mengajar ke dalam JADWAL_TEMP
+        $dosen          = $this->get_data('dosen');
+        foreach ($dosen as $k => $v) {
+            $a = explode(';', $v['wawasan_matkul']);
+            $dosen[$k]['wawasan_matkul'] = array();
+            foreach ($a as $k_n => $v_n) {
+                $b = explode('_', $v_n);
+                $dosen[$k]['wawasan_matkul'][] = $b[0];
+            }
+        }
+
+        foreach ($dosen as $k => $v) {
+            if (in_array($jadwal_temp['kode_mk'], $v['wawasan_matkul'])) {
+                $jadwal_temp['DETAIL']['dosen'][] = $v;
+            }
+        }
+
+        // Masukkan detail RUANGAN ke dalam JADWAL_TEMP
+        $ruangan          = $this->get_data('ruangan');
+        foreach ($ruangan as $k => $v) {
+            if ($jadwal_temp['kode_rg'] == $v['kode_rg']) {
+                $jadwal_temp['DETAIL']['ruangan'] = $v;
+            }
+        }
 
         return $jadwal_temp;
     }
