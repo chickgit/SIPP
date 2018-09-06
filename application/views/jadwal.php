@@ -267,7 +267,7 @@
                                                     <div class="modal-body"> 
                                                         <!-- BEGIN FORM-->
                                                         <div class="form-body">
-                                                            <div class="alert alert-warning display">
+                                                            <div class="alert alert-warning display-hide">
                                                                 <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk peringatan
                                                                 <a class="btn btn-circle btn-icon-only btn-default" data-container=".alert-warning" data-toggle="popover" data-placement="bottom" data-html="true" data-trigger="hover" data-content="<p><strong>Home</strong> - Your base where you usually start your trips </p><p><strong>Billing</strong> - info used on BOL's, invoices if  you don't want to use the Home address </p><p><strong>Other</strong> - Any other base or business location </p>">
                                                                     <i class="fa fa-exclamation"></i>
@@ -627,18 +627,33 @@ jQuery(document).ready(function() {
         return result;
     }
 
-    sih.on('change', function (e) {
+    function resetSelect2 (select)
+    {
+        // untuk ngilangin class has-warning di select2-container--open
+        select.select2('destroy');
+        select.select2();
+    }
+
+    sih.on('select2:select', function (e) {
         var sid_d_hari = String(getSelectedValues(sid,'hari'))
             sih_v = String(getSelectedValues(sih));
+        var idform = $('#form_update_jw');
 
         sid_selected_hari = sid_d_hari.split(';');
         if (jQuery.inArray(sih_v,sid_selected_hari) != -1) {
             // COCOK
+            sih.parents('.form-group').removeClass('has-warning');
+            resetSelect2(sih);
+            sid.parents('.form-group').removeClass('has-warning');
+            resetSelect2(sid);
             console.log('COCOK');
             console.log(sid_d_hari);
             console.log(sih_v);
         }else{
             // TIDAK COCOK
+            idform.find('.alert-warning').removeClass('display-hide');
+            sih.parents('.form-group').addClass('has-warning');
+            sid.parents('.form-group').addClass('has-warning');
             console.log('TIDAK');
             console.log(sid_d_hari);
             console.log(sih_v);
@@ -648,13 +663,14 @@ jQuery(document).ready(function() {
     $('#modal_update_jw').on('hidden.bs.modal', function (e) {
         console.log('modal hide');
         var idform = $('#form_update_jw');
+        idform.find('.form-group').removeClass('has-warning')
         idform.find('.has-error').removeClass('has-error');
         idform.find('.has-success').removeClass('has-success');
         idform.find('.fa-warning').removeClass('fa-warning');
         idform.find('.fa-check').removeClass('fa-check');
-        idform.find('.alert-danger').css('display','none');
-        idform.find('.alert-success').css('display','none');
-        idform.find('.alert-warning').css('display','none');
+        idform.find('.alert-danger').addClass('display-hide');
+        idform.find('.alert-success').addClass('display-hide');
+        idform.find('.alert-warning').addClass('display-hide');
         idform.find('input').val('');
         idform.find('select').val(null).trigger('change');
     })
