@@ -35,8 +35,13 @@ class Login extends CI_Controller {
 		else
 		{
 			$this->session->set_userdata(array('Login' => $data['login_res']['login']));
+
 			$data['get_identity'] = $this->login_model->get_data_user($this->session->userdata('Login'));
 			$this->session->set_userdata(array('Detail' => $data['get_identity']));
+
+			$data['tahun_ajaran'] = $this->login_model->get_tahun_ajaran();
+			$this->session->set_userdata(array('TA' => $data['tahun_ajaran']));
+
 			redirect(base_url().'home');
 		}
 	}

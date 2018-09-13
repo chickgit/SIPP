@@ -254,6 +254,7 @@
                                             }
                                             ?>
                                         </tbody>
+                                        <!-- <button class="btn btn-success mt-sweetalert" data-title="Sweet Alerts with Icons" data-message="Success Icon" data-type="success" data-allow-outside-click="true" data-confirm-button-class="btn-success">Icon Success Alert</button> -->
                                     </table>
                                     <!-- MODAL UPDATE -->
                                     <div class="modal fade bs-modal-lg " id="modal_update_jw" role="dialog" aria-hidden="true">
@@ -490,7 +491,8 @@
 
 <script type="text/javascript">
 jQuery(document).ready(function() {
-    console.log('<?php echo json_encode($user)?>');
+    var tahun_ajaran = '<?=$user['TA']['semester']?>';
+    console.log(tahun_ajaran);
     // Tipe-tipe Warning Html Content Popover Update Jadwal
     var twhcpuj = {
         hari_dosen : "<b>Hari</b> tidak sesuai dengan hari kesediaan dosen<br>",
@@ -499,7 +501,8 @@ jQuery(document).ready(function() {
         dosen_mk : "<b>Dosen</b> tidak sesuai dengan mata kuliah yang diajar<br>",
         mk_ruangan : "<b>Mata Kuliah</b> tidak sesuai dengan tipe ruangan<br>",
         ruangan_mk : "<b>Ruangan</b> tidak sesuai dengan jenis mata kuliah<br>",
-        mk_smstr : "<b>Mata Kuliah</b> yang di pilih termasuk semester genap<br>",
+        mk_smstr_genap : "<b>Mata Kuliah</b> yang di pilih termasuk semester genap<br>",
+        mk_smstr_ganjil : "<b>Mata Kuliah</b> yang di pilih termasuk semester ganjil<br>",
         no_warning : ""
     };
     $('#popover-warning-upd-jw').popover({
@@ -794,7 +797,7 @@ jQuery(document).ready(function() {
                 }
 
                 // Jika masih ada warning pada input matkul
-                if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan')) {
+                if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan') || warning.hasOwnProperty('mk_smstr_genap') || warning.hasOwnProperty('mk_smstr_ganjil')) {
                     // do nothing
                 }else{
                     simk.parents('.form-group').removeClass('has-warning');
@@ -828,9 +831,7 @@ jQuery(document).ready(function() {
 
             var idform = $('#form_update_jw');
 
-            console.log(simk_data_detail);
             simk_dd_new = simk_data_detail.split('_');
-            console.log(simk_dd_new);
             id_sks_mk.val(simk_dd_new[0]);
             id_smstr_mk.val(simk_dd_new[1]);
             i_p_mk.val(simk_dd_new[2]+' | '+simk_dd_new[3]);
@@ -855,7 +856,7 @@ jQuery(document).ready(function() {
                 }
 
                 // Jika masih ada warning pada input matkul
-                if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan')) {
+                if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan') || warning.hasOwnProperty('mk_smstr_genap') || warning.hasOwnProperty('mk_smstr_ganjil')) {
                     // do nothing
                 }else{
                     simk.parents('.form-group').removeClass('has-warning');
@@ -892,7 +893,7 @@ jQuery(document).ready(function() {
                 }
 
                 // Jika masih ada warning pada input matkul
-                if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan')) {
+                if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan') || warning.hasOwnProperty('mk_smstr_genap') || warning.hasOwnProperty('mk_smstr_ganjil')) {
                     // do nothing
                 }else{
                     simk.parents('.form-group').removeClass('has-warning');
@@ -913,6 +914,58 @@ jQuery(document).ready(function() {
                 
                 warning.mk_ruangan = twhcpuj.mk_ruangan;
                 warning.ruangan_mk = twhcpuj.ruangan_mk;
+            }
+
+            // Validasi antara Matkul dan Semester
+            switch (tahun_ajaran){
+                case 'GANJIL':
+                    // Jika semester matkul ganjil
+                    if (id_smstr_mk.val() % 2 === 1) {
+                        delete warning.mk_smstr_genap;
+                        // Jika masih ada warning pada input matkul
+                        if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan') || warning.hasOwnProperty('mk_smstr_genap') || warning.hasOwnProperty('mk_smstr_ganjil')) {
+                            // do nothing
+                        }else{
+                            simk.parents('.form-group').removeClass('has-warning');
+                            cleanSelect2(simk);
+                        }
+                        if (jQuery.isEmptyObject(warning)) {
+                            // Jika obj warning kosong
+                            idform.find('.alert-warning').addClass('display-hide');
+                        }
+                    }else{
+                        // semester matkul genap
+                        idform.find('.alert-warning').removeClass('display-hide');
+                
+                        simk.parents('.form-group').addClass('has-warning');
+                        
+                        warning.mk_smstr_genap = twhcpuj.mk_smstr_genap;
+                    }
+                    break;
+                case 'GENAP' :
+                    // Jika semester matkul genap
+                    if (id_smstr_mk.val() % 2 === 0) {
+                        delete warning.mk_smstr_ganjil;
+                        // Jika masih ada warning pada input matkul
+                        if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan') || warning.hasOwnProperty('mk_smstr_genap') || warning.hasOwnProperty('mk_smstr_ganjil')) {
+                            // do nothing
+                        }else{
+                            simk.parents('.form-group').removeClass('has-warning');
+                            cleanSelect2(simk);
+                        }
+                        if (jQuery.isEmptyObject(warning)) {
+                            // Jika obj warning kosong
+                            idform.find('.alert-warning').addClass('display-hide');
+                        }
+                    }else{
+                        // semester matkul ganjil
+                        idform.find('.alert-warning').removeClass('display-hide');
+                
+                        simk.parents('.form-group').addClass('has-warning');
+                        
+                        warning.mk_smstr_ganjil = twhcpuj.mk_smstr_ganjil;
+                    }
+                    break;
             }
             $('#popover-warning-upd-jw').attr('data-content',joinAllWarning(warning));
         })
@@ -938,7 +991,7 @@ jQuery(document).ready(function() {
                 }
 
                 // Jika masih ada warning pada input matkul
-                if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan')) {
+                if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan') || warning.hasOwnProperty('mk_smstr_genap') || warning.hasOwnProperty('mk_smstr_ganjil')) {
                     // do nothing
                 }else{
                     simk.parents('.form-group').removeClass('has-warning');
@@ -965,7 +1018,6 @@ jQuery(document).ready(function() {
         // $('#popover-warning-upd-jw').attr('data-content',function() {return $(this).attr('data-content') + htmlPopover});
     })
 
-
     $('#modal_update_jw').on('hidden.bs.modal', function (e) {
         console.log('modal hide');
         var idform = $('#form_update_jw');
@@ -981,34 +1033,6 @@ jQuery(document).ready(function() {
         idform.find('input').val('');
         idform.find('select').val(null).trigger('change');
     })
-
-    // $('select[name="upd_hari_jw"]').on('change', function (e) {
-    //     var optionSelected = $("option:selected", this);
-    //     var valueSelected = this.value;
-    //     var hari_dosen = String($('select[name="upd_dosen_jw"]').find(":selected").data("hari"));
-    //     var a = [];
-    //     if (hari_dosen !== 'undefined') {
-    //         var a = hari_dosen.split(';');
-    //     }
-
-    //     // console.log($.inArray(this.value, a));
-    //     console.log(a);
-    // });
-
-    // $('select[name="upd_mk_jw"]').on('change', function (e) {
-    //     var optionSelected = $("option:selected", this);
-    //     var valueSelected = this.value;
-    //     var detail = $(this).find(":selected").data("detail");
-    //     if (detail != null) {
-    //         var a = [];
-    //         a = detail.split('_');
-
-    //         $('input[name="upd_sks_jw"]').val(a[0]);
-    //         $('input[name="upd_semester_jw"]').val(a[1]);
-    //         $('input[name="upd_peserta_jw"]').val(a[2]+" | "+a[3]);
-    //     }
-    //     // console.log(detail);
-    // });
 
     $('#sample_2').on('click', '#update_jw', function(){
         $.ajax({
@@ -1047,127 +1071,78 @@ jQuery(document).ready(function() {
             }
         });
 
-        var form4 = $('#form_update_mk');
+        var form4 = $('#form_update_jw');
         var error4 = $('.alert-update-danger', form4);
         var success4 = $('.alert-update-success', form4);
 
-        // form4.validate({
-        //     errorElement: 'span', //default input error message container
-        //     errorClass: 'help-block help-block-error', // default input error message class
-        //     focusInvalid: false, // do not focus the last invalid input
-        //     ignore: "",  // validate all fields including form hidden input
-        //     rules: {
-        //         upd_nama_mk: {
-        //             required: true,
-        //             maxlength: 100,
-        //         },
-        //         upd_sks_mk: {
-        //             required: true,
-        //             digits: true,
-        //             minlength : 1
-        //         },
-        //         upd_semester_mk: {
-        //             required: true,
-        //             digits: true,
-        //             minlength : 1,
-        //             maxlength : 8
-        //         },
-        //         upd_program_studi: {
-        //             valueNotEquals :"pilih"
-        //         },
-        //         upd_peminatan: {
-        //             valueNotEquals :"pilih"
-        //         },
-        //         upd_jenis_rg: {
-        //             valueNotEquals :"pilih"
-        //         }
-        //     },
-        //     messages: {
-        //         upd_nama_mk: {
-        //             required: "Nama mata kuliah harus di isi",
-        //             maxlength: "Harap isi tidak lebih dari 100 karakter",
-        //         },
-        //         upd_sks_mk: {
-        //             required: "SKS harus di isi",
-        //             digits: "Hanya angka yang dibolehkan",
-        //             minlength : "Harap isi minimal 1 digit",
-        //         },
-        //         upd_semester_mk: {
-        //             required: "Semester harus di isi",
-        //             digits: "Hanya angka yang dibolehkan",
-        //             minlength : "Harap isi minimal 1 digit",
-        //             maxlength : "Harap isi maksimal 8 digit"
-        //         },
-        //         upd_program_studi: {
-        //             valueNotEquals    :"Pilih Program Studi",
-        //         },
-        //         upd_peminatan: {
-        //             valueNotEquals    :"Pilih Peminatan",
-        //         },
-        //         upd_jenis_rg: {
-        //             valueNotEquals :"Pilih Jenis Ruangan"
-        //         }
-        //     },
+        form4.validate({
+            invalidHandler: function (event, validator) { //display error alert on form submit              
+                // success4.hide();
+                // error4.show();
+                // App.scrollTo(error4, -200);
+            },
 
-        //     invalidHandler: function (event, validator) { //display error alert on form submit              
-        //         success4.hide();
-        //         error4.show();
-        //         App.scrollTo(error4, -200);
-        //     },
+            errorPlacement: function (error, element) { // render error placement for each input type
+                // var icon = $(element).parent('.input-icon').children('i');
+                // icon.removeClass('fa-check').addClass("fa-warning");  
+                // icon.attr("data-original-title", error.text()).tooltip();
+            },
 
-        //     errorPlacement: function (error, element) { // render error placement for each input type
-        //         var icon = $(element).parent('.input-icon').children('i');
-        //         icon.removeClass('fa-check').addClass("fa-warning");  
-        //         icon.attr("data-original-title", error.text()).tooltip();
-        //     },
+            highlight: function (element) { // hightlight error inputs
+                // $(element)
+                //     .closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
+            },
 
-        //     highlight: function (element) { // hightlight error inputs
-        //         $(element)
-        //             .closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group   
-        //     },
-
-        //     unhighlight: function (element) { // revert the change done by hightlight
+            unhighlight: function (element) { // revert the change done by hightlight
                 
-        //     },
+            },
 
-        //     success: function (label, element) {
-        //         var icon = $(element).parent('.input-icon').children('i');
-        //         $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
-        //         icon.removeClass("fa-warning").addClass("fa-check");
-        //     },
+            success: function (label, element) {
+                // var icon = $(element).parent('.input-icon').children('i');
+                // $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                // icon.removeClass("fa-warning").addClass("fa-check");
+            },
 
-        //     submitHandler: function (form) {
-        //         error4.hide();
-        //         // console.log($(form).serialize());
-        //         $.ajax({
-        //             url: "<?=base_url()?>matakuliah/update_mk", 
-        //             type: "POST",             
-        //             data: $(form).serialize(),
-        //             cache: false,             
-        //             processData: false,      
-        //             beforeSend: function(){
-        //                 App.blockUI({
-        //                     // target: '#form_tambah_dosen',
-        //                     // overlayColor: 'none',
-        //                     // animate: true,
-        //                     zIndex: 20000,
-        //                 });
-        //             },
-        //             success: function(data) {
-        //                 success4.show();
-        //                 location.reload();
-        //                 // console.log(data);
-        //             },
-        //             complete: function(){
-        //                 App.unblockUI();
-        //             }
-        //         });
-        //         return false;
-        //         // success4.show();
-        //         // error4.hide();
-        //         //form.submit(); // submit the form
-        //     }
-        // });
+            submitHandler: function (form) {
+                error4.hide();
+                // console.log($(form).serialize());
+                $.ajax({
+                    url: "<?=base_url()?>jadwal/update_jw", 
+                    type: "POST",             
+                    data: $(form).serialize(),
+                    cache: false,             
+                    processData: false,      
+                    beforeSend: function(){
+                        App.blockUI({
+                            // target: '#form_tambah_dosen',
+                            // overlayColor: 'none',
+                            // animate: true,
+                            zIndex: 20000,
+                        });
+                    },
+                    success: function(data) {
+                        // success4.show();
+                        // location.reload();
+                        $('#modal_update_jw').modal('hide');
+                        console.log(data);
+                        swal({
+                            title : "Berhasil!", 
+                            text : "Data telah di update!", 
+                            type : "success"},
+                            function(){
+                                location.reload();
+                            });
+                    },
+                    complete: function(){
+                        App.unblockUI();
+                    }
+                });
+                // return false;
+                // success4.show();
+                // error4.hide();
+                //form.submit(); // submit the form
+            }
+        });
     });
     $('#modal_update_mk').on('hidden.bs.modal', function (e) {
         console.log('modal hide');

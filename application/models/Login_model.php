@@ -50,4 +50,9 @@ class Login_model extends CI_Model {
         return $query->row_array();
     }
 
+    public function get_tahun_ajaran()
+    {
+        return $this->db->get_where('buka_tahun_ajaran', array('isDelete' => 0, 'isShow' => 1))->row_array();
+    }
+
 }

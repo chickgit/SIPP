@@ -236,31 +236,11 @@ class Jadwal_model extends CI_Model {
         return $dosen;
     }
 
-    public function check_kode_mk($kode_mk)
-    {
-        $query = $this->db->query('SELECT kode_mk FROM matakuliah WHERE kode_mk = "'.$kode_mk.'"');
-        return $query->row();
-    }
-
-    public function insert_data()
+    public function update_jw()
     {
         $data = array(
-            "kode_mk"       => $this->input->post('kode_mk'),
-            "nama_mk"       => $this->input->post('nama_mk'),
-            "sks_mk"        => $this->input->post('sks_mk'),
-            "semester_mk"   => $this->input->post('semester_mk'),
-            "program_studi" => $this->input->post('program_studi'),
-            "peminatan"     => $this->input->post('peminatan'),
-            "jenis_rg"      => $this->input->post('jenis_rg')
+            ""
         );
-        $this->db->insert('matakuliah', $data);
-        echo "OK";
-    }
-
-    public function get_mk($kode_mk)
-    {
-        $query = $this->db->query('SELECT * FROM matakuliah WHERE kode_mk = "'.$kode_mk.'"');
-        return $query->row();
     }
 
     public function update_mk()
