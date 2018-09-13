@@ -267,9 +267,9 @@
                                                     <div class="modal-body"> 
                                                         <!-- BEGIN FORM-->
                                                         <div class="form-body">
-                                                            <div class="alert alert-warning display-hide">
+                                                            <div class="alert alert-warning display-hide warning-upd-jw">
                                                                 <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk peringatan
-                                                                <a class="btn btn-circle btn-icon-only btn-default" data-container=".alert-warning" data-toggle="popover" data-placement="bottom" data-html="true" data-trigger="hover" data-content="<p><strong>Home</strong> - Your base where you usually start your trips </p><p><strong>Billing</strong> - info used on BOL's, invoices if  you don't want to use the Home address </p><p><strong>Other</strong> - Any other base or business location </p>">
+                                                                <a id="popover-warning-upd-jw" class="btn btn-circle btn-icon-only btn-default" data-toggle="popover" data-content="">
                                                                     <i class="fa fa-exclamation"></i>
                                                                 </a> 
                                                             </div>
@@ -309,7 +309,7 @@
                                                                             );
                                                                             foreach ($all_data['matakuliah'] as $value) {
                                                                         ?>
-                                                                        <option value="<?=$value['kode_mk']?>" data-detail="<?=$value['sks_mk']?>_<?=$value['semester_mk']?>_<?=$value['program_studi']?>_<?=$peminatan[$value['peminatan']]?>"><?=$value['nama_mk']?> | <?=$value['sks_mk']?> SKS | Semester <?=$value['semester_mk']?> | <?=$value['program_studi']?> | <?=$peminatan[$value['peminatan']]?></option>
+                                                                        <option value="<?=$value['kode_mk']?>" data-detail="<?=$value['sks_mk']?>_<?=$value['semester_mk']?>_<?=$value['program_studi']?>_<?=$peminatan[$value['peminatan']]?>" data-rg="<?=$value['jenis_rg']?>"><?=$value['nama_mk']?> | <?=$value['sks_mk']?> SKS | Semester <?=$value['semester_mk']?> | <?=$value['program_studi']?> | <?=$peminatan[$value['peminatan']]?></option>
                                                                         <?php
                                                                             }
                                                                         ?>
@@ -322,7 +322,7 @@
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
-                                                                        <i class="fa fa-warning"></i>
+                                                                        <i class="fa"></i>
                                                                         <input type="text" class="form-control" name="upd_sks_jw" readonly title="Mengikuti mata kuliah" /> 
                                                                     </div>
                                                                 </div>
@@ -374,7 +374,7 @@
                                                                                     }
                                                                                 }
                                                                         ?>
-                                                                        <option value="<?=$value['nid']?>" data-hari="<?=$value['ketersediaan_hari']?>"><?=$value['nama']?> | <?=rtrim($ketersediaan_hari,', ')?></option>
+                                                                        <option value="<?=$value['nid']?>" data-hari="<?=$value['ketersediaan_hari']?>" data-mk="<?=$value['wawasan_matkul']?>"><?=$value['nama']?> | <?=rtrim($ketersediaan_hari,', ')?></option>
                                                                         <?php
                                                                             }
                                                                         ?>
@@ -390,7 +390,7 @@
                                                                         <?php
                                                                             foreach ($all_data['ruangan'] as $value) {
                                                                         ?>
-                                                                        <option value="<?=$value['kode_rg']?>"><?=$value['kode_rg']?></option>
+                                                                        <option value="<?=$value['kode_rg']?>" data-rg="<?=$value['jenis_rg']?>"><?=$value['kode_rg']?></option>
                                                                         <?php
                                                                             }
                                                                         ?>
@@ -490,19 +490,36 @@
 
 <script type="text/javascript">
 jQuery(document).ready(function() {
-    $('[data-toggle="popover"]').popover();
+    console.log('<?php echo json_encode($user)?>');
+    // Tipe-tipe Warning Html Content Popover Update Jadwal
+    var twhcpuj = {
+        hari_dosen : "<b>Hari</b> tidak sesuai dengan hari kesediaan dosen<br>",
+        dosen_hari : "<b>Dosen</b> tidak sesuai dengan hari<br>",
+        mk_dosen : "<b>Mata Kuliah</b> tidak sesuai dengan dosen pengajar<br>",
+        dosen_mk : "<b>Dosen</b> tidak sesuai dengan mata kuliah yang diajar<br>",
+        mk_ruangan : "<b>Mata Kuliah</b> tidak sesuai dengan tipe ruangan<br>",
+        ruangan_mk : "<b>Ruangan</b> tidak sesuai dengan jenis mata kuliah<br>",
+        mk_smstr : "<b>Mata Kuliah</b> yang di pilih termasuk semester genap<br>",
+        no_warning : ""
+    };
+    $('#popover-warning-upd-jw').popover({
+        html        : true,
+        container   : ".alert-warning",
+        placement   : "bottom",
+        trigger     : "hover"
+    });
     var JADWAL = "<?=count($list_jw)?>";
 
     // add the rule here
     $.validator.addMethod("valueNotEquals", function(value, element, arg){
-    return arg !== value;
+        return arg !== value;
     }, "Value must not equal arg.");
 
     $('.select2').select2({
         placeholder : null,
         width: null,
     });
-// console.log(JADWAL);
+    // console.log(JADWAL);
     $('#generate_table_jadwal').on('click', function(){
         if (JADWAL > 0) 
         {
@@ -611,9 +628,21 @@ jQuery(document).ready(function() {
     })
     
         // Select Input Hari
-    var sih                 = $('select[name="upd_hari_jw"]')
+    var sih         = $('select[name="upd_hari_jw"]')
         // Select Input Dosen
-        sid                 = $('select[name="upd_dosen_jw"]');
+        sid         = $('select[name="upd_dosen_jw"]')
+        // Select Input Mata Kuliah
+        simk        = $('select[name="upd_mk_jw"]')
+        // Select Input Ruangan
+        sirg        = $('select[name="upd_ruangan_jw"]')
+        // Input Disabled SKS Mata Kuliah
+        id_sks_mk   = $('input[name="upd_sks_jw"]')
+        // Input Disabled Semester Mata Kuliah
+        id_smstr_mk = $('input[name="upd_semester_jw"]')
+        // Input Peserta Mata Kuliah
+        i_p_mk      = $('input[name="upd_peserta_jw"]');
+
+    var htmlPopover;
 
     function getSelectedValues (select, data_ = null)
     {
@@ -627,38 +656,315 @@ jQuery(document).ready(function() {
         return result;
     }
 
-    function resetSelect2 (select)
+    function cleanSelect2 (select)
     {
-        // untuk ngilangin class has-warning di select2-container--open
+        // untuk bersihin class has-warning di select2-container--open
         select.select2('destroy');
         select.select2();
     }
 
-    sih.on('select2:select', function (e) {
-        var sid_d_hari = String(getSelectedValues(sid,'hari'))
-            sih_v = String(getSelectedValues(sih));
-        var idform = $('#form_update_jw');
-
-        sid_selected_hari = sid_d_hari.split(';');
-        if (jQuery.inArray(sih_v,sid_selected_hari) != -1) {
-            // COCOK
-            sih.parents('.form-group').removeClass('has-warning');
-            resetSelect2(sih);
-            sid.parents('.form-group').removeClass('has-warning');
-            resetSelect2(sid);
-            console.log('COCOK');
-            console.log(sid_d_hari);
-            console.log(sih_v);
-        }else{
-            // TIDAK COCOK
-            idform.find('.alert-warning').removeClass('display-hide');
-            sih.parents('.form-group').addClass('has-warning');
-            sid.parents('.form-group').addClass('has-warning');
-            console.log('TIDAK');
-            console.log(sid_d_hari);
-            console.log(sih_v);
+    function joinAllWarning(arr_obj)
+    {
+        var str = "";
+        for (var key in arr_obj) {
+            if (arr_obj.hasOwnProperty(key)) {
+                str+=arr_obj[key];
+            }
         }
+        return str;
+    }
+
+    $('#modal_update_jw').on('show.bs.modal', function (e) {
+        var warning = {};
+        sih.on('select2:select', function (e) {
+            var sid_data_hari = String(getSelectedValues(sid,'hari'))
+                sih_value = String(getSelectedValues(sih));
+            var idform = $('#form_update_jw');
+
+            // Validasi antara Hari dan Dosen
+            sid_selected_hari = sid_data_hari.split(';');
+            if (jQuery.inArray(sih_value,sid_selected_hari) != -1) {
+                // Hari terdapat di kesediaan dosen
+                // COCOK
+                delete warning.hari_dosen;
+                delete warning.dosen_hari;
+
+                // Jika masih ada warning pada input hari
+                if (warning.hasOwnProperty('hari_dosen')) {
+                    // do nothing
+                }else{
+                    sih.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(sih);
+                }
+
+                // Jika masih ada warning pada input dosen
+                if (warning.hasOwnProperty('dosen_hari') || warning.hasOwnProperty('dosen_mk')) {
+                    // do nothing
+                }else{
+                    sid.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(sid);
+                }
+
+                // Jika obj warning kosong
+                if (jQuery.isEmptyObject(warning)) {
+                    idform.find('.alert-warning').addClass('display-hide');
+                }
+            }else{
+                // Hari tidak ada di kesediaan dosen
+                // TIDAK COCOK
+                
+                idform.find('.alert-warning').removeClass('display-hide');
+                
+                sih.parents('.form-group').addClass('has-warning');
+                sid.parents('.form-group').addClass('has-warning');
+                
+                warning.hari_dosen = twhcpuj.hari_dosen;
+                warning.dosen_hari = twhcpuj.dosen_hari;
+            }
+            $('#popover-warning-upd-jw').attr('data-content',joinAllWarning(warning));
+        })
+
+        sid.on('select2:select', function (e) {
+            var sid_data_hari = String(getSelectedValues(sid,'hari'))
+                sih_value = String(getSelectedValues(sih))
+                sid_data_mk = String(getSelectedValues(sid,'mk'))
+                simk_value = String(getSelectedValues(simk));
+
+            var idform = $('#form_update_jw');
+
+            // Validasi antara Dosen dan Hari
+            sid_selected_hari = sid_data_hari.split(';');
+            if (jQuery.inArray(sih_value,sid_selected_hari) != -1) {
+                // Dosen hadir di hari tsb
+                // COCOK
+                delete warning.hari_dosen;
+                delete warning.dosen_hari;
+
+                // Jika masih ada warning pada input hari
+                if (warning.hasOwnProperty('hari_dosen')) {
+                    // do nothing
+                }else{
+                    sih.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(sih);
+                }
+
+                // Jika masih ada warning pada input dosen
+                if (warning.hasOwnProperty('dosen_hari') || warning.hasOwnProperty('dosen_mk')) {
+                    // do nothing
+                }else{
+                    sid.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(sid);
+                }
+
+                // Jika obj warning kosong
+                if (jQuery.isEmptyObject(warning)) {
+                    idform.find('.alert-warning').addClass('display-hide');
+
+                }
+            }else{
+                // Dosen absen di hari tsb
+                // TIDAK COCOK
+                
+                idform.find('.alert-warning').removeClass('display-hide');
+                
+                sih.parents('.form-group').addClass('has-warning');
+                sid.parents('.form-group').addClass('has-warning');
+                
+                warning.dosen_hari = twhcpuj.dosen_hari;
+                warning.hari_dosen = twhcpuj.hari_dosen;
+            }
+
+            // Validasi antara Dosen dan Matkul
+            sid_mk = sid_data_mk.split(';');
+            sid_mk_new = [];
+            for (var i = 0; i < sid_mk.length; i++) {
+                sid_mk_new.push(sid_mk[i].replace(/_[0-9]/g,''));
+            }
+            if (jQuery.inArray(simk_value,sid_mk_new) != -1) {
+                // Matkul dapat diajar oleh dosen
+                delete warning.mk_dosen;
+                delete warning.dosen_mk;
+
+                // Jika masih ada warning pada input dosen
+                if (warning.hasOwnProperty('dosen_hari') || warning.hasOwnProperty('dosen_mk')) {
+                    // do nothing
+                }else{
+                    sid.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(sid);
+                }
+
+                // Jika masih ada warning pada input matkul
+                if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan')) {
+                    // do nothing
+                }else{
+                    simk.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(simk);
+                }
+
+                // Jika obj warning kosong
+                if (jQuery.isEmptyObject(warning)) {
+                    idform.find('.alert-warning').addClass('display-hide');
+
+                }
+            }else{
+                // Matkul tidak dapat diajar dosen
+                idform.find('.alert-warning').removeClass('display-hide');
+                
+                simk.parents('.form-group').addClass('has-warning');
+                sid.parents('.form-group').addClass('has-warning');
+                
+                warning.dosen_mk = twhcpuj.dosen_mk;
+                warning.mk_dosen = twhcpuj.mk_dosen;
+            }
+            $('#popover-warning-upd-jw').attr('data-content',joinAllWarning(warning));
+        })
+
+        simk.on('select2:select', function (e) {
+            var sid_data_mk = String(getSelectedValues(sid,'mk'))
+                simk_value = String(getSelectedValues(simk))
+                simk_data_detail = String(getSelectedValues(simk,'detail'))
+                simk_data_rg = String(getSelectedValues(simk,'rg'))
+                sirg_data_rg = String(getSelectedValues(sirg,'rg'));
+
+            var idform = $('#form_update_jw');
+
+            console.log(simk_data_detail);
+            simk_dd_new = simk_data_detail.split('_');
+            console.log(simk_dd_new);
+            id_sks_mk.val(simk_dd_new[0]);
+            id_smstr_mk.val(simk_dd_new[1]);
+            i_p_mk.val(simk_dd_new[2]+' | '+simk_dd_new[3]);
+
+            // Validasi antara Matkul dan Dosen
+            sid_mk = sid_data_mk.split(';');
+            sid_mk_new = [];
+            for (var i = 0; i < sid_mk.length; i++) {
+                sid_mk_new.push(sid_mk[i].replace(/_[0-9]/g,''));
+            }
+            if (jQuery.inArray(simk_value,sid_mk_new) != -1) {
+                // Matkul dapat diajar oleh dosen
+                delete warning.mk_dosen;
+                delete warning.dosen_mk;
+
+                // Jika masih ada warning pada input dosen
+                if (warning.hasOwnProperty('dosen_hari') || warning.hasOwnProperty('dosen_mk')) {
+                    // do nothing
+                }else{
+                    sid.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(sid);
+                }
+
+                // Jika masih ada warning pada input matkul
+                if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan')) {
+                    // do nothing
+                }else{
+                    simk.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(simk);
+                }
+
+                if (jQuery.isEmptyObject(warning)) {
+                    // Jika obj warning kosong
+                    idform.find('.alert-warning').addClass('display-hide');
+                }
+            }else{
+                // Matkul tidak dapat diajar dosen
+                idform.find('.alert-warning').removeClass('display-hide');
+                
+                simk.parents('.form-group').addClass('has-warning');
+                sid.parents('.form-group').addClass('has-warning');
+                
+                warning.mk_dosen = twhcpuj.mk_dosen;
+                warning.dosen_mk = twhcpuj.dosen_mk;
+            }
+
+            // Validasi antara Matkul dan Ruangan
+            if (simk_data_rg == sirg_data_rg) {
+                // Matkul dan ruangan punya jenis yg sama
+                delete warning.mk_ruangan;
+                delete warning.ruangan_mk;
+
+                // Jika masih ada warning pada input ruangan
+                if (warning.hasOwnProperty('ruangan_mk')) {
+                    // do nothing
+                }else{
+                    sirg.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(sirg);
+                }
+
+                // Jika masih ada warning pada input matkul
+                if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan')) {
+                    // do nothing
+                }else{
+                    simk.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(simk);
+                }
+
+                if (jQuery.isEmptyObject(warning)) {
+                    // Jika obj warning kosong
+                    idform.find('.alert-warning').addClass('display-hide');
+
+                }
+            }else{
+                // Matkul dan ruangan berbeda jenis
+                idform.find('.alert-warning').removeClass('display-hide');
+                
+                simk.parents('.form-group').addClass('has-warning');
+                sirg.parents('.form-group').addClass('has-warning');
+                
+                warning.mk_ruangan = twhcpuj.mk_ruangan;
+                warning.ruangan_mk = twhcpuj.ruangan_mk;
+            }
+            $('#popover-warning-upd-jw').attr('data-content',joinAllWarning(warning));
+        })
+
+        sirg.on('select2:select', function (e) {
+            var simk_data_rg = String(getSelectedValues(simk,'rg'))
+                sirg_data_rg = String(getSelectedValues(sirg,'rg'));
+
+            var idform = $('#form_update_jw');
+
+            // Validasi antara Matkul dan Ruangan
+            if (simk_data_rg == sirg_data_rg) {
+                // Matkul dan ruangan punya jenis yg sama
+                delete warning.mk_ruangan;
+                delete warning.ruangan_mk;
+
+                // Jika masih ada warning pada input ruangan
+                if (warning.hasOwnProperty('ruangan_mk')) {
+                    // do nothing
+                }else{
+                    sirg.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(sirg);
+                }
+
+                // Jika masih ada warning pada input matkul
+                if (warning.hasOwnProperty('mk_dosen') || warning.hasOwnProperty('mk_ruangan')) {
+                    // do nothing
+                }else{
+                    simk.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(simk);
+                }
+
+                if (jQuery.isEmptyObject(warning)) {
+                    // Jika obj warning kosong
+                    idform.find('.alert-warning').addClass('display-hide');
+
+                }
+            }else{
+                // Matkul dan ruangan berbeda jenis
+                idform.find('.alert-warning').removeClass('display-hide');
+                
+                simk.parents('.form-group').addClass('has-warning');
+                sirg.parents('.form-group').addClass('has-warning');
+                
+                warning.mk_ruangan = twhcpuj.mk_ruangan;
+                warning.ruangan_mk = twhcpuj.ruangan_mk;
+            }
+            $('#popover-warning-upd-jw').attr('data-content',joinAllWarning(warning));
+        })
+        // $('#popover-warning-upd-jw').attr('data-content',function() {return $(this).attr('data-content') + htmlPopover});
     })
+
 
     $('#modal_update_jw').on('hidden.bs.modal', function (e) {
         console.log('modal hide');
@@ -671,6 +977,7 @@ jQuery(document).ready(function() {
         idform.find('.alert-danger').addClass('display-hide');
         idform.find('.alert-success').addClass('display-hide');
         idform.find('.alert-warning').addClass('display-hide');
+        idform.find('#popover-warning-upd-jw').attr('data-content','');
         idform.find('input').val('');
         idform.find('select').val(null).trigger('change');
     })
@@ -688,20 +995,20 @@ jQuery(document).ready(function() {
     //     console.log(a);
     // });
 
-    $('select[name="upd_mk_jw"]').on('change', function (e) {
-        var optionSelected = $("option:selected", this);
-        var valueSelected = this.value;
-        var detail = $(this).find(":selected").data("detail");
-        if (detail != null) {
-            var a = [];
-            a = detail.split('_');
+    // $('select[name="upd_mk_jw"]').on('change', function (e) {
+    //     var optionSelected = $("option:selected", this);
+    //     var valueSelected = this.value;
+    //     var detail = $(this).find(":selected").data("detail");
+    //     if (detail != null) {
+    //         var a = [];
+    //         a = detail.split('_');
 
-            $('input[name="upd_sks_jw"]').val(a[0]);
-            $('input[name="upd_semester_jw"]').val(a[1]);
-            $('input[name="upd_peserta_jw"]').val(a[2]+" | "+a[3]);
-        }
-        // console.log(detail);
-    });
+    //         $('input[name="upd_sks_jw"]').val(a[0]);
+    //         $('input[name="upd_semester_jw"]').val(a[1]);
+    //         $('input[name="upd_peserta_jw"]').val(a[2]+" | "+a[3]);
+    //     }
+    //     // console.log(detail);
+    // });
 
     $('#sample_2').on('click', '#update_jw', function(){
         $.ajax({
