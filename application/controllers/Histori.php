@@ -27,6 +27,9 @@ class Histori extends MY_Controller {
 		$data['role'] = $this->get_role_user();
 		$data['histori_'.$this->segment()] = 'active open';
 		$data['header']['title'] = 'Histori '.ucwords($this->segment());
+		if ($this->segment() == 'jadwal_temp') {
+			$data['header']['title'] = 'Histori Jadwal';
+		}
 		$data['header']['css_page_plugin'] = '
 			<link href="'.base_url().'assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 			<link href="'.base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />';

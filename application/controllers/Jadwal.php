@@ -92,42 +92,17 @@ class Jadwal extends MY_Controller {
 
 	public function update_jw()
 	{
-		print_r(json_encode($_POST));
-		exit();
+		// echo json_encode($_POST);
+		// exit();
 		$data['update_jw'] = $this->jadwal_model->update_jw();
 		echo $data['update_jw'];
 		exit();
 	}
 
-	public function insert_matakuliah()
+	public function delete_jw()
 	{
-		// print_r($_GET);
-		// print_r($_POST['nid']);
-		// json_encode($_POST);
-		$data['insert_matakuliah'] = $this->jadwal_model->insert_data();
-		echo $data['insert_matakuliah'];
-		exit();
-	}
-
-	public function check_kode_mk()
-	{
-		// print_r($_GET);
-		$data['check_kode_mk'] = $this->jadwal_model->check_kode_mk($_GET['kode_mk']);
-		isset($data['check_kode_mk']) ? $a="false" : $a="true";
-		echo $a;
-	}
-
-	public function update_mk()
-	{
-		$data['update_mk'] = $this->jadwal_model->update_mk();
-		echo $data['update_mk'];
-		exit();
-	}
-
-	public function delete_mk()
-	{
-		$data['delete_mk'] = $this->jadwal_model->delete_mk($_POST['del_kode_mk']);
-		echo $data['delete_mk'];
+		$data['delete_jw'] = $this->jadwal_model->delete_jw();
+		echo $data['delete_jw'];
 		exit();
 	}
 

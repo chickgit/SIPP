@@ -275,9 +275,11 @@
                                                                 </a> 
                                                             </div>
                                                             <div class="alert alert-danger display-hide">
-                                                                <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. </div>
+                                                                <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. 
+                                                            </div>
                                                             <div class="alert alert-success display-hide">
-                                                                <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
+                                                                <button class="close" data-close="alert"></button> Data berhasil di simpan! 
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Hari
                                                                     <span class="required"> </span>
@@ -413,8 +415,102 @@
                                                         <!-- END FORM-->
                                                     </div>
                                                     <div class="modal-footer">
+                                                        <input type="hidden" name="upd_kode_jw" value="">
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
                                                         <button type="submit" class="btn green">Ubah</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                    <!-- MODAL DELETE -->
+                                    <div class="modal fade " id="modal_delete_jw" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog " id="modal_dialog_delete_jw"> 
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                    <h4 class="modal-title">Hapus Jadwal</h4>
+                                                </div>
+                                                <form id="form_delete_jw" class="form-horizontal">
+                                                    <div class="modal-body"> 
+                                                        <!-- BEGIN FORM-->
+                                                        <div class="form-body">
+                                                            <div class="alert alert-danger display-block">
+                                                                Anda yakin ingin menghapus data ini? 
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Hari
+                                                                    <span class="required"> </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" readonly class="form-control" name="del_hari_jw" value="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Mata Kuliah
+                                                                    <span class="required"> </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" readonly class="form-control" name="del_mk_jw" value="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">SKS
+                                                                    <span class="required"> </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" readonly class="form-control" name="del_sks_jw" value="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Semester
+                                                                    <span class="required"> </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" readonly class="form-control" name="del_semester_jw" value="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Waktu
+                                                                    <span class="required"> </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" readonly class="form-control" name="del_waktu_jw" value="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Dosen
+                                                                    <span class="required"> </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" readonly class="form-control" name="del_dosen_jw" value="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Ruangan
+                                                                    <span class="required"> </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" readonly class="form-control" name="del_ruangan_jw" value="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Peserta
+                                                                    <span class="required"> </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" readonly class="form-control" name="del_peserta_jw" value="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- END FORM-->
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <input type="hidden" name="del_kode_jw" value="">
+                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
+                                                        <button type="submit" class="btn green">Hapus</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -1063,6 +1159,7 @@ jQuery(document).ready(function() {
                 $('select[name="upd_dosen_jw"]').val(data.nid).trigger('change');
                 $('select[name="upd_ruangan_jw"]').val(data.kode_rg).trigger('change');
                 $('input[name="upd_peserta_jw"]').val(data.peserta);
+                $('input[name="upd_kode_jw"]').val(data.id_j_t);
                 $('#modal_update_jw').modal('show');
                 console.log(data);
             },
@@ -1121,17 +1218,15 @@ jQuery(document).ready(function() {
                         });
                     },
                     success: function(data) {
-                        // success4.show();
-                        // location.reload();
-                        $('#modal_update_jw').modal('hide');
                         console.log(data);
+                        $('#modal_update_jw').modal('hide');
                         swal({
                             title : "Berhasil!", 
                             text : "Data telah di update!", 
                             type : "success"},
                             function(){
                                 location.reload();
-                            });
+                        });
                     },
                     complete: function(){
                         App.unblockUI();
@@ -1144,24 +1239,13 @@ jQuery(document).ready(function() {
             }
         });
     });
-    $('#modal_update_mk').on('hidden.bs.modal', function (e) {
-        console.log('modal hide');
-        var idform = $('#form_update_mk');
-        idform.find('.has-error').removeClass('has-error');
-        idform.find('.has-success').removeClass('has-success');
-        idform.find('.fa-warning').removeClass('fa-warning');
-        idform.find('.fa-check').removeClass('fa-check');
-        idform.find('.alert-danger').css('display','none');
-        idform.find('.alert-success').css('display','none');
-        idform.find('input').val('');
-        idform.find('select').val('pilih');
-    })
-    $('#sample_2').on('click', '#delete_mk', function(){
+
+    $('#sample_2').on('click', '#delete_jw', function(){
         $.ajax({
-            url: "<?=base_url()?>matakuliah/get_mk", 
+            url: "<?=base_url()?>jadwal/get_detail_jw", 
             type: "POST",
             dataType: "json",
-            data: {kode_mk : $(this).data('val')},
+            data: {kode_jw : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
                     // target: '#form_tambah_dosen',
@@ -1172,28 +1256,35 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="del_kode_mk"]').val(data.kode_mk);
-                $('input[name="del_nama_mk"]').val(data.nama_mk);
-                $('input[name="del_sks_mk"]').val(data.sks_mk);
-                $('input[name="del_semester_mk"]').val(data.semester_mk);
-                $('input[name="del_program_studi"]').val(data.program_studi);
-                $('input[name="del_peminatan"]').val(data.peminatan);
-                $('input[name="del_jenis_rg"]').val(data.jenis_rg);
-                $('#modal_delete_mk').modal('show');
-                // console.log(data);
+                $('input[name="del_hari_jw"]').val(data.id_hari_nama);
+                $('input[name="del_mk_jw"]').val(data.kode_mk_nama);
+                if (data.DETAIL.matkul === null) {
+                    $('input[name="del_sks_jw"]').val(null);
+                    $('input[name="del_semester_jw"]').val(null);
+                }else{
+                    $('input[name="del_sks_jw"]').val(data.DETAIL.matkul.sks_mk);
+                    $('input[name="del_semester_jw"]').val(data.DETAIL.matkul.semester_mk);
+                }
+                $('input[name="del_waktu_jw"]').val(data.kode_wk_nama);
+                $('input[name="del_dosen_jw"]').val(data.nid_nama);
+                $('input[name="del_ruangan_jw"]').val(data.kode_rg);
+                $('input[name="del_peserta_jw"]').val(data.peserta);
+                $('input[name="del_kode_jw"]').val(data.id_j_t);
+                $('#modal_delete_jw').modal('show');
+                console.log(data);
             },
             complete: function(){
                 App.unblockUI();
             }
         });
 
-        var form4 = $('#form_delete_mk');
+        var form4 = $('#form_delete_jw');
         var success4 = $('.alert-danger-delete', form4);
 
         form4.validate({
             submitHandler: function (form) {
                 $.ajax({
-                    url: "<?=base_url()?>matakuliah/delete_mk", 
+                    url: "<?=base_url()?>jadwal/delete_jw", 
                     type: "POST",
                     data: $(form).serialize(),
                     cache: false,             
@@ -1207,9 +1298,15 @@ jQuery(document).ready(function() {
                         });
                     },
                     success: function(data) {
-                        success4.hide();
-                        location.reload();
-                        // console.log(data);
+                        console.log(data);
+                        $('#modal_delete_jw').modal('hide');
+                        swal({
+                            title : "Berhasil!", 
+                            text : "Data telah di hapus!", 
+                            type : "success"},
+                            function(){
+                                location.reload();
+                        });
                     },
                     complete: function(){
                         App.unblockUI();
