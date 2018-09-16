@@ -15,6 +15,24 @@ class Jadwal_model extends CI_Model {
         return $this->session->userdata('Login')['username'];
     }
 
+    public function bersih_jadwal()
+    {
+        // MEMBUANG DATA YANG TIDAK DI BUTUHKAN
+        if ($this->input->post('data') === 'BERSIH') {
+            # code...
+            $jadwal_new = array();
+            $jadwal     = $this->get_data('jadwal_temp');
+            foreach ($jadwal as $k_j => $v_j) {
+                if ( ! is_null($v_j['kode_mk'])) {
+                    unset($jadwal[$k_j]['id_j_t']);
+                    $this->db->insert('jadwal_perkuliahan', $jadwal[$k_j]);
+                    $this->delete_jw($v_j['id_j_t']);
+                }
+            }
+            echo "OK";
+        }
+    }
+
     public function hapus_jadwal()
     {
         if ($this->input->post('data') === 'HAPUS') {
@@ -61,7 +79,8 @@ class Jadwal_model extends CI_Model {
                 $data = array(
                     "tahun_ajaran"  => $row_ta->tahun_ajaran,
                     "kode_mk"       => $value_flag['kode_mk'],
-                    "ket"           => $row_ta->semester
+                    "ket"           => $row_ta->semester,
+                    "peserta"       => $value_flag['program_studi'].' | '.$peminatan[$value_flag['peminatan']]
                 );
                 $this->db->insert('jadwal_temp', $data);
             }
@@ -228,12 +247,12 @@ class Jadwal_model extends CI_Model {
         echo "OK";
     }
 
-    public function delete_jw()
+    public function delete_jw($kode_jw)
     {
         $data = array(
             'isDelete' => 1
         );
-        $this->db->where('id_j_t',$this->input->post('del_kode_jw'));
+        $this->db->where('id_j_t',$kode_jw);
         $this->db->update('jadwal_temp',$data);
         // $this->db->delete('dosen');
         echo "OK";

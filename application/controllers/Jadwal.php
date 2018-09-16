@@ -69,6 +69,13 @@ class Jadwal extends MY_Controller {
 		
 	}
 
+	public function bersih()
+	{
+		$data['jp'] = $this->jadwal_model->bersih_jadwal();
+		echo json_encode($data['jp']);
+		// echo json_encode($this->input->post('data'));
+	}
+
 	public function generate()
 	{
 		$data['jp'] = $this->jadwal_model->generate_jadwal();
@@ -101,7 +108,7 @@ class Jadwal extends MY_Controller {
 
 	public function delete_jw()
 	{
-		$data['delete_jw'] = $this->jadwal_model->delete_jw();
+		$data['delete_jw'] = $this->jadwal_model->delete_jw($this->input->post('del_kode_jw'));
 		echo $data['delete_jw'];
 		exit();
 	}
