@@ -31,6 +31,25 @@ class Histori_model extends CI_Model {
                             ->join('dosen', 'dosen.nid = A.nid', 'left')
                             ->get();
         }
+        else if ($table == 'jadwal_perkuliahan') {
+            $query = $this->db->select(
+                // 'jadwal_perkuliahan.id_jadwal_p, jadwal_perkuliahan.tahun_ajaran, jadwal_perkuliahan.peserta,
+                'A.id_jadwal_p, A.tahun_ajaran, A.peserta,
+                hari.id, hari.nama_hari, 
+                waktu.kode_wk, waktu.waktu_aw, waktu.waktu_ak, 
+                ruangan.kode_rg, 
+                matakuliah.kode_mk, matakuliah.nama_mk, matakuliah.sks_mk, matakuliah.semester_mk, matakuliah.program_studi, matakuliah.peminatan,
+                dosen.nid, dosen.nama'
+            )
+                            ->from('jadwal_perkuliahan A')
+                            ->where(array('A.isDelete' => 1, 'A.isShow' => 1))
+                            ->join('hari', 'hari.id = A.id_hari', 'left')
+                            ->join('waktu', 'waktu.kode_wk = A.kode_wk', 'left')
+                            ->join('ruangan', 'ruangan.kode_rg = A.kode_rg', 'left')
+                            ->join('matakuliah', 'matakuliah.kode_mk = A.kode_mk', 'left')
+                            ->join('dosen', 'dosen.nid = A.nid', 'left')
+                            ->get();
+        }
         else
         {
             $query = $this->db->get_where($table, array('isDelete' => 1, 'isShow' => 1));
@@ -75,6 +94,25 @@ class Histori_model extends CI_Model {
                 dosen.nid, dosen.nama'
             )
                             ->from('jadwal_temp A')
+                            ->where($arr)
+                            ->join('hari', 'hari.id = A.id_hari', 'left')
+                            ->join('waktu', 'waktu.kode_wk = A.kode_wk', 'left')
+                            ->join('ruangan', 'ruangan.kode_rg = A.kode_rg', 'left')
+                            ->join('matakuliah', 'matakuliah.kode_mk = A.kode_mk', 'left')
+                            ->join('dosen', 'dosen.nid = A.nid', 'left')
+                            ->get();
+        }
+        else if ($table == 'jadwal_perkuliahan') {
+            $query = $this->db->select(
+                // 'jadwal_perkuliahan.id_jadwal_p, jadwal_perkuliahan.tahun_ajaran, jadwal_perkuliahan.peserta,
+                'A.id_jadwal_p, A.tahun_ajaran, A.peserta,
+                hari.id, hari.nama_hari, 
+                waktu.kode_wk, waktu.waktu_aw, waktu.waktu_ak, 
+                ruangan.kode_rg, 
+                matakuliah.kode_mk, matakuliah.nama_mk, matakuliah.sks_mk, matakuliah.semester_mk, matakuliah.program_studi, matakuliah.peminatan,
+                dosen.nid, dosen.nama'
+            )
+                            ->from('jadwal_perkuliahan A')
                             ->where($arr)
                             ->join('hari', 'hari.id = A.id_hari', 'left')
                             ->join('waktu', 'waktu.kode_wk = A.kode_wk', 'left')

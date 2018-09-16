@@ -352,7 +352,7 @@
                                                                         <?php
                                                                             foreach ($all_data['waktu'] as $value) {
                                                                         ?>
-                                                                        <option value="<?=$value['kode_wk']?>"><?=$value['waktu_aw']?> - <?=$value['waktu_ak']?></option>
+                                                                        <option value="<?=$value['kode_wk']?>" data-sks="<?=$value['sks']?>"><?=$value['waktu_aw']?> - <?=$value['waktu_ak']?></option>
                                                                         <?php
                                                                             }
                                                                         ?>
@@ -631,7 +631,7 @@ jQuery(document).ready(function() {
         ruangan_mk : "<b>Ruangan</b> tidak sesuai dengan jenis mata kuliah<br>",
         mk_smstr_genap : "<b>Mata Kuliah</b> yang di pilih termasuk semester genap<br>",
         mk_smstr_ganjil : "<b>Mata Kuliah</b> yang di pilih termasuk semester ganjil<br>",
-        no_warning : ""
+        waktu : "<b>Waktu</b> yang di pilih tidak sesuai dengan jumlah sks matkul<br>",
     };
     $('#popover-warning-upd-jw').popover({
         html        : true,
@@ -838,7 +838,9 @@ jQuery(document).ready(function() {
         // Input Disabled Semester Mata Kuliah
         id_smstr_mk = $('input[name="upd_semester_jw"]')
         // Input Peserta Mata Kuliah
-        i_p_mk      = $('input[name="upd_peserta_jw"]');
+        i_p_mk      = $('input[name="upd_peserta_jw"]')
+        // Select Input Waktu
+        siw         = $('select[name="upd_waktu_jw"]');
 
     var htmlPopover;
 
@@ -1207,6 +1209,46 @@ jQuery(document).ready(function() {
                 
                 warning.mk_ruangan = twhcpuj.mk_ruangan;
                 warning.ruangan_mk = twhcpuj.ruangan_mk;
+            }
+            $('#popover-warning-upd-jw').attr('data-content',joinAllWarning(warning));
+        })
+        siw.on('select2:select', function (e) {
+            var simk_data_detail = String(getSelectedValues(simk,'detail'))
+                siw_data_sks = String(getSelectedValues(siw,'sks'));
+            var idform = $('#form_update_jw');
+
+            simk_dd_new = simk_data_detail.split('_');
+            // id_sks_mk.val(simk_dd_new[0]);
+            // id_smstr_mk.val(simk_dd_new[1]);
+            // i_p_mk.val(simk_dd_new[2]+' | '+simk_dd_new[3]);
+
+            // Validasi antara Waktu SKS dan Matkul SKS
+            if (siw_data_sks == simk_dd_new[0]) {
+                // SKS waktu dan matkul sama
+                // COCOK
+                delete warning.waktu;
+
+                // Jika masih ada warning pada input waktu
+                if (warning.hasOwnProperty('waktu')) {
+                    // do nothing
+                }else{
+                    siw.parents('.form-group').removeClass('has-warning');
+                    cleanSelect2(siw);
+                }
+
+                // Jika obj warning kosong
+                if (jQuery.isEmptyObject(warning)) {
+                    idform.find('.alert-warning').addClass('display-hide');
+                }
+            }else{
+                // SKS waktu dan matkul berbeda
+                // TIDAK COCOK
+                
+                idform.find('.alert-warning').removeClass('display-hide');
+                
+                siw.parents('.form-group').addClass('has-warning');
+                
+                warning.waktu = twhcpuj.waktu;
             }
             $('#popover-warning-upd-jw').attr('data-content',joinAllWarning(warning));
         })

@@ -27,7 +27,7 @@ class Histori extends MY_Controller {
 		$data['role'] = $this->get_role_user();
 		$data['histori_'.$this->segment()] = 'active open';
 		$data['header']['title'] = 'Histori '.ucwords($this->segment());
-		if ($this->segment() == 'jadwal_temp') {
+		if ($this->segment() == 'jadwal_temp' || $this->segment() == 'jadwal_perkuliahan') {
 			$data['header']['title'] = 'Histori Jadwal';
 		}
 		$data['header']['css_page_plugin'] = '

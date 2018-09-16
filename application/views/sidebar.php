@@ -34,7 +34,7 @@
                                     <span class="title">Dosen</span>
                                     <span class="arrow"></span>
                                 </a>
-                                <ul class="sub-menu" style="display: <?=isset($dosen) ? 'block' : ''?>;">
+                                <ul class="sub-menu">
                                     <li class="nav-item <?=isset($dosen) ? $dosen : ''?>">
                                         <a href="<?=base_url()?>dosen" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
@@ -52,7 +52,7 @@
                                     <span class="title">Mata Kuliah</span>
                                     <span class="arrow"></span>
                                 </a>
-                                <ul class="sub-menu" style="display: <?=isset($mk) ? 'block' : ''?>;">
+                                <ul class="sub-menu">
                                     <li class="nav-item <?=isset($mk) ? $mk : ''?>">
                                         <a href="<?=base_url()?>matakuliah" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
@@ -70,7 +70,7 @@
                                     <span class="title">Ruangan</span>
                                     <span class="arrow"></span>
                                 </a>
-                                <ul class="sub-menu" style="display: <?=isset($ruangan) ? 'block' : ''?>;">
+                                <ul class="sub-menu">
                                     <li class="nav-item <?=isset($ruangan) ? $ruangan : ''?>">
                                         <a href="<?=base_url()?>ruangan" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
@@ -88,7 +88,7 @@
                                     <span class="title">Waktu</span>
                                     <span class="arrow"></span>
                                 </a>
-                                <ul class="sub-menu" style="display: <?=isset($waktu) ? 'block' : ''?>;">
+                                <ul class="sub-menu">
                                     <li class="nav-item <?=isset($waktu) ? $waktu : ''?>">
                                         <a href="<?=base_url()?>waktu" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
@@ -106,7 +106,7 @@
                                     <span class="title">Hari</span>
                                     <span class="arrow"></span>
                                 </a>
-                                <ul class="sub-menu" style="display: <?=isset($hari) ? 'block' : ''?>;">
+                                <ul class="sub-menu">
                                     <li class="nav-item <?=isset($hari) ? $hari : ''?>">
                                         <a href="<?=base_url()?>hari" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
@@ -124,7 +124,7 @@
                                     <span class="title">Jadwal</span>
                                     <span class="arrow"></span>
                                 </a>
-                                <ul class="sub-menu" style="display: <?=isset($jadwal) ? 'block' : ''?>;">
+                                <ul class="sub-menu">
                                     <li class="nav-item <?=isset($jadwal) ? $jadwal : ''?>">
                                         <a href="<?=base_url()?>jadwal" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
@@ -138,11 +138,30 @@
                             <li class="heading">
                                 <h3 class="uppercase">JADWAL</h3>
                             </li>
-                            <li class="nav-item <?=isset($jadwalP) ? $jadwalP : ''?> ">
-                                <a href="jadwalP" class="nav-link nav-toggle">
+                            <li class="nav-item <?=isset($jadwal_perkuliahan) ? $jadwal_perkuliahan : ''?> <?=isset($histori_jadwal_perkuliahan) ? $histori_jadwal_perkuliahan : ''?>">
+                                <a href="javascript:;" class="nav-link nav-toggle">
                                     <i class="icon-calendar"></i>
                                     <span class="title">Jadwal Perkuliahan</span>
+                                    <span class="arrow"></span>
                                 </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item <?=isset($jadwal_perkuliahan) ? $jadwal_perkuliahan : ''?>">
+                                        <a href="<?=base_url()?>jadwal_perkuliahan" class="nav-link">
+                                            <i class="fa fa-table"></i> Data </a>
+                                    </li>
+                                    <li class="nav-item <?=isset($histori_jadwal_temp) ? $histori_jadwal_temp : ''?>">
+                                        <a href="<?=base_url()?>histori/jadwal_temp" class="nav-link">
+                                            <i class="fa fa-share-square-o"></i> Export </a>
+                                    </li>
+                                    <li class="nav-item <?=isset($histori_jadwal_perkuliahan) ? $histori_jadwal_perkuliahan : ''?>">
+                                        <a href="<?=base_url()?>histori/jadwal_perkuliahan" class="nav-link">
+                                            <i class="fa fa-trash-o"></i> Histori </a>
+                                    </li>
+                                </ul>
+                                <!-- <a href="<?=base_url()?>jadwal_perkuliahan" class="nav-link nav-toggle">
+                                    <i class="icon-calendar"></i>
+                                    <span class="title">Jadwal Perkuliahan</span>
+                                </a> -->
                             </li>
                                     <?php
                                     break;
@@ -159,7 +178,7 @@
                                     <span class="title">Mata Kuliah</span>
                                     <!-- <span class="arrow"></span> -->
                                 </a>
-                                <!-- <ul class="sub-menu" style="display: <?=isset($mk) ? 'block' : ''?>;">
+                                <!-- <ul class="sub-menu">
                                     <li class="nav-item <?=isset($mk) ? $mk : ''?>">
                                         <a href="<?=base_url()?>ambil_matakuliah" class="nav-link">
                                             <i class="fa fa-th-list"></i> Ambil </a>
@@ -173,7 +192,7 @@
                             <li class="heading">
                                 <h3 class="uppercase">JADWAL</h3>
                             </li>
-                            <li class="nav-item <?=isset($jadwalP) ? $jadwalP : ''?> ">
+                            <li class="nav-item <?=isset($jadwal_perkuliahan) ? $jadwal_perkuliahan : ''?> ">
                                 <a href="jadwalP" class="nav-link nav-toggle">
                                     <i class="icon-calendar"></i>
                                     <span class="title">Jadwal Perkuliahan</span>
