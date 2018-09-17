@@ -233,11 +233,11 @@
                                                 <tr class="odd gradeX" style="
                                                     <?php
                                                     if (isset($row->label)) {
-                                                        if ($row->label == 'warning_0') {
-                                                            echo "background-color:tomato";
+                                                        if ($row->label == 's_warning') {
+                                                            echo "background-color:tomato;";
                                                         }
-                                                        if ($row->label == 'warning_1') {
-                                                            echo "outline: thick double gold";
+                                                        if ($row->label == 'a_warning') {
+                                                            echo "outline: thick double gold;";
                                                         }
                                                     }
                                                     ?> ">

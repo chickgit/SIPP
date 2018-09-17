@@ -141,29 +141,34 @@ class Jadwal_perkuliahan_model extends CI_Model {
                         ->get();
         $hasil = $query->result();
         foreach ($hasil as $key => $value) {
-            // Jika id_hari==null ATAU kode_mk==null ATAU kode_rg==null ATAU nid==null
-            if (is_null($value->id) || is_null($value->kode_mk) || is_null($value->kode_rg) || is_null($value->nid)) {
-                # kasih label warning
-                $hasil[$key]->label = 'warning_0';
-            }
             foreach ($hasil as $key_hasil => $value_hasil) {
-                // jika belum ada label warning
-                if (!isset($value_hasil->label)) {
-                    // Cegah agar tidak bertemu data sendiri
-                    if ($value->id_jadwal_p != $value_hasil->id_jadwal_p) {
-                        // echo "1 = ".$value->id_jadwal_p;
-                        // echo "\n2 = ".$value_hasil->id_jadwal_p;
-                        // exit();
+                // Cegah agar tidak bertemu data sendiri
+                if ($value->id_jadwal_p != $value_hasil->id_jadwal_p) 
+                {
+                    // Jika id_hari==null ATAU kode_mk==null ATAU kode_rg==null ATAU nid==null
+                    if (is_null($value->id) || is_null($value->kode_mk) || is_null($value->kode_rg) || is_null($value->nid)) 
+                    {
+                        # Beri label warning tingkat S
+                        $hasil[$key]->label = 's_warning';
+                    }
+                    else
+                    {
                         // Jika hari sama,
-                        if ($value->id == $value_hasil->id) {
+                        if ($value->id == $value_hasil->id) 
+                        {
                             // cek
-                            // Jika (kode_wk DAN semester_mk sama) ATAU (kode_wk DAN nid sama) ATAU (kode_wk DAN nama_mk sama) ATAU (kode_wk DAN kode_rg sama)
-                            if ((($value->kode_wk == $value_hasil->kode_wk) && ($value->semester_mk == $value_hasil->semester_mk)) ||
+                            // Jika (kode_wk DAN semester_mk sama) ATAU (kode_wk DAN nid sama) ATAU (kode_wk DAN nama_mk sama) ATAU (kode_wk DAN kode_rg sama) ATAU (nama_mk sama) ATAU (kode_mk sama)
+                            if (
+                                (($value->kode_wk == $value_hasil->kode_wk) && ($value->semester_mk == $value_hasil->semester_mk)) ||
                                 (($value->kode_wk == $value_hasil->kode_wk) && ($value->nid == $value_hasil->nid)) ||
                                 (($value->kode_wk == $value_hasil->kode_wk) && ($value->nama_mk == $value_hasil->nama_mk)) ||
-                                (($value->kode_wk == $value_hasil->kode_wk) && ($value->kode_rg == $value_hasil->kode_rg))) {
-                                // Kasih label warning
-                                $hasil[$key]->label = 'warning_1';
+                                (($value->kode_wk == $value_hasil->kode_wk) && ($value->kode_rg == $value_hasil->kode_rg)) ||
+                                ($value->nama_mk == $value_hasil->nama_mk) ||
+                                ($value->kode_mk == $value_hasil->kode_mk) 
+                            ) 
+                            {
+                                // Ganti label warning tingkat A
+                                $hasil[$key]->label = 'a_warning';
                             }
                         }
                     }
