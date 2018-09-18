@@ -59,16 +59,41 @@
                                         <span class="caption-subject font-green sbold uppercase">Data Jadwal Perkuliahan</span>
                                     </div>
                                     <div class="actions">
-                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Bersihkan Jadwal" id="clean_table_jadwal">
-                                            <i class="fa fa-magic"></i>
-                                        </a>
-                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Hapus Tabel" id="delete_table_jadwal">
-                                            <i class="fa fa-remove"></i>
-                                        </a>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <div class="panel-group accordion" id="accordion3">
+                                    <div class="panel-group accordion" id="draft">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="accordion-toggle" data-parent="#draft" aria-expanded="true"> Pilih Draft </a>
+                                                </h4>
+                                            </div>
+                                            <div class="panel-collapse collapse in" aria-expanded="true" style="">
+                                                <div class="panel-body">
+                                                    <div class="input-group">
+                                                        <select class="form-control input-sm" name="draft_jp">
+                                                            <?php
+                                                            foreach ($list_draft_jp as $key => $value) {
+                                                            ?>
+                                                            <option value="<?=$value->draft_id_jp?>" data-text="<?=$value->draft_nama?>"><?=$value->draft_nama?></option>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                        <span class="input-group-btn">
+                                                            <a class="btn green btn-sm" type="button" title="Buka Draft" id="draft_open" onclick="draft(this)"><i class="icon-book-open"></i></a>
+                                                        </span>
+                                                        <span class="input-group-btn">
+                                                            <a class="btn blue btn-sm" type="button" title="Rename Draft" id="draft_edit" onclick="draft(this)"><i class="fa fa-edit"></i></a>
+                                                        </span>
+                                                        <span class="input-group-btn">
+                                                            <a class="btn red btn-sm" type="button" title="Delete Draft" id="draft_delete" onclick="draft(this)"><i class="fa fa-remove"></i></a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
@@ -225,6 +250,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
+                                            (isset($list_jp)) ? : $list_jp = array();
                                             foreach ($list_jp as $row) {
                                                 ?>
                                                 <tr class="odd gradeX" style="
@@ -528,57 +554,44 @@
                                         </div>
                                         <!-- /.modal-dialog -->
                                     </div>
-                                    <!-- MODAL VALIDASI CLEAN -->
-                                    <div class="modal fade " id="modal_clean_table_jadwal" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <!-- MODAL VALIDASI DRAFT -->
+                                    <div class="modal fade " id="modal_draft" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog "> 
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Bersihkan Tabel</h4>
+                                                    <h4 id="open" class="modal-title display-hide">Buka Draft</h4>
+                                                    <h4 id="edit" class="modal-title display-hide">Edit Draft</h4>
+                                                    <h4 id="delete" class="modal-title display-hide">Hapus Draft</h4>
                                                 </div>
-                                                <form id="form_bersih" class="form-horizontal">
+                                                <form id="form_draft" class="form-horizontal">
                                                     <div class="modal-body"> 
                                                         <!-- BEGIN FORM-->
                                                         <div class="form-body">
-                                                            <div class="alert alert-info alert-danger-delete">
-                                                                Anda yakin ingin membersihkan tabel jadwal ? 
+                                                            <div id="open" class="alert alert-info display-hide">
+                                                                Anda yakin ingin membuka draft ini ? 
+                                                            </div>
+                                                            <div id="edit" class="alert alert-warning display-hide">
+                                                                Anda yakin ingin mengubah nama draft ini ? 
+                                                            </div>
+                                                            <div id="edit" class="form-group display-hide">
+                                                                <label class="control-label col-md-3">Nama
+                                                                    <span class="required"> </span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" class="form-control" id="input_edit_draft" >
+                                                                </div>
+                                                            </div>
+                                                            <div id="delete" class="alert alert-danger display-hide">
+                                                                Anda yakin ingin menghapus draft ini ? 
                                                             </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
-                                                        <input type="hidden" name="data" value="BERSIH">
-                                                        <button type="submit" class="btn green">Bersihkan</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- /.modal-content -->
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
-                                    <!-- MODAL VALIDASI DELETE -->
-                                    <div class="modal fade " id="modal_delete_table_jadwal" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog "> 
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Hapus Tabel</h4>
-                                                </div>
-                                                <form id="form_hapus" class="form-horizontal">
-                                                    <div class="modal-body"> 
-                                                        <!-- BEGIN FORM-->
-                                                        <div class="form-body">
-                                                            <div class="alert alert-danger alert-danger-delete">
-                                                                Anda yakin ingin menghapus tabel jadwal ? 
-                                                            </div>
-                                                        </div>
-                                                        <!-- END FORM-->
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
-                                                        <input type="hidden" name="data" value="HAPUS">
-                                                        <button type="submit" class="btn green">Hapus</button>
+                                                        <input type="hidden" id="draft" value="">
+                                                        <button type="submit" class="btn green"></button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -596,6 +609,66 @@
 <?=$footer?>
 
 <script type="text/javascript">
+    function draft(elm)
+    {
+        elm_id = elm.id.split('_');
+        modal = $('#modal_'+elm_id[0]);
+
+        $('#modal_'+elm_id[0]+' #'+elm_id[1]).show();
+        modal.find('button[type="submit"]').text(elm_id[1].toUpperCase());
+        modal.find('#draft').attr('name','draft_id').val(elm_id[1]+'_'+$('select[name="draft_jp"]').find(':selected').val());
+        if (elm_id[1] == 'edit') {
+            // console.log($('#'+elm.id).parents().find('select[name="draft_jp"]').text());
+            modal.find('#input_edit_draft').attr('name','draft_nama').val($('select[name="draft_jp"]').find(':selected').data('text'));
+        }
+
+        modal.modal('show');
+
+        $('#form_draft').validate({
+            submitHandler: function (form) {
+                $.ajax({
+                    url: "<?=base_url()?>jadwal_perkuliahan/draft", 
+                    type: "POST",
+                    data: $(form).serialize(),
+                    cache: false,             
+                    processData: false,      
+                    beforeSend: function(){
+                        App.blockUI({
+                            // target: '#form_tambah_dosen',
+                            // overlayColor: 'none',
+                            // animate: true,
+                            zIndex: 20000,
+                        });
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        modal.modal('hide');
+                        swal({
+                            title : "Berhasil!", 
+                            type : "success"},
+                            function(){
+                                location.reload();
+                        });
+                    },
+                    complete: function(){
+                        App.unblockUI();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        modal.modal('hide');
+                        swal({
+                            title : "Gagal!", 
+                            text : xhr.status+"\n"+thrownError, 
+                            type : "error"},
+                        );
+                        console.log(xhr);
+                        console.log(thrownError);
+                    }
+                });
+            }
+        });
+        // console.log(elm_id);
+    }
+
 jQuery(document).ready(function() {
     var tahun_ajaran = '<?=$user['TA']['semester']?>';
     console.log(tahun_ajaran);
@@ -628,99 +701,7 @@ jQuery(document).ready(function() {
         placeholder : null,
         width: null,
     });
-    // console.log(JADWAL);
-    $('#clean_table_jadwal').on('click', function(){
-        $('#modal_clean_table_jadwal').modal('show');
-        var form = $('#form_bersih');
-        form.validate({
-            submitHandler: function (form) {
-                $.ajax({
-                    url: "<?=base_url()?>jadwal_perkuliahan/bersih", 
-                    type: "POST",             
-                    // data: {data : "ULANG"},
-                    data: $(form).serialize(),
-                    cache: false,             
-                    processData: false,      
-                    beforeSend: function(){
-                        App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
-                            zIndex: 20000,
-                        });
-                    },
-                    success: function(data) {
-                        // success4.show();
-                        $('#modal_clean_table_jadwal').modal('hide');
-                        swal({
-                            title : "Berhasil!", 
-                            text : "Data telah di bersihkan!", 
-                            type : "success"},
-                            function(){
-                                location.reload();
-                        });
-                        console.log(data);
-                    },
-                    complete: function(){
-                        App.unblockUI();
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        $('#modal_clean_table_jadwal').modal('hide');
-                        swal({
-                            title : "Gagal!", 
-                            text : xhr.status+"\n"+thrownError, 
-                            type : "error"},
-                        );
-                        console.log(xhr);
-                    }
-                });
-            }
-        });
-    })
 
-    $('#delete_table_jadwal').on('click', function(){
-        $('#modal_delete_table_jadwal').modal('show');
-        var form = $('#form_hapus');
-        form.validate({
-            submitHandler: function (form) {
-                $.ajax({
-                    url: "<?=base_url()?>jadwal_perkuliahan/hapus", 
-                    type: "POST",             
-                    // data: {data : "ULANG"},
-                    data: $(form).serialize(),
-                    cache: false,             
-                    processData: false,      
-                    beforeSend: function(){
-                        App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
-                            zIndex: 20000,
-                        });
-                    },
-                    success: function(data) {
-                        // success4.show();
-                        location.reload();
-                        console.log(data);
-                    },
-                    complete: function(){
-                        App.unblockUI();
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        $('#modal_clean_table_jadwal').modal('hide');
-                        swal({
-                            title : "Gagal!", 
-                            text : xhr.status+"\n"+thrownError, 
-                            type : "error"},
-                        );
-                        console.log(xhr);
-                        console.log(thrownError);
-                    }
-                });
-            }
-        });
-    })
-    
         // Select Input Hari
     var sih         = $('select[name="upd_hari_jw"]')
         // Select Input Dosen
@@ -1166,6 +1147,15 @@ jQuery(document).ready(function() {
         idform.find('#popover-warning-upd-jw').attr('data-content','');
         idform.find('input').val('');
         idform.find('select').val(null).trigger('change');
+    })
+
+    $('#modal_draft').on('hidden.bs.modal', function (e) {
+        // console.log($(this.id));
+        var idform = $('#form_draft');
+        $('#'+this.id).find('[id="open"]').hide();
+        $('#'+this.id).find('[id="edit"]').hide();
+        $('#'+this.id).find('[id="delete"]').hide();
+        $('#'+this.id).find('input[type="text"]').removeAttr('name','');
     })
 
     $('#sample_2').on('click', '#update_jw', function(){
