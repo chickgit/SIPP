@@ -19,13 +19,28 @@ class Jadwal_model extends CI_Model {
     {
         // MEMBUANG DATA YANG TIDAK DI BUTUHKAN
         if ($this->input->post('data') === 'BERSIH') {
-            # code...
+            // Buat nama jadwal
+            $nama_jadwal = $this->session->userdata('TA')['tahun_ajaran'].'_'.$this->session->userdata('TA')['semester'].'_'.date('Y-m-d');
+            // simpan nama jadwal di draft
+            $this->db->insert('draft_jadwal_perkuliahan', array('draft_nama' => $nama_jadwal));
+            // ambil id terbaru yang di insert di draft
+            $id_draft = $this->db->insert_id();
+            
+            // buat array baru
             $jadwal_new = array();
+            // ambil data jadwal_temp
             $jadwal     = $this->get_data('jadwal_temp');
+            // jabarin masing-masing data jadwal_temp
             foreach ($jadwal as $k_j => $v_j) {
+                // jika kode_mk tidak null
                 if ( ! is_null($v_j['kode_mk'])) {
+                    // hapus id_j_t
                     unset($jadwal[$k_j]['id_j_t']);
+                    // masukkan id draft tadi ke dalam array jadwal_temp
+                    $jadwal[$k_j]['draft_id_jp'] = $id_draft;
+                    // insert data jadwal_temp ke jadwal_perkuliahan
                     $this->db->insert('jadwal_perkuliahan', $jadwal[$k_j]);
+                    // delete data jadwal_temp sesuai dengan id_j_t
                     $this->delete_jw($v_j['id_j_t']);
                 }
             }
