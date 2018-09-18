@@ -76,13 +76,6 @@ class Jadwal_perkuliahan extends MY_Controller {
 		// echo json_encode($this->input->post('data'));
 	}
 
-	public function generate()
-	{
-		$data['jp'] = $this->jadwal_perkuliahan_model->generate_jadwal();
-		echo json_encode($data['jp']);
-		// echo json_encode($this->input->post('data'));
-	}
-
 	public function hapus()
 	{
 		$data['hapus_jp'] = $this->jadwal_perkuliahan_model->hapus_jadwal();

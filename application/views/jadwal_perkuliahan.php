@@ -62,9 +62,6 @@
                                         <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Bersihkan Jadwal" id="clean_table_jadwal">
                                             <i class="fa fa-magic"></i>
                                         </a>
-                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Generate Jadwal" id="generate_table_jadwal">
-                                            <i class="fa fa-random"></i>
-                                        </a>
                                         <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Hapus Tabel" id="delete_table_jadwal">
                                             <i class="fa fa-remove"></i>
                                         </a>
@@ -560,35 +557,6 @@
                                         </div>
                                         <!-- /.modal-dialog -->
                                     </div>
-                                    <!-- MODAL VALIDASI GENERATE -->
-                                    <div class="modal fade " id="modal_generate_table_jadwal" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog " id="modal_dialog_delete_mk"> 
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Generate Jadwal</h4>
-                                                </div>
-                                                <form id="form_generate" class="form-horizontal">
-                                                    <div class="modal-body"> 
-                                                        <!-- BEGIN FORM-->
-                                                        <div class="form-body">
-                                                            <div class="alert alert-danger alert-danger-delete">
-                                                                Anda yakin ingin meng-generate ulang jadwal ? 
-                                                            </div>
-                                                        </div>
-                                                        <!-- END FORM-->
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
-                                                        <input type="hidden" name="data" value="ULANG">
-                                                        <button type="submit" class="btn green">Generate</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- /.modal-content -->
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
                                     <!-- MODAL VALIDASI DELETE -->
                                     <div class="modal fade " id="modal_delete_table_jadwal" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog "> 
@@ -710,88 +678,6 @@ jQuery(document).ready(function() {
         });
     })
 
-    $('#generate_table_jadwal').on('click', function(){
-        if (JADWAL > 0) 
-        {
-            $('#modal_generate_table_jadwal').modal('show');
-            var form = $('#form_generate');
-            form.validate({
-                submitHandler: function (form) {
-                    $.ajax({
-                        url: "<?=base_url()?>jadwal_perkuliahan/generate", 
-                        type: "POST",             
-                        // data: {data : "ULANG"},
-                        data: $(form).serialize(),
-                        cache: false,             
-                        processData: false,      
-                        beforeSend: function(){
-                            App.blockUI({
-                                // target: '#form_tambah_dosen',
-                                // overlayColor: 'none',
-                                // animate: true,
-                                zIndex: 20000,
-                            });
-                        },
-                        success: function(data) {
-                            // success4.show();
-                            location.reload();
-                            console.log(data);
-                        },
-                        complete: function(){
-                            App.unblockUI();
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            $('#modal_clean_table_jadwal').modal('hide');
-                            swal({
-                                title : "Gagal!", 
-                                text : xhr.status+"\n"+thrownError, 
-                                type : "error"},
-                            );
-                            console.log(xhr);
-                            console.log(thrownError);
-                        }
-                    });
-                }
-            });
-        }
-        else
-        {
-            $.ajax({
-                url: "<?=base_url()?>jadwal_perkuliahan/generate", 
-                type: "POST",             
-                data: {data : 'NEW'},
-                cache: false,             
-                processData: false,      
-                beforeSend: function(){
-                    App.blockUI({
-                        // target: '#form_tambah_dosen',
-                        // overlayColor: 'none',
-                        // animate: true,
-                        zIndex: 20000,
-                    });
-                },
-                success: function(data) {
-                    // success4.show();
-                    location.reload();
-                    console.log(data);
-                },
-                complete: function(){
-                    App.unblockUI();
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    $('#modal_clean_table_jadwal').modal('hide');
-                    swal({
-                        title : "Gagal!", 
-                        text : xhr.status+"\n"+thrownError, 
-                        type : "error"},
-                    );
-                    console.log(xhr);
-                    console.log(thrownError);
-                }
-            });
-        }
-    });
-    
     $('#delete_table_jadwal').on('click', function(){
         $('#modal_delete_table_jadwal').modal('show');
         var form = $('#form_hapus');
