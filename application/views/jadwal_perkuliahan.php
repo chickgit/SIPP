@@ -59,6 +59,15 @@
                                         <span class="caption-subject font-green sbold uppercase">Data Jadwal Perkuliahan</span>
                                     </div>
                                     <div class="actions">
+                                        <!-- <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Bersihkan Jadwal" id="clean_table_jadwal">
+                                            <i class="fa fa-magic"></i>
+                                        </a>
+                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Generate Jadwal" id="generate_table_jadwal">
+                                            <i class="fa fa-random"></i>
+                                        </a>
+                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Hapus Tabel" id="delete_table_jadwal">
+                                            <i class="fa fa-remove"></i>
+                                        </a> -->
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -670,6 +679,85 @@
     }
 
 jQuery(document).ready(function() {
+    // var table = $('#sample_2').DataTable();
+    // new $.fn.dataTable.Buttons( table, {
+    //     buttons: 
+    //     [
+    //         {
+    //             extend : 'collection',
+    //             text : 'Report',
+    //             className: 'btn btn-sm green btn-outline',
+    //             buttons : 
+    //             [
+    //                 { 
+    //                     extend: 'excel',
+    //                 }, 
+    //                 {
+    //                     extend: 'pdfHtml5',
+    //                     // download:'open',
+    //                     exportOptions:
+    //                     {
+    //                         columns: [0,1,2,3,4,5,6,7]
+    //                     },
+    //                     customize:function(doc)
+    //                     {
+    //                         doc['pageSize'] = 'A4',
+    //                         doc['pageOrientation'] = 'portrait',
+    //                         doc['pageMargins'] = [40,40,40,60],
+    //                         doc['styles'] = 
+    //                         {
+    //                             // tableHeader: 
+    //                             // {
+    //                             //     bold: !0,
+    //                             //     fontSize: 11,
+    //                             //     color: 'black',
+    //                             //     fillColor: '#F0F8FF',
+    //                             //     alignment: 'center'
+    //                             // },
+    //                             // athleteTable: 
+    //                             // {
+    //                             //     //alignment: 'center'
+    //                             // },
+    //                             // column1: 
+    //                             // {
+    //                             //     alignment: 'center'
+    //                             // },
+    //                             title: 
+    //                             {
+    //                                 fontSize: 10,
+    //                                 bold: true,
+    //                                 margin: [0, 0, 0, 10],
+    //                                 alignment: 'center'
+    //                             },
+    //                             headerTopRight:
+    //                             {
+    //                                 fontSize: 5,
+    //                                 bold:false,
+    //                                 alignment: 'right',
+    //                                 margin: [0,10,20,0]
+    //                             }
+    //                         };
+    //                         var cols = [];
+    //                         cols[0] = {text: 'Update: DD M YYYY', style: 'headerTopRight' };
+    //                         var obj = {};
+    //                         obj['columns'] = cols;
+    //                         doc['header']=obj;
+    //                         // doc.content.splice(1, 0,
+    //                         // {
+    //                         //     margin: [0, 0, 0, 12],
+    //                         //     alignment: 'center',
+    //                         //     image: 'data:image/png;base64,...',
+    //                         // }
+    //                         // );
+    //                     }
+    //                 }
+    //             ]
+    //         },
+    //     ]
+    // } );
+    // table.buttons().container().appendTo('.actions');
+
+
     var tahun_ajaran = '<?=$user['TA']['semester']?>';
     console.log(tahun_ajaran);
     // Tipe-tipe Warning Html Content Popover Update Jadwal

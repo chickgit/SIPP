@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Jadwal_perkuliahan extends MY_Controller {
+class Jadwal_perkuliahan_export extends MY_Controller {
 
 	public function __construct()
     {
@@ -9,7 +9,8 @@ class Jadwal_perkuliahan extends MY_Controller {
 
     	$this->load->library('session');
     	$this->load->library('algo');
-
+    	$this->load->library('Pdf');
+    	
     	if (!$this->session->has_userdata('Login')) {
 			redirect(base_url().'login');
     	}
@@ -38,7 +39,7 @@ class Jadwal_perkuliahan extends MY_Controller {
 
 		$data['role'] = $this->get_role_user();
 
-		$data['jadwal_perkuliahan'] = 'active open';
+		$data['jadwal_perkuliahan_export'] = 'active open';
 
 		$data['header']['title'] = 'Data Jadwal';
 		$data['header']['css_page_plugin'] = '
@@ -46,8 +47,7 @@ class Jadwal_perkuliahan extends MY_Controller {
 			<link href="'.base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 			<link href="'.base_url().'assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 			<link href="'.base_url().'assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
-			<link href="'.base_url().'assets/global/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
-			';
+			<link href="'.base_url().'assets/global/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />';
 
 		$data['footer']['footer_page_plugin'] = '
 			<script src="'.base_url().'assets/global/scripts/datatable.js" type="text/javascript"></script>
@@ -57,8 +57,6 @@ class Jadwal_perkuliahan extends MY_Controller {
 			<script src="'.base_url().'assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
         	<script src="'.base_url().'assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
         	<script src="'.base_url().'assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js" type="text/javascript"></script>
-        	<script src="'.base_url().'assets/global/plugins/pdfmake/build/pdfmake.min.js" type="text/javascript"></script>
-        	<script src="'.base_url().'assets/global/plugins/pdfmake/build/vfs_fonts.js" type="text/javascript"></script>
 			';
 		$data['footer']['footer_page_scripts'] = '
 			<script src="'.base_url().'assets/pages/scripts/table-datatables-jadwal.js" type="text/javascript"></script>
@@ -73,7 +71,13 @@ class Jadwal_perkuliahan extends MY_Controller {
 
 		// $data['list_dosen'] = $this->dosen_model->
 
-		$this->load->view('Jadwal_perkuliahan',$data);
+		$this->load->view('Jadwal_perkuliahan_export',$data);
+		
+	}
+
+	public function pdf()
+	{
+		$this->load->view('Jadwal_report');
 	}
 
 	public function draft()

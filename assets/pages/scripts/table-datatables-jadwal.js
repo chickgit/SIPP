@@ -60,6 +60,7 @@ var TableDatatablesManaged = function () {
             // So when dropdowns used the scrollable div should be removed. 
             //"dom": "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
             "dom": 'lprti',
+            // "dom": 'Blprti', //with button
             // "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
             "pagingType": "bootstrap_extended", //dari datatables.bootstrap.js di plugin global
 
@@ -89,6 +90,14 @@ var TableDatatablesManaged = function () {
                 header: true,
                 headerOffset: fixedHeaderOffset
             },
+            // buttons: [
+            //     { extend: 'print', className: 'btn dark btn-outline' },
+            //     { extend: 'copy', className: 'btn red btn-outline' },
+            //     { extend: 'pdf', className: 'btn green btn-outline' },
+            //     { extend: 'excel', className: 'btn yellow btn-outline ' },
+            //     { extend: 'csv', className: 'btn purple btn-outline ' },
+            //     { extend: 'colvis', className: 'btn dark btn-outline', text: 'Columns'}
+            // ],
         });
 
         var tableWrapper = jQuery('#sample_2_wrapper');

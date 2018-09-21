@@ -138,7 +138,7 @@
                             <li class="heading">
                                 <h3 class="uppercase">JADWAL</h3>
                             </li>
-                            <li class="nav-item <?=isset($jadwal_perkuliahan) ? $jadwal_perkuliahan : ''?> <?=isset($histori_jadwal_perkuliahan) ? $histori_jadwal_perkuliahan : ''?>">
+                            <li class="nav-item <?=isset($jadwal_perkuliahan) ? $jadwal_perkuliahan : ''?> <?=isset($jadwal_perkuliahan_export) ? $jadwal_perkuliahan_export : ''?> <?=isset($histori_jadwal_perkuliahan) ? $histori_jadwal_perkuliahan : ''?>">
                                 <a href="javascript:;" class="nav-link nav-toggle">
                                     <i class="icon-calendar"></i>
                                     <span class="title">Jadwal Perkuliahan</span>
@@ -149,8 +149,8 @@
                                         <a href="<?=base_url()?>jadwal_perkuliahan" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
                                     </li>
-                                    <li class="nav-item <?=isset($histori_jadwal_temp) ? $histori_jadwal_temp : ''?>">
-                                        <a href="<?=base_url()?>histori/jadwal_temp" class="nav-link">
+                                    <li class="nav-item <?=isset($jadwal_perkuliahan_export) ? $jadwal_perkuliahan_export : ''?>">
+                                        <a href="<?=base_url()?>jadwal_perkuliahan_export" class="nav-link">
                                             <i class="fa fa-share-square-o"></i> Export </a>
                                     </li>
                                     <li class="nav-item <?=isset($histori_jadwal_perkuliahan) ? $histori_jadwal_perkuliahan : ''?>">
