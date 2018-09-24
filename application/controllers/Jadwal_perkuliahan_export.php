@@ -15,26 +15,26 @@ class Jadwal_perkuliahan_export extends MY_Controller {
 			redirect(base_url().'login');
     	}
 
-        $this->load->model('jadwal_perkuliahan_model');
+        $this->load->model('jadwal_perkuliahan_export_model');
     }
 	public function index()
 	{
-		// $data['list_jp'] = $this->jadwal_perkuliahan_model->get_data_temp();
+		// $data['list_jp'] = $this->jadwal_perkuliahan_export_model->get_data_temp();
 		// print_r(json_encode($data['list_jp']));
 		// exit();
 		$data['user'] = $this->session->userdata();
 
-		$data['list_draft_jp'] = $this->jadwal_perkuliahan_model->get_all_data('draft_jadwal_perkuliahan',array(),'result');
+		$data['list_draft_jp'] = $this->jadwal_perkuliahan_export_model->get_all_data('draft_jadwal_perkuliahan',array(),'result');
 		if ($this->session->has_userdata('id_draft')) {
 			# code...
-			$data['list_jp'] = $this->jadwal_perkuliahan_model->get_data_temp(array('draft_id_jp' => $this->session->userdata('id_draft')['draft_id_jp']));
+			$data['list_jp'] = $this->jadwal_perkuliahan_export_model->get_data_temp(array('draft_id_jp' => $this->session->userdata('id_draft')['draft_id_jp']));
 		}
 		$data['all_data'] = array(
-			"hari" 			=> $this->jadwal_perkuliahan_model->get_all_data('hari'),
-			"matakuliah" 	=> $this->jadwal_perkuliahan_model->get_all_data('matakuliah'),
-			"waktu" 		=> $this->jadwal_perkuliahan_model->get_all_data('waktu'),
-			"dosen" 		=> $this->jadwal_perkuliahan_model->get_all_data('dosen'),
-			"ruangan" 		=> $this->jadwal_perkuliahan_model->get_all_data('ruangan')
+			"hari" 			=> $this->jadwal_perkuliahan_export_model->get_all_data('hari'),
+			"matakuliah" 	=> $this->jadwal_perkuliahan_export_model->get_all_data('matakuliah'),
+			"waktu" 		=> $this->jadwal_perkuliahan_export_model->get_all_data('waktu'),
+			"dosen" 		=> $this->jadwal_perkuliahan_export_model->get_all_data('dosen'),
+			"ruangan" 		=> $this->jadwal_perkuliahan_export_model->get_all_data('ruangan')
 		);
 
 		$data['role'] = $this->get_role_user();
@@ -77,20 +77,25 @@ class Jadwal_perkuliahan_export extends MY_Controller {
 
 	public function pdf()
 	{
-		$this->load->view('Jadwal_report');
+		echo json_encode($this->input->post());
+		exit();
+		$data['list_jp'] = $this->jadwal_perkuliahan_export_model->get_data_temp(array('draft_id_jp' => 1));
+		$data['hari'] = $this->jadwal_perkuliahan_export_model->get_all_data('hari');
+
+		$this->load->view('Jadwal_report',$data);
 	}
 
 	public function draft()
 	{
 		// echo json_encode($this->input->post());
 		// exit();
-		$data['draft'] = $this->jadwal_perkuliahan_model->draft();
+		$data['draft'] = $this->jadwal_perkuliahan_export_model->draft();
 		echo json_encode($data['draft']);
 	}
 
 	public function get_detail_jw()
 	{
-		$data['get_detail_jw'] = $this->jadwal_perkuliahan_model->get_detail_jw($_POST['kode_jw']);
+		$data['get_detail_jw'] = $this->jadwal_perkuliahan_export_model->get_detail_jw($_POST['kode_jw']);
 		echo json_encode($data['get_detail_jw']);
 		// print_r($data['get_dosen']);
 	}
@@ -99,14 +104,14 @@ class Jadwal_perkuliahan_export extends MY_Controller {
 	{
 		// echo json_encode($_POST);
 		// exit();
-		$data['update_jw'] = $this->jadwal_perkuliahan_model->update_jw();
+		$data['update_jw'] = $this->jadwal_perkuliahan_export_model->update_jw();
 		echo $data['update_jw'];
 		exit();
 	}
 
 	public function delete_jw()
 	{
-		$data['delete_jw'] = $this->jadwal_perkuliahan_model->delete_jw($this->input->post('del_kode_jw'));
+		$data['delete_jw'] = $this->jadwal_perkuliahan_export_model->delete_jw($this->input->post('del_kode_jw'));
 		echo $data['delete_jw'];
 		exit();
 	}

@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <form>
+                                    <form action="<?=base_url()?>jadwal_perkuliahan_export/pdf" method="POST">
                                         <div class="panel-group accordion" id="draft">
                                             <div class="panel panel-info">
                                                 <div class="panel-heading">
@@ -50,7 +50,7 @@
                                                 </div>
                                                 <div class="panel-collapse collapse in" aria-expanded="true" style="">
                                                     <div class="panel-body">
-                                                        <input type="text" name="export_jw_judul" class="form-control">
+                                                        <input type="text" name="judul" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -106,22 +106,22 @@
                                                         <div class="form-group">
                                                             <label class="col-md-3 control-label">Mengetahui</label>
                                                             <div class="col-md-4">
-                                                                <input type="text" class="form-control" placeholder="Enter text">
+                                                                <input type="text" class="form-control" name="mengetahui_nama" placeholder="Enter text">
                                                                 <span class="help-block"> Nama </span>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <input type="text" class="form-control" placeholder="Enter text">
+                                                                <input type="text" class="form-control" name="mengetahui_sebagai" placeholder="Enter text">
                                                                 <span class="help-block"> Sebagai </span>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-md-3 control-label">Menyetujui</label>
                                                             <div class="col-md-4">
-                                                                <input type="text" class="form-control" placeholder="Enter text">
+                                                                <input type="text" class="form-control" name="menyetujui_nama" placeholder="Enter text">
                                                                 <span class="help-block"> Nama </span>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <input type="text" class="form-control" placeholder="Enter text">
+                                                                <input type="text" class="form-control" name="menyetujui_sebagai" placeholder="Enter text">
                                                                 <span class="help-block"> Sebagai </span>
                                                             </div>
                                                         </div>
@@ -138,12 +138,13 @@
                                                 </div>
                                                 <div class="panel-collapse collapse in" aria-expanded="true" style="">
                                                     <div class="panel-body">
-                                                        <input type="text" name="export_jw_judul" class="form-control">
+                                                        <input type="text" name="catatan_kaki" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <a class="btn red" type="button" title="Export to Pdf" id="draft_export_pdf" href="<?=base_url()?>jadwal_perkuliahan_export/pdf?" target="_blank">Export to PDF <i class="fa fa-file-pdf-o"></i></a>
+                                        <!-- <a class="btn red" type="button" title="Export to Pdf" id="draft_export_pdf" target="_blank">Export to PDF <i class="fa fa-file-pdf-o"></i></a> -->
+                                        <button class="btn red" type="submit" title="Export to Pdf" formtarget="_blank">Export to PDF <i class="fa fa-file-pdf-o"></i></button>
                                     </form>
                                     <!-- MODAL VALIDASI DRAFT -->
                                     <div class="modal fade " id="modal_draft" tabindex="-1" role="dialog" aria-hidden="true">
