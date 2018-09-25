@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <form action="<?=base_url()?>jadwal_perkuliahan_export/pdf" method="POST">
+                                    <form action="<?=base_url()?>jadwal_perkuliahan_export/export" method="POST">
                                         <div class="panel-group accordion" id="draft">
                                             <div class="panel panel-info">
                                                 <div class="panel-heading">
@@ -144,7 +144,8 @@
                                             </div>
                                         </div>
                                         <!-- <a class="btn red" type="button" title="Export to Pdf" id="draft_export_pdf" target="_blank">Export to PDF <i class="fa fa-file-pdf-o"></i></a> -->
-                                        <button class="btn red" type="submit" title="Export to Pdf" formtarget="_blank">Export to PDF <i class="fa fa-file-pdf-o"></i></button>
+                                        <button class="btn red" type="submit" title="Export to Pdf" formtarget="_blank" name="submit" value="pdf">Export to PDF <i class="fa fa-file-pdf-o"></i></button>
+                                        <button class="btn green-jungle" type="submit" title="Export to Excel" formtarget="_blank" name="submit" value="excel">Export to Excel <i class="fa fa-file-pdf-o"></i></button>
                                     </form>
                                     <!-- MODAL VALIDASI DRAFT -->
                                     <div class="modal fade " id="modal_draft" tabindex="-1" role="dialog" aria-hidden="true">

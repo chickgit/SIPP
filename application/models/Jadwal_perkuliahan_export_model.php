@@ -116,6 +116,7 @@ class Jadwal_perkuliahan_export_model extends CI_Model {
                         ->join('matakuliah', 'matakuliah.kode_mk = A.kode_mk', 'left')
                         ->join('dosen', 'dosen.nid = A.nid', 'left')
                         ->order_by('hari.id','ASC')
+                        ->order_by('waktu.kode_wk', 'ASC')
                         ->get();
         $hasil = $query->result();
         foreach ($hasil as $key => $value) {

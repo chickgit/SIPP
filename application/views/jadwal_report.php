@@ -19,21 +19,25 @@ $pdf->setPrintHeader(false);
 $pdf->setPrintFooter(false);
 // Set a Page
 $pdf->AddPage();
+
 // Generate Content
+
 // Tanggal dibuatnya jadwal
 $pdf->SetFont('times', '', 6); // Set Font
-$tgl_jadwal = 'DD Month YYYY';
-$pdf->MultiCell(0, '', '[LEFT] '.$tgl_jadwal, 0, 'R', 0, 0, '', '', true);
+// $tgl_jadwal = 'DD Month YYYY';
+$pdf->MultiCell(0, '', $jadwal_tanggalDiBuat, 0, 'R', 0, 0, '', '', true);
 $pdf->Ln(5); // Performs a line break.
+
 // Judul Jadwal
 $pdf->SetFont('times', '', 15); // Set Font
-$judul_jadwal = 'Judul Jadwal Judul Jadwal Judul Jadwal Judul Jadwal Judul Jadwal Judul Jadwal Judul Jadwal Judul Jadwal Judul Jadwal ';
-$pdf->Write(0, $judul_jadwal, '', 0, 'C', 1);
+// $judul_jadwal = 'Judul Jadwal Judul Jadwal Judul Jadwal Judul Jadwal Judul Jadwal Judul Jadwal Judul Jadwal Judul Jadwal Judul Jadwal ';
+$pdf->Write(0, $jadwal_judul, '', 0, 'C', 1);
 $pdf->Ln(2); // Performs a line break.
+
 // Tabel Jadwal
 $pdf->SetFont('times', '', 8); // Set Font
 $isi_tabel = "";
-foreach ($list_jp as $row) {
+foreach ($jadwal_tabel as $row) {
 $isi_tabel .= '<tr>';
     $isi_tabel .= '<td class="hari" style="">'.$row->nama_hari.'</td>';
     $isi_tabel .= '<td class="matkul" style="text-align:left;">'.$row->nama_mk.'</td>';
@@ -102,28 +106,20 @@ EOD;
 $pdf->writeHTML($tabel_jadwal, false, false, false, false, '');
 // Performs a line break.
 // $pdf->Ln(2);
+
 // Catatan Kaki
 $pdf->SetFont('times', '', 6); // Set Font
-(isset($catatan_kaki)) ? $catatan_kaki : $catatan_kaki = 'catatan<br>aksdkjasbdkjbasd' ;
-$pdf->writeHTML($catatan_kaki,true);
+$pdf->writeHTML(!(empty($jadwal_catatanKaki)) ? 'Catatan:<br>'.$jadwal_catatanKaki : '' ,true);
+// Performs a line break.
+$pdf->Ln(2);
 // Persetujuan
 $pdf->SetFont('times', 'B', 8); // Set Font
 $mengetahui['nama'] = '<u>Mengetahui Nama</u>';
 $mengetahui['sebagai'] = 'Mengetahui Sebagai';
 $menyetujui['nama'] = 'Mengetahui Nama';
 $menyetujui['sebagai'] = 'Mengetahui Sebagai';
-// set color for background
-// $pdf->SetFillColor(255, 255, 200);
-
-// set color for text
-// $pdf->SetTextColor(0, 63, 127);
-
-// write the first column
-$pdf->writeHTMLCell(95, '', '', '', '<p>Mengetahui<br><br><br><br>'.$mengetahui['nama'].'<br>'.$mengetahui['sebagai'] = 'Mengetahui Sebagai'.'</p>', 0, 0, 0, true, 'C', true);
-$pdf->writeHTMLCell(95, '', '', '', '<p>Menyetujui<br><br><br><br>'.$mengetahui['nama'].'<br>'.$mengetahui['sebagai'] = 'Mengetahui Sebagai'.'</p>', 0, 0, 0, true, 'C', true);
-
-// $pdf->MultiCell(0, '', 'Mengetahui'.$mengetahui['nama'], 0, 'R', 0, 0, '', '', true);
-// $pdf->Write(10, 'Tanda Tangan Pengesahan Jadwal');
+$pdf->writeHTMLCell(95, '', '', '', '<p>Mengetahui<br><br><br><br><u>'.$jadwal_persetujuan['mengetahui']['nama'].'</u><br>'.$jadwal_persetujuan['mengetahui']['sebagai'].'</p>', 0, 0, 0, true, 'C', true);
+$pdf->writeHTMLCell(95, '', '', '', '<p>Menyetujui<br><br><br><br><u>'.$jadwal_persetujuan['menyetujui']['nama'].'</u><br>'.$jadwal_persetujuan['menyetujui']['sebagai'].'</p>', 0, 0, 0, true, 'C', true);
 
 $pdf->Output('My-File-Name.pdf', 'I');
  ?>
