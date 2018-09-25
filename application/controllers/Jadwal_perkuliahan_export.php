@@ -77,8 +77,8 @@ class Jadwal_perkuliahan_export extends MY_Controller {
 
 	public function export()
 	{
-		echo json_encode($this->input->post());
-		exit();
+		// echo json_encode($this->input->post());
+		// exit();
 		// $data['list_jp'] = $this->jadwal_perkuliahan_export_model->get_data_temp(array('draft_id_jp' => $this->insput->post('draft_jp')));
 		$data = array(
 			'jadwal_tanggalDiBuat' => date('j F Y'),
