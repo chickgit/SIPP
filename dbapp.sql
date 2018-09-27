@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Jul 02, 2018 at 07:49 AM
--- Server version: 5.7.22-0ubuntu0.16.04.1
--- PHP Version: 7.0.30-0ubuntu0.16.04.1
+-- Host: 127.0.0.1
+-- Generation Time: Sep 27, 2018 at 09:00 PM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,7 +26,6 @@ SET time_zone = "+00:00";
 -- Table structure for table `ambil_matakuliah`
 --
 
-DROP TABLE IF EXISTS `ambil_matakuliah`;
 CREATE TABLE `ambil_matakuliah` (
   `id` int(11) NOT NULL,
   `nim` int(9) NOT NULL,
@@ -40,11 +39,6 @@ CREATE TABLE `ambil_matakuliah` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `ambil_matakuliah`
---
-
-TRUNCATE TABLE `ambil_matakuliah`;
 --
 -- Dumping data for table `ambil_matakuliah`
 --
@@ -149,7 +143,6 @@ INSERT INTO `ambil_matakuliah` (`id`, `nim`, `tahun_ajaran`, `kode_mk`, `created
 -- Table structure for table `buka_tahun_ajaran`
 --
 
-DROP TABLE IF EXISTS `buka_tahun_ajaran`;
 CREATE TABLE `buka_tahun_ajaran` (
   `id` int(1) NOT NULL,
   `tahun_ajaran` varchar(9) NOT NULL,
@@ -164,16 +157,11 @@ CREATE TABLE `buka_tahun_ajaran` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Truncate table before insert `buka_tahun_ajaran`
---
-
-TRUNCATE TABLE `buka_tahun_ajaran`;
---
 -- Dumping data for table `buka_tahun_ajaran`
 --
 
 INSERT INTO `buka_tahun_ajaran` (`id`, `tahun_ajaran`, `semester`, `batas_akhir`, `created_date`, `created_by`, `modified_date`, `modified_by`, `isDelete`, `isShow`) VALUES
-(1, '2017/2018', 'GANJIL', '2018-02-28', '2018-01-21 14:21:51', 'admin', '2018-02-20 02:17:56', 'admin', 0, 1);
+(1, '2017/2018', 'GANJIL', '2018-02-28', '2018-01-21 14:21:51', 'admin', '2018-09-26 21:17:39', 'admin', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -181,7 +169,6 @@ INSERT INTO `buka_tahun_ajaran` (`id`, `tahun_ajaran`, `semester`, `batas_akhir`
 -- Table structure for table `dosen`
 --
 
-DROP TABLE IF EXISTS `dosen`;
 CREATE TABLE `dosen` (
   `nid` int(11) NOT NULL,
   `nama` varchar(50) NOT NULL,
@@ -189,7 +176,7 @@ CREATE TABLE `dosen` (
   `telepon` varchar(15) DEFAULT NULL,
   `gambar_ava` varchar(100) DEFAULT NULL,
   `ketersediaan_hari` varchar(9) NOT NULL,
-  `wawasan_matkul` varchar(255) NOT NULL COMMENT 'nid_sks',
+  `wawasan_matkul` varchar(255) NOT NULL COMMENT 'kodemk_sks',
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` varchar(150) NOT NULL DEFAULT 'admin',
   `modified_date` datetime DEFAULT NULL,
@@ -199,11 +186,6 @@ CREATE TABLE `dosen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Truncate table before insert `dosen`
---
-
-TRUNCATE TABLE `dosen`;
---
 -- Dumping data for table `dosen`
 --
 
@@ -211,26 +193,63 @@ INSERT INTO `dosen` (`nid`, `nama`, `alamat`, `telepon`, `gambar_ava`, `ketersed
 (1, 'Test Dummy 2', '', '081232213123', NULL, '0', '97', '2018-03-01 09:47:14', 'admin', NULL, NULL, 1, 1),
 (22233332, 'Jendro Hardiyanto', 'Tes ubah 3', '082233341233', NULL, '', '', '2017-11-09 13:34:08', 'admin', '2018-01-11 15:42:02', 'admin', 1, 1),
 (620057001, 'Mustofa Hayat, MKom', '', '082156447778', NULL, '1', '32MKK009_3;22MBB005_2', '2017-11-03 09:14:18', 'admin', '2018-03-09 06:45:28', 'admin', 0, 1),
-(620057002, 'Juli Yanto, Mkom', 'Griya Jakarta, Jl Bukit Indah Permai', '081287654444', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 0, 1),
-(620057003, 'Safitri Jaya, MTi', 'Jl Villa Dago', '081382264064', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 0, 1),
+(620057002, 'Juli Yanto, Mkom', 'Griya Jakarta, Jl Bukit Indah Permai', '081287654444', NULL, '4', '32MKB018_3;22MKB018_3;22MKB022_3', '2017-11-03 09:14:18', 'admin', '2018-07-12 11:27:04', 'admin', 0, 1),
+(620057003, 'Safitri Jaya, MTi', 'Jl Villa Dago', '081382264064', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 1, 1),
 (620057004, 'Susana Dwi Yulianti, MKom', 'Perumahan Sevilla BSD Blok A 1', '082233341233', NULL, '1;2;4', '22MKB020_3;03MKB012_3;03MKB010_3;22MKB029_3;03MKB001_3', '2017-11-03 09:14:18', 'admin', '2018-03-09 07:00:08', 'admin', 0, 1),
 (620057005, 'Trinugi Wira H, ST, MKom', 'Depok', '087755554444', NULL, '1', '03MKB005_3;32MKK033_3;22MKB006_3', '2017-11-03 09:14:18', 'admin', '2018-03-09 06:44:09', 'admin', 0, 1),
-(620057007, 'M. Fachri, SKom', 'Ciputat', '087644443333', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 0, 1),
-(620057008, 'Nur Sucahyo, S.Si, MM', 'Ciputat', '089876765454', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 0, 1),
+(620057007, 'M. Fachri, SKom', 'Ciputat', '087644443333', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 1, 1),
+(620057008, 'Nur Sucahyo, S.Si, MM', 'Ciputat', '089876765454', NULL, '3', '22MKK010_3;22MKK009_3;03MKK005_3', '2017-11-03 09:14:18', 'admin', '2018-07-02 15:04:17', 'admin', 0, 1),
 (620057009, 'Jefri Rahmadian, MKom', 'Depok', '082196666676', NULL, '1;2;3', '43MKB014_3;43MKB023_3;43MKB012_3;43MKK028_3;43MKK029_3;43MKK030_3', '2017-11-03 09:14:18', 'admin', '2018-03-09 07:02:34', 'admin', 0, 1),
-(620057010, 'Ir. Nixon Erzed, MT', 'Jakarta Pusat', '087843567456', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 0, 1),
-(620057011, 'Bagus Puri, SKom', 'Tangerang Selatan', '087954678543', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 0, 1),
-(620057012, 'Hari Setiyani, ST, MKom', 'Serang', '087733445467', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 0, 1),
-(620057013, 'Zulfikar Anas Hamidi, MBA', 'Cilandak', '0877456347754', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 0, 1),
-(620057014, 'Andi Nugroho, ST, MKom', 'Ciputat', '087923147685', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 0, 1),
-(620057015, 'Harjono Padmono Putro, ST, MKom', 'Bintaro', '087644568876', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 0, 1),
-(620057016, 'Yadarabullah, SKom', 'Bintaro', '087744213333', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 0, 1),
-(620057017, 'Arif Handoko, ST, MT', 'Jagakarsa', '087699877765', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 0, 1),
+(620057010, 'Ir. Nixon Erzed, MT', 'Jakarta Pusat', '087843567456', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 1, 1),
+(620057011, 'Bagus Puri, SKom', 'Tangerang Selatan', '087954678543', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 1, 1),
+(620057012, 'Hari Setiyani, ST, MKom', 'Serang', '087733445467', NULL, '3', '32MKB019_3;32MPK004_3;22MKB002_3', '2017-11-03 09:14:18', 'admin', '2018-07-02 15:13:16', 'admin', 0, 1),
+(620057013, 'Zulfikar Anas Hamidi, MBA', 'Cilandak', '0877456347754', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 1, 1),
+(620057014, 'Andi Nugroho, ST, MKom', 'Ciputat', '087923147685', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 1, 1),
+(620057015, 'Harjono Padmono Putro, ST, MKom', 'Bintaro', '087644568876', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 1, 1),
+(620057016, 'Yadarabullah, SKom', 'Bintaro', '087744213333', NULL, '', '', '2017-11-03 09:14:18', 'admin', NULL, NULL, 1, 1),
+(620057017, 'Arif Handoko, ST, M.Kom', 'Jagakarsa', '087699877765', NULL, '2;6', '43MKK022_3;32MKK011_3', '2017-11-03 09:14:18', 'admin', '2018-07-02 15:01:30', 'admin', 0, 1),
 (620057018, 'Farida Nurlaila, M.Kom', '', '081232213123', NULL, '1;2', '22MKK008_3;32MKB020_3;32MKK019_3', '2018-03-09 06:39:35', 'admin', '2018-03-09 06:48:30', 'admin', 0, 1),
 (620057019, 'Yasin Efendi, M.Kom', '', '081232213123', NULL, '1', '32MKB002_3;22MKK002_3;32MKB004_1;22MKK003_1;22MKB007_3;32MKK003_3;32MKK002_6', '2018-03-09 06:42:24', 'admin', '2018-03-09 06:48:05', 'admin', 0, 1),
 (620057020, 'Imam Solahudin, ST, MM', '', '081232213123', NULL, '1', '32MKK015_3;32MKK021_3', '2018-03-09 06:46:37', 'admin', '2018-03-09 07:00:40', 'admin', 0, 1),
-(620057021, 'Meira Pramusdari, SH, M.Kn', '', '081232213123', NULL, '', '03MBB001_2;03MBB002_3', '2018-03-09 07:03:53', 'admin', NULL, NULL, 0, 1),
+(620057021, 'Meira Pramusdari, SH, M.Kn', '', '081232213123', NULL, '2', '03MBB001_2;03MBB002_3', '2018-03-09 07:03:53', 'admin', '2018-07-12 11:28:14', 'admin', 0, 1),
+(620057022, 'Andri Marbun, S.Kom', '', '081231231231', NULL, '1', '03MKB005_3;22MKB020_3', '2018-07-02 14:59:10', 'admin', '2018-07-12 11:28:58', 'admin', 0, 1),
+(620057023, 'IGN Mantra, M.Kom, MM, ECIH, CEI', '', '082112341234', NULL, '2', '22MKB031_3', '2018-07-02 15:03:10', 'admin', '2018-07-12 11:29:15', 'admin', 0, 1),
+(620057024, 'Safrizal, ST, MM', '', '082112341234', NULL, '3', '22MKB025_3', '2018-07-02 15:05:17', 'admin', NULL, NULL, 0, 1),
+(620057025, 'Fajar Septian, S.Pd, M.Kom', '', '082112341234', NULL, '3;4', '03MKB003_3;03MKB004_3;22MKK013_3;22MKK012_3', '2018-07-02 15:07:51', 'admin', '2018-07-02 15:11:05', 'admin', 0, 1),
+(620057026, 'Dr. Ir. Hamid Al Jufri, MM, M.Kom', '', '082112341234', NULL, '3', '22MKB014_2;32MKK007_2;32MKK020_3', '2018-07-02 15:09:12', 'admin', '2018-07-02 15:12:17', 'admin', 0, 1),
+(620057027, 'Saipul Anwar, M.Kom', '', '0801212341234', NULL, '3', '32MKK006_3;22MKB004_3', '2018-07-02 15:10:20', 'admin', '2018-07-02 15:10:39', 'admin', 0, 1),
+(620057028, 'Asri Hayat, SH, MH', '', '081212341234', NULL, '4', '03MPK001_2;03MPK003_2', '2018-07-02 15:14:13', 'admin', NULL, NULL, 0, 1),
+(620057029, 'H. M. Bambang Libriantono, S.Kom, MM', '', '081212341234', NULL, '4', '32MKB022_3;32MKK014_3', '2018-07-02 15:15:21', 'admin', '2018-07-12 11:29:45', 'admin', 0, 1),
+(620057030, 'Ipin Sugiyarto, S.Kom', '', '081212341234', NULL, '4', '32MKB018_3;22MKB018_3;22MKB022_3', '2018-07-02 15:16:38', 'admin', '2018-07-12 11:25:51', 'admin', 0, 1),
+(620057031, 'Pratomo Djati Nugroho, S.Pi, M.Kom, CSCU, CHFI', '', '081212341234', NULL, '6', '22MKB027_3', '2018-07-02 15:48:56', 'admin', NULL, NULL, 0, 1),
+(620057032, 'Muhammad Bagir, MTI', '', '081212341234', NULL, '6', '22MKB028_3', '2018-07-02 15:49:53', 'admin', '2018-07-12 11:27:36', 'admin', 0, 1),
+(620057033, 'Jazim Hamidi, S.Sos, M.I.Kom', '', '0812123451234', NULL, '6', '43MKB024_3;43MKK024_2;43MKK027_2', '2018-07-02 15:50:53', 'admin', NULL, NULL, 0, 1),
+(620057034, 'Tata Sutabri, S.Kom, MMSI', '', '081212341234', NULL, '6', '32MKK012_2', '2018-07-02 15:51:35', 'admin', NULL, NULL, 0, 1),
 (2147483647, 'Test Dummy', 'Jl. Dummy', '081232213123', NULL, 'Kamis', '22MKK011', '2018-03-01 09:44:28', 'admin', NULL, NULL, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `draft_jadwal_perkuliahan`
+--
+
+CREATE TABLE `draft_jadwal_perkuliahan` (
+  `draft_id_jp` int(11) NOT NULL,
+  `draft_nama` varchar(255) NOT NULL,
+  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(150) NOT NULL DEFAULT 'admin',
+  `modified_date` datetime DEFAULT NULL,
+  `modified_by` varchar(150) DEFAULT NULL,
+  `isDelete` int(11) NOT NULL DEFAULT '0' COMMENT '0:tidak ; 1:iya',
+  `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:iya'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `draft_jadwal_perkuliahan`
+--
+
+INSERT INTO `draft_jadwal_perkuliahan` (`draft_id_jp`, `draft_nama`, `created_date`, `created_by`, `modified_date`, `modified_by`, `isDelete`, `isShow`) VALUES
+(1, '2017/2018_GANJIL_2018-09-15', '2018-09-18 09:31:34', 'admin', NULL, NULL, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -238,7 +257,6 @@ INSERT INTO `dosen` (`nid`, `nama`, `alamat`, `telepon`, `gambar_ava`, `ketersed
 -- Table structure for table `hari`
 --
 
-DROP TABLE IF EXISTS `hari`;
 CREATE TABLE `hari` (
   `id` int(11) NOT NULL,
   `nama_hari` varchar(6) NOT NULL,
@@ -250,11 +268,6 @@ CREATE TABLE `hari` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `hari`
---
-
-TRUNCATE TABLE `hari`;
 --
 -- Dumping data for table `hari`
 --
@@ -270,346 +283,454 @@ INSERT INTO `hari` (`id`, `nama_hari`, `created_date`, `created_by`, `modified_d
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jadwal_temp`
+-- Table structure for table `jadwal_perkuliahan`
 --
 
-DROP TABLE IF EXISTS `jadwal_temp`;
-CREATE TABLE `jadwal_temp` (
-  `id` int(11) NOT NULL,
+CREATE TABLE `jadwal_perkuliahan` (
+  `id_jadwal_p` int(11) NOT NULL,
   `tahun_ajaran` varchar(9) NOT NULL,
-  `id_hari` int(11) NOT NULL,
-  `kode_wk` int(11) NOT NULL,
-  `kode_rg` varchar(6) NOT NULL,
+  `id_hari` int(11) DEFAULT NULL,
+  `kode_wk` int(11) DEFAULT NULL,
+  `kode_rg` varchar(6) DEFAULT NULL,
   `kode_mk` varchar(8) DEFAULT NULL,
   `nid` int(11) DEFAULT NULL,
-  `peserta` varchar(25) DEFAULT NULL
+  `peserta` varchar(25) DEFAULT NULL,
+  `ket` varchar(6) NOT NULL,
+  `draft_id_jp` int(11) NOT NULL,
+  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(150) NOT NULL DEFAULT 'admin',
+  `modified_date` datetime DEFAULT NULL,
+  `modified_by` varchar(150) DEFAULT NULL,
+  `isDelete` int(11) NOT NULL DEFAULT '0' COMMENT '0:tidak ; 1:iya',
+  `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:iya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Truncate table before insert `jadwal_temp`
+-- Dumping data for table `jadwal_perkuliahan`
 --
 
-TRUNCATE TABLE `jadwal_temp`;
+INSERT INTO `jadwal_perkuliahan` (`id_jadwal_p`, `tahun_ajaran`, `id_hari`, `kode_wk`, `kode_rg`, `kode_mk`, `nid`, `peserta`, `ket`, `draft_id_jp`, `created_date`, `created_by`, `modified_date`, `modified_by`, `isDelete`, `isShow`) VALUES
+(331, '2017/2018', NULL, 1, NULL, '22MKB006', 620057005, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:13', 'admin', '2018-09-16 20:00:38', 'admin', 0, 1),
+(332, '2017/2018', NULL, NULL, NULL, '22MKK002', 620057019, 'SI/TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:13', 'admin', '2018-09-16 20:18:27', 'admin', 0, 1),
+(333, '2017/2018', NULL, NULL, NULL, '22MKK009', 620057008, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:13', 'admin', '2018-09-15 14:12:15', 'admin', 0, 1),
+(334, '2017/2018', NULL, NULL, NULL, '32MKB002', 620057019, 'SI | Umum', 'GANJIL', 1, '2018-09-15 14:09:13', 'admin', '2018-09-15 14:11:53', 'admin', 1, 1),
+(335, '2017/2018', 4, 4, 'CISCO', '32MKB018', 620057002, 'SI/TI | EIS', 'GANJIL', 1, '2018-09-15 14:09:13', 'admin', '2018-09-16 21:34:53', 'admin', 0, 1),
+(336, '2017/2018', NULL, NULL, NULL, '32MKK003', 620057019, 'SI | Umum', 'GANJIL', 1, '2018-09-15 14:09:13', 'admin', '2018-09-15 14:15:15', 'admin', 0, 1),
+(337, '2017/2018', 3, 1, 'LR-3', '32MKK006', 620057027, 'SI | Umum', 'GANJIL', 1, '2018-09-15 14:09:13', 'admin', '2018-09-16 21:32:56', 'admin', 0, 1),
+(338, '2017/2018', NULL, NULL, NULL, '32MKK009', 620057001, 'SI | Umum', 'GANJIL', 1, '2018-09-15 14:09:13', 'admin', '2018-09-15 14:16:34', 'admin', 0, 1),
+(339, '2017/2018', NULL, NULL, NULL, '32MKK019', 620057018, 'SI | EIS', 'GANJIL', 1, '2018-09-15 14:09:14', 'admin', '2018-09-15 14:16:57', 'admin', 0, 1),
+(340, '2017/2018', NULL, NULL, NULL, '32MKK020', 620057026, 'SI | Umum', 'GANJIL', 1, '2018-09-15 14:09:14', 'admin', '2018-09-15 14:17:22', 'admin', 0, 1),
+(341, '2017/2018', NULL, NULL, NULL, '32MKK033', 620057005, 'SI | EIS', 'GANJIL', 1, '2018-09-15 14:09:14', 'admin', '2018-09-15 14:17:42', 'admin', 0, 1),
+(342, '2017/2018', NULL, NULL, NULL, '32MPK004', 620057012, 'SI | Umum', 'GANJIL', 1, '2018-09-15 14:09:14', 'admin', '2018-09-15 14:17:59', 'admin', 0, 1),
+(343, '2017/2018', NULL, NULL, NULL, '43MKB014', 620057009, 'SI | MM', 'GANJIL', 1, '2018-09-15 14:09:14', 'admin', '2018-09-15 14:18:16', 'admin', 0, 1),
+(344, '2017/2018', NULL, NULL, NULL, '43MKB023', 620057009, 'SI | MM', 'GANJIL', 1, '2018-09-15 14:09:14', 'admin', '2018-09-15 14:18:35', 'admin', 0, 1),
+(345, '2017/2018', NULL, NULL, NULL, '43MKK028', 620057009, 'SI | MM', 'GANJIL', 1, '2018-09-15 14:09:14', 'admin', '2018-09-15 14:18:53', 'admin', 0, 1),
+(346, '2017/2018', 1, 1, 'LR-1', '03MKB001', 620057004, 'SI/TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(347, '2017/2018', 1, 1, 'LR-2', '22MKB007', 620057019, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(348, '2017/2018', 1, 2, 'LR-1', '22MBB005', 620057001, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(349, '2017/2018', 1, 4, 'LR-1', '32MKK015', 620057020, 'SI | EIS', 'GANJIL', 1, '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(350, '2017/2018', 1, 4, 'OCR-1', '03MKB005', 620057005, 'SI/TI | EIS', 'GANJIL', 1, '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(351, '2017/2018', 1, 4, 'OCR-2', '03MKB012', 620057004, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(352, '2017/2018', 1, 6, 'OCR-1', '22MKK003', 620057019, 'SI/TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:15', 'admin', '2018-09-16 21:35:25', 'admin', 0, 1),
+(353, '2017/2018', 1, 8, 'LR-1', '32MKK021', 620057020, 'SI | Umum', 'GANJIL', 1, '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(354, '2017/2018', 1, 8, 'OCR-1', '03MKB010', 620057004, 'SI | EIS', 'GANJIL', 1, '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(355, '2017/2018', 1, 8, 'OCR-2', '22MKB020', 620057022, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(356, '2017/2018', 1, 6, 'OCR-1', '32MKB004', 620057019, 'SI | Umum', 'GANJIL', 1, '2018-09-15 14:09:16', 'admin', '2018-09-16 21:24:49', 'admin', 1, 1),
+(357, '2017/2018', 2, 1, 'CISCO', '22MKB031', 620057023, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(358, '2017/2018', 2, 1, 'OCR-1', '22MKB029', 620057004, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(359, '2017/2018', 2, 1, 'OCR-2', '22MKK008', 620057018, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(360, '2017/2018', 2, 2, 'LR-1', '03MBB001', 620057021, 'SI/TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(361, '2017/2018', 2, 4, 'IMAC', '43MKB012', 620057009, 'SI | MM', 'GANJIL', 1, '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(362, '2017/2018', 2, 4, 'LR-1', '03MBB002', 620057021, 'SI/TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(363, '2017/2018', 2, 4, 'OCR-1', '32MKB020', 620057018, 'SI | EIS', 'GANJIL', 1, '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(364, '2017/2018', 2, 8, 'IMAC', '32MKK011', 620057017, 'SI | Umum', 'GANJIL', 1, '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(365, '2017/2018', 2, 8, 'LR-1', '43MKK030', 620057009, 'SI | MM', 'GANJIL', 1, '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(366, '2017/2018', 3, 1, 'CISCO', '22MKB025', 620057024, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(367, '2017/2018', 3, 1, 'LR-1', '03MKB003', 620057025, 'SI/TI | EIS', 'GANJIL', 1, '2018-09-15 14:09:19', 'admin', '2018-09-16 21:33:39', 'admin', 0, 1),
+(368, '2017/2018', 3, 1, 'LR-2', '22MKB002', 620057012, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(369, '2017/2018', 3, 1, 'LR-3', '22MKB004', 620057027, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(370, '2017/2018', 3, 4, 'IMAC', '43MKK029', 620057009, 'SI | MM', 'GANJIL', 1, '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(371, '2017/2018', 3, 1, 'LR-1', '03MKB004', 620057025, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:20', 'admin', '2018-09-16 21:06:21', 'admin', 1, 1),
+(372, '2017/2018', 3, 4, 'LR-2', '22MKK010', 620057008, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(373, '2017/2018', 3, 5, 'OCR-1', '32MKK007', 620057026, 'SI | EIS', 'GANJIL', 1, '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(374, '2017/2018', 3, 8, 'LR-1', '03MKK005', 620057008, 'SI/TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(375, '2017/2018', 3, 8, 'LR-2', '32MKB019', 620057012, 'SI | Umum', 'GANJIL', 1, '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(376, '2017/2018', 3, 8, 'OCR-1', '22MKK012', 620057025, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(377, '2017/2018', 3, 12, 'OCR-1', '22MKB014', 620057026, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(378, '2017/2018', 4, 1, 'LR-1', '32MKB022', 620057029, 'SI | Umum', 'GANJIL', 1, '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(379, '2017/2018', 4, 1, 'OCR-1', '22MKB022', 620057002, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(380, '2017/2018', 4, 2, 'LR-1', '03MPK001', 620057028, 'SI/TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(381, '2017/2018', 4, 4, 'CISCO', '22MKB018', 620057002, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:22', 'admin', NULL, NULL, 1, 1),
+(382, '2017/2018', 4, 4, 'LR-1', '32MKK014', 620057029, 'SI | Umum', 'GANJIL', 1, '2018-09-15 14:09:23', 'admin', NULL, NULL, 0, 1),
+(383, '2017/2018', 4, 5, 'CISCO', '03MPK003', 620057028, 'SI/TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:23', 'admin', NULL, NULL, 0, 1),
+(384, '2017/2018', 4, 8, 'CISCO', '22MKK013', 620057025, 'TI | Umum', 'GANJIL', 1, '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(385, '2017/2018', 6, 1, 'CISCO', '22MKB027', 620057031, 'TI | JarKom', 'GANJIL', 1, '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(386, '2017/2018', 6, 1, 'IMAC', '43MKB024', 620057033, 'SI | MM', 'GANJIL', 1, '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(387, '2017/2018', 6, 2, 'LR-1', '32MKK012', 620057034, 'SI | EIS', 'GANJIL', 1, '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(388, '2017/2018', 6, 4, 'IMAC', '43MKK022', 620057017, 'SI | MM', 'GANJIL', 1, '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(389, '2017/2018', 6, 4, 'OCR-1', '22MKB028', 620057032, 'TI | MobA', 'GANJIL', 1, '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(390, '2017/2018', 6, 5, 'LR-1', '43MKK027', 620057033, 'SI | MM', 'GANJIL', 1, '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(391, '2017/2018', 6, 12, 'IMAC', '43MKK024', 620057033, 'SI | MM', 'GANJIL', 1, '2018-09-15 14:09:28', 'admin', NULL, NULL, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jadwal_temp`
+--
+
+CREATE TABLE `jadwal_temp` (
+  `id_j_t` int(11) NOT NULL,
+  `tahun_ajaran` varchar(9) NOT NULL,
+  `id_hari` int(11) DEFAULT NULL,
+  `kode_wk` int(11) DEFAULT NULL,
+  `kode_rg` varchar(6) DEFAULT NULL,
+  `kode_mk` varchar(8) DEFAULT NULL,
+  `nid` int(11) DEFAULT NULL,
+  `peserta` varchar(25) DEFAULT NULL,
+  `ket` varchar(6) NOT NULL,
+  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(150) NOT NULL DEFAULT 'admin',
+  `modified_date` datetime DEFAULT NULL,
+  `modified_by` varchar(150) DEFAULT NULL,
+  `isDelete` int(11) NOT NULL DEFAULT '0' COMMENT '0:tidak ; 1:iya',
+  `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:iya'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Dumping data for table `jadwal_temp`
 --
 
-INSERT INTO `jadwal_temp` (`id`, `tahun_ajaran`, `id_hari`, `kode_wk`, `kode_rg`, `kode_mk`, `nid`, `peserta`) VALUES
-(1, '2017/2018', 1, 1, 'CISCO', NULL, NULL, ' | '),
-(2, '2017/2018', 1, 1, 'IMAC', NULL, NULL, ' | '),
-(3, '2017/2018', 1, 1, 'LR-1', NULL, NULL, ' | '),
-(4, '2017/2018', 1, 1, 'LR-2', NULL, NULL, ' | '),
-(5, '2017/2018', 1, 1, 'LR-3', NULL, NULL, ' | '),
-(6, '2017/2018', 1, 1, 'OCR-1', '22MKB029', NULL, 'TI | Umum'),
-(7, '2017/2018', 1, 1, 'OCR-2', NULL, NULL, ' | '),
-(8, '2017/2018', 1, 2, 'CISCO', NULL, NULL, ' | '),
-(9, '2017/2018', 1, 2, 'IMAC', NULL, NULL, ' | '),
-(10, '2017/2018', 1, 2, 'LR-1', NULL, NULL, ' | '),
-(11, '2017/2018', 1, 2, 'LR-2', NULL, NULL, ' | '),
-(12, '2017/2018', 1, 2, 'LR-3', NULL, NULL, ' | '),
-(13, '2017/2018', 1, 2, 'OCR-1', NULL, NULL, ' | '),
-(14, '2017/2018', 1, 2, 'OCR-2', '32MKK007', NULL, 'SI | EIS'),
-(15, '2017/2018', 1, 3, 'CISCO', NULL, NULL, ' | '),
-(16, '2017/2018', 1, 3, 'IMAC', NULL, NULL, ' | '),
-(17, '2017/2018', 1, 3, 'LR-1', NULL, NULL, ' | '),
-(18, '2017/2018', 1, 3, 'LR-2', NULL, NULL, ' | '),
-(19, '2017/2018', 1, 3, 'LR-3', NULL, NULL, ' | '),
-(20, '2017/2018', 1, 3, 'OCR-1', NULL, NULL, ' | '),
-(21, '2017/2018', 1, 3, 'OCR-2', NULL, NULL, ' | '),
-(22, '2017/2018', 1, 4, 'CISCO', '32MKB018', NULL, 'SI | EIS'),
-(23, '2017/2018', 1, 4, 'IMAC', NULL, NULL, ' | '),
-(24, '2017/2018', 1, 4, 'LR-1', '43MKK027', NULL, 'SI | MM'),
-(25, '2017/2018', 1, 4, 'LR-2', NULL, NULL, ' | '),
-(26, '2017/2018', 1, 4, 'LR-3', NULL, NULL, ' | '),
-(27, '2017/2018', 1, 4, 'OCR-1', NULL, NULL, ' | '),
-(28, '2017/2018', 1, 4, 'OCR-2', NULL, NULL, ' | '),
-(29, '2017/2018', 1, 5, 'CISCO', '22MKB018', NULL, 'TI | Umum'),
-(30, '2017/2018', 1, 5, 'IMAC', NULL, NULL, ' | '),
-(31, '2017/2018', 1, 5, 'LR-1', '03MKK005', NULL, 'SI/TI | Umum'),
-(32, '2017/2018', 1, 5, 'LR-2', NULL, NULL, ' | '),
-(33, '2017/2018', 1, 5, 'LR-3', '22MBB005', NULL, 'TI | Umum'),
-(34, '2017/2018', 1, 5, 'OCR-1', NULL, NULL, ' | '),
-(35, '2017/2018', 1, 5, 'OCR-2', NULL, NULL, ' | '),
-(36, '2017/2018', 1, 6, 'CISCO', NULL, NULL, ' | '),
-(37, '2017/2018', 1, 6, 'IMAC', NULL, NULL, ' | '),
-(38, '2017/2018', 1, 6, 'LR-1', NULL, NULL, ' | '),
-(39, '2017/2018', 1, 6, 'LR-2', '32MPK004', NULL, 'SI | Umum'),
-(40, '2017/2018', 1, 6, 'LR-3', NULL, NULL, ' | '),
-(41, '2017/2018', 1, 6, 'OCR-1', NULL, NULL, ' | '),
-(42, '2017/2018', 1, 6, 'OCR-2', NULL, NULL, ' | '),
-(43, '2017/2018', 1, 8, 'CISCO', NULL, NULL, ' | '),
-(44, '2017/2018', 1, 8, 'IMAC', NULL, NULL, ' | '),
-(45, '2017/2018', 1, 8, 'LR-1', NULL, NULL, ' | '),
-(46, '2017/2018', 1, 8, 'LR-2', NULL, NULL, ' | '),
-(47, '2017/2018', 1, 8, 'LR-3', NULL, NULL, ' | '),
-(48, '2017/2018', 1, 8, 'OCR-1', NULL, NULL, ' | '),
-(49, '2017/2018', 1, 8, 'OCR-2', NULL, NULL, ' | '),
-(50, '2017/2018', 1, 9, 'CISCO', NULL, NULL, ' | '),
-(51, '2017/2018', 1, 9, 'IMAC', NULL, NULL, ' | '),
-(52, '2017/2018', 1, 9, 'LR-1', NULL, NULL, ' | '),
-(53, '2017/2018', 1, 9, 'LR-2', NULL, NULL, ' | '),
-(54, '2017/2018', 1, 9, 'LR-3', '32MKK003', NULL, 'SI | Umum'),
-(55, '2017/2018', 1, 9, 'OCR-1', NULL, NULL, ' | '),
-(56, '2017/2018', 1, 9, 'OCR-2', NULL, NULL, ' | '),
-(57, '2017/2018', 1, 12, 'CISCO', NULL, NULL, ' | '),
-(58, '2017/2018', 1, 12, 'IMAC', NULL, NULL, ' | '),
-(59, '2017/2018', 1, 12, 'LR-1', '03MBB002', NULL, 'SI/TI | Umum'),
-(60, '2017/2018', 1, 12, 'LR-2', NULL, NULL, ' | '),
-(61, '2017/2018', 1, 12, 'LR-3', '32MKB022', NULL, 'SI | Umum'),
-(62, '2017/2018', 1, 12, 'OCR-1', '32MKB002', NULL, 'SI | Umum'),
-(63, '2017/2018', 1, 12, 'OCR-2', NULL, NULL, ' | '),
-(64, '2017/2018', 2, 1, 'CISCO', NULL, NULL, ' | '),
-(65, '2017/2018', 2, 1, 'IMAC', '43MKK022', NULL, 'SI | MM'),
-(66, '2017/2018', 2, 1, 'LR-1', NULL, NULL, ' | '),
-(67, '2017/2018', 2, 1, 'LR-2', NULL, NULL, ' | '),
-(68, '2017/2018', 2, 1, 'LR-3', NULL, NULL, ' | '),
-(69, '2017/2018', 2, 1, 'OCR-1', '22MKB006', NULL, 'TI | Umum'),
-(70, '2017/2018', 2, 1, 'OCR-2', NULL, NULL, ' | '),
-(71, '2017/2018', 2, 2, 'CISCO', NULL, NULL, ' | '),
-(72, '2017/2018', 2, 2, 'IMAC', NULL, NULL, ' | '),
-(73, '2017/2018', 2, 2, 'LR-1', NULL, NULL, ' | '),
-(74, '2017/2018', 2, 2, 'LR-2', NULL, NULL, ' | '),
-(75, '2017/2018', 2, 2, 'LR-3', NULL, NULL, ' | '),
-(76, '2017/2018', 2, 2, 'OCR-1', NULL, NULL, ' | '),
-(77, '2017/2018', 2, 2, 'OCR-2', NULL, NULL, ' | '),
-(78, '2017/2018', 2, 3, 'CISCO', NULL, NULL, ' | '),
-(79, '2017/2018', 2, 3, 'IMAC', NULL, NULL, ' | '),
-(80, '2017/2018', 2, 3, 'LR-1', NULL, NULL, ' | '),
-(81, '2017/2018', 2, 3, 'LR-2', '32MKK009', NULL, 'SI | Umum'),
-(82, '2017/2018', 2, 3, 'LR-3', NULL, NULL, ' | '),
-(83, '2017/2018', 2, 3, 'OCR-1', '22MKB022', NULL, 'TI | Umum'),
-(84, '2017/2018', 2, 3, 'OCR-2', NULL, NULL, ' | '),
-(85, '2017/2018', 2, 4, 'CISCO', NULL, NULL, ' | '),
-(86, '2017/2018', 2, 4, 'IMAC', NULL, NULL, ' | '),
-(87, '2017/2018', 2, 4, 'LR-1', '03MPK001', NULL, 'SI/TI | Umum'),
-(88, '2017/2018', 2, 4, 'LR-2', NULL, NULL, ' | '),
-(89, '2017/2018', 2, 4, 'LR-3', '03MKB004', NULL, 'TI | Umum'),
-(90, '2017/2018', 2, 4, 'OCR-1', NULL, NULL, ' | '),
-(91, '2017/2018', 2, 4, 'OCR-2', NULL, NULL, ' | '),
-(92, '2017/2018', 2, 5, 'CISCO', NULL, NULL, ' | '),
-(93, '2017/2018', 2, 5, 'IMAC', NULL, NULL, ' | '),
-(94, '2017/2018', 2, 5, 'LR-1', NULL, NULL, ' | '),
-(95, '2017/2018', 2, 5, 'LR-2', NULL, NULL, ' | '),
-(96, '2017/2018', 2, 5, 'LR-3', NULL, NULL, ' | '),
-(97, '2017/2018', 2, 5, 'OCR-1', NULL, NULL, ' | '),
-(98, '2017/2018', 2, 5, 'OCR-2', NULL, NULL, ' | '),
-(99, '2017/2018', 2, 6, 'CISCO', NULL, NULL, ' | '),
-(100, '2017/2018', 2, 6, 'IMAC', NULL, NULL, ' | '),
-(101, '2017/2018', 2, 6, 'LR-1', NULL, NULL, ' | '),
-(102, '2017/2018', 2, 6, 'LR-2', NULL, NULL, ' | '),
-(103, '2017/2018', 2, 6, 'LR-3', NULL, NULL, ' | '),
-(104, '2017/2018', 2, 6, 'OCR-1', NULL, NULL, ' | '),
-(105, '2017/2018', 2, 6, 'OCR-2', NULL, NULL, ' | '),
-(106, '2017/2018', 2, 8, 'CISCO', '03MPK003', NULL, 'SI/TI | Umum'),
-(107, '2017/2018', 2, 8, 'IMAC', '43MKB014', NULL, 'SI | MM'),
-(108, '2017/2018', 2, 8, 'LR-1', NULL, NULL, ' | '),
-(109, '2017/2018', 2, 8, 'LR-2', NULL, NULL, ' | '),
-(110, '2017/2018', 2, 8, 'LR-3', NULL, NULL, ' | '),
-(111, '2017/2018', 2, 8, 'OCR-1', '22MKB014', NULL, 'TI | Umum'),
-(112, '2017/2018', 2, 8, 'OCR-2', NULL, NULL, ' | '),
-(113, '2017/2018', 2, 9, 'CISCO', NULL, NULL, ' | '),
-(114, '2017/2018', 2, 9, 'IMAC', NULL, NULL, ' | '),
-(115, '2017/2018', 2, 9, 'LR-1', '22MKB002', NULL, 'TI | Umum'),
-(116, '2017/2018', 2, 9, 'LR-2', NULL, NULL, ' | '),
-(117, '2017/2018', 2, 9, 'LR-3', NULL, NULL, ' | '),
-(118, '2017/2018', 2, 9, 'OCR-1', NULL, NULL, ' | '),
-(119, '2017/2018', 2, 9, 'OCR-2', NULL, NULL, ' | '),
-(120, '2017/2018', 2, 12, 'CISCO', NULL, NULL, ' | '),
-(121, '2017/2018', 2, 12, 'IMAC', NULL, NULL, ' | '),
-(122, '2017/2018', 2, 12, 'LR-1', NULL, NULL, ' | '),
-(123, '2017/2018', 2, 12, 'LR-2', NULL, NULL, ' | '),
-(124, '2017/2018', 2, 12, 'LR-3', NULL, NULL, ' | '),
-(125, '2017/2018', 2, 12, 'OCR-1', NULL, NULL, ' | '),
-(126, '2017/2018', 2, 12, 'OCR-2', NULL, NULL, ' | '),
-(127, '2017/2018', 3, 1, 'CISCO', NULL, NULL, ' | '),
-(128, '2017/2018', 3, 1, 'IMAC', NULL, NULL, ' | '),
-(129, '2017/2018', 3, 1, 'LR-1', '03MKB001', NULL, 'SI/TI | Umum'),
-(130, '2017/2018', 3, 1, 'LR-2', '32MKK014', NULL, 'SI | Umum'),
-(131, '2017/2018', 3, 1, 'LR-3', NULL, NULL, ' | '),
-(132, '2017/2018', 3, 1, 'OCR-1', NULL, NULL, ' | '),
-(133, '2017/2018', 3, 1, 'OCR-2', NULL, NULL, ' | '),
-(134, '2017/2018', 3, 2, 'CISCO', NULL, NULL, ' | '),
-(135, '2017/2018', 3, 2, 'IMAC', '43MKK024', NULL, 'SI | MM'),
-(136, '2017/2018', 3, 2, 'LR-1', NULL, NULL, ' | '),
-(137, '2017/2018', 3, 2, 'LR-2', NULL, NULL, ' | '),
-(138, '2017/2018', 3, 2, 'LR-3', NULL, NULL, ' | '),
-(139, '2017/2018', 3, 2, 'OCR-1', NULL, NULL, ' | '),
-(140, '2017/2018', 3, 2, 'OCR-2', '22MKB028', NULL, 'TI | MobA'),
-(141, '2017/2018', 3, 3, 'CISCO', NULL, NULL, ' | '),
-(142, '2017/2018', 3, 3, 'IMAC', NULL, NULL, ' | '),
-(143, '2017/2018', 3, 3, 'LR-1', '03MBB001', NULL, 'SI/TI | Umum'),
-(144, '2017/2018', 3, 3, 'LR-2', '22MKK009', NULL, 'TI | Umum'),
-(145, '2017/2018', 3, 3, 'LR-3', NULL, NULL, ' | '),
-(146, '2017/2018', 3, 3, 'OCR-1', NULL, NULL, ' | '),
-(147, '2017/2018', 3, 3, 'OCR-2', NULL, NULL, ' | '),
-(148, '2017/2018', 3, 4, 'CISCO', NULL, NULL, ' | '),
-(149, '2017/2018', 3, 4, 'IMAC', NULL, NULL, ' | '),
-(150, '2017/2018', 3, 4, 'LR-1', NULL, NULL, ' | '),
-(151, '2017/2018', 3, 4, 'LR-2', '32MKK015', NULL, 'SI | EIS'),
-(152, '2017/2018', 3, 4, 'LR-3', NULL, NULL, ' | '),
-(153, '2017/2018', 3, 4, 'OCR-1', '22MKK002', NULL, 'TI | Umum'),
-(154, '2017/2018', 3, 4, 'OCR-2', NULL, NULL, ' | '),
-(155, '2017/2018', 3, 5, 'CISCO', '22MKB031', NULL, 'TI | Umum'),
-(156, '2017/2018', 3, 5, 'IMAC', NULL, NULL, ' | '),
-(157, '2017/2018', 3, 5, 'LR-1', NULL, NULL, ' | '),
-(158, '2017/2018', 3, 5, 'LR-2', NULL, NULL, ' | '),
-(159, '2017/2018', 3, 5, 'LR-3', NULL, NULL, ' | '),
-(160, '2017/2018', 3, 5, 'OCR-1', NULL, NULL, ' | '),
-(161, '2017/2018', 3, 5, 'OCR-2', NULL, NULL, ' | '),
-(162, '2017/2018', 3, 6, 'CISCO', NULL, NULL, ' | '),
-(163, '2017/2018', 3, 6, 'IMAC', NULL, NULL, ' | '),
-(164, '2017/2018', 3, 6, 'LR-1', NULL, NULL, ' | '),
-(165, '2017/2018', 3, 6, 'LR-2', NULL, NULL, ' | '),
-(166, '2017/2018', 3, 6, 'LR-3', NULL, NULL, ' | '),
-(167, '2017/2018', 3, 6, 'OCR-1', NULL, NULL, ' | '),
-(168, '2017/2018', 3, 6, 'OCR-2', '32MKB020', NULL, 'SI | EIS'),
-(169, '2017/2018', 3, 8, 'CISCO', NULL, NULL, ' | '),
-(170, '2017/2018', 3, 8, 'IMAC', NULL, NULL, ' | '),
-(171, '2017/2018', 3, 8, 'LR-1', '32MKK021', NULL, 'SI | Umum'),
-(172, '2017/2018', 3, 8, 'LR-2', NULL, NULL, ' | '),
-(173, '2017/2018', 3, 8, 'LR-3', NULL, NULL, ' | '),
-(174, '2017/2018', 3, 8, 'OCR-1', NULL, NULL, ' | '),
-(175, '2017/2018', 3, 8, 'OCR-2', NULL, NULL, ' | '),
-(176, '2017/2018', 3, 9, 'CISCO', NULL, NULL, ' | '),
-(177, '2017/2018', 3, 9, 'IMAC', '43MKB024', NULL, 'SI | MM'),
-(178, '2017/2018', 3, 9, 'LR-1', NULL, NULL, ' | '),
-(179, '2017/2018', 3, 9, 'LR-2', NULL, NULL, ' | '),
-(180, '2017/2018', 3, 9, 'LR-3', NULL, NULL, ' | '),
-(181, '2017/2018', 3, 9, 'OCR-1', '03MKB005', NULL, 'SI/TI | EIS'),
-(182, '2017/2018', 3, 9, 'OCR-2', '22MKB020', NULL, 'TI | Umum'),
-(183, '2017/2018', 3, 12, 'CISCO', '22MKB025', NULL, 'TI | Umum'),
-(184, '2017/2018', 3, 12, 'IMAC', NULL, NULL, ' | '),
-(185, '2017/2018', 3, 12, 'LR-1', NULL, NULL, ' | '),
-(186, '2017/2018', 3, 12, 'LR-2', NULL, NULL, ' | '),
-(187, '2017/2018', 3, 12, 'LR-3', NULL, NULL, ' | '),
-(188, '2017/2018', 3, 12, 'OCR-1', NULL, NULL, ' | '),
-(189, '2017/2018', 3, 12, 'OCR-2', NULL, NULL, ' | '),
-(190, '2017/2018', 4, 1, 'CISCO', NULL, NULL, ' | '),
-(191, '2017/2018', 4, 1, 'IMAC', NULL, NULL, ' | '),
-(192, '2017/2018', 4, 1, 'LR-1', NULL, NULL, ' | '),
-(193, '2017/2018', 4, 1, 'LR-2', NULL, NULL, ' | '),
-(194, '2017/2018', 4, 1, 'LR-3', NULL, NULL, ' | '),
-(195, '2017/2018', 4, 1, 'OCR-1', NULL, NULL, ' | '),
-(196, '2017/2018', 4, 1, 'OCR-2', NULL, NULL, ' | '),
-(197, '2017/2018', 4, 2, 'CISCO', NULL, NULL, ' | '),
-(198, '2017/2018', 4, 2, 'IMAC', NULL, NULL, ' | '),
-(199, '2017/2018', 4, 2, 'LR-1', NULL, NULL, ' | '),
-(200, '2017/2018', 4, 2, 'LR-2', '32MKK006', NULL, 'SI | Umum'),
-(201, '2017/2018', 4, 2, 'LR-3', NULL, NULL, ' | '),
-(202, '2017/2018', 4, 2, 'OCR-1', NULL, NULL, ' | '),
-(203, '2017/2018', 4, 2, 'OCR-2', '03MKB010', NULL, 'SI | EIS'),
-(204, '2017/2018', 4, 3, 'CISCO', NULL, NULL, ' | '),
-(205, '2017/2018', 4, 3, 'IMAC', NULL, NULL, ' | '),
-(206, '2017/2018', 4, 3, 'LR-1', NULL, NULL, ' | '),
-(207, '2017/2018', 4, 3, 'LR-2', '03MKB003', NULL, 'SI | EIS'),
-(208, '2017/2018', 4, 3, 'LR-3', NULL, NULL, ' | '),
-(209, '2017/2018', 4, 3, 'OCR-1', NULL, NULL, ' | '),
-(210, '2017/2018', 4, 3, 'OCR-2', NULL, NULL, ' | '),
-(211, '2017/2018', 4, 4, 'CISCO', NULL, NULL, ' | '),
-(212, '2017/2018', 4, 4, 'IMAC', '43MKB023', NULL, 'SI | MM'),
-(213, '2017/2018', 4, 4, 'LR-1', NULL, NULL, ' | '),
-(214, '2017/2018', 4, 4, 'LR-2', NULL, NULL, ' | '),
-(215, '2017/2018', 4, 4, 'LR-3', NULL, NULL, ' | '),
-(216, '2017/2018', 4, 4, 'OCR-1', '22MKK012', NULL, 'TI | Umum'),
-(217, '2017/2018', 4, 4, 'OCR-2', NULL, NULL, ' | '),
-(218, '2017/2018', 4, 5, 'CISCO', NULL, NULL, ' | '),
-(219, '2017/2018', 4, 5, 'IMAC', '43MKK029', NULL, 'SI | MM'),
-(220, '2017/2018', 4, 5, 'LR-1', NULL, NULL, ' | '),
-(221, '2017/2018', 4, 5, 'LR-2', NULL, NULL, ' | '),
-(222, '2017/2018', 4, 5, 'LR-3', NULL, NULL, ' | '),
-(223, '2017/2018', 4, 5, 'OCR-1', NULL, NULL, ' | '),
-(224, '2017/2018', 4, 5, 'OCR-2', NULL, NULL, ' | '),
-(225, '2017/2018', 4, 6, 'CISCO', NULL, NULL, ' | '),
-(226, '2017/2018', 4, 6, 'IMAC', NULL, NULL, ' | '),
-(227, '2017/2018', 4, 6, 'LR-1', NULL, NULL, ' | '),
-(228, '2017/2018', 4, 6, 'LR-2', NULL, NULL, ' | '),
-(229, '2017/2018', 4, 6, 'LR-3', NULL, NULL, ' | '),
-(230, '2017/2018', 4, 6, 'OCR-1', '32MKK033', NULL, 'SI | EIS'),
-(231, '2017/2018', 4, 6, 'OCR-2', NULL, NULL, ' | '),
-(232, '2017/2018', 4, 8, 'CISCO', NULL, NULL, ' | '),
-(233, '2017/2018', 4, 8, 'IMAC', '43MKB012', NULL, 'SI | MM'),
-(234, '2017/2018', 4, 8, 'LR-1', NULL, NULL, ' | '),
-(235, '2017/2018', 4, 8, 'LR-2', NULL, NULL, ' | '),
-(236, '2017/2018', 4, 8, 'LR-3', NULL, NULL, ' | '),
-(237, '2017/2018', 4, 8, 'OCR-1', NULL, NULL, ' | '),
-(238, '2017/2018', 4, 8, 'OCR-2', NULL, NULL, ' | '),
-(239, '2017/2018', 4, 9, 'CISCO', NULL, NULL, ' | '),
-(240, '2017/2018', 4, 9, 'IMAC', NULL, NULL, ' | '),
-(241, '2017/2018', 4, 9, 'LR-1', NULL, NULL, ' | '),
-(242, '2017/2018', 4, 9, 'LR-2', NULL, NULL, ' | '),
-(243, '2017/2018', 4, 9, 'LR-3', NULL, NULL, ' | '),
-(244, '2017/2018', 4, 9, 'OCR-1', NULL, NULL, ' | '),
-(245, '2017/2018', 4, 9, 'OCR-2', NULL, NULL, ' | '),
-(246, '2017/2018', 4, 12, 'CISCO', NULL, NULL, ' | '),
-(247, '2017/2018', 4, 12, 'IMAC', NULL, NULL, ' | '),
-(248, '2017/2018', 4, 12, 'LR-1', NULL, NULL, ' | '),
-(249, '2017/2018', 4, 12, 'LR-2', NULL, NULL, ' | '),
-(250, '2017/2018', 4, 12, 'LR-3', '32MKB019', NULL, 'SI | Umum'),
-(251, '2017/2018', 4, 12, 'OCR-1', NULL, NULL, ' | '),
-(252, '2017/2018', 4, 12, 'OCR-2', NULL, NULL, ' | '),
-(253, '2017/2018', 6, 1, 'CISCO', NULL, NULL, ' | '),
-(254, '2017/2018', 6, 1, 'IMAC', NULL, NULL, ' | '),
-(255, '2017/2018', 6, 1, 'LR-1', NULL, NULL, ' | '),
-(256, '2017/2018', 6, 1, 'LR-2', '22MKB004', NULL, 'TI | Umum'),
-(257, '2017/2018', 6, 1, 'LR-3', NULL, NULL, ' | '),
-(258, '2017/2018', 6, 1, 'OCR-1', '22MKK003', NULL, 'TI | Umum'),
-(259, '2017/2018', 6, 1, 'OCR-2', NULL, NULL, ' | '),
-(260, '2017/2018', 6, 2, 'CISCO', '22MKB027', NULL, 'TI | JarKom'),
-(261, '2017/2018', 6, 2, 'IMAC', NULL, NULL, ' | '),
-(262, '2017/2018', 6, 2, 'LR-1', NULL, NULL, ' | '),
-(263, '2017/2018', 6, 2, 'LR-2', NULL, NULL, ' | '),
-(264, '2017/2018', 6, 2, 'LR-3', NULL, NULL, ' | '),
-(265, '2017/2018', 6, 2, 'OCR-1', NULL, NULL, ' | '),
-(266, '2017/2018', 6, 2, 'OCR-2', '32MKB004', NULL, 'SI | Umum'),
-(267, '2017/2018', 6, 3, 'CISCO', NULL, NULL, ' | '),
-(268, '2017/2018', 6, 3, 'IMAC', NULL, NULL, ' | '),
-(269, '2017/2018', 6, 3, 'LR-1', NULL, NULL, ' | '),
-(270, '2017/2018', 6, 3, 'LR-2', NULL, NULL, ' | '),
-(271, '2017/2018', 6, 3, 'LR-3', NULL, NULL, ' | '),
-(272, '2017/2018', 6, 3, 'OCR-1', NULL, NULL, ' | '),
-(273, '2017/2018', 6, 3, 'OCR-2', NULL, NULL, ' | '),
-(274, '2017/2018', 6, 4, 'CISCO', NULL, NULL, ' | '),
-(275, '2017/2018', 6, 4, 'IMAC', NULL, NULL, ' | '),
-(276, '2017/2018', 6, 4, 'LR-1', NULL, NULL, ' | '),
-(277, '2017/2018', 6, 4, 'LR-2', NULL, NULL, ' | '),
-(278, '2017/2018', 6, 4, 'LR-3', NULL, NULL, ' | '),
-(279, '2017/2018', 6, 4, 'OCR-1', NULL, NULL, ' | '),
-(280, '2017/2018', 6, 4, 'OCR-2', '32MKK020', NULL, 'SI | Umum'),
-(281, '2017/2018', 6, 5, 'CISCO', NULL, NULL, ' | '),
-(282, '2017/2018', 6, 5, 'IMAC', NULL, NULL, ' | '),
-(283, '2017/2018', 6, 5, 'LR-1', NULL, NULL, ' | '),
-(284, '2017/2018', 6, 5, 'LR-2', NULL, NULL, ' | '),
-(285, '2017/2018', 6, 5, 'LR-3', NULL, NULL, ' | '),
-(286, '2017/2018', 6, 5, 'OCR-1', NULL, NULL, ' | '),
-(287, '2017/2018', 6, 5, 'OCR-2', NULL, NULL, ' | '),
-(288, '2017/2018', 6, 6, 'CISCO', NULL, NULL, ' | '),
-(289, '2017/2018', 6, 6, 'IMAC', '43MKK028', NULL, 'SI | MM'),
-(290, '2017/2018', 6, 6, 'LR-1', NULL, NULL, ' | '),
-(291, '2017/2018', 6, 6, 'LR-2', '32MKK012', NULL, 'SI | EIS'),
-(292, '2017/2018', 6, 6, 'LR-3', NULL, NULL, ' | '),
-(293, '2017/2018', 6, 6, 'OCR-1', NULL, NULL, ' | '),
-(294, '2017/2018', 6, 6, 'OCR-2', NULL, NULL, ' | '),
-(295, '2017/2018', 6, 8, 'CISCO', NULL, NULL, ' | '),
-(296, '2017/2018', 6, 8, 'IMAC', NULL, NULL, ' | '),
-(297, '2017/2018', 6, 8, 'LR-1', NULL, NULL, ' | '),
-(298, '2017/2018', 6, 8, 'LR-2', '22MKB007', NULL, 'TI | Umum'),
-(299, '2017/2018', 6, 8, 'LR-3', NULL, NULL, ' | '),
-(300, '2017/2018', 6, 8, 'OCR-1', NULL, NULL, ' | '),
-(301, '2017/2018', 6, 8, 'OCR-2', '03MKB012', NULL, 'TI | Umum'),
-(302, '2017/2018', 6, 9, 'CISCO', '22MKK013', NULL, 'TI | Umum'),
-(303, '2017/2018', 6, 9, 'IMAC', NULL, NULL, ' | '),
-(304, '2017/2018', 6, 9, 'LR-1', '22MKK010', NULL, 'TI | Umum'),
-(305, '2017/2018', 6, 9, 'LR-2', NULL, NULL, ' | '),
-(306, '2017/2018', 6, 9, 'LR-3', NULL, NULL, ' | '),
-(307, '2017/2018', 6, 9, 'OCR-1', NULL, NULL, ' | '),
-(308, '2017/2018', 6, 9, 'OCR-2', NULL, NULL, ' | '),
-(309, '2017/2018', 6, 12, 'CISCO', NULL, NULL, ' | '),
-(310, '2017/2018', 6, 12, 'IMAC', NULL, NULL, ' | '),
-(311, '2017/2018', 6, 12, 'LR-1', '43MKK030', NULL, 'SI | MM'),
-(312, '2017/2018', 6, 12, 'LR-2', NULL, NULL, ' | '),
-(313, '2017/2018', 6, 12, 'LR-3', '32MKK019', NULL, 'SI | EIS'),
-(314, '2017/2018', 6, 12, 'OCR-1', NULL, NULL, ' | '),
-(315, '2017/2018', 6, 12, 'OCR-2', NULL, NULL, ' | ');
+INSERT INTO `jadwal_temp` (`id_j_t`, `tahun_ajaran`, `id_hari`, `kode_wk`, `kode_rg`, `kode_mk`, `nid`, `peserta`, `ket`, `created_date`, `created_by`, `modified_date`, `modified_by`, `isDelete`, `isShow`) VALUES
+(1, '2017/2018', NULL, NULL, NULL, '22MKB006', 620057005, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:13', 'admin', '2018-09-15 14:10:52', 'admin', 1, 1),
+(2, '2017/2018', NULL, NULL, NULL, '22MKK002', 620057019, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:13', 'admin', '2018-09-15 14:11:37', 'admin', 1, 1),
+(3, '2017/2018', NULL, NULL, NULL, '22MKK009', 620057008, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:13', 'admin', '2018-09-15 14:12:15', 'admin', 1, 1),
+(4, '2017/2018', NULL, NULL, NULL, '32MKB002', 620057019, 'SI | Umum', 'GANJIL', '2018-09-15 14:09:13', 'admin', '2018-09-15 14:11:53', 'admin', 1, 1),
+(5, '2017/2018', NULL, NULL, NULL, '32MKB018', 620057002, 'SI | EIS', 'GANJIL', '2018-09-15 14:09:13', 'admin', '2018-09-15 14:14:18', 'admin', 1, 1),
+(6, '2017/2018', NULL, NULL, NULL, '32MKK003', 620057019, 'SI | Umum', 'GANJIL', '2018-09-15 14:09:13', 'admin', '2018-09-15 14:15:15', 'admin', 1, 1),
+(7, '2017/2018', NULL, NULL, NULL, '32MKK006', 620057027, 'SI | Umum', 'GANJIL', '2018-09-15 14:09:13', 'admin', '2018-09-15 14:15:46', 'admin', 1, 1),
+(8, '2017/2018', NULL, NULL, NULL, '32MKK009', 620057001, 'SI | Umum', 'GANJIL', '2018-09-15 14:09:13', 'admin', '2018-09-15 14:16:34', 'admin', 1, 1),
+(9, '2017/2018', NULL, NULL, NULL, '32MKK019', 620057018, 'SI | EIS', 'GANJIL', '2018-09-15 14:09:14', 'admin', '2018-09-15 14:16:57', 'admin', 1, 1),
+(10, '2017/2018', NULL, NULL, NULL, '32MKK020', 620057026, 'SI | Umum', 'GANJIL', '2018-09-15 14:09:14', 'admin', '2018-09-15 14:17:22', 'admin', 1, 1),
+(11, '2017/2018', NULL, NULL, NULL, '32MKK033', 620057005, 'SI | EIS', 'GANJIL', '2018-09-15 14:09:14', 'admin', '2018-09-15 14:17:42', 'admin', 1, 1),
+(12, '2017/2018', NULL, NULL, NULL, '32MPK004', 620057012, 'SI | Umum', 'GANJIL', '2018-09-15 14:09:14', 'admin', '2018-09-15 14:17:59', 'admin', 1, 1),
+(13, '2017/2018', NULL, NULL, NULL, '43MKB014', 620057009, 'SI | MM', 'GANJIL', '2018-09-15 14:09:14', 'admin', '2018-09-15 14:18:16', 'admin', 1, 1),
+(14, '2017/2018', NULL, NULL, NULL, '43MKB023', 620057009, 'SI | MM', 'GANJIL', '2018-09-15 14:09:14', 'admin', '2018-09-15 14:18:35', 'admin', 1, 1),
+(15, '2017/2018', NULL, NULL, NULL, '43MKK028', 620057009, 'SI | MM', 'GANJIL', '2018-09-15 14:09:14', 'admin', '2018-09-15 14:18:53', 'admin', 1, 1),
+(16, '2017/2018', 1, 1, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(17, '2017/2018', 1, 1, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(18, '2017/2018', 1, 1, 'LR-1', '03MKB001', 620057004, 'SI/TI | Umum', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 1, 1),
+(19, '2017/2018', 1, 1, 'LR-2', '22MKB007', 620057019, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 1, 1),
+(20, '2017/2018', 1, 1, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(21, '2017/2018', 1, 1, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(22, '2017/2018', 1, 1, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(23, '2017/2018', 1, 2, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(24, '2017/2018', 1, 2, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(25, '2017/2018', 1, 2, 'LR-1', '22MBB005', 620057001, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 1, 1),
+(26, '2017/2018', 1, 2, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(27, '2017/2018', 1, 2, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(28, '2017/2018', 1, 2, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(29, '2017/2018', 1, 2, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(30, '2017/2018', 1, 3, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(31, '2017/2018', 1, 3, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(32, '2017/2018', 1, 3, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(33, '2017/2018', 1, 3, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(34, '2017/2018', 1, 3, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(35, '2017/2018', 1, 3, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:14', 'admin', NULL, NULL, 0, 1),
+(36, '2017/2018', 1, 3, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(37, '2017/2018', 1, 4, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(38, '2017/2018', 1, 4, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(39, '2017/2018', 1, 4, 'LR-1', '32MKK015', 620057020, 'SI | EIS', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 1, 1),
+(40, '2017/2018', 1, 4, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(41, '2017/2018', 1, 4, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(42, '2017/2018', 1, 4, 'OCR-1', '03MKB005', 620057005, 'SI/TI | EIS', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 1, 1),
+(43, '2017/2018', 1, 4, 'OCR-2', '03MKB012', 620057004, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 1, 1),
+(44, '2017/2018', 1, 5, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(45, '2017/2018', 1, 5, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(46, '2017/2018', 1, 5, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(47, '2017/2018', 1, 5, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(48, '2017/2018', 1, 5, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(49, '2017/2018', 1, 5, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(50, '2017/2018', 1, 5, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(51, '2017/2018', 1, 6, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(52, '2017/2018', 1, 6, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(53, '2017/2018', 1, 6, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(54, '2017/2018', 1, 6, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(55, '2017/2018', 1, 6, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(56, '2017/2018', 1, 6, 'OCR-1', '22MKK003', 620057019, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 1, 1),
+(57, '2017/2018', 1, 6, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(58, '2017/2018', 1, 8, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(59, '2017/2018', 1, 8, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:15', 'admin', NULL, NULL, 0, 1),
+(60, '2017/2018', 1, 8, 'LR-1', '32MKK021', 620057020, 'SI | Umum', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 1, 1),
+(61, '2017/2018', 1, 8, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(62, '2017/2018', 1, 8, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(63, '2017/2018', 1, 8, 'OCR-1', '03MKB010', 620057004, 'SI | EIS', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 1, 1),
+(64, '2017/2018', 1, 8, 'OCR-2', '22MKB020', 620057022, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 1, 1),
+(65, '2017/2018', 1, 9, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(66, '2017/2018', 1, 9, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(67, '2017/2018', 1, 9, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(68, '2017/2018', 1, 9, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(69, '2017/2018', 1, 9, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(70, '2017/2018', 1, 9, 'OCR-1', '32MKB004', 620057019, 'SI | Umum', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 1, 1),
+(71, '2017/2018', 1, 9, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(72, '2017/2018', 1, 12, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(73, '2017/2018', 1, 12, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(74, '2017/2018', 1, 12, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(75, '2017/2018', 1, 12, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(76, '2017/2018', 1, 12, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(77, '2017/2018', 1, 12, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(78, '2017/2018', 1, 12, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(79, '2017/2018', 2, 1, 'CISCO', '22MKB031', 620057023, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 1, 1),
+(80, '2017/2018', 2, 1, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(81, '2017/2018', 2, 1, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(82, '2017/2018', 2, 1, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(83, '2017/2018', 2, 1, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 0, 1),
+(84, '2017/2018', 2, 1, 'OCR-1', '22MKB029', 620057004, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 1, 1),
+(85, '2017/2018', 2, 1, 'OCR-2', '22MKK008', 620057018, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:16', 'admin', NULL, NULL, 1, 1),
+(86, '2017/2018', 2, 2, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(87, '2017/2018', 2, 2, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(88, '2017/2018', 2, 2, 'LR-1', '03MBB001', 620057021, 'SI/TI | Umum', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 1, 1),
+(89, '2017/2018', 2, 2, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(90, '2017/2018', 2, 2, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(91, '2017/2018', 2, 2, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(92, '2017/2018', 2, 2, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(93, '2017/2018', 2, 3, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(94, '2017/2018', 2, 3, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(95, '2017/2018', 2, 3, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(96, '2017/2018', 2, 3, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(97, '2017/2018', 2, 3, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(98, '2017/2018', 2, 3, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(99, '2017/2018', 2, 3, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(100, '2017/2018', 2, 4, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(101, '2017/2018', 2, 4, 'IMAC', '43MKB012', 620057009, 'SI | MM', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 1, 1),
+(102, '2017/2018', 2, 4, 'LR-1', '03MBB002', 620057021, 'SI/TI | Umum', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 1, 1),
+(103, '2017/2018', 2, 4, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(104, '2017/2018', 2, 4, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(105, '2017/2018', 2, 4, 'OCR-1', '32MKB020', 620057018, 'SI | EIS', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 1, 1),
+(106, '2017/2018', 2, 4, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:17', 'admin', NULL, NULL, 0, 1),
+(107, '2017/2018', 2, 5, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(108, '2017/2018', 2, 5, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(109, '2017/2018', 2, 5, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(110, '2017/2018', 2, 5, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(111, '2017/2018', 2, 5, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(112, '2017/2018', 2, 5, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(113, '2017/2018', 2, 5, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(114, '2017/2018', 2, 6, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(115, '2017/2018', 2, 6, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(116, '2017/2018', 2, 6, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(117, '2017/2018', 2, 6, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(118, '2017/2018', 2, 6, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(119, '2017/2018', 2, 6, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(120, '2017/2018', 2, 6, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(121, '2017/2018', 2, 8, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(122, '2017/2018', 2, 8, 'IMAC', '32MKK011', 620057017, 'SI | Umum', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 1, 1),
+(123, '2017/2018', 2, 8, 'LR-1', '43MKK030', 620057009, 'SI | MM', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 1, 1),
+(124, '2017/2018', 2, 8, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(125, '2017/2018', 2, 8, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(126, '2017/2018', 2, 8, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:18', 'admin', NULL, NULL, 0, 1),
+(127, '2017/2018', 2, 8, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(128, '2017/2018', 2, 9, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(129, '2017/2018', 2, 9, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(130, '2017/2018', 2, 9, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(131, '2017/2018', 2, 9, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(132, '2017/2018', 2, 9, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(133, '2017/2018', 2, 9, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(134, '2017/2018', 2, 9, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(135, '2017/2018', 2, 12, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(136, '2017/2018', 2, 12, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(137, '2017/2018', 2, 12, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(138, '2017/2018', 2, 12, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(139, '2017/2018', 2, 12, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(140, '2017/2018', 2, 12, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(141, '2017/2018', 2, 12, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(142, '2017/2018', 3, 1, 'CISCO', '22MKB025', 620057024, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 1, 1),
+(143, '2017/2018', 3, 1, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(144, '2017/2018', 3, 1, 'LR-1', '03MKB003', 620057025, 'SI | EIS', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 1, 1),
+(145, '2017/2018', 3, 1, 'LR-2', '22MKB002', 620057012, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 1, 1),
+(146, '2017/2018', 3, 1, 'LR-3', '22MKB004', 620057027, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 1, 1),
+(147, '2017/2018', 3, 1, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(148, '2017/2018', 3, 1, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(149, '2017/2018', 3, 2, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(150, '2017/2018', 3, 2, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(151, '2017/2018', 3, 2, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:19', 'admin', NULL, NULL, 0, 1),
+(152, '2017/2018', 3, 2, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(153, '2017/2018', 3, 2, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(154, '2017/2018', 3, 2, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(155, '2017/2018', 3, 2, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(156, '2017/2018', 3, 3, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(157, '2017/2018', 3, 3, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(158, '2017/2018', 3, 3, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(159, '2017/2018', 3, 3, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(160, '2017/2018', 3, 3, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(161, '2017/2018', 3, 3, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(162, '2017/2018', 3, 3, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(163, '2017/2018', 3, 4, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(164, '2017/2018', 3, 4, 'IMAC', '43MKK029', 620057009, 'SI | MM', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 1, 1),
+(165, '2017/2018', 3, 4, 'LR-1', '03MKB004', 620057025, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 1, 1),
+(166, '2017/2018', 3, 4, 'LR-2', '22MKK010', 620057008, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 1, 1),
+(167, '2017/2018', 3, 4, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(168, '2017/2018', 3, 4, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(169, '2017/2018', 3, 4, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(170, '2017/2018', 3, 5, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(171, '2017/2018', 3, 5, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(172, '2017/2018', 3, 5, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(173, '2017/2018', 3, 5, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(174, '2017/2018', 3, 5, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(175, '2017/2018', 3, 5, 'OCR-1', '32MKK007', 620057026, 'SI | EIS', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 1, 1),
+(176, '2017/2018', 3, 5, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(177, '2017/2018', 3, 6, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(178, '2017/2018', 3, 6, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:20', 'admin', NULL, NULL, 0, 1),
+(179, '2017/2018', 3, 6, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(180, '2017/2018', 3, 6, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(181, '2017/2018', 3, 6, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(182, '2017/2018', 3, 6, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(183, '2017/2018', 3, 6, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(184, '2017/2018', 3, 8, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(185, '2017/2018', 3, 8, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(186, '2017/2018', 3, 8, 'LR-1', '03MKK005', 620057008, 'SI/TI | Umum', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 1, 1),
+(187, '2017/2018', 3, 8, 'LR-2', '32MKB019', 620057012, 'SI | Umum', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 1, 1),
+(188, '2017/2018', 3, 8, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(189, '2017/2018', 3, 8, 'OCR-1', '22MKK012', 620057025, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 1, 1),
+(190, '2017/2018', 3, 8, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(191, '2017/2018', 3, 9, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(192, '2017/2018', 3, 9, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(193, '2017/2018', 3, 9, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(194, '2017/2018', 3, 9, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(195, '2017/2018', 3, 9, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(196, '2017/2018', 3, 9, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(197, '2017/2018', 3, 9, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(198, '2017/2018', 3, 12, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(199, '2017/2018', 3, 12, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(200, '2017/2018', 3, 12, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:21', 'admin', NULL, NULL, 0, 1),
+(201, '2017/2018', 3, 12, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(202, '2017/2018', 3, 12, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(203, '2017/2018', 3, 12, 'OCR-1', '22MKB014', 620057026, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 1, 1),
+(204, '2017/2018', 3, 12, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(205, '2017/2018', 4, 1, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(206, '2017/2018', 4, 1, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(207, '2017/2018', 4, 1, 'LR-1', '32MKB022', 620057029, 'SI | Umum', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 1, 1),
+(208, '2017/2018', 4, 1, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(209, '2017/2018', 4, 1, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(210, '2017/2018', 4, 1, 'OCR-1', '22MKB022', 620057002, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 1, 1),
+(211, '2017/2018', 4, 1, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(212, '2017/2018', 4, 2, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(213, '2017/2018', 4, 2, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(214, '2017/2018', 4, 2, 'LR-1', '03MPK001', 620057028, 'SI/TI | Umum', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 1, 1),
+(215, '2017/2018', 4, 2, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(216, '2017/2018', 4, 2, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(217, '2017/2018', 4, 2, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(218, '2017/2018', 4, 2, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(219, '2017/2018', 4, 3, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(220, '2017/2018', 4, 3, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(221, '2017/2018', 4, 3, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(222, '2017/2018', 4, 3, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(223, '2017/2018', 4, 3, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(224, '2017/2018', 4, 3, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(225, '2017/2018', 4, 3, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(226, '2017/2018', 4, 4, 'CISCO', '22MKB018', 620057002, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 1, 1),
+(227, '2017/2018', 4, 4, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:22', 'admin', NULL, NULL, 0, 1),
+(228, '2017/2018', 4, 4, 'LR-1', '32MKK014', 620057029, 'SI | Umum', 'GANJIL', '2018-09-15 14:09:23', 'admin', NULL, NULL, 1, 1),
+(229, '2017/2018', 4, 4, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:23', 'admin', NULL, NULL, 0, 1),
+(230, '2017/2018', 4, 4, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:23', 'admin', NULL, NULL, 0, 1),
+(231, '2017/2018', 4, 4, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:23', 'admin', NULL, NULL, 0, 1),
+(232, '2017/2018', 4, 4, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:23', 'admin', NULL, NULL, 0, 1),
+(233, '2017/2018', 4, 5, 'CISCO', '03MPK003', 620057028, 'SI/TI | Umum', 'GANJIL', '2018-09-15 14:09:23', 'admin', NULL, NULL, 1, 1),
+(234, '2017/2018', 4, 5, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:23', 'admin', NULL, NULL, 0, 1),
+(235, '2017/2018', 4, 5, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:23', 'admin', NULL, NULL, 0, 1),
+(236, '2017/2018', 4, 5, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:23', 'admin', NULL, NULL, 0, 1),
+(237, '2017/2018', 4, 5, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:23', 'admin', NULL, NULL, 0, 1),
+(238, '2017/2018', 4, 5, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:23', 'admin', NULL, NULL, 0, 1),
+(239, '2017/2018', 4, 5, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:23', 'admin', NULL, NULL, 0, 1),
+(240, '2017/2018', 4, 6, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(241, '2017/2018', 4, 6, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(242, '2017/2018', 4, 6, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(243, '2017/2018', 4, 6, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(244, '2017/2018', 4, 6, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(245, '2017/2018', 4, 6, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(246, '2017/2018', 4, 6, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(247, '2017/2018', 4, 8, 'CISCO', '22MKK013', 620057025, 'TI | Umum', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 1, 1),
+(248, '2017/2018', 4, 8, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(249, '2017/2018', 4, 8, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(250, '2017/2018', 4, 8, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(251, '2017/2018', 4, 8, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(252, '2017/2018', 4, 8, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(253, '2017/2018', 4, 8, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(254, '2017/2018', 4, 9, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(255, '2017/2018', 4, 9, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(256, '2017/2018', 4, 9, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(257, '2017/2018', 4, 9, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(258, '2017/2018', 4, 9, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(259, '2017/2018', 4, 9, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(260, '2017/2018', 4, 9, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(261, '2017/2018', 4, 12, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(262, '2017/2018', 4, 12, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(263, '2017/2018', 4, 12, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:24', 'admin', NULL, NULL, 0, 1),
+(264, '2017/2018', 4, 12, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(265, '2017/2018', 4, 12, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(266, '2017/2018', 4, 12, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(267, '2017/2018', 4, 12, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(268, '2017/2018', 6, 1, 'CISCO', '22MKB027', 620057031, 'TI | JarKom', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 1, 1),
+(269, '2017/2018', 6, 1, 'IMAC', '43MKB024', 620057033, 'SI | MM', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 1, 1),
+(270, '2017/2018', 6, 1, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(271, '2017/2018', 6, 1, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(272, '2017/2018', 6, 1, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(273, '2017/2018', 6, 1, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(274, '2017/2018', 6, 1, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(275, '2017/2018', 6, 2, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(276, '2017/2018', 6, 2, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(277, '2017/2018', 6, 2, 'LR-1', '32MKK012', 620057034, 'SI | EIS', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 1, 1),
+(278, '2017/2018', 6, 2, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(279, '2017/2018', 6, 2, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(280, '2017/2018', 6, 2, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(281, '2017/2018', 6, 2, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(282, '2017/2018', 6, 3, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(283, '2017/2018', 6, 3, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(284, '2017/2018', 6, 3, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(285, '2017/2018', 6, 3, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(286, '2017/2018', 6, 3, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:25', 'admin', NULL, NULL, 0, 1),
+(287, '2017/2018', 6, 3, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(288, '2017/2018', 6, 3, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(289, '2017/2018', 6, 4, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(290, '2017/2018', 6, 4, 'IMAC', '43MKK022', 620057017, 'SI | MM', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 1, 1),
+(291, '2017/2018', 6, 4, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(292, '2017/2018', 6, 4, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(293, '2017/2018', 6, 4, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(294, '2017/2018', 6, 4, 'OCR-1', '22MKB028', 620057032, 'TI | MobA', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 1, 1),
+(295, '2017/2018', 6, 4, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(296, '2017/2018', 6, 5, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(297, '2017/2018', 6, 5, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(298, '2017/2018', 6, 5, 'LR-1', '43MKK027', 620057033, 'SI | MM', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 1, 1),
+(299, '2017/2018', 6, 5, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(300, '2017/2018', 6, 5, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(301, '2017/2018', 6, 5, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(302, '2017/2018', 6, 5, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(303, '2017/2018', 6, 6, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(304, '2017/2018', 6, 6, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(305, '2017/2018', 6, 6, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(306, '2017/2018', 6, 6, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(307, '2017/2018', 6, 6, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(308, '2017/2018', 6, 6, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(309, '2017/2018', 6, 6, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(310, '2017/2018', 6, 8, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(311, '2017/2018', 6, 8, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(312, '2017/2018', 6, 8, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(313, '2017/2018', 6, 8, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:26', 'admin', NULL, NULL, 0, 1),
+(314, '2017/2018', 6, 8, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:27', 'admin', NULL, NULL, 0, 1),
+(315, '2017/2018', 6, 8, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:27', 'admin', NULL, NULL, 0, 1),
+(316, '2017/2018', 6, 8, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:27', 'admin', NULL, NULL, 0, 1),
+(317, '2017/2018', 6, 9, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:27', 'admin', NULL, NULL, 0, 1),
+(318, '2017/2018', 6, 9, 'IMAC', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:27', 'admin', NULL, NULL, 0, 1),
+(319, '2017/2018', 6, 9, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:27', 'admin', NULL, NULL, 0, 1),
+(320, '2017/2018', 6, 9, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:27', 'admin', NULL, NULL, 0, 1),
+(321, '2017/2018', 6, 9, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:27', 'admin', NULL, NULL, 0, 1),
+(322, '2017/2018', 6, 9, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:28', 'admin', NULL, NULL, 0, 1),
+(323, '2017/2018', 6, 9, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:28', 'admin', NULL, NULL, 0, 1),
+(324, '2017/2018', 6, 12, 'CISCO', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:28', 'admin', NULL, NULL, 0, 1),
+(325, '2017/2018', 6, 12, 'IMAC', '43MKK024', 620057033, 'SI | MM', 'GANJIL', '2018-09-15 14:09:28', 'admin', NULL, NULL, 1, 1),
+(326, '2017/2018', 6, 12, 'LR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:28', 'admin', NULL, NULL, 0, 1),
+(327, '2017/2018', 6, 12, 'LR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:28', 'admin', NULL, NULL, 0, 1),
+(328, '2017/2018', 6, 12, 'LR-3', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:28', 'admin', NULL, NULL, 0, 1),
+(329, '2017/2018', 6, 12, 'OCR-1', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:28', 'admin', NULL, NULL, 0, 1),
+(330, '2017/2018', 6, 12, 'OCR-2', NULL, NULL, ' | ', 'GANJIL', '2018-09-15 14:09:28', 'admin', NULL, NULL, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -617,7 +738,6 @@ INSERT INTO `jadwal_temp` (`id`, `tahun_ajaran`, `id_hari`, `kode_wk`, `kode_rg`
 -- Table structure for table `mahasiswa`
 --
 
-DROP TABLE IF EXISTS `mahasiswa`;
 CREATE TABLE `mahasiswa` (
   `nim` int(9) NOT NULL,
   `nama` varchar(50) NOT NULL,
@@ -634,11 +754,6 @@ CREATE TABLE `mahasiswa` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `mahasiswa`
---
-
-TRUNCATE TABLE `mahasiswa`;
 --
 -- Dumping data for table `mahasiswa`
 --
@@ -750,7 +865,6 @@ INSERT INTO `mahasiswa` (`nim`, `nama`, `alamat`, `telepon`, `gambar_ava`, `prog
 -- Table structure for table `matakuliah`
 --
 
-DROP TABLE IF EXISTS `matakuliah`;
 CREATE TABLE `matakuliah` (
   `kode_mk` varchar(8) NOT NULL,
   `nama_mk` varchar(100) NOT NULL,
@@ -768,66 +882,61 @@ CREATE TABLE `matakuliah` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Truncate table before insert `matakuliah`
---
-
-TRUNCATE TABLE `matakuliah`;
---
 -- Dumping data for table `matakuliah`
 --
 
 INSERT INTO `matakuliah` (`kode_mk`, `nama_mk`, `sks_mk`, `semester_mk`, `program_studi`, `peminatan`, `jenis_rg`, `created_date`, `created_by`, `modified_date`, `modified_by`, `isDelete`, `isShow`) VALUES
 ('03MBB001', 'Bahasa Inggris 1', '2', '1', 'SI/TI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:41:55', 'admin', 0, 1),
 ('03MBB002', 'Ilmu Sosial Dasar', '3', '1', 'SI/TI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:40:49', 'admin', 0, 1),
-('03MBB003', 'Bahasa Inggris 2', '2', '2', 'SI/TI', '0', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:01:11', 'admin', 0, 1),
-('03MBB004', 'Technopreunership', '3', '6', 'SI/TI', '0', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:53:26', 'admin', 0, 1),
+('03MBB003', 'Bahasa Inggris 2', '2', '2', 'SI/TI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:36:45', 'admin', 0, 1),
+('03MBB004', 'Technopreunership', '3', '6', 'SI/TI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:38:26', 'admin', 0, 1),
 ('03MKB001', 'Rekayasa Perangkat Lunak', '3', '3', 'SI/TI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:50:14', 'admin', 0, 1),
 ('03MKB003', 'Data Warehouse & Data Mining', '3', '5', 'SI', '1', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:51:59', 'admin', 0, 1),
 ('03MKB004', 'Data Warehouse and Data Mining', '3', '7', 'TI', '0', 'LR', '2018-01-18 05:09:31', 'admin', '2018-02-09 00:52:04', 'admin', 0, 1),
 ('03MKB005', 'Pemrograman Berorientasi Objek', '3', '3', 'SI/TI', '1', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:34:27', 'admin', 0, 1),
-('03MKB008', 'Interaksi Manusia dan Komputer', '3', '6', 'SI/TI', '0', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:53:32', 'admin', 0, 1),
-('03MKB009', 'Rakayasa Perangkat Lunak Lanjut', '3', '4', 'SI/TI', '1', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:23:49', 'admin', 0, 1),
+('03MKB008', 'Interaksi Manusia dan Komputer', '3', '6', 'SI/TI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:38:01', 'admin', 0, 1),
+('03MKB009', 'Rekayasa Perangkat Lunak Lanjut', '3', '4', 'SI/TI', '1', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:42:59', 'admin', 0, 1),
 ('03MKB010', 'Perancangan Database dan Implementasi', '3', '3', 'SI', '1', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:42:26', 'admin', 0, 1),
-('03MKB011', 'Perancangan dan Pemrograman Web', '3', '4', 'SI/TI', '1', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:24:00', 'admin', 0, 1),
+('03MKB011', 'Perancangan dan Pemrograman Web', '3', '4', 'SI/TI', '1', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:41:08', 'admin', 0, 1),
 ('03MKB012', 'Perancangan Database dan Implementasi', '3', '5', 'TI', '0', 'OCR', '2018-01-18 04:51:10', 'admin', '2018-02-09 00:42:32', 'admin', 0, 1),
-('03MKK001', 'Aljabar Linear dan Matrik', '3', '2', 'SI/TI', '0', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:01:26', 'admin', 0, 1),
-('03MKK004', 'Matematika Diskrit', '3', '4', 'SI', '0', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:24:45', 'admin', 0, 1),
+('03MKK001', 'Aljabar Linear dan Matrik', '3', '2', 'SI/TI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:43:40', 'admin', 0, 1),
+('03MKK004', 'Matematika Diskrit', '3', '4', 'SI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:37:25', 'admin', 0, 1),
 ('03MKK005', 'Statistik dan Probabilitas', '3', '3', 'SI/TI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:46:49', 'admin', 0, 1),
-('03MKK006', 'Matematika Diskrit', '3', '2', 'TI', '0', '', '2018-01-18 04:06:42', 'admin', NULL, NULL, 0, 1),
-('03MPB001', 'Etika Profesi', '2', '4', 'SI', '0', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:24:52', 'admin', 0, 1),
-('03MPB002', 'Etika Profesi', '2', '6', 'TI', '0', '', '2018-01-18 04:55:49', 'admin', NULL, NULL, 0, 1),
+('03MKK006', 'Matematika Diskrit', '3', '2', 'TI', '0', 'LR', '2018-01-18 04:06:42', 'admin', '2018-09-13 10:37:37', 'admin', 0, 1),
+('03MPB001', 'Etika Profesi', '2', '4', 'SI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:37:07', 'admin', 0, 1),
+('03MPB002', 'Etika Profesi', '2', '6', 'TI', '0', 'LR', '2018-01-18 04:55:49', 'admin', '2018-09-13 10:37:14', 'admin', 0, 1),
 ('03MPK001', 'Pendidikan Kewarganegaraan', '2', '1', 'SI/TI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:50:01', 'admin', 0, 1),
-('03MPK002', 'Pendidikan Agama', '2', '2', 'SI/TI', '0', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:01:40', 'admin', 0, 1),
+('03MPK002', 'Pendidikan Agama', '2', '2', 'SI/TI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:42:13', 'admin', 0, 1),
 ('03MPK003', 'Pendidikan Pancasila', '2', '3', 'SI/TI', '0', 'CISCO', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:49:34', 'admin', 0, 1),
 ('1', 'Dummy asd', '2', '6', '', '', '', '2018-01-11 14:08:03', 'admin', NULL, NULL, 1, 1),
-('22KMB015', 'Aplikasi Nirkabel', '3', '6', 'TI', '4', '', '2018-01-18 04:57:29', 'admin', NULL, NULL, 0, 1),
+('22KMB015', 'Aplikasi Nirkabel', '3', '6', 'TI', '4', 'OCR', '2018-01-18 04:57:29', 'admin', '2018-09-13 10:40:03', 'admin', 0, 1),
 ('22MBB005', 'Komputer dan Masyarakat', '2', '5', 'TI', '0', 'LR', '2018-01-18 04:49:00', 'admin', '2018-02-09 00:36:28', 'admin', 0, 1),
 ('22MKB002', 'Pengantar Teknologi Informasi ', '3', '1', 'TI', '0', 'LR', '2018-01-18 03:58:17', 'admin', '2018-02-09 00:46:18', 'admin', 0, 1),
 ('22MKB004', 'Manajemen Proyek', '3', '7', 'TI', '0', 'LR', '2018-01-18 05:08:42', 'admin', '2018-02-09 00:45:57', 'admin', 0, 1),
 ('22MKB006', 'Proyek Pemrograman Berorientasi Objek (Proyek 1)', '3', '3', 'TI', '0', 'OCR', '2018-01-18 04:15:51', 'admin', '2018-02-09 00:39:36', 'admin', 0, 1),
 ('22MKB007', 'Praktek Kerja Lapangan', '3', '7', 'TI', '0', 'LR', '2018-01-18 05:04:10', 'admin', '2018-02-09 00:32:10', 'admin', 0, 1),
 ('22MKB014', 'Metode Penelitian', '2', '7', 'TI', '0', 'OCR', '2018-01-18 05:04:36', 'admin', '2018-02-09 00:47:25', 'admin', 0, 1),
-('22MKB016', 'Pemrograman Berorientasi Objek Lanjut', '3', '4', 'TI', '0', '', '2018-01-18 04:27:02', 'admin', NULL, NULL, 0, 1),
-('22MKB017', 'Jaringan Komputer', '3', '2', 'TI', '0', '', '2018-01-18 04:07:13', 'admin', NULL, NULL, 0, 1),
+('22MKB016', 'Pemrograman Berorientasi Objek Lanjut', '3', '4', 'TI', '0', 'LR', '2018-01-18 04:27:02', 'admin', '2018-09-13 10:44:06', 'admin', 0, 1),
+('22MKB017', 'Jaringan Komputer', '3', '2', 'TI', '0', 'CISCO', '2018-01-18 04:07:13', 'admin', '2018-09-13 10:40:36', 'admin', 0, 1),
 ('22MKB018', 'Komunikasi Data', '3', '1', 'TI', '0', 'CISCO', '2018-01-18 04:00:33', 'admin', '2018-02-09 00:52:51', 'admin', 0, 1),
-('22MKB019', 'Pemrograman Aplikasi Jaringan', '3', '4', 'TI', '0', '', '2018-01-18 04:27:51', 'admin', NULL, NULL, 0, 1),
+('22MKB019', 'Pemrograman Aplikasi Jaringan', '3', '4', 'TI', '0', 'CISCO', '2018-01-18 04:27:51', 'admin', '2018-09-13 10:40:26', 'admin', 0, 1),
 ('22MKB020', 'Perancangan dan Pemrograman Web Lanjut', '3', '5', 'TI', '0', 'OCR', '2018-01-18 04:49:34', 'admin', '2018-02-09 00:40:06', 'admin', 0, 1),
-('22MKB021', 'Sistem Manajemen Data', '3', '4', 'TI', '0', '', '2018-01-18 04:27:27', 'admin', NULL, NULL, 0, 1),
+('22MKB021', 'Sistem Manajemen Data', '3', '4', 'TI', '0', 'LR', '2018-01-18 04:27:27', 'admin', '2018-09-13 10:44:17', 'admin', 0, 1),
 ('22MKB022', 'Sistem Operasi Jaringan', '3', '5', 'TI', '0', 'OCR', '2018-01-18 04:51:37', 'admin', '2018-02-09 00:50:27', 'admin', 0, 1),
-('22MKB023', 'Komputer Grafik', '3', '6', 'TI', '0', '', '2018-01-18 04:56:15', 'admin', NULL, NULL, 0, 1),
-('22MKB024', 'Sistem Keamanan Jaringan Komputer', '3', '6', 'TI', '3', '', '2018-01-18 04:56:50', 'admin', NULL, NULL, 0, 1),
+('22MKB023', 'Komputer Grafik', '3', '6', 'TI', '0', 'OCR', '2018-01-18 04:56:15', 'admin', '2018-09-13 10:40:52', 'admin', 0, 1),
+('22MKB024', 'Sistem Keamanan Jaringan Komputer', '3', '6', 'TI', '3', 'LR', '2018-01-18 04:56:50', 'admin', '2018-09-13 10:44:36', 'admin', 0, 1),
 ('22MKB025', 'Sistem Operasi', '3', '3', 'TI', '0', 'CISCO', '2018-01-18 04:17:14', 'admin', '2018-02-09 00:44:55', 'admin', 0, 1),
-('22MKB026', 'Proyek Siskamjar (Proyek 4)', '3', '6', 'TI', '3', '', '2018-01-18 04:58:06', 'admin', NULL, NULL, 0, 1),
+('22MKB026', 'Proyek Siskamjar (Proyek 4)', '3', '6', 'TI', '3', 'LR', '2018-01-18 04:58:06', 'admin', '2018-09-13 10:44:53', 'admin', 0, 1),
 ('22MKB027', 'Cyber Security', '3', '7', 'TI', '3', 'CISCO', '2018-01-18 05:05:35', 'admin', '2018-02-09 00:53:10', 'admin', 0, 1),
 ('22MKB028', 'Pemrograman Aplikasi Platform Khusus', '3', '7', 'TI', '4', 'OCR', '2018-01-18 05:06:10', 'admin', '2018-02-09 00:53:24', 'admin', 0, 1),
 ('22MKB029', 'Proyek Perancangan dan Pemrograman Web Lanjut (Proyek 3)', '3', '5', 'TI', '0', 'OCR', '2018-01-18 04:50:11', 'admin', '2018-02-09 00:44:18', 'admin', 0, 1),
-('22MKB030', 'Arsitektur dan Organisasi Komputer', '3', '2', 'TI', '0', '', '2018-01-18 04:07:43', 'admin', NULL, NULL, 0, 1),
+('22MKB030', 'Arsitektur dan Organisasi Komputer', '3', '2', 'TI', '0', 'OCR', '2018-01-18 04:07:43', 'admin', '2018-09-13 10:39:21', 'admin', 0, 1),
 ('22MKB031', 'Pemrograman Sistem Jaringan', '3', '3', 'TI', '0', 'CISCO', '2018-01-18 04:16:48', 'admin', '2018-02-09 00:43:23', 'admin', 0, 1),
-('22MKB032', 'Proyek Aplikasi Nirkabel (Proyek 4)', '3', '6', 'TI', '4', '', '2018-01-18 04:58:38', 'admin', NULL, NULL, 0, 1),
+('22MKB032', 'Proyek Aplikasi Nirkabel (Proyek 4)', '3', '6', 'TI', '4', 'LR', '2018-01-18 04:58:38', 'admin', '2018-09-13 10:45:01', 'admin', 0, 1),
 ('22MKK002', 'Algoritma Pemrograman dan Struktur Data 1', '3', '1', 'TI', '0', 'OCR', '2018-01-18 03:56:03', 'admin', '2018-02-09 00:32:48', 'admin', 0, 1),
 ('22MKK003', 'Lab Algoritma Pemrograman dan Struktur Data 1', '1', '1', 'TI', '0', 'OCR', '2018-01-18 03:57:07', 'admin', '2018-02-09 00:38:22', 'admin', 0, 1),
 ('22MKK006', 'Algoritma Pemrograman dan Struktur Data 2', '3', '2', 'TI', '0', '', '2018-01-18 04:03:54', 'admin', NULL, NULL, 0, 1),
-('22MKK007', 'Lab Algoritma Pemrograman dan Struktur Data 2', '1', '2', 'TI', '0', '', '2018-01-18 04:04:28', 'admin', NULL, NULL, 0, 1),
+('22MKK007', 'Lab Algoritma Pemrograman dan Struktur Data 2', '1', '2', 'TI', '0', 'OCR', '2018-01-18 04:04:28', 'admin', '2018-09-13 10:38:56', 'admin', 0, 1),
 ('22MKK008', 'Desain Algoritma Analisis', '3', '7', 'TI', '0', 'OCR', '2018-01-18 05:07:11', 'admin', '2018-02-09 00:41:18', 'admin', 0, 1),
 ('22MKK009', 'Metode Numerik', '3', '7', 'TI', '0', 'LR', '2018-01-18 05:09:03', 'admin', '2018-02-09 00:48:29', 'admin', 0, 1),
 ('22MKK010', 'Logika Matematika', '3', '1', 'TI', '0', 'LR', '2018-01-18 03:59:09', 'admin', '2018-02-09 00:44:40', 'admin', 0, 1),
@@ -837,10 +946,10 @@ INSERT INTO `matakuliah` (`kode_mk`, `nama_mk`, `sks_mk`, `semester_mk`, `progra
 ('32MKB002', 'Algoritma Pemrograman dan Struktur Data 1', '3', '1', 'SI', '0', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:33:12', 'admin', 0, 1),
 ('32MKB004', 'Lab Algoritma Pemrograman dan Struktur Data 1', '1', '1', 'SI', '0', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:38:29', 'admin', 0, 1),
 ('32MKB006', 'Algoritma Pemrograman dan Struktur Data 2', '3', '2', 'SI', '0', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:02:09', 'admin', 0, 1),
-('32MKB007', 'Lab Algoritma Pemrograman dan Struktur Data 2', '1', '2', 'SI', '0', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:02:22', 'admin', 0, 1),
-('32MKB015', 'Aplikasi Nirkabel', '3', '6', 'SI', '1', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:53:45', 'admin', 0, 1),
-('32MKB016', 'Keamanan Sistem Informasi', '3', '4', 'SI', '1', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:24:36', 'admin', 0, 1),
-('32MKB017', 'Kecerdasan Bisnis', '3', '6', 'SI', '1', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:53:53', 'admin', 0, 1),
+('32MKB007', 'Lab Algoritma Pemrograman dan Struktur Data 2', '1', '2', 'SI', '0', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:39:02', 'admin', 0, 1),
+('32MKB015', 'Aplikasi Nirkabel', '3', '6', 'SI', '1', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-09-13 11:04:26', 'admin', 0, 1),
+('32MKB016', 'Keamanan Sistem Informasi', '3', '4', 'SI', '1', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:46:57', 'admin', 0, 1),
+('32MKB017', 'Kecerdasan Bisnis', '3', '6', 'SI', '1', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:41:42', 'admin', 0, 1),
 ('32MKB018', 'Komunikasi Data', '3', '5', 'SI', '1', 'CISCO', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:52:56', 'admin', 0, 1),
 ('32MKB019', 'Konsep Sistem Informasi', '3', '1', 'SI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:48:05', 'admin', 0, 1),
 ('32MKB020', 'Pemrograman Visual', '3', '5', 'SI', '1', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:31:47', 'admin', 0, 1),
@@ -850,44 +959,44 @@ INSERT INTO `matakuliah` (`kode_mk`, `nama_mk`, `sks_mk`, `semester_mk`, `progra
 ('32MKK003', 'Praktek Kerja Lapangan', '3', '7', 'SI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:32:16', 'admin', 0, 1),
 ('32MKK006', 'Manajemen Proyek', '3', '7', 'SI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:46:02', 'admin', 0, 1),
 ('32MKK007', 'Metode Penelitian', '2', '5', 'SI', '1', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:47:29', 'admin', 0, 1),
-('32MKK008', 'Analisa dan Perancangan Sistem', '3', '2', 'SI', '0', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:02:50', 'admin', 0, 1),
+('32MKK008', 'Analisa dan Perancangan Sistem', '3', '2', 'SI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:45:58', 'admin', 0, 1),
 ('32MKK009', 'Analisa Proses Bisnis', '3', '1', 'SI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:03:23', 'admin', 0, 1),
-('32MKK010', 'Audit Sistem Informasi', '3', '6', 'SI', '1', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:53:59', 'admin', 0, 1),
+('32MKK010', 'Audit Sistem Informasi', '3', '6', 'SI', '1', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:46:15', 'admin', 0, 1),
 ('32MKK011', 'E-Commerce', '3', '5', 'SI', '0', 'IMAC', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:41:00', 'admin', 0, 1),
 ('32MKK012', 'E-Government', '2', '3', 'SI', '1', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:53:47', 'admin', 0, 1),
-('32MKK013', 'Komunikasi Bisnis', '3', '2', 'SI', '0', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:03:05', 'admin', 0, 1),
+('32MKK013', 'Komunikasi Bisnis', '3', '2', 'SI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:39:38', 'admin', 0, 1),
 ('32MKK014', 'Manajemen Hubungan Pelanggan', '3', '7', 'SI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:52:28', 'admin', 0, 1),
 ('32MKK015', 'Manajemen Rantai Pasok', '3', '7', 'SI', '1', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:40:22', 'admin', 0, 1),
-('32MKK016', 'Multimedia dan Internet', '3', '4', 'SI', '0', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:25:05', 'admin', 0, 1),
+('32MKK016', 'Multimedia dan Internet', '3', '4', 'SI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:38:15', 'admin', 0, 1),
 ('32MKK017', 'Pengujian & Implementasi Sistem', '3', '6', 'SI', '1', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:54:11', 'admin', 0, 1),
-('32MKK018', 'Proyek Aplikasi Nirkabel (Proyek 4)', '3', '6', 'SI', '1', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:54:19', 'admin', 0, 1),
+('32MKK018', 'Proyek Aplikasi Nirkabel (Proyek 4)', '3', '6', 'SI', '1', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:47:36', 'admin', 0, 1),
 ('32MKK019', 'Proyek Pemrograman Visual (Proyek 3)', '3', '5', 'SI', '1', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:37:31', 'admin', 0, 1),
 ('32MKK020', 'Sistem Informasi Manajemen', '3', '5', 'SI', '0', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:45:41', 'admin', 0, 1),
 ('32MKK021', 'Sistem Penunjang Keputusan', '3', '7', 'SI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:37:52', 'admin', 0, 1),
 ('32MKK033', 'Proyek Pemrograman Berorientasi Objek (Proyek 1)', '3', '3', 'SI', '1', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:39:42', 'admin', 0, 1),
-('32MKK034', 'Proyek Perancangan dan Pemrograman Web (Proyek 2)', '3', '4', 'SI/TI', '1', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:25:30', 'admin', 0, 1),
+('32MKK034', 'Proyek Perancangan dan Pemrograman Web (Proyek 2)', '3', '4', 'SI/TI', '1', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:47:28', 'admin', 0, 1),
 ('32MPK004', 'Pengantar Teknologi Informasi', '3', '1', 'SI', '0', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:46:23', 'admin', 0, 1),
 ('34', 'Dummy MatKUl', '3', '3', '', '', '', '2018-01-11 14:08:03', 'admin', NULL, NULL, 1, 1),
 ('4', 'Dummy MatKUl', '4', '4', '', '', '', '2018-01-11 14:08:03', 'admin', NULL, NULL, 1, 1),
 ('43MKB012', 'Pengolahan Citra Digital', '3', '3', 'SI', '2', 'IMAC', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:45:07', 'admin', 0, 1),
-('43MKB013', 'Web Interaktif', '3', '6', 'SI', '2', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:54:38', 'admin', 0, 1),
+('43MKB013', 'Web Interaktif', '3', '6', 'SI', '2', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:41:54', 'admin', 0, 1),
 ('43MKB014', '3D Animation & Visual Effects', '3', '5', 'SI', '2', 'IMAC', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:47:46', 'admin', 0, 1),
 ('43MKB023', '3D Modeling & Texturing', '3', '5', 'SI', '2', 'IMAC', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:42:51', 'admin', 0, 1),
 ('43MKB024', 'Audio & Video Editing', '3', '5', 'SI', '2', 'IMAC', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:53:37', 'admin', 0, 1),
 ('43MKB025', 'Augmented Reality', '3', '4', 'SI', '2', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:25:41', 'admin', 0, 1),
 ('43MKB026', 'Multimedia Interaktif', '3', '4', 'SI', '2', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:25:50', 'admin', 0, 1),
-('43MKB027', 'Pengembangan Permainan', '3', '6', 'SI', '2', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:54:45', 'admin', 0, 1),
+('43MKB027', 'Pengembangan Permainan', '3', '6', 'SI', '2', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:45:30', 'admin', 0, 1),
 ('43MKK022', 'Desain Penerbitan Digital', '3', '3', 'SI', '2', 'IMAC', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:54:43', 'admin', 0, 1),
-('43MKK023', 'Konsep & Desain Web', '3', '6', 'SI', '2', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:54:52', 'admin', 0, 1),
+('43MKK023', 'Konsep & Desain Web', '3', '6', 'SI', '2', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:45:42', 'admin', 0, 1),
 ('43MKK024', 'Konsep Komunikasi Visual', '2', '3', 'SI', '2', 'IMAC', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:54:04', 'admin', 0, 1),
 ('43MKK025', 'Konsep Multimedia Non Linear', '3', '4', 'SI', '2', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:25:59', 'admin', 0, 1),
-('43MKK026', 'Konsep Permainan', '3', '6', 'SI', '2', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:54:59', 'admin', 0, 1),
+('43MKK026', 'Konsep Permainan', '3', '6', 'SI', '2', 'LR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:46:29', 'admin', 0, 1),
 ('43MKK027', 'Konsep Storyboard', '2', '5', 'SI', '2', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:54:24', 'admin', 0, 1),
 ('43MKK028', 'Proyek Broadcasting', '3', '5', 'SI', '2', 'IMAC', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:44:28', 'admin', 0, 1),
 ('43MKK029', 'Proyek Desain Komunikasi Visual', '3', '3', 'SI', '2', 'IMAC', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:48:18', 'admin', 0, 1),
 ('43MKK030', 'Proyek Komprehensif Multimedia', '3', '7', 'SI', '2', 'LR', '2018-01-11 14:08:03', 'admin', '2018-02-09 00:40:35', 'admin', 0, 1),
-('43MKK031', 'Proyek Multimedia Interaktif', '3', '4', 'SI', '2', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:26:10', 'admin', 0, 1),
-('43MKK032', 'Proyek Web/Permainan', '3', '6', 'SI', '2', '', '2018-01-11 14:08:03', 'admin', '2018-01-18 04:55:08', 'admin', 0, 1);
+('43MKK031', 'Proyek Multimedia Interaktif', '3', '4', 'SI', '2', 'IMAC', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:47:53', 'admin', 0, 1),
+('43MKK032', 'Proyek Web/Permainan', '3', '6', 'SI', '2', 'OCR', '2018-01-11 14:08:03', 'admin', '2018-09-13 10:41:27', 'admin', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -895,7 +1004,6 @@ INSERT INTO `matakuliah` (`kode_mk`, `nama_mk`, `sks_mk`, `semester_mk`, `progra
 -- Table structure for table `ruangan`
 --
 
-DROP TABLE IF EXISTS `ruangan`;
 CREATE TABLE `ruangan` (
   `kode_rg` varchar(6) NOT NULL,
   `gedung_rg` char(1) NOT NULL,
@@ -909,11 +1017,6 @@ CREATE TABLE `ruangan` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `ruangan`
---
-
-TRUNCATE TABLE `ruangan`;
 --
 -- Dumping data for table `ruangan`
 --
@@ -939,7 +1042,6 @@ INSERT INTO `ruangan` (`kode_rg`, `gedung_rg`, `jenis_rg`, `kapasitas_rg`, `crea
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
@@ -954,11 +1056,6 @@ CREATE TABLE `user` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='semua user yang terhubung ke app, termasuk admin';
 
---
--- Truncate table before insert `user`
---
-
-TRUNCATE TABLE `user`;
 --
 -- Dumping data for table `user`
 --
@@ -1071,7 +1168,6 @@ INSERT INTO `user` (`id`, `username`, `password`, `sebagai`, `id_sebagai`, `crea
 -- Table structure for table `waktu`
 --
 
-DROP TABLE IF EXISTS `waktu`;
 CREATE TABLE `waktu` (
   `kode_wk` int(11) NOT NULL,
   `waktu_aw` time NOT NULL,
@@ -1086,11 +1182,6 @@ CREATE TABLE `waktu` (
   `isShow` int(11) NOT NULL DEFAULT '1' COMMENT '0:tidak ; 1:ya'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `waktu`
---
-
-TRUNCATE TABLE `waktu`;
 --
 -- Dumping data for table `waktu`
 --
@@ -1132,16 +1223,28 @@ ALTER TABLE `dosen`
   ADD PRIMARY KEY (`nid`);
 
 --
+-- Indexes for table `draft_jadwal_perkuliahan`
+--
+ALTER TABLE `draft_jadwal_perkuliahan`
+  ADD PRIMARY KEY (`draft_id_jp`);
+
+--
 -- Indexes for table `hari`
 --
 ALTER TABLE `hari`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `jadwal_perkuliahan`
+--
+ALTER TABLE `jadwal_perkuliahan`
+  ADD PRIMARY KEY (`id_jadwal_p`);
+
+--
 -- Indexes for table `jadwal_temp`
 --
 ALTER TABLE `jadwal_temp`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_j_t`);
 
 --
 -- Indexes for table `mahasiswa`
@@ -1185,15 +1288,25 @@ ALTER TABLE `waktu`
 ALTER TABLE `ambil_matakuliah`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 --
+-- AUTO_INCREMENT for table `draft_jadwal_perkuliahan`
+--
+ALTER TABLE `draft_jadwal_perkuliahan`
+  MODIFY `draft_id_jp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `hari`
 --
 ALTER TABLE `hari`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
+-- AUTO_INCREMENT for table `jadwal_perkuliahan`
+--
+ALTER TABLE `jadwal_perkuliahan`
+  MODIFY `id_jadwal_p` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=392;
+--
 -- AUTO_INCREMENT for table `jadwal_temp`
 --
 ALTER TABLE `jadwal_temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=316;
+  MODIFY `id_j_t` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=331;
 --
 -- AUTO_INCREMENT for table `user`
 --
