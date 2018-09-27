@@ -11,7 +11,7 @@ SIPP merupakan sistem yang dibuat khusus untuk otomatisasi penjadwalan perkuliah
 Hal-hal yang diperlukan dalam menjalankan SIPP
 
 ```
-XAMPP v3.2.2 or newer (Windows) / LAMPP (Linux)
+XAMPP v3.2.2 or newer
 MySQL 5.5 or newer
 PHP 5.5.0 or newer
 Web Browser with cookies and JavaScript enabled (like Chrome)
@@ -20,6 +20,12 @@ Web Browser with cookies and JavaScript enabled (like Chrome)
 ### Installing
 
 Langkah-langkah yang diperlukan agar SIPP dapat berjalan.
+
+Masukkan folder SIPP ke dalam htdocs XAMPP
+
+```
+...\xampp\htdocs\SIPP
+```
 
 Import file DB
 
@@ -46,10 +52,6 @@ Atur konfigurasi base_url
 SIPP/application/config/config.php
 $config['base_url'] = 'http://localhost/SIPP';
 ```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
