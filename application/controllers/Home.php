@@ -14,11 +14,7 @@ class Home extends MY_Controller {
 			redirect(base_url().'login');
     	}
 
-    	$this->load->model('dosen_model');
-    	$this->load->model('matakuliah_model');
-    	$this->load->model('ruangan_model');
-    	$this->load->model('waktu_model');
-    	$this->load->model('hari_model');
+        $this->load->model('home_model');
     }
 
     private function session_username()
@@ -30,21 +26,21 @@ class Home extends MY_Controller {
 	{
 		// $arr = array('Login', 'Detail');
 		// $this->session->unset_userdata($arr);
-		// print_r($this->session->userdata());
+		// print_r(json_encode($this->get_all_detail()));
 		// exit();
 
 		$data['role'] = $this->get_role_user();
-		$data['session'] = $this->session->userdata('Detail');
+		$data['session'] = $this->user_all_detail();
 		$data['dashboard'] = 'active open';
 		$data['menu'] = $this->load->view('sidebar',$data,TRUE);
 		
-		$data['title'] = 'Dashboard';
+		$data['title'] = 'Beranda';
 
-		$data['count_dosen'] = $this->dosen_model->get_data();
-		$data['count_matakuliah'] = $this->matakuliah_model->get_data();
-		$data['count_ruangan'] = $this->ruangan_model->get_data();
-		$data['count_waktu'] = $this->waktu_model->get_data();
-		$data['count_hari'] = $this->hari_model->get_data();
+		$data['count_dosen'] = $this->home_model->get_all_data('dosen',array(),'num_rows');
+		$data['count_matakuliah'] = $this->home_model->get_all_data('matakuliah',array(),'num_rows');
+		$data['count_ruangan'] = $this->home_model->get_all_data('ruangan',array(),'num_rows');
+		$data['count_waktu'] = $this->home_model->get_all_data('waktu',array(),'num_rows');
+		$data['count_hari'] = $this->home_model->get_all_data('hari',array(),'num_rows');
 
         $data['footer_page_plugin'] = '
             <script src="'.base_url().'assets/global/plugins/moment.min.js" type="text/javascript"></script>
@@ -58,7 +54,7 @@ class Home extends MY_Controller {
             <script src="'.base_url().'assets/pages/scripts/dashboard.min.js" type="text/javascript"></script>
         ';
 
-		$data['bta'] = $this->db->get('buka_tahun_ajaran')->row();
+		$data['bta'] = $this->home_model->get_all_data('buka_tahun_ajaran',array(),'row');
 
 		$this->load->view('header',$data);
 
