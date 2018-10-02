@@ -45,7 +45,24 @@
                                     <!-- SIDEBAR USER TITLE -->
                                     <div class="profile-usertitle">
                                         <div class="profile-usertitle-name"> <?=$session_detail['nama']?> </div>
-                                        <div class="profile-usertitle-job"> <?=$session_login['sebagai'] == 1 ? "Dosen" : "Mahasiswa"?> </div>
+                                        <div class="profile-usertitle-job"> 
+                                            <?php
+                                            switch ($session_login['sebagai']) {
+                                                case 0:
+                                                    echo 'Kaprodi';
+                                                    break;
+                                                case 1:
+                                                    echo 'Dosen';
+                                                    break;
+                                                case 2:
+                                                    echo 'Mahasiswa';
+                                                    break;
+                                                default:
+                                                    echo 'unknown';
+                                                    break;
+                                            }
+                                            ?> 
+                                        </div>
                                     </div>
                                     <!-- END SIDEBAR USER TITLE -->
                                     <!-- SIDEBAR BUTTONS -->
@@ -55,22 +72,22 @@
                                     </div>
                                     <!-- END SIDEBAR BUTTONS -->
                                     <!-- SIDEBAR MENU -->
-                                    <div class="profile-usermenu">
+                                    <!-- <div class="profile-usermenu">
                                         <ul class="nav">
                                             <li class="active">
                                                 <a href="page_user_profile_1.html">
                                                     <i class="icon-home"></i> Overview </a>
                                             </li>
-                                            <!-- <li class="active">
+                                            <li class="active">
                                                 <a href="page_user_profile_1_account.html">
                                                     <i class="icon-settings"></i> Account Settings </a>
                                             </li>
                                             <li>
                                                 <a href="page_user_profile_1_help.html">
                                                     <i class="icon-info"></i> Help </a>
-                                            </li> -->
+                                            </li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                     <!-- END MENU -->
                                 </div>
                                 <!-- END PORTLET MAIN -->

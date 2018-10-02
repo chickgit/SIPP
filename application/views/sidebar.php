@@ -21,7 +21,7 @@
                             <li class="nav-item start <?=isset($dashboard) ? $dashboard : ''?>">
                                 <a href="<?=base_url()?>home" class="nav-link nav-toggle">
                                     <i class="icon-home"></i>
-                                    <span class="title">Dashboard</span>
+                                    <span class="title">Beranda</span>
                                 </a>
                             </li>
                             <li class="heading">
@@ -168,6 +168,12 @@
                                 // 2
                                 case 'Mahasiswa':
                                     ?>
+                            <li class="nav-item start <?=isset($dashboard) ? $dashboard : ''?>">
+                                <a href="<?=base_url()?>home" class="nav-link nav-toggle">
+                                    <i class="icon-home"></i>
+                                    <span class="title">Beranda</span>
+                                </a>
+                            </li>
                             <li class="heading">
                                 <h3 class="uppercase"><?=strtoupper($role)?></h3>
                             </li>

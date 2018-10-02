@@ -5,50 +5,19 @@
                     <!-- BEGIN BREADCRUMBS -->
                     <ul class="page-breadcrumb">
                         <li>
-                            <a href="#">Dashboard</a>
+                            <a href="#"><?=$title?></a>
                         </li>
-                        <li><?=$session['nama']?></li>
+                        <li><?=$session['Detail']['nama']?></li>
                     </ul>
                     <!-- END BREADCRUMBS -->
-                    <div class="content-header-menu">
-                        <!-- BEGIN DROPDOWN AJAX MENU -->
-                        <div class="dropdown-ajax-menu btn-group">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                            </button>
-                            <ul class="dropdown-menu-v2">
-                                <li>
-                                    <a href="start.html">Application</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Reports</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Templates</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Settings</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- END DROPDOWN AJAX MENU -->
-                        <!-- BEGIN MENU TOGGLER -->
-                        <button type="button" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="toggle-icon">
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </span>
-                        </button>
-                        <!-- END MENU TOGGLER -->
-                    </div>
                 </div>
                 <?=$menu?>
                 <div class="page-fixed-main-content">
                     <!-- BEGIN PAGE BASE CONTENT -->
                     <!-- BEGIN DASHBOARD STATS 1-->
+                    <?php
+                    if ($session['Login']['sebagai'] == 0) {
+                    ?>
                     <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                             <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
@@ -57,7 +26,7 @@
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        <span data-counter="counterup" data-value="<?=count($count_dosen)?>">0</span>
+                                        <span data-counter="counterup" data-value="<?=$count_dosen?>">0</span>
                                     </div>
                                     <div class="desc"> Dosen </div>
                                 </div>
@@ -70,7 +39,7 @@
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        <span data-counter="counterup" data-value="<?=count($count_matakuliah)?>">0</span>
+                                        <span data-counter="counterup" data-value="<?=$count_matakuliah?>">0</span>
                                     </div>
                                     <div class="desc"> Mata Kuliah </div>
                                 </div>
@@ -83,7 +52,7 @@
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        <span data-counter="counterup" data-value="<?=count($count_ruangan)?>">0</span>
+                                        <span data-counter="counterup" data-value="<?=$count_ruangan?>">0</span>
                                     </div>
                                     <div class="desc"> Ruangan </div>
                                 </div>
@@ -96,7 +65,7 @@
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        <span data-counter="counterup" data-value="<?=count($count_dosen)?>"></span></div>
+                                        <span data-counter="counterup" data-value="<?=$count_waktu?>"></span></div>
                                     <div class="desc"> Waktu </div>
                                 </div>
                             </a>
@@ -108,21 +77,29 @@
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        <span data-counter="counterup" data-value="<?=count($count_hari)?>"></span></div>
+                                        <span data-counter="counterup" data-value="<?=$count_hari?>"></span></div>
                                     <div class="desc"> Hari </div>
                                 </div>
                             </a>
                         </div>
                     </div>
+                    <?php
+                    }
+                    ?>
                     <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                             <h3><b>PENGAMBILAN MATA KULIAH</b></h3>
                             <h3><?=$bta->tahun_ajaran?> - <?=$bta->semester?></h3>
-                            <h3 id="batas_ambil_matkul"></h3>
+                            <h5>Hingga</h5>
+                            <h3 class="font-red"><?=date('d - m - Y', strtotime($bta->batas_akhir))?></h3>
+                            <h3 class="font-red" id="batas_ambil_matkul"></h3>
                         </div>
                     </div>
                     <div class="clearfix"></div>
+                    <?php
+                    if ($session['Login']['sebagai'] == 0) {
+                    ?>
                     <div class="row">
                         <!-- BEGIN FORM-->
                         <form id="form_tambah_dosen" class="form-inline text-center" method="post" action="<?=base_url()?>home/update">
@@ -145,6 +122,9 @@
                             <button type="submit" class="btn green">Ubah</button>
                         </form>
                     </div>
+                    <?php
+                    }
+                    ?>
                     <div class="clearfix"></div>
                 </div>
 <?php
@@ -170,8 +150,8 @@ var x = setInterval(function() {
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
     // Output the result in an element with id="demo"
-    document.getElementById("batas_ambil_matkul").innerHTML = days + "d " + hours + "h "
-    + minutes + "m " + seconds + "s ";
+    document.getElementById("batas_ambil_matkul").innerHTML ="Sisa " + days + " Hari " + hours + " Jam "
+    + minutes + " Menit " + seconds + " Detik ";
     
     // If the count down is over, write some text 
     if (distance < 0) {
