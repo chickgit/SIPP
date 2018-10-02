@@ -26,31 +26,17 @@ class MY_Controller extends CI_Controller {
 		return $role;
 	}
 
+	public function user_all_detail()
+	{
+		return $this->session->userdata();
+	}
+
 	public function giving_access($as)
 	{
 		if ($this->session->has_userdata('Login')) {
 			if ($this->session->userdata('Login')['sebagai'] != $as) {
 				echo "alert('Anda tidak memiliki hak akses')";
 			}
-			// switch () {
-			// 	case 0:
-			// 		# code...
-			// 		break;
-				
-			// 	case 1:
-			// 		# code...
-			// 		break;
-
-			// 	case 2:
-			// 		# code...
-			// 		break;
-			// 	default:
-			// 		# code...
-			// 		break;
-			// }
-			// if ( == 0) {
-			// 	# code...
-			// }
 			
 		}
 	}
