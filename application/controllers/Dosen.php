@@ -13,15 +13,13 @@ class Dosen extends MY_Controller {
     	}
 
         $this->load->model('dosen_model');
-        $this->load->model('hari_model');
-        $this->load->model('matakuliah_model');
     }
 
 	public function index()
 	{
-		$data['list_dosen'] = $this->dosen_model->get_data();
-		$data['list_hari'] = $this->hari_model->get_data();
-		$data['list_matakuliah'] = $this->matakuliah_model->get_data();
+		$data['list_dosen'] = $this->dosen_model->get_all_data('dosen',array(),'result');
+		$data['list_hari'] = $this->dosen_model->get_all_data('hari',array(),'result');
+		$data['list_matakuliah'] = $this->dosen_model->get_all_data('matakuliah',array(),'result');
 
 		$data['role'] = $this->get_role_user();
 
@@ -60,9 +58,6 @@ class Dosen extends MY_Controller {
 
 	public function insert_dosen()
 	{
-		// print_r($_GET);
-		// print_r($_POST['nid']);
-		// echo json_encode($_POST);
 		$data['insert_dosen'] = $this->dosen_model->insert_data($_POST);
 		echo $data['insert_dosen'];
 		exit();
@@ -70,7 +65,6 @@ class Dosen extends MY_Controller {
 
 	public function check_nid()
 	{
-		// print_r($_GET);
 		$data['check_nid_dosen'] = $this->dosen_model->check_nid($_GET['nid']);
 		isset($data['check_nid_dosen']) ? $a="false" : $a="true";
 		echo $a;
@@ -78,10 +72,8 @@ class Dosen extends MY_Controller {
 
 	public function get_dosen()
 	{
-		// print_r($_GET);
 		$data['get_dosen'] = $this->dosen_model->get_dosen($_POST['nid']);
 		echo json_encode($data['get_dosen']);
-		// print_r($data['get_dosen']);
 	}
 
 	public function update_dosen()
@@ -97,9 +89,4 @@ class Dosen extends MY_Controller {
 		echo $data['delete_dosen'];
 		exit();
 	}
-
-	public function comments()
-        {
-                echo 'Look at this!';
-        }
 }

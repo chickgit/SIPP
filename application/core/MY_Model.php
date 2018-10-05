@@ -1,6 +1,4 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
 class MY_Model extends CI_Model {
 
 	public function __construct()
@@ -40,9 +38,9 @@ class MY_Model extends CI_Model {
                 $data = $query->num_rows();
                 break;
 
-            default:
-                $data = $query->result();
-                break;
+            // default:
+            //     $data = $query->result();
+            //     break;
         }
         
         return $data;

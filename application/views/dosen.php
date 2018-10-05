@@ -477,16 +477,6 @@ jQuery(document).ready(function() {
         var error4 = $('.alert-danger', form4);
         var success4 = $('.alert-success', form4);
 
-        // form4.find('#multi-append').change(function(){
-        //     var sks = 0;
-        //     $.each($(this).val(), function(index,value){
-        //         value.split('_');
-        //         sks += parseInt(value[1]);
-        //     })
-        //     form4.find('#help-block-matkul-multiple').text(sks+' SKS | Min: 9 SKS');
-        //     console.log(sks);
-        // })
-
         form4.validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block help-block-error', // default input error message class
@@ -583,9 +573,6 @@ jQuery(document).ready(function() {
                     }
                 });
                 return false;
-                // success4.show();
-                // error4.hide();
-                //form.submit(); // submit the form
             }
         });
     });
@@ -795,16 +782,12 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
                             zIndex: 20000,
                         });
                     },
                     success: function(data) {
                         success4.hide();
                         location.reload();
-                        // console.log(data);
                     },
                     complete: function(){
                         App.unblockUI();

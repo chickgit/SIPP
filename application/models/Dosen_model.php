@@ -1,5 +1,5 @@
 <?php
-class Dosen_model extends CI_Model {
+class Dosen_model extends MY_Model {
 
     public function __construct()
     {
@@ -64,11 +64,11 @@ class Dosen_model extends CI_Model {
         return $matkul;
     }
 
-    public function get_data()
-    {
-        $query = $this->db->get_where('dosen', array('isDelete' => 0, 'isShow' => 1));
-        return $query->result();
-    }
+    // public function get_data()
+    // {
+    //     $query = $this->db->get_where('dosen', array('isDelete' => 0, 'isShow' => 1));
+    //     return $query->result();
+    // }
 
     public function check_nid($nid)
     {

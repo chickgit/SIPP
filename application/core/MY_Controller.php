@@ -40,4 +40,25 @@ class MY_Controller extends CI_Controller {
 			
 		}
 	}
+
+	public function check_data($data = array(), $as = 'json')
+	{
+		switch ($as) {
+			case 'json':
+				echo json_encode($data);
+				break;
+
+			case 'print_r':
+				print_r($data);
+				break;
+			
+			case 'var_dump':
+				var_dump($data);
+				break;
+
+			default:
+				# code...
+				break;
+		}
+	}
 }
