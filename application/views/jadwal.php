@@ -59,23 +59,59 @@
                                         <span class="caption-subject font-green sbold uppercase">Data Jadwal</span>
                                     </div>
                                     <div class="actions">
-                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Bersihkan Jadwal" id="clean_table_jadwal">
+                                        <!-- <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Finalisasi Jadwal" id="clean_table_jadwal">
                                             <i class="fa fa-magic"></i>
-                                        </a>
+                                        </a> -->
                                         <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Generate Jadwal" id="generate_table_jadwal">
                                             <i class="fa fa-random"></i>
                                         </a>
-                                        <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Hapus Tabel" id="delete_table_jadwal">
+                                        <!-- <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Hapus Tabel" id="delete_table_jadwal">
                                             <i class="fa fa-remove"></i>
-                                        </a>
+                                        </a> -->
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <div class="panel-group accordion" id="accordion3">
+                                    <div class="panel-group accordion" id="draft">
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
-                                                    <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion3" href="#collapse_3_1" aria-expanded="true"> Cari </a>
+                                                    <a class="accordion-toggle" data-parent="#draft" aria-expanded="true"> Pilih Draft Jadwal </a>
+                                                </h4>
+                                            </div>
+                                            <div class="panel-collapse collapse in" aria-expanded="true" style="">
+                                                <div class="panel-body">
+                                                    <div class="input-group">
+                                                        <select class="form-control input-sm" name="draft_jp">
+                                                            <?php
+                                                            foreach ($list_draft_jp as $key => $value) {
+                                                            ?>
+                                                            <option value="<?=$value->draft_id_jp?>" data-text="<?=$value->draft_nama?>"><?=$value->draft_nama?></option>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                        <span class="input-group-btn">
+                                                            <a class="btn green btn-sm" type="button" title="Buka Draft" id="draft_open" onclick="draft(this)"><i class="icon-book-open"></i></a>
+                                                        </span>
+                                                        <span class="input-group-btn">
+                                                            <a class="btn blue btn-sm" type="button" title="Rename Draft" id="draft_edit" onclick="draft(this)"><i class="fa fa-edit"></i></a>
+                                                        </span>
+                                                        <span class="input-group-btn">
+                                                            <a class="btn purple-soft btn-sm" type="button" title="Finalisasi Draft" id="draft_open" onclick="draft(this)"><i class="fa fa-magic"></i></a>
+                                                        </span>
+                                                        <span class="input-group-btn">
+                                                            <a class="btn red btn-sm" type="button" title="Delete Draft" id="draft_delete" onclick="draft(this)"><i class="fa fa-remove"></i></a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-group accordion" id="cari">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#cari" href="#collapse_3_1" aria-expanded="true"> Cari </a>
                                                 </h4>
                                             </div>
                                             <div id="collapse_3_1" class="panel-collapse collapse in" aria-expanded="true" style="">
@@ -89,10 +125,12 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="panel-group accordion" id="pencarian_lanjutan">
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
-                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_3_2" aria-expanded="false"> Pencarian Lanjutan </a>
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#pencarian_lanjutan" href="#collapse_3_2" aria-expanded="false"> Pencarian Lanjutan </a>
                                                 </h4>
                                             </div>
                                             <div id="collapse_3_2" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -527,14 +565,14 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Bersihkan Tabel</h4>
+                                                    <h4 class="modal-title">Finalisasi Jadwal</h4>
                                                 </div>
                                                 <form id="form_bersih" class="form-horizontal">
                                                     <div class="modal-body"> 
                                                         <!-- BEGIN FORM-->
                                                         <div class="form-body">
                                                             <div class="alert alert-info alert-danger-delete">
-                                                                Anda yakin ingin membersihkan tabel jadwal ? 
+                                                                Anda yakin ingin memfinalisasikan tabel jadwal ? 
                                                             </div>
                                                         </div>
                                                         <!-- END FORM-->
@@ -542,7 +580,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
                                                         <input type="hidden" name="data" value="BERSIH">
-                                                        <button type="submit" class="btn green">Bersihkan</button>
+                                                        <button type="submit" class="btn green">Finalisasi</button>
                                                     </div>
                                                 </form>
                                             </div>
