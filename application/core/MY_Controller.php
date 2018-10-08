@@ -9,9 +9,9 @@ class MY_Controller extends CI_Controller {
     	
     	ini_set('max_execution_time', 0); 
 		ini_set('memory_limit','2048M');
-    	
+
     }
-    
+
 	public function get_role_user()
 	{
 		$cek_role = array(
@@ -41,7 +41,7 @@ class MY_Controller extends CI_Controller {
 		}
 	}
 
-	public function check_data($data = array(), $as = 'json')
+	public function check_pass_data_only($data = array(), $as = 'json')
 	{
 		switch ($as) {
 			case 'json':
@@ -60,5 +60,6 @@ class MY_Controller extends CI_Controller {
 				# code...
 				break;
 		}
+		exit();
 	}
 }
