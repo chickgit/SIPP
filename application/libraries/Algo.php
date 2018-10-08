@@ -2,7 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Algo{
-
+// VALIDASI ERROR JIKA ADA HAL YANG TIDAK DIINGINKAN TERJADI
+// CONTOH: BELUM ADA MAHASISWA YANG MENGAMBIL MATKUL, JADI GENERATE BELUM BISA
 	public function __construct()
     {
     	// parent::__construct();
@@ -50,10 +51,10 @@ class Algo{
         return $dosen;
     }
 
-    private function matkul_raw($tahun_ajaran)
+    private function matkul_raw($tahun_ajaran, $semester_mk)
     {
         # PENGAMBILAN DATA MATA KULIAH YANG DIAMBIL MAHASISWA
-        $query = $this->CI->db->get_where('ambil_matakuliah', array('tahun_ajaran' => $tahun_ajaran,'isDelete' => 0, 'isShow' => 1));
+        $query = $this->CI->db->get_where('ambil_matakuliah', array('tahun_ajaran' => $tahun_ajaran, 'smstr' => $semester_mk,'isDelete' => 0, 'isShow' => 1));
         $hasil = $query->result_array();
 
         # MENJUMLAHKAN MAHASISWA YANG TELAH MENGAMBIL MATA KULIAH
@@ -304,7 +305,7 @@ class Algo{
 	public function generate_jadwal($tahun_ajaran, $semester_mk)
 	{
         $jadwal_raw     = $this->jadwal_raw();                  //Generate jadwal frame(kasarnya)
-        $matkul         = $this->matkul_raw($tahun_ajaran);     //Generate matkul frame(kasarnya)
+        $matkul         = $this->matkul_raw($tahun_ajaran, $semester_mk);     //Generate matkul frame(kasarnya)
         $hasil_jadwal   = $this->jadwal($jadwal_raw,$matkul);   //Generate jadwal | combine jadwal_raw & matkul
 
         $start = microtime(true);
