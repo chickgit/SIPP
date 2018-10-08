@@ -1,5 +1,5 @@
 <?php
-class Jadwal_model extends CI_Model {
+class Jadwal_model extends MY_Model {
 
     public function __construct()
     {
@@ -15,70 +15,35 @@ class Jadwal_model extends CI_Model {
         return $this->session->userdata('Login')['username'];
     }
 
-    public function bersih_jadwal()
-    {
-        // MEMBUANG DATA YANG TIDAK DI BUTUHKAN
-        if ($this->input->post('data') === 'BERSIH') {
-            // Buat nama jadwal
-            $nama_jadwal = $this->session->userdata('TA')['tahun_ajaran'].'_'.$this->session->userdata('TA')['semester'].'_'.date('Y-m-d');
-            // simpan nama jadwal di draft
-            $this->db->insert('draft_jadwal_perkuliahan', array('draft_nama' => $nama_jadwal));
-            // ambil id terbaru yang di insert di draft
-            $id_draft = $this->db->insert_id();
-            
-            // buat array baru
-            $jadwal_new = array();
-            // ambil data jadwal_temp
-            $jadwal     = $this->get_data('jadwal_temp');
-            // jabarin masing-masing data jadwal_temp
-            foreach ($jadwal as $k_j => $v_j) {
-                // jika kode_mk tidak null
-                if ( ! is_null($v_j['kode_mk'])) {
-                    // hapus id_j_t
-                    unset($jadwal[$k_j]['id_j_t']);
-                    // masukkan id draft tadi ke dalam array jadwal_temp
-                    $jadwal[$k_j]['draft_id_jp'] = $id_draft;
-                    // insert data jadwal_temp ke jadwal_perkuliahan
-                    $this->db->insert('jadwal_perkuliahan', $jadwal[$k_j]);
-                    // delete data jadwal_temp sesuai dengan id_j_t
-                    $this->delete_jw($v_j['id_j_t']);
-                }
-            }
-            echo "OK";
-        }
-    }
-
-    public function hapus_jadwal()
-    {
-        if ($this->input->post('data') === 'HAPUS') {
-            # code...
-            $this->db->truncate('jadwal_temp');
-            echo "OK";
-        }
-    }
-
     public function generate_jadwal()
     {
-        $query = $this->db->get('buka_tahun_ajaran');
-        $row_ta = $query->row();
+        $row_ta = $this->session->userdata('TA');
 
-        $query = $this->db->get_where('jadwal_temp', array('tahun_ajaran' => $row_ta->tahun_ajaran));
-        $rows = $query->num_rows();
+        // $query = $this->db->get_where('jadwal_temp', array('tahun_ajaran' => $row_ta['tahun_ajaran']));
+        // $rows = $query->num_rows();
 
         // var_dump($this->input->post());
         // exit();
         
-        if ($this->input->post('data') === 'NEW') 
-        {
-            // NOTHING TO DO
-        }
-        elseif ($this->input->post('data') === 'ULANG') 
-        {
-            // BERSIHKAN TABEL
-            $this->db->truncate('jadwal_temp');
-        }
+        // if ($this->input->post('data') === 'NEW') 
+        // {
+        //     // NOTHING TO DO
+        // }
+        // elseif ($this->input->post('data') === 'ULANG') 
+        // {
+        //     // BERSIHKAN TABEL
+        //     $this->db->truncate('jadwal_temp');
+        // }
+        // INSERT NAMA JADWAL
+        $data = array(
+            'draft_nama' => $this->input->post('draft_nama'),
+            'created_by' => $this->session_username()
+        );
+        $query = $this->db->insert('draft_jadwal_perkuliahan', $data);
+        $last_id = $this->db->insert_id();
+
         // INSERT DATA BARU
-        $jadwal = $this->algo->generate_jadwal($row_ta->tahun_ajaran, $row_ta->semester);
+        $jadwal = $this->algo->generate_jadwal($row_ta['tahun_ajaran'], $row_ta['semester']);
         $peminatan = Array(
           '0' => 'Umum',
           '1' => 'EIS',
@@ -92,12 +57,14 @@ class Jadwal_model extends CI_Model {
             foreach ($jadwal['FLAG_TERTINGGAL'] as $key_flag => $value_flag) {
                 # code...
                 $data = array(
-                    "tahun_ajaran"  => $row_ta->tahun_ajaran,
+                    "tahun_ajaran"  => $row_ta['tahun_ajaran'],
                     "kode_mk"       => $value_flag['kode_mk'],
-                    "ket"           => $row_ta->semester,
-                    "peserta"       => $value_flag['program_studi'].' | '.$peminatan[$value_flag['peminatan']]
+                    "ket"           => $row_ta['semester'],
+                    "peserta"       => $value_flag['program_studi'].' | '.$peminatan[$value_flag['peminatan']],
+                    "draft_id_jp"   => $last_id,
+                    "created_by"    => $this->session_username()
                 );
-                $this->db->insert('jadwal_temp', $data);
+                $this->db->insert('jadwal_perkuliahan', $data);
             }
         }
 
@@ -117,71 +84,98 @@ class Jadwal_model extends CI_Model {
                     }
                     $peserta = $a.' | '.$b;
                     $data = array(
-                        "tahun_ajaran"  => $row_ta->tahun_ajaran,
+                        "tahun_ajaran"  => $row_ta['tahun_ajaran'],
                         "id_hari"       => $value_hr['id'],
                         "kode_wk"       => $value_wk['kode_wk'],
                         "kode_rg"       => $value_rg['kode_rg'],
                         "kode_mk"       => isset($value_rg['MATKUL']) ? $value_rg['MATKUL']['kode_mk'] : NULL,
                         "nid"           => isset($value_rg['DOSEN']) ? $value_rg['DOSEN'] : NULL,
                         "peserta"       => $peserta,
-                        "ket"           => $row_ta->semester
+                        "ket"           => $row_ta['semester'],
+                        "draft_id_jp"   => $last_id,
+                        "created_by"    => $this->session_username()
                     );
-                    $this->db->insert('jadwal_temp', $data);
+                    $this->db->insert('jadwal_perkuliahan', $data);
                 }
             }
         }
 
-        $query = $this->db->get('jadwal_temp');
-        return $query->result_array();
+        // $query = $this->db->get('jadwal_temp');
+        return 'OK';
     }
 
-    public function get_data_temp()
+    public function draft()
     {
-        $query = $this->db->select(
-            // 'jadwal_temp.id_j_t, jadwal_temp.tahun_ajaran, jadwal_temp.peserta,
-            'A.id_j_t, A.tahun_ajaran, A.peserta,
-            hari.id, hari.nama_hari, 
-            waktu.kode_wk, waktu.waktu_aw, waktu.waktu_ak, 
-            ruangan.kode_rg, 
-            matakuliah.kode_mk, matakuliah.nama_mk, matakuliah.sks_mk, matakuliah.semester_mk, matakuliah.program_studi, matakuliah.peminatan,
-            dosen.nid, dosen.nama'
-        )
-                        ->from('jadwal_temp A')
-                        ->where(array('A.isDelete' => 0, 'A.isShow' => 1))
-                        ->join('hari', 'hari.id = A.id_hari', 'left')
-                        ->join('waktu', 'waktu.kode_wk = A.kode_wk', 'left')
-                        ->join('ruangan', 'ruangan.kode_rg = A.kode_rg', 'left')
-                        ->join('matakuliah', 'matakuliah.kode_mk = A.kode_mk', 'left')
-                        ->join('dosen', 'dosen.nid = A.nid', 'left')
-                        ->get();
-    	return $query->result();
+        $draft = split('_', $this->input->post('draft_id'));
+
+        if ($draft[0] == 'open') 
+        {
+            # Membuka jadwal perkuliahan dari draft
+            // $open_draft = $this->get_all_data('draft_jadwal_perkuliahan', array('draft_id_jp' => $draft[1]), 'row_array');
+            $this->session->set_userdata(array('id_draft' => $draft[1]));
+            echo "OK";
+        }
+        else if ($draft[0] == 'edit') 
+        {
+            # Mengubah nama draft jadwal perkuliahan
+            $data = array(
+                "draft_nama"    => $this->input->post('draft_nama'),
+                "modified_date" => date('Y-m-d H:i:s'),
+                "modified_by"   => $this->session_username()
+            );
+
+            $this->db->where('draft_id_jp', $draft[1]);
+            $this->db->update('draft_jadwal_perkuliahan', $data);
+            echo "OK";
+        }
+        else if ($draft[0] == 'finalisasi') {
+            // Hapus seluruh data jadwal satuan di dalam tabel jadwal perkuliahan 
+            $this->db->where('kode_mk', NULL);
+            $this->db->where('draft_id_jp', $draft[1]);
+            $this->db->delete('jadwal_perkuliahan');
+            echo "OK";
+        }
+        else if ($draft[0] == 'delete') 
+        {
+            # Menghapus draft jadwal
+            $data = array(
+                'isDelete' => 1
+            );
+            $this->db->where('draft_id_jp', $draft[1]);
+            $this->db->update('draft_jadwal_perkuliahan', $data);
+            
+            $this->db->where('draft_id_jp', $draft[1]);
+            $this->db->update('jadwal_perkuliahan', $data);
+            // $this->db->delete('dosen');
+            echo "OK";
+        }
     }
 
     public function get_detail_jw($id_jw)
     {
         // Ambil induk data JADWAL_TEMP
-        $this->db->where('id_j_t',$id_jw);
-        $query          = $this->db->get('jadwal_temp');
+        $this->db->where('id_jadwal_p',$id_jw);
+        $query          = $this->db->get('jadwal_perkuliahan');
         $jadwal_temp    = $query->row_array();
         // return $query->row();
 
         // Masukkan detail HARI ke dalam JADWAL_TEMP
-        $hari           = $this->get_data('hari', array('id' => $jadwal_temp['id_hari']), 'row');
+        $hari           = $this->get_all_data('hari', array('id' => $jadwal_temp['id_hari']), 'row_array');
         $jadwal_temp['DETAIL']['hari'] = $hari;
         $jadwal_temp['id_hari_nama'] = $hari['nama_hari'];
 
         // Masukkan detail MATA KULIAH ke dalam JADWAL_TEMP
-        $matkul         = $this->get_data('matakuliah', array('kode_mk' => $jadwal_temp['kode_mk']), 'row');
+        $matkul         = $this->get_all_data('matakuliah', array('kode_mk' => $jadwal_temp['kode_mk']), 'row_array');
         $jadwal_temp['DETAIL']['matkul'] = $matkul;
         $jadwal_temp['kode_mk_nama'] = $matkul['nama_mk'];
 
         // Masukkan detail WAKTU ke dalam JADWAL_TEMP
-        $waktu          = $this->get_data('waktu', array('kode_wk' => $jadwal_temp['kode_wk']), 'row');
+        $waktu          = $this->get_all_data('waktu', array('kode_wk' => $jadwal_temp['kode_wk']), 'row_array');
         $jadwal_temp['DETAIL']['waktu'] = $waktu;
         $jadwal_temp['kode_wk_nama'] = $waktu['waktu_aw'].' - '.$waktu['waktu_ak'];
 
         // Masukkan detail setiap dosen yang berhak mengajar ke dalam JADWAL_TEMP
-        $dosen          = $this->get_data('dosen');
+        $dosen          = $this->get_all_data('dosen');
         foreach ($dosen as $k => $v) {
             $a = explode(';', $v['wawasan_matkul']);
             $dosen[$k]['wawasan_matkul'] = array();
@@ -204,27 +198,10 @@ class Jadwal_model extends CI_Model {
         }
 
         // Masukkan detail RUANGAN ke dalam JADWAL_TEMP
-        $ruangan          = $this->get_data('ruangan', array('kode_rg' => $jadwal_temp['kode_rg']), 'row');
+        $ruangan          = $this->get_all_data('ruangan', array('kode_rg' => $jadwal_temp['kode_rg']), 'row_array');
         $jadwal_temp['DETAIL']['ruangan'] = $ruangan;
 
         return $jadwal_temp;
-    }
-
-    public function get_data($table, $array = array(), $result = 'array')
-    {
-        $this->db->where('isDelete', 0);
-        $this->db->where('isShow', 1);
-        if (!empty($array)) {
-            $this->db->where($array);
-        }
-        $query  = $this->db->get($table);
-        if ($result == 'array') {
-            $data = $query->result_array();
-        }
-        if ($result == 'row') {
-            $data = $query->row_array();
-        }
-        return $data;
     }
 
     public function update_jw()
@@ -240,25 +217,8 @@ class Jadwal_model extends CI_Model {
             "modified_by"   => $this->session_username()
         );
 
-        $this->db->where('id_j_t', $this->input->post('upd_kode_jw'));
-        $this->db->update('jadwal_temp', $data);
-        echo "OK";
-    }
-
-    public function update_mk()
-    {
-        $data = array(
-            "nama_mk"       => $this->input->post('upd_nama_mk'),
-            "sks_mk"        => $this->input->post('upd_sks_mk'),
-            "semester_mk"   => $this->input->post('upd_semester_mk'),
-            "program_studi" => $this->input->post('upd_program_studi'),
-            "peminatan"     => $this->input->post('upd_peminatan'),
-            "jenis_rg"      => $this->input->post('upd_jenis_rg'),
-            "modified_date" => date('Y-m-d H:i:s'),
-            "modified_by"   => $this->session_username()
-        );
-        $this->db->where("kode_mk", $this->input->post('upd_kode_mk'));
-        $this->db->update('matakuliah', $data);
+        $this->db->where('id_jadwal_p', $this->input->post('upd_kode_jw'));
+        $this->db->update('jadwal_perkuliahan', $data);
         echo "OK";
     }
 
@@ -267,10 +227,8 @@ class Jadwal_model extends CI_Model {
         $data = array(
             'isDelete' => 1
         );
-        $this->db->where('id_j_t',$kode_jw);
-        $this->db->update('jadwal_temp',$data);
-        // $this->db->delete('dosen');
+        $this->db->where('id_jadwal_p',$kode_jw);
+        $this->db->update('jadwal_perkuliahan',$data);
         echo "OK";
     }
-
 }

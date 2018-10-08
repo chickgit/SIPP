@@ -22,13 +22,19 @@ class Jadwal extends MY_Controller {
 		// exit();
 		$data['user'] = $this->session->userdata();
 
-		$data['list_jw'] = $this->jadwal_model->get_data_temp();
+		$data['list_draft_jp'] = $this->jadwal_model->get_all_data('draft_jadwal_perkuliahan',array('finalisasi' => 0, 'terbit' => 0),'result');
+
+		if ($this->session->has_userdata('id_draft')) {
+			# code...
+			$data['list_jp'] = $this->jadwal_model->get_all_jadwal_perkuliahan(array('draft_id_jp' => $this->session->userdata('id_draft')));
+		}
+
 		$data['all_data'] = array(
-			"hari" 			=> $this->jadwal_model->get_data('hari'),
-			"matakuliah" 	=> $this->jadwal_model->get_data('matakuliah'),
-			"waktu" 		=> $this->jadwal_model->get_data('waktu'),
-			"dosen" 		=> $this->jadwal_model->get_data('dosen'),
-			"ruangan" 		=> $this->jadwal_model->get_data('ruangan')
+			"hari" 			=> $this->jadwal_model->get_all_data('hari'),
+			"matakuliah" 	=> $this->jadwal_model->get_all_data('matakuliah'),
+			"waktu" 		=> $this->jadwal_model->get_all_data('waktu'),
+			"dosen" 		=> $this->jadwal_model->get_all_data('dosen'),
+			"ruangan" 		=> $this->jadwal_model->get_all_data('ruangan')
 		);
 
 		$data['role'] = $this->get_role_user();
@@ -69,29 +75,24 @@ class Jadwal extends MY_Controller {
 		
 	}
 
-	public function bersih()
-	{
-		$data['jp'] = $this->jadwal_model->bersih_jadwal();
-		echo json_encode($data['jp']);
-		// echo json_encode($this->input->post('data'));
-	}
-
 	public function generate()
 	{
+		// $this->check_pass_data_only($this->input->post());
 		$data['jp'] = $this->jadwal_model->generate_jadwal();
 		echo json_encode($data['jp']);
 		// echo json_encode($this->input->post('data'));
 	}
 
-	public function hapus()
+	public function draft()
 	{
-		$data['hapus_jp'] = $this->jadwal_model->hapus_jadwal();
-		echo $data['hapus_jp'];
-		exit();
+		// $this->check_pass_data_only($this->input->post());
+		$data['draft'] = $this->jadwal_model->draft();
+		echo json_encode($data['draft']);
 	}
 
 	public function get_detail_jw()
 	{
+		// $this->check_pass_data_only($this->input->post());
 		$data['get_detail_jw'] = $this->jadwal_model->get_detail_jw($_POST['kode_jw']);
 		echo json_encode($data['get_detail_jw']);
 		// print_r($data['get_dosen']);
@@ -99,8 +100,7 @@ class Jadwal extends MY_Controller {
 
 	public function update_jw()
 	{
-		// echo json_encode($_POST);
-		// exit();
+		// $this->check_pass_data_only($this->input->post());
 		$data['update_jw'] = $this->jadwal_model->update_jw();
 		echo $data['update_jw'];
 		exit();
@@ -113,8 +113,4 @@ class Jadwal extends MY_Controller {
 		exit();
 	}
 
-	public function comments()
-        {
-                echo 'Look at this!';
-        }
 }
