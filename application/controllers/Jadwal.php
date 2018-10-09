@@ -22,7 +22,7 @@ class Jadwal extends MY_Controller {
 		// exit();
 		$data['user'] = $this->session->userdata();
 
-		$data['list_draft_jp'] = $this->jadwal_model->get_all_data('draft_jadwal_perkuliahan',array('finalisasi' => 0, 'terbit' => 0),'result');
+		$data['list_draft_jp'] = $this->jadwal_model->get_all_data('draft_jadwal_perkuliahan',array('finalisasi' => 0),'result');
 
 		if ($this->session->has_userdata('id_draft')) {
 			# code...

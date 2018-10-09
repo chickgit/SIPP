@@ -82,7 +82,7 @@
                                                             <?php
                                                             foreach ($list_draft_jp as $key => $value) {
                                                             ?>
-                                                            <option value="<?=$value->draft_id_jp?>" data-text="<?=$value->draft_nama?>" <?=($value->draft_id_jp == $user['id_draft']) ? 'selected' : ''?>><?=$value->draft_nama?></option>
+                                                            <option value="<?=$value->draft_id_jp?>" data-text="<?=$value->draft_nama?>" <?=(isset($user['id_draft']) && ($value->draft_id_jp == $user['id_draft'])) ? 'selected' : ''?>><?=$value->draft_nama?></option>
                                                             <?php
                                                             }
                                                             ?>
