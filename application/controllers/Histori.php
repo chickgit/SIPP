@@ -22,17 +22,30 @@ class Histori extends MY_Controller {
     
 	public function index()
 	{
+		// $this->check_pass_data_only($this->session->userdata());
+		$data['user'] = $this->session->userdata();
 		$data['list_histori'] = $this->histori_model->get_histori($this->segment());
 
 		$data['role'] = $this->get_role_user();
 		$data['histori_'.$this->segment()] = 'active open';
 		$data['header']['title'] = 'Histori '.ucwords($this->segment());
-		if ($this->segment() == 'jadwal_temp' || $this->segment() == 'jadwal_perkuliahan') {
+
+		if ($this->segment() == 'jadwal' || $this->segment() == 'jadwal_perkuliahan') {
+			if ($this->session->has_userdata('id_draft_histori')) {
+				if ($this->session->userdata('id_draft_histori') != 'ALL') {
+					$data['list_histori'] = $this->histori_model->get_histori($this->segment(), array('draft_id_jp' => $this->session->userdata('id_draft_histori')));
+				}
+			}
+			$data['list_draft_jp'] = $this->histori_model->get_histori('draft_jadwal_perkuliahan');
+
 			$data['header']['title'] = 'Histori Jadwal';
 		}
+
 		$data['header']['css_page_plugin'] = '
 			<link href="'.base_url().'assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-			<link href="'.base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />';
+			<link href="'.base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+			<link href="'.base_url().'assets/global/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
+			';
 
 		$data['footer']['footer_page_plugin'] = '
 			';
@@ -66,6 +79,13 @@ class Histori extends MY_Controller {
 		$data['delete_data'] = $this->histori_model->delete_data($_POST);
 		echo $data['delete_data'];
 		exit();
+	}
+
+	public function draft()
+	{
+		// $this->check_pass_data_only($this->input->post());
+		$data['draft'] = $this->histori_model->draft();
+		echo json_encode($data['draft']);
 	}
 
 
