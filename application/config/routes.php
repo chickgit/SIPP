@@ -51,6 +51,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'home';
 
+$route['histori/draft'] = 'histori/draft';
+
 $route['histori/(:any)'] = 'histori';
 $route['histori/(:any)/get_data'] = 'histori/get_data';
 $route['histori/(:any)/restore_data'] = 'histori/restore_data';
