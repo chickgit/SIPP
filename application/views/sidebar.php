@@ -118,7 +118,7 @@
                                 </ul>
                             </li>
                             <!-- MENU JADWAL -->
-                            <li class="nav-item <?=isset($jadwal) ? $jadwal : ''?> <?=isset($histori_jadwal_temp) ? $histori_jadwal_temp : ''?>">
+                            <li class="nav-item <?=isset($jadwal) ? $jadwal : ''?> <?=isset($histori_jadwal) ? $histori_jadwal : ''?>">
                                 <a href="javascript:;" class="nav-link nav-toggle">
                                     <i class="fa fa-th-list"></i>
                                     <span class="title">Jadwal</span>
@@ -129,8 +129,8 @@
                                         <a href="<?=base_url()?>jadwal" class="nav-link">
                                             <i class="fa fa-table"></i> Data </a>
                                     </li>
-                                    <li class="nav-item <?=isset($histori_jadwal_temp) ? $histori_jadwal_temp : ''?>">
-                                        <a href="<?=base_url()?>histori/jadwal_temp" class="nav-link">
+                                    <li class="nav-item <?=isset($histori_jadwal) ? $histori_jadwal : ''?>">
+                                        <a href="<?=base_url()?>histori/jadwal" class="nav-link">
                                             <i class="fa fa-trash-o"></i> Histori </a>
                                     </li>
                                 </ul>
