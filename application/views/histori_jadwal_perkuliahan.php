@@ -8,7 +8,7 @@
                     <!-- BEGIN BREADCRUMBS -->
                     <ul class="page-breadcrumb">
                         <li><?=$role?></li>
-                        <li>Dosen</li>
+                        <li>Jadwal</li>
                     </ul>
                     <!-- END BREADCRUMBS -->
                     <div class="content-header-menu">
@@ -44,14 +44,11 @@
                                     <table class="table table-striped table-bordered table-hover order-column" id="sample_2">
                                         <thead>
                                             <tr>
-                                                <th> Hari </th>
-                                                <th> Mata Kuliah </th>
-                                                <th> SKS </th>
-                                                <th> Semester </th>
-                                                <th> Waktu </th>
-                                                <th> Dosen </th>
-                                                <th> Ruang </th>
-                                                <th> Peserta </th>
+                                                <th> Nama Jadwal </th>
+                                                <th> Finalisasi </th>
+                                                <th> Terbit </th>
+                                                <th> Tahun Ajaran Terbit </th>
+                                                <th> Semester Terbit </th>
                                                 <th> Actions </th>
                                             </tr>
                                         </thead>
@@ -61,19 +58,11 @@
                                             {
                                                 ?>
                                                 <tr class="odd gradeX">
-                                                    <td> <?=$row->nama_hari?> </td>
-                                                    <td> <?=$row->nama_mk?> </td>
-                                                    <td> <?=$row->sks_mk?> </td>
-                                                    <td> <?=$row->semester_mk?> </td>
-                                                    <td> <?php 
-                                                    if ((isset($row->waktu_aw)) && (isset($row->waktu_ak))) {
-                                                        # code...
-                                                        echo date('H:i', strtotime($row->waktu_aw)).' - '.date('H:i', strtotime($row->waktu_ak)); 
-                                                    }
-                                                    ?> </td>
-                                                    <td> <?=$row->nama?> </td>
-                                                    <td> <?=$row->kode_rg?> </td>
-                                                    <td> <?=$row->peserta?> </td>
+                                                    <td> <?=$row->draft_nama?> </td>
+                                                    <td> <?=($row->finalisasi == 0) ? '<span class="label label-sm label-info"> Belum </span>' : '<span class="label label-sm label-info"> Sudah </span>'?> </td>
+                                                    <td> <?=($row->terbit == 0) ? '<span class="label label-sm label-warning"> Belum </span>' : '<span class="label label-sm label-info"> Sudah </span>'?> </td>
+                                                    <td> <?=($row->ta_terbit == NULL) ? '-' : $row->ta_terbit?> </td>
+                                                    <td> <?=($row->smstr_terbit == NULL) ? '-' : $row->smstr_terbit?> </td>
                                                     <td>
                                                         <div class="btn-group" style="position: relative;">
                                                             <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
@@ -81,11 +70,11 @@
                                                             </button>
                                                             <ul class="dropdown-menu" role="menu" style="position: inherit;">
                                                                 <li>
-                                                                    <a id="restore_jadwal_perkuliahan" data-val="<?=$row->id_jadwal_p?>">
+                                                                    <a id="restore_jadwal_perkuliahan" data-val="<?=$row->draft_id_jp?>">
                                                                         <i class="icon-docs"></i> Kembalikan </a>
                                                                 </li>
                                                                 <li>
-                                                                    <a id="delete_jadwal_perkuliahan" data-val="<?=$row->id_jadwal_p?>">
+                                                                    <a id="delete_jadwal_perkuliahan" data-val="<?=$row->draft_id_jp?>">
                                                                         <i class="icon-trash"></i> Hapus </a>
                                                                 </li>
                                                             </ul>
@@ -103,7 +92,7 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Mengembalikan Dosen</h4>
+                                                    <h4 class="modal-title">Mengembalikan Jadwal Perkuliahan</h4>
                                                 </div>
                                                 <form id="form_restore_jadwal_perkuliahan" class="form-horizontal">
                                                     <div class="modal-body"> 
@@ -113,27 +102,35 @@
                                                                 Anda yakin ingin mengembalikan data berikut? 
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4">Hari
+                                                                <label class="control-label col-md-4">Nama Jadwal
                                                                     <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="restore_hari_jw" value="">
+                                                                    <input type="text" readonly class="form-control" name="restore_draft_nama" value="">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4">Mata Kuliah
+                                                                <label class="control-label col-md-4">Finalisasi
                                                                     <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="restore_mk_jw" value="">
+                                                                    <input type="text" readonly class="form-control" name="restore_finalisasi" value="">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4">SKS
+                                                                <label class="control-label col-md-4">Terbit
                                                                     <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="restore_sks_jw" value="">
+                                                                    <input type="text" readonly class="form-control" name="restore_terbit" value="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Tahun Ajaran terbit
+                                                                    <span class="required"> </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" readonly class="form-control" name="restore_ta_terbit" value="">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -141,39 +138,7 @@
                                                                     <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="restore_semester_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Waktu
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="restore_waktu_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Dosen
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="restore_dosen_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Ruangan
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="restore_ruangan_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Peserta
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="restore_peserta_jw" value="">
+                                                                    <input type="text" readonly class="form-control" name="restore_smstr_terbit" value="">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -181,8 +146,8 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <input type="hidden" name="restore_0">
-                                                        <input type="hidden" name="restore_1" value="id_jadwal_p">
-                                                        <input type="hidden" name="restore_2" value="jadwal_perkuliahan">
+                                                        <input type="hidden" name="restore_1" value="draft_id_jp">
+                                                        <input type="hidden" name="restore_2" value="draft_jadwal_perkuliahan">
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
                                                         <button type="submit" class="btn green">Kembalikan</button>
                                                     </div>
@@ -198,7 +163,7 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Hapus Jadwal</h4>
+                                                    <h4 class="modal-title">Hapus Permanen Jadwal Perkuliahan</h4>
                                                 </div>
                                                 <form id="form_delete_jadwal_perkuliahan" class="form-horizontal">
                                                     <div class="modal-body"> 
@@ -208,67 +173,43 @@
                                                                 Anda yakin ingin menghapus? 
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4">Hari
+                                                                <label class="control-label col-md-4">Nama Jadwal
                                                                     <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="delete_hari_jw" value="">
+                                                                    <input type="text" readonly class="form-control" name="delete_draft_nama" value="">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4">Mata Kuliah
+                                                                <label class="control-label col-md-4">Finalisasi
                                                                     <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="delete_mk_jw" value="">
+                                                                    <input type="text" readonly class="form-control" name="delete_finalisasi" value="">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4">SKS
+                                                                <label class="control-label col-md-4">Terbit
                                                                     <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="delete_sks_jw" value="">
+                                                                    <input type="text" readonly class="form-control" name="delete_terbit" value="">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4">Semester
+                                                                <label class="control-label col-md-4">Tahun Ajaran Terbit
                                                                     <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="delete_semester_jw" value="">
+                                                                    <input type="text" readonly class="form-control" name="delete_ta_terbit" value="">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4">Waktu
+                                                                <label class="control-label col-md-4">Semester Terbit
                                                                     <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="delete_waktu_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Dosen
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="delete_dosen_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Ruangan
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="delete_ruangan_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Peserta
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="delete_peserta_jw" value="">
+                                                                    <input type="text" readonly class="form-control" name="delete_smstr_terbit" value="">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -276,8 +217,8 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <input type="hidden" name="delete_0">
-                                                        <input type="hidden" name="delete_1" value="id_jadwal_p">
-                                                        <input type="hidden" name="delete_2" value="jadwal_perkuliahan">
+                                                        <input type="hidden" name="delete_1" value="draft_id_jp">
+                                                        <input type="hidden" name="delete_2" value="draft_jadwal_perkuliahan">
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
                                                         <button type="submit" class="btn green">Hapus</button>
                                                     </div>
@@ -309,9 +250,9 @@ jQuery(document).ready(function() {
             type: "POST",
             dataType: "json",
             data: {
-                0 : 'jadwal_perkuliahan', 
+                0 : 'draft_jadwal_perkuliahan', 
                 1 : {
-                    id_jadwal_p : $(this).data('val')
+                    draft_id_jp : $(this).data('val')
                 }
             },
             beforeSend: function(){
@@ -324,15 +265,12 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="restore_0"]').val(data.id_jadwal_p);
-                $('input[name="restore_hari_jw"]').val(data.nama_hari);
-                $('input[name="restore_mk_jw"]').val(data.nama_mk);
-                $('input[name="restore_sks_jw"]').val(data.sks_mk);
-                $('input[name="restore_semester_jw"]').val(data.semester_mk);
-                $('input[name="restore_waktu_jw"]').val(data.waktu_aw+' - '+data.waktu_ak);
-                $('input[name="restore_dosen_jw"]').val(data.nama);
-                $('input[name="restore_ruangan_jw"]').val(data.kode_rg);
-                $('input[name="restore_peserta_jw"]').val(data.peserta);
+                $('input[name="restore_0"]').val(data.draft_id_jp);
+                $('input[name="restore_draft_nama"]').val(data.draft_nama);
+                $('input[name="restore_finalisasi"]').val(data.finalisasi);
+                $('input[name="restore_terbit"]').val(data.terbit);
+                $('input[name="restore_ta_terbit"]').val(data.ta_terbit);
+                $('input[name="restore_smstr_terbit"]').val(data.smstr_terbit);
                 $('#modal_restore_jadwal_perkuliahan').modal('show');
                 console.log(data);
             },
@@ -378,9 +316,9 @@ jQuery(document).ready(function() {
             type: "POST",
             dataType: "json",
             data: {
-                0 : 'jadwal_perkuliahan', 
+                0 : 'draft_jadwal_perkuliahan', 
                 1 : {
-                    id_jadwal_p : $(this).data('val')
+                    draft_id_jp : $(this).data('val')
                 }
             },
             beforeSend: function(){
@@ -393,15 +331,12 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="delete_0"]').val(data.id_jadwal_p);
-                $('input[name="delete_hari_jw"]').val(data.nama_hari);
-                $('input[name="delete_mk_jw"]').val(data.nama_mk);
-                $('input[name="delete_sks_jw"]').val(data.sks_mk);
-                $('input[name="delete_semester_jw"]').val(data.semester_mk);
-                $('input[name="delete_waktu_jw"]').val(data.waktu_aw+' - '+data.waktu_ak);
-                $('input[name="delete_dosen_jw"]').val(data.nama);
-                $('input[name="delete_ruangan_jw"]').val(data.kode_rg);
-                $('input[name="delete_peserta_jw"]').val(data.peserta);
+                $('input[name="delete_0"]').val(data.draft_id_jp);
+                $('input[name="delete__draft_nama"]').val(data.draft_nama);
+                $('input[name="delete_finalisasi"]').val(data.finalisasi);
+                $('input[name="delete_terbit"]').val(data.terbit);
+                $('input[name="delete_ta_terbit"]').val(data.ta_terbit);
+                $('input[name="delete_smstr_terbit"]').val(data.smstr_terbit);
                 $('#modal_delete_jadwal_perkuliahan').modal('show');
                 console.log(data);
             },
