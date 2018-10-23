@@ -1,5 +1,5 @@
 <?php
-class Jadwal_perkuliahan_model extends CI_Model {
+class Jadwal_perkuliahan_model extends MY_Model {
 
     public function __construct()
     {
@@ -13,6 +13,55 @@ class Jadwal_perkuliahan_model extends CI_Model {
     private function session_username()
     {
         return $this->session->userdata('Login')['username'];
+    }
+
+    public function penerbitan()
+    {
+        $data = array(
+            "terbit"        => 1,
+            "ta_terbit"     => $this->input->post('ta_jadwal'),
+            "smstr_terbit"  => $this->input->post('smstr_jadwal'),
+            "modified_date" => date('Y-m-d H:i:s'),
+            "modified_by"   => $this->session_username()
+        );
+
+        # Update draft status terbit menjadi 1
+        $this->db->where('draft_id_jp', $this->input->post('id_draft'));
+        $this->db->update('draft_jadwal_perkuliahan', $data);
+
+        echo "OK";
+    }
+
+    public function batal_penerbitan()
+    {
+        $data = array(
+            "terbit"        => 0,
+            "ta_terbit"     => NULL,
+            "smstr_terbit"  => NULL,
+            "modified_date" => date('Y-m-d H:i:s'),
+            "modified_by"   => $this->session_username()
+        );
+
+        # Update draft status terbit menjadi 1
+        $this->db->where('draft_id_jp', $this->input->post('id_draft_batal'));
+        $this->db->update('draft_jadwal_perkuliahan', $data);
+
+        echo "OK";
+    }
+
+    public function penghapusan()
+    {
+        # Proses penghapusan jadwal perkuliahan
+        # Hapus data-data jadwal
+        $data = array(
+            "isDelete"        => 1,
+        );
+        $this->db->where('draft_id_jp', $this->input->post('id_draft'));
+        $this->db->update('jadwal_perkuliahan', $data);
+
+        # Hapus draft jadwal 
+        $this->db->where('draft_id_jp', $this->input->post('id_draft'));
+        $this->db->update('draft_jadwal_perkuliahan', $data);
     }
 
     public function get_all_data($table, $array = array(), $result = 'result_array')
