@@ -47,6 +47,7 @@
                     </div>
                 </div>
                 <?=$menu?>
+                <?php $final = (isset($user['id_draft'])) ? explode('_', $user['id_draft']) : array();?>
                 <div class="page-fixed-main-content">
                     <!-- BEGIN PAGE BASE CONTENT -->
                     <div class="row">
@@ -59,15 +60,24 @@
                                         <span class="caption-subject font-green sbold uppercase">Data Jadwal</span>
                                     </div>
                                     <div class="actions">
+                                        <?php
+                                        if (!isset($final[1])) {
+                                            ?>
                                         <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" title="Generate Jadwal" id="generate_table_jadwal">
                                             <i class="fa fa-random"></i>
                                         </a>
+                                            <?php
+                                        }
+                                        ?>
                                         <a class="btn btn-circle btn-icon-only btn-default" data-toggle="modal" data-target="#modal_petunjuk" title="Petunjuk" id="petunjuk">
                                             <i class="fa fa-question"></i>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
+                                    <?php
+                                    if (!isset($final[1]) && !isset($final[2])) {
+                                        ?>
                                     <div class="panel-group accordion" id="draft">
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
@@ -104,6 +114,35 @@
                                             </div>
                                         </div>
                                     </div>
+                                        <?php
+                                    }
+                                    else{
+                                        ?>
+                                    <div class="panel-group accordion" id="lihat">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="accordion-toggle" data-parent="#lihat" aria-expanded="true"> Lihat Jadwal </a>
+                                                </h4>
+                                            </div>
+                                            <div class="panel-collapse collapse in" aria-expanded="true" style="">
+                                                <div class="panel-body">
+                                                    <form method="POST" action="jadwal_perkuliahan/actions">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control input-sm" readonly="readonly" value="<?=$final[2]?>">
+                                                            <span class="input-group-btn">
+                                                                <button type="submit" class="btn red btn-sm" title="Tutup Jadwal" name="tutup_view" value="<?=$final[0]?>">Tutup Jadwal</button>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <?php
+                                    }
+                                    ?>
+                                    
                                     <div class="panel-group accordion" id="cari">
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
