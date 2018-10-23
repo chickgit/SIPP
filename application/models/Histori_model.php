@@ -8,6 +8,32 @@ class Histori_model extends MY_Model {
         // Your own constructor code
     }
 
+    public function get_histori($table, $where = array())
+    {
+        $data = array(
+            'isDelete' => 1,
+            'isShow'   => 1
+        );
+        if (!empty($where)) {
+            $data = array_merge($data, $where);
+        }
+
+        if ($table == 'jadwal_perkuliahan') {
+            $table = 'draft_jadwal_perkuliahan';
+            $data['finalisasi'] = 1;
+        }
+
+        if ($table == 'jadwal') 
+        {
+            $query = $this->get_jadwal_history($where);
+        }
+        else
+        {
+            $query = $this->db->get_where($table, $data);
+        }
+        return $query->result();
+    }
+
     private function get_jadwal_history($where = array())
     {
         $query = $this->db->select(
@@ -29,27 +55,6 @@ class Histori_model extends MY_Model {
                             ->join('dosen', 'dosen.nid = A.nid', 'left')
                             ->get();
         return $query;                            
-    }
-
-    public function get_histori($table, $where = array())
-    {
-        $data = array(
-            'isDelete' => 1,
-            'isShow'   => 1
-        );
-        if (!empty($where)) {
-            $data = array_merge($data, $where);
-        }
-
-        if ($table == 'jadwal' || $table == 'jadwal_perkuliahan') 
-        {
-            $query = $this->get_jadwal_history($where);
-        }
-        else
-        {
-            $query = $this->db->get_where($table, $data);
-        }
-    	return $query->result();
     }
 
     public function get_data($table, $arr)
@@ -83,9 +88,11 @@ class Histori_model extends MY_Model {
 
     public function restore_data($arr)
     {
+        # restore what?
         $data = array(
             'isDelete' => 0
         );
+        # restore who?
         $arr2 = array(
             $arr['restore_1'] => $arr['restore_0']
         );

@@ -19,7 +19,7 @@ class Histori extends MY_Controller {
     {
     	return $this->uri->segment(2);
     }
-    
+
 	public function index()
 	{
 		// $this->check_pass_data_only($this->session->userdata());
@@ -30,7 +30,7 @@ class Histori extends MY_Controller {
 		$data['histori_'.$this->segment()] = 'active open';
 		$data['header']['title'] = 'Histori '.ucwords($this->segment());
 
-		if ($this->segment() == 'jadwal' || $this->segment() == 'jadwal_perkuliahan') {
+		if ($this->segment() == 'jadwal') {
 			if ($this->session->has_userdata('id_draft_histori')) {
 				if ($this->session->userdata('id_draft_histori') != 'ALL') {
 					$data['list_histori'] = $this->histori_model->get_histori($this->segment(), array('draft_id_jp' => $this->session->userdata('id_draft_histori')));

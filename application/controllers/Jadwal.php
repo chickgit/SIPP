@@ -20,6 +20,7 @@ class Jadwal extends MY_Controller {
 		// $data['jp'] = $this->algo->generate_jadwal('2017/2018','GANJIL');
 		// print_r(json_encode($data['jp']));
 		// exit();
+		// $this->check_pass_data_only($this->session->userdata());
 		$data['user'] = $this->session->userdata();
 
 		$data['list_draft_jp'] = $this->jadwal_model->get_all_data('draft_jadwal_perkuliahan',array('finalisasi' => 0),'result');
