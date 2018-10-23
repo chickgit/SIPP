@@ -129,10 +129,17 @@ class Jadwal_model extends MY_Model {
             echo "OK";
         }
         else if ($draft[0] == 'finalisasi') {
-            // Hapus seluruh data jadwal satuan di dalam tabel jadwal perkuliahan 
+            # Hapus seluruh data jadwal satuan di dalam tabel jadwal perkuliahan 
             $this->db->where('kode_mk', NULL);
             $this->db->where('draft_id_jp', $draft[1]);
             $this->db->delete('jadwal_perkuliahan');
+
+            # Update draft menjadi telah di finalisasi
+            $data = array(
+                'finalisasi' => 1
+            );
+            $this->db->where('draft_id_jp', $draft[1]);
+            $this->db->update('draft_jadwal_perkuliahan', $data);
             echo "OK";
         }
         else if ($draft[0] == 'delete') 
