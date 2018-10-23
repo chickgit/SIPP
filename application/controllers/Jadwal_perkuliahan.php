@@ -16,6 +16,7 @@ class Jadwal_perkuliahan extends MY_Controller {
 
         $this->load->model('jadwal_perkuliahan_model');
     }
+
 	public function index()
 	{
 		// $data['list_jp'] = $this->jadwal_perkuliahan_model->get_data_temp();
@@ -23,11 +24,8 @@ class Jadwal_perkuliahan extends MY_Controller {
 		// exit();
 		$data['user'] = $this->session->userdata();
 
-		$data['list_draft_jp'] = $this->jadwal_perkuliahan_model->get_all_data('draft_jadwal_perkuliahan',array(),'result');
-		if ($this->session->has_userdata('id_draft')) {
-			# code...
-			$data['list_jp'] = $this->jadwal_perkuliahan_model->get_data_temp(array('draft_id_jp' => $this->session->userdata('id_draft')['draft_id_jp']));
-		}
+		$data['list_jp'] = $this->jadwal_perkuliahan_model->get_all_data('draft_jadwal_perkuliahan', array('finalisasi' => 1), 'result');
+
 		$data['all_data'] = array(
 			"hari" 			=> $this->jadwal_perkuliahan_model->get_all_data('hari'),
 			"matakuliah" 	=> $this->jadwal_perkuliahan_model->get_all_data('matakuliah'),
@@ -61,7 +59,7 @@ class Jadwal_perkuliahan extends MY_Controller {
         	<script src="'.base_url().'assets/global/plugins/pdfmake/build/vfs_fonts.js" type="text/javascript"></script>
 			';
 		$data['footer']['footer_page_scripts'] = '
-			<script src="'.base_url().'assets/pages/scripts/table-datatables-jadwal.js" type="text/javascript"></script>
+			<script src="'.base_url().'assets/pages/scripts/table-datatables-managed.js" type="text/javascript"></script>
         	<script src="'.base_url().'assets/pages/scripts/components-select2.js" type="text/javascript"></script>
         	<script src="'.base_url().'assets/pages/scripts/ui-sweetalert.js" type="text/javascript"></script>
 			';
@@ -74,6 +72,50 @@ class Jadwal_perkuliahan extends MY_Controller {
 		// $data['list_dosen'] = $this->dosen_model->
 
 		$this->load->view('Jadwal_perkuliahan',$data);
+	}
+
+	public function actions()
+	{
+		// $this->check_pass_data_only($draft);
+		if ($this->input->post('view')) {
+			$draft = $this->jadwal_perkuliahan_model->get_all_data('draft_jadwal_perkuliahan', array('draft_id_jp' => $this->input->post('view')), 'row_array');
+			$this->session->set_userdata('id_draft',$draft['draft_id_jp'].'_'.$draft['finalisasi'].'_'.$draft['draft_nama']);
+			header('Location: '.base_url().'jadwal');
+		}
+		if ($this->input->post('tutup_view')) {
+			$this->session->unset_userdata('id_draft');
+			header('Location: '.base_url().'jadwal_perkuliahan');
+		}
+	}
+
+	public function get_draft()
+	{
+		$data['draft'] = $this->jadwal_perkuliahan_model->get_all_data('draft_jadwal_perkuliahan', array('draft_id_jp' => $this->input->post('id_draft')), 'row_array');
+		echo json_encode($data['draft']);
+	}
+
+	public function penerbitan()
+	{
+		# Proses Penerbitan
+		// $this->check_pass_data_only($this->input->post());
+		$data['penerbitan'] = $this->jadwal_perkuliahan_model->penerbitan();
+		echo json_encode($data['penerbitan']);
+	}
+
+	public function batal_penerbitan()
+	{
+		# Proses Penerbitan
+		// $this->check_pass_data_only($this->input->post());
+		$data['batal_penerbitan'] = $this->jadwal_perkuliahan_model->batal_penerbitan();
+		echo json_encode($data['batal_penerbitan']);
+	}
+
+	public function penghapusan()
+	{
+		# code...
+		// $this->check_pass_data_only($this->input->post());
+		$data['penghapusan'] = $this->jadwal_perkuliahan_model->penghapusan();
+		echo json_encode($data['penghapusan']);
 	}
 
 	public function draft()
