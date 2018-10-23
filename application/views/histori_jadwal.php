@@ -393,12 +393,16 @@
     {
         var selected = elm.options[elm.selectedIndex].getAttribute('value');
         if (selected === 'ALL') {
-            $('[name='+elm.name+']').parent().find('#draft_restore').attr('disabled','disabled');
-            $('[name='+elm.name+']').parent().find('#draft_delete').attr('disabled','disabled');
+            // $('[name='+elm.name+']').parent().find('#draft_restore').attr('disabled','disabled');
+            $('[name='+elm.name+']').parent().find('#draft_restore').addClass('disabled',);
+            // $('[name='+elm.name+']').parent().find('#draft_delete').attr('disabled','disabled');
+            $('[name='+elm.name+']').parent().find('#draft_delete').addClass('disabled',);
             // elm.parent().find('#draft_restore').disabled();
         }else{
-            $('[name='+elm.name+']').parent().find('#draft_restore').removeAttr('disabled');
-            $('[name='+elm.name+']').parent().find('#draft_delete').removeAttr('disabled');
+            $('[name='+elm.name+']').parent().find('#draft_restore').removeClass('disabled');
+            // $('[name='+elm.name+']').parent().find('#draft_restore').removeAttr('disabled');
+            $('[name='+elm.name+']').parent().find('#draft_delete').removeClass('disabled');
+            // $('[name='+elm.name+']').parent().find('#draft_delete').removeAttr('disabled');
         }
     }
     function draft(elm)
