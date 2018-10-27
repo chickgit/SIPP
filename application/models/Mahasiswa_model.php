@@ -1,5 +1,5 @@
 <?php
-class Mahasiswa_model extends CI_Model {
+class Mahasiswa_model extends MY_Model {
 
     public function __construct()
     {
@@ -54,11 +54,38 @@ class Mahasiswa_model extends CI_Model {
         return $query->row();
     }
 
-    public function check_mk()
+    public function get_data()
     {
-        $query = $this->db->get_where('ambil_matakuliah', array('nim' => $this->input->post('nim'), 'tahun_ajaran' => $this->input->post('tahun_ajaran')));
-        return $query->row();
+        $where = array(
+            'nim'           => $this->session->userdata('Detail')['nim'],
+            'tahun_ajaran'  => $this->session->userdata('TA')['tahun_ajaran'],
+            'smstr'         => $this->session->userdata('TA')['semester']
+        );
+        $data_ambil_mk = $this->get_all_data('ambil_matakuliah', $where, 'result');
+        // $query = $this->db->get_where('ambil_matakuliah', array(
+        //     'isDelete'  => 0, 
+        //     'isShow'    => 1, 
+        //     'nim'       => $this->session->userdata('Detail')['nim']
+        // ));
+        $new_obj = (object) array();
+        foreach ($data_ambil_mk as $row) {
+            $new = explode(';', $row->kode_mk);
+            foreach ($new as $key => $kode_mk) {
+                $query = $this->get_mk($kode_mk);
+                $new_obj->$key = $query;
+                $new_obj->$key->nim = $row->nim;
+                $new_obj->$key->tahun_ajaran = $row->tahun_ajaran;
+                $new_obj->$key->smstr = $row->smstr;
+            }
+        }
+        return $new_obj;
     }
+
+    // public function check_mk()
+    // {
+    //     $query = $this->db->get_where('ambil_matakuliah', array('nim' => $this->input->post('nim'), 'tahun_ajaran' => $this->input->post('tahun_ajaran')));
+    //     return $query->row();
+    // }
 
     public function insert()
     {
@@ -69,7 +96,7 @@ class Mahasiswa_model extends CI_Model {
             "created_by"    => $this->session_username()
         );
         $this->db->insert('ambil_matakuliah', $data);
-        echo "INSERT OK";
+        echo "OK";
     }
 
     public function update()
@@ -82,27 +109,7 @@ class Mahasiswa_model extends CI_Model {
         $this->db->where("nim", $this->input->post('nim'));
         $this->db->where("tahun_ajaran", $this->input->post('tahun_ajaran'));
         $this->db->update('ambil_matakuliah', $data);
-        echo "UPDATE OK";
-    }
-
-    public function get_data()
-    {
-        $query = $this->db->get_where('ambil_matakuliah', array(
-            'isDelete'  => 0, 
-            'isShow'    => 1, 
-            'nim'       => $this->session->userdata('Detail')['nim']
-        ));
-        $new_obj = (object) array();
-        foreach ($query->result() as $row) {
-            $new = explode(';', $row->kode_mk);
-            foreach ($new as $key => $kode_mk) {
-                $query = $this->get_mk($kode_mk);
-                $new_obj->$key = $query;
-                $new_obj->$key->nim = $row->nim;
-                $new_obj->$key->tahun_ajaran = $row->tahun_ajaran;
-            }
-        }
-        return $new_obj;
+        echo "OK";
     }
 
     public function get_mk($kode_mk)
@@ -114,37 +121,4 @@ class Mahasiswa_model extends CI_Model {
         ));
         return $query->row();
     }
-
-    public function check_kode_mk($kode_mk)
-    {
-        $query = $this->db->query('SELECT kode_mk FROM matakuliah WHERE kode_mk = "'.$kode_mk.'"');
-        return $query->row();
-    }
-
-    public function insert_data($arr = array())
-    {
-        $sql = ("INSERT INTO matakuliah(kode_mk, nama_mk, sks_mk, semester_mk, program_studi, peminatan) VALUES (?, ?, ?, ?, ?, ?)");
-        $this->db->query($sql, array($arr['kode_mk'],$arr['nama_mk'],$arr['sks_mk'],$arr['semester_mk'],$arr['program_studi'],$arr['peminatan']));
-        echo "OK";
-    }
-
-
-    public function update_mk($arr = array())
-    {
-        $sql = ("UPDATE matakuliah SET nama_mk = ?, sks_mk = ?, semester_mk = ?, program_studi = ?, peminatan = ?, modified_date = ?, modified_by = ? WHERE kode_mk = ?");
-        $this->db->query($sql, array($arr['upd_nama_mk'],$arr['upd_sks_mk'],$arr['upd_semester_mk'],$arr['upd_program_studi'],$arr['upd_peminatan'],date('Y-m-d H:i:s'),$this->session_username(),$arr['upd_kode_mk']));
-        echo "OK";
-    }
-
-    public function delete_mk($kode_mk)
-    {
-        $data = array(
-            'isDelete' => 1
-        );
-        $this->db->where('kode_mk',$kode_mk);
-        $this->db->update('matakuliah',$data);
-        // $this->db->delete('dosen');
-        echo "OK";
-    }
-
 }
