@@ -179,14 +179,14 @@
                             </li>
                             <!-- MENU MAHASISWA -->
                             <li class="nav-item <?=isset($amk) ? $amk : ''?><?=isset($histori_matakuliah) ? $histori_matakuliah : ''?>">
-                                <a href="<?=base_url()?>ambil_matakuliah" class="nav-link nav-toggle">
+                                <a href="<?=base_url()?>mhs_ambil_mk" class="nav-link nav-toggle">
                                     <i class="fa fa-book"></i>
                                     <span class="title">Mata Kuliah</span>
                                     <!-- <span class="arrow"></span> -->
                                 </a>
                                 <!-- <ul class="sub-menu">
                                     <li class="nav-item <?=isset($mk) ? $mk : ''?>">
-                                        <a href="<?=base_url()?>ambil_matakuliah" class="nav-link">
+                                        <a href="<?=base_url()?>mhs_ambil_mk" class="nav-link">
                                             <i class="fa fa-th-list"></i> Ambil </a>
                                     </li>
                                     <li class="nav-item <?=isset($histori_matakuliah) ? $histori_matakuliah : ''?>">
@@ -198,8 +198,8 @@
                             <li class="heading">
                                 <h3 class="uppercase">JADWAL</h3>
                             </li>
-                            <li class="nav-item <?=isset($jadwal_perkuliahan) ? $jadwal_perkuliahan : ''?> ">
-                                <a href="jadwalP" class="nav-link nav-toggle">
+                            <li class="nav-item <?=isset($mhs_jp) ? $mhs_jp : ''?> ">
+                                <a href="mhs_jp" class="nav-link nav-toggle">
                                     <i class="icon-calendar"></i>
                                     <span class="title">Jadwal Perkuliahan</span>
                                 </a>
