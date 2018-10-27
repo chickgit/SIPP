@@ -389,7 +389,7 @@ jQuery(document).ready(function() {
                         });
                     },
                     success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                         $('#modal_terbit').modal('hide');
                         swal({
                             title : "Berhasil!", 
@@ -409,8 +409,8 @@ jQuery(document).ready(function() {
                             text : xhr.status+"\n"+thrownError, 
                             type : "error"},
                         );
-                        console.log(xhr);
-                        console.log(thrownError);
+                        // console.log(xhr);
+                        // console.log(thrownError);
                     }
                 });
             }
