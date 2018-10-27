@@ -26,14 +26,6 @@ class Jadwal_perkuliahan extends MY_Controller {
 
 		$data['list_jp'] = $this->jadwal_perkuliahan_model->get_all_data('draft_jadwal_perkuliahan', array('finalisasi' => 1), 'result');
 
-		$data['all_data'] = array(
-			"hari" 			=> $this->jadwal_perkuliahan_model->get_all_data('hari'),
-			"matakuliah" 	=> $this->jadwal_perkuliahan_model->get_all_data('matakuliah'),
-			"waktu" 		=> $this->jadwal_perkuliahan_model->get_all_data('waktu'),
-			"dosen" 		=> $this->jadwal_perkuliahan_model->get_all_data('dosen'),
-			"ruangan" 		=> $this->jadwal_perkuliahan_model->get_all_data('ruangan')
-		);
-
 		$data['role'] = $this->get_role_user();
 
 		$data['jadwal_perkuliahan'] = 'active open';
@@ -117,40 +109,4 @@ class Jadwal_perkuliahan extends MY_Controller {
 		$data['penghapusan'] = $this->jadwal_perkuliahan_model->penghapusan();
 		echo json_encode($data['penghapusan']);
 	}
-
-	public function draft()
-	{
-		// echo json_encode($this->input->post());
-		// exit();
-		$data['draft'] = $this->jadwal_perkuliahan_model->draft();
-		echo json_encode($data['draft']);
-	}
-
-	public function get_detail_jw()
-	{
-		$data['get_detail_jw'] = $this->jadwal_perkuliahan_model->get_detail_jw($_POST['kode_jw']);
-		echo json_encode($data['get_detail_jw']);
-		// print_r($data['get_dosen']);
-	}
-
-	public function update_jw()
-	{
-		// echo json_encode($_POST);
-		// exit();
-		$data['update_jw'] = $this->jadwal_perkuliahan_model->update_jw();
-		echo $data['update_jw'];
-		exit();
-	}
-
-	public function delete_jw()
-	{
-		$data['delete_jw'] = $this->jadwal_perkuliahan_model->delete_jw($this->input->post('del_kode_jw'));
-		echo $data['delete_jw'];
-		exit();
-	}
-
-	public function comments()
-        {
-                echo 'Look at this!';
-        }
 }
