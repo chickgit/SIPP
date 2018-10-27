@@ -140,6 +140,11 @@ class Jadwal_model extends MY_Model {
             );
             $this->db->where('draft_id_jp', $draft[1]);
             $this->db->update('draft_jadwal_perkuliahan', $data);
+
+            if ($this->session->has_userdata('id_draft')) {
+                $this->session->unset_userdata('id_draft');
+            }
+
             echo "OK";
         }
         else if ($draft[0] == 'delete') 
@@ -154,6 +159,11 @@ class Jadwal_model extends MY_Model {
             $this->db->where('draft_id_jp', $draft[1]);
             $this->db->update('jadwal_perkuliahan', $data);
             // $this->db->delete('dosen');
+
+            if ($this->session->has_userdata('id_draft')) {
+                $this->session->unset_userdata('id_draft');
+            }
+            
             echo "OK";
         }
     }

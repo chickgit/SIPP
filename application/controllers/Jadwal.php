@@ -18,7 +18,7 @@ class Jadwal extends MY_Controller {
 	public function index()
 	{
 		// $data['jp'] = $this->algo->generate_jadwal('2017/2018','GANJIL');
-		// print_r(json_encode($data['jp']));
+		// print_r($this->session->userdata());
 		// exit();
 		// $this->check_pass_data_only($this->session->userdata());
 		$data['user'] = $this->session->userdata();
@@ -48,8 +48,8 @@ class Jadwal extends MY_Controller {
 			<link href="'.base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
 			<link href="'.base_url().'assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 			<link href="'.base_url().'assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
-			<link href="'.base_url().'assets/global/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />';
-
+			<link href="'.base_url().'assets/global/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
+			';
 		$data['footer']['footer_page_plugin'] = '
 			<script src="'.base_url().'assets/global/scripts/datatable.js" type="text/javascript"></script>
 			<script src="'.base_url().'assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
