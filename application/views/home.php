@@ -92,7 +92,7 @@
                             <h3><b>PENGAMBILAN MATA KULIAH</b></h3>
                             <h3><?=$bta->tahun_ajaran?> - <?=$bta->semester?></h3>
                             <h5>Hingga</h5>
-                            <h3 class="font-red"><?=date('d - m - Y', strtotime($bta->batas_akhir))?></h3>
+                            <h3 class="font-red"><?=$bta->batas_akhir?></h3>
                             <h3 class="font-red" id="batas_ambil_matkul"></h3>
                         </div>
                     </div>
@@ -104,19 +104,16 @@
                         <!-- BEGIN FORM-->
                         <form id="form_tambah_dosen" class="form-inline text-center" method="post" action="<?=base_url()?>home/update">
                             <div class="form-group">
-                                <label class="sr-only" for="tahun-ajar">Tahun Ajaran</label>
-                                <input type="text" class="form-control" id="tahun-ajar" name="tahun_ajar" value="<?=$bta->tahun_ajaran?>"> 
+                                <label class="sr-only" for="tahun-ajaran">Tahun Ajaran</label>
+                                <?php echo form_dropdown('tahun_ajaran', $drop['ta']['opt'], $drop['ta']['slctd'], $drop['ta']['attr']); ?>
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="semester">Semester</label>
-                                <select name="semester" class="form-control" id="semester">
-                                    <option value="GANJIL" <?=($bta->semester == 'GANJIL') ? 'selected' : '';?>>GANJIL</option>
-                                    <option value="GENAP" <?=($bta->semester == 'GENAP') ? 'selected' : '';?>>GENAP</option>
-                                </select>
+                                <?php echo form_dropdown('semester', $drop['smstr']['opt'], $drop['smstr']['slctd'], $drop['smstr']['attr']); ?>
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="date">Date</label>
-                                <input type="date" class="form-control" id="date" name="date" value="<?=$bta->batas_akhir?>"> 
+                                <?php echo form_input($input['batas_akhir']); ?>
                             </div>
                             <!-- END FORM-->
                             <button type="submit" class="btn green">Ubah</button>
@@ -129,10 +126,12 @@
                 </div>
 <?php
     $baru = explode("-", $bta->batas_akhir);
+    $date = "".(isset($baru[1])?$baru[1]:'')." ".(isset($baru[2])?$baru[2]:'').", ".(isset($baru[0])?$baru[0]:'')."";
 ?>
 <script>
 // Set the date we're counting down to
-var countDownDate = new Date("<?=$baru[1]?> <?=$baru[2]?>, <?=$baru[0]?>").getTime();
+// var countDownDate = new Date("<?=$baru[1]?> <?=$baru[2]?>, <?=$baru[0]?>").getTime();
+var countDownDate = new Date("<?=$date?>").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
