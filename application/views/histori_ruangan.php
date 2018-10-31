@@ -1,5 +1,3 @@
-<!-- <link href="assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
@@ -44,7 +42,7 @@
                                     <table class="table table-striped table-bordered table-hover order-column" id="sample_2">
                                         <thead>
                                             <tr>
-                                                <th> Kode Ruangan </th>
+                                                <th> Nama Ruangan </th>
                                                 <th> Gedung </th>
                                                 <th> Jenis </th>
                                                 <th> Kapasitas </th>
@@ -62,9 +60,9 @@
                                             {
                                                 ?>
                                             <tr class="odd gradeX">
-                                                <td> <?=$row->kode_rg?> </td>
+                                                <td> <?=$row->nama_ruangan?> </td>
                                                 <td> <?=$row->gedung_rg?> </td>
-                                                <td> <?=$row->jenis_rg?> </td>
+                                                <td> <?=$row->id_jenis?> </td>
                                                 <td> <?=$row->kapasitas_rg?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
@@ -78,11 +76,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu" style="position: inherit;">
                                                             <li>
-                                                                <a id="restore_rg" data-val="<?=$row->kode_rg?>">
+                                                                <a id="restore_rg" data-val="<?=$row->id_ruangan?>">
                                                                     <i class="icon-docs"></i> Kembalikan </a>
                                                             </li>
                                                             <li>
-                                                                <a id="delete_rg" data-val="<?=$row->kode_rg?>">
+                                                                <a id="delete_rg" data-val="<?=$row->id_ruangan?>">
                                                                     <i class="icon-trash"></i> Hapus </a>
                                                             </li>
                                                         </ul>
@@ -109,21 +107,22 @@
                                                             <div class="alert alert-danger alert-danger-delete">
                                                                 Anda yakin ingin mengembalikan data berikut ? </div>
                                                             <div class="form-group ">
-                                                                <label class="control-label col-md-3">Kode Ruangan
-                                                                    <span class="required"> * </span>
+                                                                <label class="control-label col-md-3">Nama Ruangan
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="restore_0" disabled /> </div>
+                                                                        <input type="text" class="form-control" name="restore_nama_ruangan" disabled /> 
+                                                                    </div>
                                                                         <input type="hidden" name="restore_0">
-                                                                        <input type="hidden" name="restore_1" value="kode_rg">
+                                                                        <input type="hidden" name="restore_1" value="id_ruangan">
                                                                         <input type="hidden" name="restore_2" value="ruangan">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Gedung
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -142,7 +141,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Kapasitas
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -179,21 +178,22 @@
                                                             <div class="alert alert-danger alert-danger-delete">
                                                                 Anda yakin ingin menghapus ? </div>
                                                             <div class="form-group ">
-                                                                <label class="control-label col-md-3">Kode Ruangan
-                                                                    <span class="required"> * </span>
+                                                                <label class="control-label col-md-3">Nama Ruangan
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="delete_0" disabled /> </div>
+                                                                        <input type="text" class="form-control" name="delete_nama_ruangan" disabled /> 
+                                                                    </div>
                                                                         <input type="hidden" name="delete_0">
-                                                                        <input type="hidden" name="delete_1" value="kode_rg">
+                                                                        <input type="hidden" name="delete_1" value="id_ruangan">
                                                                         <input type="hidden" name="delete_2" value="ruangan">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Gedung
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -212,7 +212,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Kapasitas
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -258,7 +258,7 @@ jQuery(document).ready(function() {
             data: {
                 0 : 'ruangan', 
                 1 : {
-                    kode_rg : $(this).data('val')
+                    id_ruangan : $(this).data('val')
                 }
             },
             beforeSend: function(){
@@ -271,9 +271,10 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="restore_0"]').val(data.kode_rg);
+                $('input[name="restore_0"]').val(data.id_ruangan);
+                $('input[name="restore_nama_ruangan"]').val(data.nama_ruangan);
                 $('input[name="restore_gedung_rg"]').val(data.gedung_rg);
-                $('input[name="restore_jenis_rg"]').val(data.jenis_rg);
+                $('input[name="restore_jenis_rg"]').val(data.id_jenis);
                 $('input[name="restore_kapasitas_rg"]').val(data.kapasitas_rg);
                 $('#modal_restore_rg').modal('show');
                 // console.log(data);
@@ -323,7 +324,7 @@ jQuery(document).ready(function() {
             data: {
                 0 : 'ruangan', 
                 1 : {
-                    kode_rg : $(this).data('val')
+                    id_ruangan : $(this).data('val')
                 }
             },
             beforeSend: function(){
@@ -336,9 +337,10 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="delete_0"]').val(data.kode_rg);
+                $('input[name="delete_0"]').val(data.id_ruangan);
+                $('input[name="delete_nama_ruangan"]').val(data.nama_ruangan);
                 $('input[name="delete_gedung_rg"]').val(data.gedung_rg);
-                $('input[name="delete_jenis_rg"]').val(data.jenis_rg);
+                $('input[name="delete_jenis_rg"]').val(data.id_jenis);
                 $('input[name="delete_kapasitas_rg"]').val(data.kapasitas_rg);
                 $('#modal_delete_rg').modal('show');
                 // console.log(data);
