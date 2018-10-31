@@ -1,5 +1,5 @@
 <?php
-class MataKuliah_model extends CI_Model {
+class MataKuliah_model extends MY_Model {
 
     public function __construct()
     {
@@ -11,12 +11,6 @@ class MataKuliah_model extends CI_Model {
     private function session_username()
     {
         return $this->session->userdata('Login')['username'];
-    }
-
-    public function get_data()
-    {
-        $query = $this->db->get_where('matakuliah', array('isDelete' => 0, 'isShow' => 1));
-    	return $query->result();
     }
 
     public function check_kode_mk($kode_mk)
@@ -32,18 +26,29 @@ class MataKuliah_model extends CI_Model {
             "nama_mk"       => $this->input->post('nama_mk'),
             "sks_mk"        => $this->input->post('sks_mk'),
             "semester_mk"   => $this->input->post('semester_mk'),
-            "program_studi" => $this->input->post('program_studi'),
-            "peminatan"     => $this->input->post('peminatan'),
-            "jenis_rg"      => $this->input->post('jenis_rg')
+            "id_prodi"      => $this->input->post('id_program_studi'),
+            "id_peminatan"  => $this->input->post('id_peminatan'),
+            "id_jenis"      => $this->input->post('id_jenis_ruangan'),
+            "created_by"    => $this->session_username()
         );
         $this->db->insert('matakuliah', $data);
         echo "OK";
     }
-
-    public function get_mk($kode_mk)
+    
+    public function get_mk()
     {
-        $query = $this->db->query('SELECT * FROM matakuliah WHERE kode_mk = "'.$kode_mk.'"');
-        return $query->row();
+        $options = array(
+            'select'    => 'matakuliah.kode_mk, matakuliah.nama_mk, matakuliah.sks_mk, matakuliah.semester_mk, program_studi.id_prodi, program_studi.panggilan program_studi, peminatan.id_peminatan, peminatan.panggilan peminatan, jenis_ruangan.id_jenis, jenis_ruangan.jenis, matakuliah.created_date, matakuliah.created_by, matakuliah.modified_date, matakuliah.modified_by, matakuliah.isShow',
+            'table'     => 'matakuliah',
+            'where'     => array('matakuliah.kode_mk' => $this->input->post('kode_mk')),
+            'join'      => array(
+                'program_studi'     => 'program_studi.id_prodi = matakuliah.id_prodi',
+                'peminatan'         => 'peminatan.id_peminatan = matakuliah.id_peminatan',
+                'jenis_ruangan'     => 'jenis_ruangan.id_jenis = matakuliah.id_jenis'
+            ),
+            'single'    => TRUE
+        );
+        return $this->commonGet($options);
     }
 
     public function update_mk()
@@ -52,9 +57,9 @@ class MataKuliah_model extends CI_Model {
             "nama_mk"       => $this->input->post('upd_nama_mk'),
             "sks_mk"        => $this->input->post('upd_sks_mk'),
             "semester_mk"   => $this->input->post('upd_semester_mk'),
-            "program_studi" => $this->input->post('upd_program_studi'),
-            "peminatan"     => $this->input->post('upd_peminatan'),
-            "jenis_rg"      => $this->input->post('upd_jenis_rg'),
+            "id_prodi"      => $this->input->post('upd_program_studi'),
+            "id_peminatan"  => $this->input->post('upd_peminatan'),
+            "id_jenis"      => $this->input->post('upd_jenis_ruangan'),
             "modified_date" => date('Y-m-d H:i:s'),
             "modified_by"   => $this->session_username()
         );
@@ -66,12 +71,13 @@ class MataKuliah_model extends CI_Model {
     public function delete_mk($kode_mk)
     {
         $data = array(
-            'isDelete' => 1
+            "isDelete"      => 1,
+            "modified_date" => date('Y-m-d H:i:s'),
+            "modified_by"   => $this->session_username()
         );
         $this->db->where('kode_mk',$kode_mk);
         $this->db->update('matakuliah',$data);
         // $this->db->delete('dosen');
         echo "OK";
     }
-
 }

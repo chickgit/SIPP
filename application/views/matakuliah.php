@@ -1,5 +1,3 @@
-<!-- <link href="assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
@@ -73,22 +71,8 @@
                                                 <td> <?=$row->sks_mk?> </td>
                                                 <td> <?=$row->semester_mk?> </td>
                                                 <td> <?=$row->program_studi?> </td>
-                                                <td> <?php
-                                                $peminatan = Array(
-                                                  '0' => 'Umum',
-                                                  '1' => 'EIS',
-                                                  '2' => 'MM',
-                                                  '3' => 'JarKom',
-                                                  '4' => 'MobA',
-                                                );
-
-                                                $color_type = null;
-                                                if (array_key_exists($row->peminatan, $peminatan))
-                                                {
-                                                  echo $peminatan[$row->peminatan];
-                                                }
-                                                ?> </td>
-                                                <td> <?=$row->jenis_rg?> </td>
+                                                <td> <?=$row->peminatan?> </td>
+                                                <td> <?=$row->jenis?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
                                                 <td> <?=$row->modified_date?> </td>
@@ -180,12 +164,7 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select name="program_studi" class="form-control">
-                                                                            <option value="pilih">Pilih Prodi</option>
-                                                                            <option value="SI">SI</option>
-                                                                            <option value="TI">TI</option>
-                                                                            <option value="SI/TI">SI/TI</option>
-                                                                        </select>
+                                                                        <?php echo form_dropdown('id_program_studi', $drop['prodi']['opt'], '', array('class' => 'form-control')); ?>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -196,14 +175,15 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select name="peminatan" class="form-control">
+                                                                        <?php echo form_dropdown('id_peminatan',$drop['peminatan']['opt'],'',array('class' => 'form-control')); ?>
+                                                                        <!-- <select name="peminatan" class="form-control">
                                                                             <option value="pilih">Pilih Peminatan</option>
                                                                             <option value="0">Umum</option>
                                                                             <option value="1">Enterprise Information System</option>
                                                                             <option value="2">Multimedia</option>
                                                                             <option value="3">Jaringan Komputer</option>
                                                                             <option value="4">Mobile Application</option>
-                                                                        </select>
+                                                                        </select> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -214,13 +194,14 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select name="jenis_rg" class="form-control">
+                                                                        <?php echo form_dropdown('id_jenis_ruangan',$drop['jenis_ruangan']['opt'],'',array('class' => 'form-control')); ?>
+                                                                        <!-- <select name="jenis_rg" class="form-control">
                                                                             <option value="pilih">Pilih Jenis</option>
                                                                             <option value="CISCO">CISCO</option>
                                                                             <option value="OCR">OCR</option>
                                                                             <option value="LR">LR</option>
                                                                             <option value="IMAC">IMAC</option>
-                                                                        </select>
+                                                                        </select> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -302,12 +283,13 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select name="upd_program_studi" class="form-control">
+                                                                        <?php echo form_dropdown('upd_program_studi', $drop['prodi']['opt'], '', array('class' => 'form-control')); ?>
+                                                                        <!-- <select name="upd_program_studi" class="form-control">
                                                                             <option value="pilih">Pilih Prodi</option>
                                                                             <option value="SI">SI</option>
                                                                             <option value="TI">TI</option>
                                                                             <option value="SI/TI">SI/TI</option>
-                                                                        </select>
+                                                                        </select> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -318,14 +300,15 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select name="upd_peminatan" class="form-control">
+                                                                        <?php echo form_dropdown('upd_peminatan',$drop['peminatan']['opt'],'',array('class' => 'form-control')); ?>
+                                                                        <!-- <select name="upd_peminatan" class="form-control">
                                                                             <option value="pilih">Pilih Peminatan</option>
                                                                             <option value="0">Umum</option>
                                                                             <option value="1">Enterprise Information System</option>
                                                                             <option value="2">Multimedia</option>
                                                                             <option value="3">Jaringan Komputer</option>
                                                                             <option value="4">Mobile Application</option>
-                                                                        </select>
+                                                                        </select> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -336,13 +319,14 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select name="upd_jenis_rg" class="form-control">
+                                                                        <?php echo form_dropdown('upd_jenis_ruangan',$drop['jenis_ruangan']['opt'],'',array('class' => 'form-control')); ?>
+                                                                        <!-- <select name="upd_jenis_rg" class="form-control">
                                                                             <option value="pilih">Pilih Jenis</option>
                                                                             <option value="CISCO">CISCO</option>
                                                                             <option value="OCR">OCR</option>
                                                                             <option value="LR">LR</option>
                                                                             <option value="IMAC">IMAC</option>
-                                                                        </select>
+                                                                        </select> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -469,12 +453,6 @@
                     <!-- END PAGE BASE CONTENT -->
                 </div>
 <?=$footer?>
-<script src="<?=base_url()?>assets/global/scripts/datatable.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/pages/scripts/table-datatables-managed.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
     // add the rule here
@@ -515,14 +493,14 @@ jQuery(document).ready(function() {
                     minlength   : 1,
                     maxlength   : 8
                 },
-                program_studi: {
-                    valueNotEquals :"pilih"
+                id_program_studi: {
+                    valueNotEquals :"0"
                 },
-                peminatan: {
-                    valueNotEquals :"pilih"
+                id_peminatan: {
+                    valueNotEquals :"0"
                 },
-                jenis_rg: {
-                    valueNotEquals :"pilih"
+                id_jenis_ruangan: {
+                    valueNotEquals :"0"
                 }
             },
             messages: {
@@ -546,13 +524,13 @@ jQuery(document).ready(function() {
                     minlength   : "Harap isi minimal 1 digit",
                     maxlength   : "Harap isi maksimal 8 digit"
                 },
-                program_studi: {
+                id_program_studi: {
                     valueNotEquals    :"Pilih Program Studi",
                 },
-                peminatan: {
+                id_peminatan: {
                     valueNotEquals    :"Pilih Peminatan",
                 },
-                jenis_rg: {
+                id_jenis_ruangan: {
                     valueNotEquals    :"Pilih Jenis Ruangan",
                 }
             },
@@ -595,29 +573,23 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
                     success: function(data) {
                         success4.show();
-                        location.reload();
                         // console.log(data);
+                        location.reload();
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         alert(xhr.status);
                         alert(thrownError);
                     }
                 });
-                return false;
-                // success4.show();
-                // error4.hide();
-                //form.submit(); // submit the form
             }
         });
     });
@@ -631,7 +603,7 @@ jQuery(document).ready(function() {
         idform.find('.alert-danger').css('display','none');
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
-        idform.find('select').val('pilih');
+        idform.find('select').val(0);
     })
     $('#sample_2').on('click', '#update_mk', function(){
         $.ajax({
@@ -641,9 +613,7 @@ jQuery(document).ready(function() {
             data: {kode_mk : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
-                    // target: '#form_tambah_dosen',
-                    // overlayColor: 'none',
-                    // animate: true,
+                    boxed : true,
                     zIndex: 20000,
                 });
             },
@@ -653,14 +623,18 @@ jQuery(document).ready(function() {
                 $('input[name="upd_nama_mk"]').val(data.nama_mk);
                 $('input[name="upd_sks_mk"]').val(data.sks_mk);
                 $('input[name="upd_semester_mk"]').val(data.semester_mk);
-                $('select[name="upd_program_studi"]').val(data.program_studi);
-                $('select[name="upd_peminatan"]').val(data.peminatan);
-                $('select[name="upd_jenis_rg"]').val(data.jenis_rg);
+                $('select[name="upd_program_studi"]').val(data.id_prodi);
+                $('select[name="upd_peminatan"]').val(data.id_peminatan);
+                $('select[name="upd_jenis_ruangan"]').val(data.id_jenis);
                 $('#modal_update_mk').modal('show');
                 // console.log(data);
             },
             complete: function(){
-                App.unblockUI();
+                setTimeout(function(){ App.unblockUI(); }, 500);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
             }
         });
 
@@ -690,13 +664,13 @@ jQuery(document).ready(function() {
                     maxlength : 8
                 },
                 upd_program_studi: {
-                    valueNotEquals :"pilih"
+                    valueNotEquals :"0"
                 },
                 upd_peminatan: {
-                    valueNotEquals :"pilih"
+                    valueNotEquals :"0"
                 },
-                upd_jenis_rg: {
-                    valueNotEquals :"pilih"
+                upd_jenis_ruangan: {
+                    valueNotEquals :"0"
                 }
             },
             messages: {
@@ -721,7 +695,7 @@ jQuery(document).ready(function() {
                 upd_peminatan: {
                     valueNotEquals    :"Pilih Peminatan",
                 },
-                upd_jenis_rg: {
+                upd_jenis_ruangan: {
                     valueNotEquals :"Pilih Jenis Ruangan"
                 }
             },
@@ -764,9 +738,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -776,13 +748,13 @@ jQuery(document).ready(function() {
                         // console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
                     }
                 });
-                return false;
-                // success4.show();
-                // error4.hide();
-                //form.submit(); // submit the form
             }
         });
     });
@@ -796,7 +768,7 @@ jQuery(document).ready(function() {
         idform.find('.alert-danger').css('display','none');
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
-        idform.find('select').val('pilih');
+        idform.find('select').val(0);
     })
     $('#sample_2').on('click', '#delete_mk', function(){
         $.ajax({
@@ -806,9 +778,7 @@ jQuery(document).ready(function() {
             data: {kode_mk : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
-                    // target: '#form_tambah_dosen',
-                    // overlayColor: 'none',
-                    // animate: true,
+                    boxed : true,
                     zIndex: 20000,
                 });
             },
@@ -820,12 +790,16 @@ jQuery(document).ready(function() {
                 $('input[name="del_semester_mk"]').val(data.semester_mk);
                 $('input[name="del_program_studi"]').val(data.program_studi);
                 $('input[name="del_peminatan"]').val(data.peminatan);
-                $('input[name="del_jenis_rg"]').val(data.jenis_rg);
+                $('input[name="del_jenis_rg"]').val(data.jenis);
                 $('#modal_delete_mk').modal('show');
-                // console.log(data);
+                console.log(data);
             },
             complete: function(){
-                App.unblockUI();
+                setTimeout(function(){ App.unblockUI(); }, 500);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
             }
         });
 
@@ -842,9 +816,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -854,7 +826,11 @@ jQuery(document).ready(function() {
                         // console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
                     }
                 });
             }
