@@ -44,7 +44,6 @@
                                     <table class="table table-striped table-bordered table-hover order-column" id="sample_2">
                                         <thead>
                                             <tr>
-                                                <th> Kode Waktu </th>
                                                 <th> Waktu Awal </th>
                                                 <th> Waktu Akhir </th>
                                                 <th> Identitas Waktu </th>
@@ -63,7 +62,6 @@
                                             {
                                                 ?>
                                             <tr class="odd gradeX">
-                                                <td> <?=$row->kode_wk?> </td>
                                                 <td> <?=$row->waktu_aw?> </td>
                                                 <td> <?=$row->waktu_ak?> </td>
                                                 <td> <?=$row->role?> </td>
@@ -80,11 +78,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu" style="position: inherit;">
                                                             <li>
-                                                                <a id="restore_wk" data-val="<?=$row->kode_wk?>">
+                                                                <a id="restore_wk" data-val="<?=$row->id_waktu?>">
                                                                     <i class="icon-docs"></i> Kembalikan </a>
                                                             </li>
                                                             <li>
-                                                                <a id="delete_wk" data-val="<?=$row->kode_wk?>">
+                                                                <a id="delete_wk" data-val="<?=$row->id_waktu?>">
                                                                     <i class="icon-trash"></i> Hapus </a>
                                                             </li>
                                                         </ul>
@@ -119,7 +117,7 @@
                                                                         <i class="fa"></i>
                                                                         <input type="text" class="form-control" name="restore_0" disabled /> </div>
                                                                         <input type="hidden" name="restore_0">
-                                                                        <input type="hidden" name="restore_1" value="kode_wk">
+                                                                        <input type="hidden" name="restore_1" value="id_waktu">
                                                                         <input type="hidden" name="restore_2" value="waktu">
                                                                 </div>
                                                             </div>
@@ -199,7 +197,7 @@
                                                                         <i class="fa"></i>
                                                                         <input type="text" class="form-control" name="delete_0" disabled /> </div>
                                                                         <input type="hidden" name="delete_0">
-                                                                        <input type="hidden" name="delete_1" value="kode_wk">
+                                                                        <input type="hidden" name="delete_1" value="id_waktu">
                                                                         <input type="hidden" name="delete_2" value="waktu">
                                                                 </div>
                                                             </div>
@@ -280,7 +278,7 @@ jQuery(document).ready(function() {
             data: {
                 0 : 'waktu', 
                 1 : {
-                    kode_wk : $(this).data('val')
+                    id_waktu : $(this).data('val')
                 }
             },
             beforeSend: function(){
@@ -293,7 +291,7 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="restore_0"]').val(data.kode_wk);
+                $('input[name="restore_0"]').val(data.id_waktu);
                 $('input[name="restore_awal_wk"]').val(data.waktu_aw);
                 $('input[name="restore_akhir_wk"]').val(data.waktu_ak);
                 $('input[name="restore_id_wk"]').val(data.role);
@@ -346,7 +344,7 @@ jQuery(document).ready(function() {
             data: {
                 0 : 'waktu', 
                 1 : {
-                    kode_wk : $(this).data('val')
+                    id_waktu : $(this).data('val')
                 }
             },
             beforeSend: function(){
@@ -359,7 +357,7 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="delete_0"]').val(data.kode_wk);
+                $('input[name="delete_0"]').val(data.id_waktu);
                 $('input[name="delete_awal_wk"]').val(data.waktu_aw);
                 $('input[name="delete_akhir_wk"]').val(data.waktu_ak);
                 $('input[name="delete_id_wk"]').val(data.role);
