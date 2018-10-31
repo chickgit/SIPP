@@ -1,5 +1,3 @@
-<!-- <link href="assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
@@ -69,23 +67,9 @@
                                                 <td> <?=$row->nama_mk?> </td>
                                                 <td> <?=$row->sks_mk?> </td>
                                                 <td> <?=$row->semester_mk?> </td>
-                                                <td> <?=$row->program_studi?> </td>
-                                                <td> <?php
-                                                $peminatan = Array(
-                                                  '0' => 'Umum',
-                                                  '1' => 'EIS',
-                                                  '2' => 'MM',
-                                                  '3' => 'JarKom',
-                                                  '4' => 'MobA',
-                                                );
-
-                                                $color_type = null;
-                                                if (array_key_exists($row->peminatan, $peminatan))
-                                                {
-                                                  echo $peminatan[$row->peminatan];
-                                                }
-                                                ?> </td>
-                                                <td> <?=$row->jenis_rg?> </td>
+                                                <td> <?=$row->id_prodi?> </td>
+                                                <td> <?=$row->id_peminatan?> </td>
+                                                <td> <?=$row->id_jenis?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
                                                 <td> <?=$row->modified_date?> </td>
@@ -130,7 +114,7 @@
                                                                 Anda yakin ingin mengembalikan data berikut ? </div>
                                                             <div class="form-group ">
                                                                 <label class="control-label col-md-3">Kode Mata Kuliah
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -143,7 +127,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Nama Mata Kuliah
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -162,7 +146,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Semester
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -172,7 +156,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Program Studi
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -182,7 +166,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Peminatan
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -192,7 +176,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Jenis Ruangan
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -229,7 +213,7 @@
                                                                 Anda yakin ingin menghapus ? </div>
                                                             <div class="form-group ">
                                                                 <label class="control-label col-md-3">Kode Mata Kuliah
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -242,7 +226,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Nama Mata Kuliah
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -261,7 +245,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Semester
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -271,7 +255,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Program Studi
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -281,7 +265,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Peminatan
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -291,7 +275,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Jenis Ruangan
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -353,9 +337,9 @@ jQuery(document).ready(function() {
                 $('input[name="restore_nama_mk"]').val(data.nama_mk);
                 $('textarea[name="restore_sks_mk"]').val(data.sks_mk);
                 $('input[name="restore_semester_mk"]').val(data.semester_mk);
-                $('input[name="restore_program_studi"]').val(data.program_studi);
-                $('input[name="restore_peminatan"]').val(data.peminatan);
-                $('input[name="restore_jenis_rg"]').val(data.jenis_rg);
+                $('input[name="restore_program_studi"]').val(data.id_prodi);
+                $('input[name="restore_peminatan"]').val(data.id_peminatan);
+                $('input[name="restore_jenis_rg"]').val(data.id_jenis);
                 $('#modal_restore_mk').modal('show');
                 // console.log(data);
             },
@@ -421,9 +405,9 @@ jQuery(document).ready(function() {
                 $('input[name="delete_nama_mk"]').val(data.nama_mk);
                 $('textarea[name="delete_sks_mk"]').val(data.sks_mk);
                 $('input[name="delete_semester_mk"]').val(data.semester_mk);
-                $('input[name="delete_program_studi"]').val(data.program_studi);
-                $('input[name="delete_peminatan"]').val(data.peminatan);
-                $('input[name="delete_jenis_rg"]').val(data.jenis_rg);
+                $('input[name="delete_program_studi"]').val(data.id_prodi);
+                $('input[name="delete_peminatan"]').val(data.id_peminatan);
+                $('input[name="delete_jenis_rg"]').val(data.id_jenis);
                 $('#modal_delete_mk').modal('show');
                 // console.log(data);
             },
