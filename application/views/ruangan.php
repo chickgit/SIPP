@@ -1,5 +1,3 @@
-<!-- <link href="<?=base_url()?>assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
@@ -13,27 +11,6 @@
                     <!-- END BREADCRUMBS -->
                     <div class="content-header-menu">
                         <!-- BEGIN DROPDOWN AJAX MENU -->
-                        <!-- <div class="dropdown-ajax-menu btn-group">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                            </button>
-                            <ul class="dropdown-menu-v2">
-                                <li>
-                                    <a href="start.html">Application</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Reports</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Templates</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Settings</a>
-                                </li>
-                            </ul>
-                        </div> -->
                         <!-- END DROPDOWN AJAX MENU -->
                         <!-- BEGIN MENU TOGGLER -->
                         <button type="button" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
@@ -68,7 +45,7 @@
                                     <table class="table table-striped table-bordered table-hover order-column" id="sample_2">
                                         <thead>
                                             <tr>
-                                                <th> Kode Ruangan </th>
+                                                <th> Nama Ruangan </th>
                                                 <th> Gedung </th>
                                                 <th> Jenis </th>
                                                 <th> Kapasitas </th>
@@ -86,9 +63,9 @@
                                             {
                                                 ?>
                                             <tr class="odd gradeX">
-                                                <td> <?=$row->kode_rg?> </td>
+                                                <td> <?=$row->nama_ruangan?> </td>
                                                 <td> <?=$row->gedung_rg?> </td>
-                                                <td> <?=$row->jenis_rg?> </td>
+                                                <td> <?=$row->jenis?> </td>
                                                 <td> <?=$row->kapasitas_rg?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
@@ -102,11 +79,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu" style="position: inherit;">
                                                             <li>
-                                                                <a id="update_rg" data-val="<?=$row->kode_rg?>">
+                                                                <a id="update_rg" data-val="<?=$row->id_ruangan?>">
                                                                     <i class="icon-docs"></i> Ubah </a>
                                                             </li>
                                                             <li>
-                                                                <a id="delete_rg" data-val="<?=$row->kode_rg?>">
+                                                                <a id="delete_rg" data-val="<?=$row->id_ruangan?>">
                                                                     <i class="icon-trash"></i> Hapus </a>
                                                             </li>
                                                         </ul>
@@ -135,13 +112,13 @@
                                                             <div class="alert alert-success display-hide">
                                                                 <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
                                                             <div class="form-group ">
-                                                                <label class="control-label col-md-4">Kode Ruangan
+                                                                <label class="control-label col-md-4">Nama Ruangan
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="kode_rg" /> </div>
+                                                                        <input type="text" class="form-control" name="nama_ruangan" /> </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -161,7 +138,8 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="jenis" /> </div>
+                                                                        <?php echo form_dropdown('jenis', $drop['jenis_ruangan']['opt'],'',array('class' => 'form-control')); ?>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -204,14 +182,14 @@
                                                             <div class="alert alert-success display-hide">
                                                                 <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
                                                             <div class="form-group ">
-                                                                <label class="control-label col-md-4">Kode Ruangan
+                                                                <label class="control-label col-md-4">Nama Ruangan
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="upd_kode_rg" disabled/> 
-                                                                        <input type="hidden" name="upd_kode_rg">
+                                                                        <input type="text" class="form-control" name="upd_nama_ruangan"/> 
+                                                                        <input type="hidden" name="upd_nama_ruangan">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -232,7 +210,8 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="upd_jenis" /> </div>
+                                                                        <?php echo form_dropdown('upd_jenis', $drop['jenis_ruangan']['opt'],'',array('class' => 'form-control')); ?>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -249,6 +228,7 @@
                                                         <!-- END FORM-->
                                                     </div>
                                                     <div class="modal-footer">
+                                                        <input type="hidden" name="upd_id_ruangan">
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
                                                         <button type="submit" class="btn green">Ubah</button>
                                                     </div>
@@ -273,14 +253,14 @@
                                                             <div class="alert alert-danger alert-danger-delete">
                                                                 Anda yakin ingin menghapus ? </div>
                                                             <div class="form-group ">
-                                                                <label class="control-label col-md-4">Kode Ruangan
+                                                                <label class="control-label col-md-4">Nama Ruangan
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="del_kode_rg" disabled/> 
-                                                                        <input type="hidden" name="del_kode_rg">
+                                                                        <input type="text" class="form-control" name="del_nama_rg" disabled/> 
+                                                                        <input type="hidden" name="del_id_ruangan">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -335,14 +315,12 @@
                     <!-- END PAGE BASE CONTENT -->
                 </div>
 <?=$footer?>
-<script src="<?=base_url()?>assets/global/scripts/datatable.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/pages/scripts/table-datatables-managed.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
+ $.validator.addMethod("valueNotEquals", function(value, element, arg){
+  return arg !== value;
+ }, "Value must not equal arg.");
+
     $('#tambah_rg').on('click', function(){
         //console.log('clicked');
         // validation using icons
@@ -356,16 +334,16 @@ jQuery(document).ready(function() {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
             rules: {
-                kode_rg: {
+                nama_ruangan: {
                     required: true,
-                    remote: "<?=base_url()?>ruangan/check_kode_rg",
-                    maxlength: 6
+                    maxlength: 15
                 },
                 gedung: {
                     required: true,
+                    maxlength: 1
                 },
                 jenis: {
-                    required: true,
+                    valueNotEquals :"0"
                 },
                 kapasitas: {
                     required: true,
@@ -374,16 +352,16 @@ jQuery(document).ready(function() {
                 },
             },
             messages: {
-                kode_rg: {
-                    required: "Kode ruangan harus di isi",
-                    remote: "Kode ruangan sudah terpakai",
-                    maxlength: "Kode ruangan maksimal 6 karakter"
+                nama_ruangan: {
+                    required: "Nama ruangan harus di isi",
+                    maxlength: "Nama ruangan maksimal 15 karakter"
                 },
                 gedung: {
                     required: "Gedung harus di isi",
+                    maxlength: "Isi dengan satu karakter"
                 },
                 jenis: {
-                    required: "Jenis harus di isi",
+                    valueNotEquals: "Pilih jenis ruangan",
                 },
                 kapasitas: {
                     required: "Kapasitas harus di isi",
@@ -430,9 +408,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -442,17 +418,13 @@ jQuery(document).ready(function() {
                         // console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         alert(xhr.status);
                         alert(thrownError);
                     }
                 });
-                return false;
-                // success4.show();
-                // error4.hide();
-                //form.submit(); // submit the form
             }
         });
     });
@@ -466,32 +438,36 @@ jQuery(document).ready(function() {
         idform.find('.alert-danger').css('display','none');
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
+        idform.find('select').val(0);
     });
     $('#sample_2').on('click', '#update_rg', function(){
         $.ajax({
             url: "<?=base_url()?>ruangan/get_rg", 
             type: "POST",
             dataType: "json",
-            data: {kode_rg : $(this).data('val')},
+            data: {id_ruangan : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
-                    // target: '#form_tambah_dosen',
-                    // overlayColor: 'none',
-                    // animate: true,
+                    boxed : true,
                     zIndex: 20000,
                 });
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="upd_kode_rg"]').val(data.kode_rg);
+                $('input[name="upd_id_ruangan"]').val(data.id_ruangan);
+                $('input[name="upd_nama_ruangan"]').val(data.nama_ruangan);
                 $('input[name="upd_gedung"]').val(data.gedung_rg);
-                $('input[name="upd_jenis"]').val(data.jenis_rg);
+                $('select[name="upd_jenis"]').val(data.id_jenis);
                 $('input[name="upd_kapasitas"]').val(data.kapasitas_rg);
                 $('#modal_update_rg').modal('show');
-                // console.log(data);
+                console.log(data);
             },
             complete: function(){
-                App.unblockUI();
+                setTimeout(function(){ App.unblockUI(); }, 500);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
             }
         });
 
@@ -509,7 +485,7 @@ jQuery(document).ready(function() {
                     required: true,
                 },
                 upd_jenis: {
-                    required: true,
+                    valueNotEquals :"0"
                 },
                 upd_kapasitas: {
                     required: true,
@@ -522,7 +498,7 @@ jQuery(document).ready(function() {
                     required: "Gedung harus di isi",
                 },
                 upd_jenis: {
-                    required: "Jenis harus di isi",
+                    valueNotEquals: "Pilih jenis ruangan",
                 },
                 upd_kapasitas: {
                     required: "Kapasitas harus di isi",
@@ -569,9 +545,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -581,13 +555,13 @@ jQuery(document).ready(function() {
                         // console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
                     }
                 });
-                return false;
-                // success4.show();
-                // error4.hide();
-                //form.submit(); // submit the form
             }
         });
     });
@@ -601,32 +575,32 @@ jQuery(document).ready(function() {
         idform.find('.alert-danger').css('display','none');
         idform.find('.alert-success').css('display','none');
         idform.find('input').val('');
+        idform.find('select').val(0);
     });
     $('#sample_2').on('click', '#delete_rg', function(){
         $.ajax({
             url: "<?=base_url()?>ruangan/get_rg", 
             type: "POST",
             dataType: "json",
-            data: {kode_rg : $(this).data('val')},
+            data: {id_ruangan : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
-                    // target: '#form_tambah_dosen',
-                    // overlayColor: 'none',
-                    // animate: true,
+                    boxed : true,
                     zIndex: 20000,
                 });
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="del_kode_rg"]').val(data.kode_rg);
+                $('input[name="del_id_ruangan"]').val(data.id_ruangan);
+                $('input[name="del_nama_rg"]').val(data.nama_ruangan);
                 $('input[name="del_gedung"]').val(data.gedung_rg);
-                $('input[name="del_jenis"]').val(data.jenis_rg);
+                $('input[name="del_jenis"]').val(data.jenis);
                 $('input[name="del_kapasitas"]').val(data.kapasitas_rg);
                 $('#modal_delete_rg').modal('show');
                 // console.log(data);
             },
             complete: function(){
-                App.unblockUI();
+                setTimeout(function(){ App.unblockUI(); }, 500);
             }
         });
 
@@ -643,9 +617,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -655,7 +627,7 @@ jQuery(document).ready(function() {
                         // console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
                     }
                 });
             }

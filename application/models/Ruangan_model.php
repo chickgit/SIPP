@@ -1,5 +1,5 @@
 <?php
-class Ruangan_model extends CI_Model {
+class Ruangan_model extends MY_Model {
 
     public function __construct()
     {
@@ -13,47 +13,70 @@ class Ruangan_model extends CI_Model {
         return $this->session->userdata('Login')['username'];
     }
 
-    public function get_data()
+    public function get_all_ruangan()
     {
-        $query = $this->db->get_where('ruangan', array('isDelete' => 0, 'isShow' => 1));
-    	return $query->result();
+        $options = array(
+            'select'    => 'ruangan.id_ruangan, ruangan.nama_ruangan, ruangan.gedung_rg, jenis_ruangan.id_jenis, jenis_ruangan.jenis, ruangan.kapasitas_rg, ruangan.created_date, ruangan.created_by, ruangan.modified_date, ruangan.modified_by, ruangan.isShow',
+            'table'     => 'ruangan',
+            'join'      => array(
+                'jenis_ruangan'     => 'jenis_ruangan.id_jenis = ruangan.id_jenis',
+            )
+        );
+        return $this->commonGet($options);
     }
 
-    public function check_kode_rg($kode_rg)
-    {
-        $query = $this->db->query('SELECT kode_rg FROM ruangan WHERE kode_rg = "'.$kode_rg.'"');
-        return $query->row();
-    }
-
-    public function insert_data($arr = array())
-    {
-        $sql = ("INSERT INTO ruangan(kode_rg, gedung_rg, jenis_rg, kapasitas_rg) VALUES (?, ?, ?, ?)");
-        $this->db->query($sql, array($arr['kode_rg'],$arr['gedung'],$arr['jenis'],$arr['kapasitas']));
-        echo "OK";
-    }
-
-    public function get_rg($kode_rg)
-    {
-        $query = $this->db->query('SELECT * FROM ruangan WHERE kode_rg = "'.$kode_rg.'"');
-        return $query->row();
-    }
-
-    public function update_rg($arr = array())
-    {
-        $sql = ("UPDATE ruangan SET gedung_rg = ?, jenis_rg = ?, kapasitas_rg = ?, modified_date = ?, modified_by = ? WHERE kode_rg = ?");
-        $this->db->query($sql, array($arr['upd_gedung'],$arr['upd_jenis'],$arr['upd_kapasitas'],date('Y-m-d H:i:s'),$this->session_username(),$arr['upd_kode_rg']));
-        echo "OK";
-    }
-
-    public function delete_rg($kode_rg)
+    public function insert_data()
     {
         $data = array(
-            'isDelete' => 1
+            "nama_ruangan"  => $this->input->post('nama_ruangan'),
+            "gedung_rg"     => $this->input->post('gedung'),
+            "id_jenis"      => $this->input->post('jenis'),
+            "kapasitas_rg"  => $this->input->post('kapasitas'),
+            "created_by"    => $this->session_username()
         );
-        $this->db->where('kode_rg',$kode_rg);
+        $this->db->insert('ruangan', $data);
+        echo "OK";
+    }
+
+    public function get_rg()
+    {
+        $options = array(
+            'select'    => 'ruangan.id_ruangan, ruangan.nama_ruangan, ruangan.gedung_rg, jenis_ruangan.id_jenis, jenis_ruangan.jenis, ruangan.kapasitas_rg, ruangan.created_date, ruangan.created_by, ruangan.modified_date, ruangan.modified_by, ruangan.isShow',
+            'table'     => 'ruangan',
+            'where'     => array('ruangan.id_ruangan' => $this->input->post('id_ruangan')),
+            'join'      => array(
+                'jenis_ruangan'     => 'jenis_ruangan.id_jenis = ruangan.id_jenis',
+            ),
+            'single'    => TRUE
+        );
+        return $this->commonGet($options);
+    }
+
+    public function update_rg()
+    {
+        $data = array(
+            "nama_ruangan"  => $this->input->post('upd_nama_ruangan'),
+            "gedung_rg"     => $this->input->post('upd_gedung'),
+            "id_jenis"      => $this->input->post('upd_jenis'),
+            "kapasitas_rg"  => $this->input->post('upd_kapasitas'),
+            "modified_date" => date('Y-m-d H:i:s'),
+            "modified_by"   => $this->session_username()
+        );
+        $this->db->where("id_ruangan", $this->input->post('upd_id_ruangan'));
+        $this->db->update('ruangan', $data);
+        echo "OK";
+    }
+
+    public function delete_rg()
+    {
+        $data = array(
+            "isDelete"      => 1,
+            "modified_date" => date('Y-m-d H:i:s'),
+            "modified_by"   => $this->session_username()
+        );
+        $this->db->where('id_ruangan',$this->input->post('del_id_ruangan'));
         $this->db->update('ruangan',$data);
         // $this->db->delete('dosen');
         echo "OK";
     }
-
 }
