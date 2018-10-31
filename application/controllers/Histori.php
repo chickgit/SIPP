@@ -22,7 +22,7 @@ class Histori extends MY_Controller {
 
 	public function index()
 	{
-		// $this->check_pass_data_only($this->session->userdata());
+		// $this->check_pass_data_only(base_url());
 		$data['user'] = $this->session->userdata();
 		$data['list_histori'] = $this->histori_model->get_histori($this->segment());
 
