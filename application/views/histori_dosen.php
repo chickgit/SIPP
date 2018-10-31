@@ -1,5 +1,3 @@
-<!-- <link href="assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
@@ -110,7 +108,7 @@
                                                                 Anda yakin ingin mengembalikan data berikut ? </div>
                                                             <div class="form-group ">
                                                                 <label class="control-label col-md-3">NID
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -123,7 +121,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Nama
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -142,7 +140,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Telepon
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -179,20 +177,20 @@
                                                                 Anda yakin ingin menghapus ? </div>
                                                             <div class="form-group ">
                                                                 <label class="control-label col-md-3">NID
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
                                                                         <input type="text" class="form-control" name="delete_0" disabled /> </div>
-                                                                        <<input type="hidden" name="delete_0">
+                                                                        <input type="hidden" name="delete_0">
                                                                         <input type="hidden" name="delete_1" value="nid">
                                                                         <input type="hidden" name="delete_2" value="matakuliah">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Nama
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
@@ -211,7 +209,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-3">Telepon
-                                                                    <span class="required"> * </span>
+                                                                    <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
