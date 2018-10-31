@@ -1,5 +1,3 @@
-<!-- <link href="<?=base_url()?>assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
@@ -13,27 +11,6 @@
                     <!-- END BREADCRUMBS -->
                     <div class="content-header-menu">
                         <!-- BEGIN DROPDOWN AJAX MENU -->
-                        <!-- <div class="dropdown-ajax-menu btn-group">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                            </button>
-                            <ul class="dropdown-menu-v2">
-                                <li>
-                                    <a href="start.html">Application</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Reports</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Templates</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Settings</a>
-                                </li>
-                            </ul>
-                        </div> -->
                         <!-- END DROPDOWN AJAX MENU -->
                         <!-- BEGIN MENU TOGGLER -->
                         <button type="button" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
@@ -68,7 +45,6 @@
                                     <table class="table table-striped table-bordered table-hover order-column" id="sample_2">
                                         <thead>
                                             <tr>
-                                                <th> Kode Waktu </th>
                                                 <th> Waktu Awal </th>
                                                 <th> Waktu Akhir </th>
                                                 <th> Identitas Waktu </th>
@@ -87,7 +63,6 @@
                                             {
                                                 ?>
                                             <tr class="odd gradeX">
-                                                <td> <?=$row->kode_wk?> </td>
                                                 <td> <?=$row->waktu_aw?> </td>
                                                 <td> <?=$row->waktu_ak?> </td>
                                                 <td> <?=$row->role?> </td>
@@ -104,11 +79,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu" style="position: inherit;">
                                                             <li>
-                                                                <a id="update_wk" data-val="<?=$row->kode_wk?>">
+                                                                <a id="update_wk" data-val="<?=$row->id_waktu?>">
                                                                     <i class="icon-docs"></i> Ubah </a>
                                                             </li>
                                                             <li>
-                                                                <a id="delete_wk" data-val="<?=$row->kode_wk?>">
+                                                                <a id="delete_wk" data-val="<?=$row->id_waktu?>">
                                                                     <i class="icon-trash"></i> Hapus </a>
                                                             </li>
                                                         </ul>
@@ -136,16 +111,6 @@
                                                                 <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. </div>
                                                             <div class="alert alert-success display-hide">
                                                                 <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
-                                                            <!-- <div class="form-group ">
-                                                                <label class="control-label col-md-4">Kode Waktu
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="kode_wk" id="" /> </div>
-                                                                </div>
-                                                            </div> -->
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Waktu Awal
                                                                     <span class="required"> * </span>
@@ -173,7 +138,7 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select name="id_wk" class="form-control">
+                                                                        <select name="role" class="form-control">
                                                                             <option value="pilih">Pilih Identitas</option>
                                                                             <option value="PP">PP (Pagi-Pagi)</option>
                                                                             <option value="PS">PS (Pagi-Siang)</option>
@@ -222,18 +187,6 @@
                                                                 <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. </div>
                                                             <div class="alert alert-success display-hide">
                                                                 <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
-                                                            <!-- <div class="form-group ">
-                                                                <label class="control-label col-md-4">Kode Waktu
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="upd_kode_wk" disabled/> 
-                                                                        <input type="hidden" name="upd_kode_wk">
-                                                                    </div>
-                                                                </div>
-                                                            </div> -->
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Waktu Awal
                                                                     <span class="required"> * </span>
@@ -261,7 +214,7 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select name="upd_id_wk" class="form-control">
+                                                                        <select name="upd_role" class="form-control">
                                                                             <option value="pilih">Pilih Identitas</option>
                                                                             <option value="PP">PP (Pagi-Pagi)</option>
                                                                             <option value="PS">PS (Pagi-Siang)</option>
@@ -286,7 +239,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
-                                                        <input type="hidden" name="upd_kode_wk">
+                                                        <input type="hidden" name="upd_id_waktu">
                                                         <button type="submit" class="btn green">Ubah</button>
                                                     </div>
                                                 </form>
@@ -316,8 +269,8 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="del_kode_wk" disabled/> 
-                                                                        <input type="hidden" name="del_kode_wk">
+                                                                        <input type="text" class="form-control" name="del_id_waktu" disabled/> 
+                                                                        <input type="hidden" name="del_id_waktu">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -328,7 +281,7 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="time" class="form-control" name="del_awal_wk" /> </div>
+                                                                        <input type="time" class="form-control" name="del_awal_wk" disabled /> </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -338,7 +291,28 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="time" class="form-control" name="del_akhir_wk" /> </div>
+                                                                        <input type="time" class="form-control" name="del_akhir_wk" disabled /> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Identitas Waktu
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="del_role" disabled /> 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">SKS Waktu
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="del_sks_wk" disabled /> 
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -362,12 +336,6 @@
                     <!-- END PAGE BASE CONTENT -->
                 </div>
 <?=$footer?>
-<script src="<?=base_url()?>assets/global/scripts/datatable.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/pages/scripts/table-datatables-managed.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
     $.validator.addMethod("notEqual", function(value, element, param) {
@@ -390,11 +358,6 @@ jQuery(document).ready(function() {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
             rules: {
-                kode_wk: {
-                    required: true,
-                    remote: "<?=base_url()?>waktu/check_kode_wk",
-                    maxlength: 5
-                },
                 awal_wk: {
                     required: true,
                     notEqual: "#akhir_wk"
@@ -403,7 +366,7 @@ jQuery(document).ready(function() {
                     required: true,
                     notEqual: "#awal_wk"
                 },
-                id_wk: {
+                role: {
                     valueNotEquals : 'pilih'
                 },
                 sks_wk: {
@@ -412,11 +375,6 @@ jQuery(document).ready(function() {
                 }
             },
             messages: {
-                kode_wk: {
-                    required: "Kode waktu harus di isi",
-                    remote: "Kode waktu sudah terpakai",
-                    maxlength: "Kode waktu maksimal 5 karakter"
-                },
                 awal_wk: {
                     required: "Waktu awal harus di isi",
                     notEqual: "Waktu awal dan waktu akhir tidak boleh sama"
@@ -425,7 +383,7 @@ jQuery(document).ready(function() {
                     required: "Waktu akhir harus di isi",
                     notEqual: "Waktu awal dan waktu akhir tidak boleh sama"
                 },
-                id_wk: {
+                role: {
                     valueNotEquals : "Harap pilih identitas waktu"
                 },
                 sks_wk: {
@@ -472,9 +430,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -484,17 +440,13 @@ jQuery(document).ready(function() {
                         // console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         alert(xhr.status);
                         alert(thrownError);
                     }
                 });
-                return false;
-                // success4.show();
-                // error4.hide();
-                //form.submit(); // submit the form
             }
         });
     });
@@ -515,27 +467,29 @@ jQuery(document).ready(function() {
             url: "<?=base_url()?>waktu/get_wk", 
             type: "POST",
             dataType: "json",
-            data: {kode_wk : $(this).data('val')},
+            data: {id_waktu : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
-                    // target: '#form_tambah_dosen',
-                    // overlayColor: 'none',
-                    // animate: true,
+                    boxed : true,
                     zIndex: 20000,
                 });
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="upd_kode_wk"]').val(data.kode_wk);
+                $('input[name="upd_id_waktu"]').val(data.id_waktu);
                 $('input[name="upd_awal_wk"]').val(data.waktu_aw);
                 $('input[name="upd_akhir_wk"]').val(data.waktu_ak);
-                $('select[name="upd_id_wk"]').val(data.role);
+                $('select[name="upd_role"]').val(data.role);
                 $('input[name="upd_sks_wk"]').val(data.sks);
                 $('#modal_update_wk').modal('show');
-                // console.log(data);
+                console.log(data);
             },
             complete: function(){
-                App.unblockUI();
+                setTimeout(function(){ App.unblockUI(); }, 500);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
             }
         });
 
@@ -555,7 +509,7 @@ jQuery(document).ready(function() {
                 upd_akhir_wk: {
                     required: true,
                 },
-                upd_id_wk: {
+                upd_role: {
                     valueNotEquals : 'pilih'
                 },
                 upd_sks_wk: {
@@ -570,7 +524,7 @@ jQuery(document).ready(function() {
                 upd_akhir_wk: {
                     required: "Akhir waktu harus di isi",
                 },
-                upd_id_wk: {
+                upd_role: {
                     valueNotEquals : "Pilih identitas waktu"
                 },
                 upd_sks_wk: {
@@ -617,25 +571,23 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
                     success: function(data) {
                         success4.show();
                         location.reload();
-                        // console.log(data);
+                        console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
                     }
                 });
-                return false;
-                // success4.show();
-                // error4.hide();
-                //form.submit(); // submit the form
             }
         });
     });
@@ -655,25 +607,29 @@ jQuery(document).ready(function() {
             url: "<?=base_url()?>waktu/get_wk", 
             type: "POST",
             dataType: "json",
-            data: {kode_wk : $(this).data('val')},
+            data: {id_waktu : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
-                    // target: '#form_tambah_dosen',
-                    // overlayColor: 'none',
-                    // animate: true,
+                    boxed : true,
                     zIndex: 20000,
                 });
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="del_kode_wk"]').val(data.kode_wk);
+                $('input[name="del_id_waktu"]').val(data.id_waktu);
                 $('input[name="del_awal_wk"]').val(data.waktu_aw);
                 $('input[name="del_akhir_wk"]').val(data.waktu_ak);
+                $('input[name="del_role"]').val(data.role);
+                $('input[name="del_sks_wk"]').val(data.sks);
                 $('#modal_delete_wk').modal('show');
                 // console.log(data);
             },
             complete: function(){
-                App.unblockUI();
+                setTimeout(function(){ App.unblockUI(); }, 500);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
             }
         });
 
@@ -690,9 +646,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -702,7 +656,11 @@ jQuery(document).ready(function() {
                         // console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
                     }
                 });
             }
