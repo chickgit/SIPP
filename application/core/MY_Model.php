@@ -148,6 +148,20 @@ class MY_Model extends CI_Model {
 
         return $query->result();
     }
+
+    public function get_all_matakuliah()
+    {
+        $options = array(
+            'select'    => 'matakuliah.kode_mk, matakuliah.nama_mk, matakuliah.sks_mk, matakuliah.semester_mk, program_studi.id_prodi, program_studi.panggilan program_studi, peminatan.id_peminatan, peminatan.panggilan peminatan, jenis_ruangan.id_jenis, jenis_ruangan.jenis, matakuliah.created_date, matakuliah.created_by, matakuliah.modified_date, matakuliah.modified_by, matakuliah.isShow',
+            'table'     => 'matakuliah',
+            'join'      => array(
+                'program_studi'     => 'program_studi.id_prodi = matakuliah.id_prodi',
+                'peminatan'         => 'peminatan.id_peminatan = matakuliah.id_peminatan',
+                'jenis_ruangan'     => 'jenis_ruangan.id_jenis = matakuliah.id_jenis'
+            )
+        );
+        return $this->commonGet($options);
+    }
     
     public function get_all_jadwal_perkuliahan($where = array())
     {
