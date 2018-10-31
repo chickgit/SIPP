@@ -15,8 +15,6 @@ class Home extends MY_Controller {
     	}
 
         $this->load->model('home_model');
-
-        $this->load->helper('form');
     }
 
     private function session_username()
@@ -109,7 +107,12 @@ class Home extends MY_Controller {
 
 	public function update()
 	{
-        // $this->check_pass_data_only($this->input->post());
+        if ($this->input->post('tahun_ajaran') == 0 || $this->input->post('semester') == 0) {
+            echo "<script>
+            alert('Tidak bisa melakukan perubahan');
+            window.location.href='".base_url()."home';
+            </script>";
+        }
 		$data = array(
             'id_ta' 	    => $this->input->post('tahun_ajaran'),
             'id_smstr'		=> $this->input->post('semester'),
@@ -118,9 +121,11 @@ class Home extends MY_Controller {
             'modified_by'	=> $this->session_username()
         );
         $this->db->where('id_bta',1);
-        // $this->check_pass_data_only($this->db);
         $this->db->update('buka_tahun_ajaran',$data);
-        header("Location: ".base_url()."home");
+        echo "<script>
+            alert('Data telah di ubah');
+            window.location.href='".base_url()."home';
+            </script>";
 	}
 
 	public function comments()
