@@ -44,7 +44,6 @@
                                     <table class="table table-striped table-bordered table-hover order-column" id="sample_2">
                                         <thead>
                                             <tr>
-                                                <th> ID </th>
                                                 <th> Nama Hari </th>
                                                 <th> Created Date </th>
                                                 <th> Created By </th>
@@ -60,7 +59,6 @@
                                             {
                                                 ?>
                                             <tr class="odd gradeX">
-                                                <td> <?=$row->id?> </td>
                                                 <td> <?=$row->nama_hari?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
@@ -74,11 +72,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu" style="position: inherit;">
                                                             <li>
-                                                                <a id="restore_hr" data-val="<?=$row->id?>">
+                                                                <a id="restore_hr" data-val="<?=$row->id_hari?>">
                                                                     <i class="icon-docs"></i> Kembalikan </a>
                                                             </li>
                                                             <li>
-                                                                <a id="delete_hr" data-val="<?=$row->id?>">
+                                                                <a id="delete_hr" data-val="<?=$row->id_hari?>">
                                                                     <i class="icon-trash"></i> Hapus </a>
                                                             </li>
                                                         </ul>
@@ -113,7 +111,7 @@
                                                                         <i class="fa"></i>
                                                                         <input type="text" class="form-control" name="restore_0" disabled /> </div>
                                                                         <input type="hidden" name="restore_0">
-                                                                        <input type="hidden" name="restore_1" value="id">
+                                                                        <input type="hidden" name="restore_1" value="id_hari">
                                                                         <input type="hidden" name="restore_2" value="hari">
                                                                 </div>
                                                             </div>
@@ -163,7 +161,7 @@
                                                                         <i class="fa"></i>
                                                                         <input type="text" class="form-control" name="delete_0" disabled /> </div>
                                                                         <input type="hidden" name="delete_0">
-                                                                        <input type="hidden" name="delete_1" value="id">
+                                                                        <input type="hidden" name="delete_1" value="id_hari">
                                                                         <input type="hidden" name="delete_2" value="hari">
                                                                 </div>
                                                             </div>
@@ -214,7 +212,7 @@ jQuery(document).ready(function() {
             data: {
                 0 : 'hari', 
                 1 : {
-                    id : $(this).data('val')
+                    id_hari : $(this).data('val')
                 }
             },
             beforeSend: function(){
@@ -227,7 +225,7 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="restore_0"]').val(data.id);
+                $('input[name="restore_0"]').val(data.id_hari);
                 $('input[name="restore_nama_hr"]').val(data.nama_hari);
                 $('#modal_restore_hr').modal('show');
                 // console.log(data);
@@ -277,7 +275,7 @@ jQuery(document).ready(function() {
             data: {
                 0 : 'hari', 
                 1 : {
-                    id : $(this).data('val')
+                    id_hari : $(this).data('val')
                 }
             },
             beforeSend: function(){
@@ -290,7 +288,7 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="delete_0"]').val(data.id);
+                $('input[name="delete_0"]').val(data.id_hari);
                 $('input[name="delete_nama_hr"]').val(data.nama_hari);
                 $('#modal_delete_hr').modal('show');
                 // console.log(data);
