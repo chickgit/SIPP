@@ -32,235 +32,31 @@
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class=" icon-layers font-green"></i>
-                                        <span class="caption-subject font-green sbold uppercase">Jadwal Perkuliahan | <?=$tahun_ajaran?> - <?=$semester?></span>
+                                        <span class="caption-subject font-green sbold uppercase">Jadwal Perkuliahan</span>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <form class="form-inline" role="form">
+                                    <form class="form-inline" role="form" method="post" action="mhs_jp">
                                         <div class="form-group">
-                                            <label class="sr-only" for="tahunAjar">Tahun Ajar</label>
+                                            <label class="sr-only" for="tahunAjar">Jadwal Perkuliahan</label>
                                             <select class="form-control" name="tahun_ajar" id="tahunAjar">
-                                                <option>Pilih Tahun Ajar</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="semester">Semester</label>
-                                            <select class="form-control" name="semester" id="semester">
-                                                <option>Pilih Semester</option>
-                                                <option>GANJIL</option>
-                                                <option>GENAP</option>
+                                                <option value="0">Pilih Tahun Ajaran Jadwal Perkuliahan</option>
+                                                <?php
+                                                foreach ($opt_jp as $key => $value) {
+                                                    if (isset($flash_id_jp)) {
+                                                        # code...
+                                                    }
+                                                ?>
+                                                <option value="<?=$value->draft_id_jp?>" <?=(isset($flash_id_jp) && $flash_id_jp == $value->draft_id_jp) ? 'selected' : ''?>><?=$value->ta_terbit?> - <?=$value->smstr_terbit?></option>
+                                                <?php
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                         <button type="submit" class="btn btn-default">BUKA</button>
                                     </form>
                                 </div>
                                 <div class="portlet-body">
-                                    <?php
-                                    if (!isset($final[1]) && !isset($final[2])) {
-                                        ?>
-                                    <div class="panel-group accordion" id="draft">
-                                        <div class="panel panel-info">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="accordion-toggle" data-parent="#draft" aria-expanded="true"> Pilih Draft Jadwal </a>
-                                                </h4>
-                                            </div>
-                                            <div class="panel-collapse collapse in" aria-expanded="true" style="">
-                                                <div class="panel-body">
-                                                    <div class="input-group">
-                                                        <select class="form-control input-sm" name="draft_jp">
-                                                            <?php
-                                                            foreach ($list_draft_jp as $key => $value) {
-                                                            ?>
-                                                            <option value="<?=$value->draft_id_jp?>" data-text="<?=$value->draft_nama?>" <?=(isset($user['id_draft']) && ($value->draft_id_jp == $user['id_draft'])) ? 'selected' : ''?>><?=$value->draft_nama?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                        <span class="input-group-btn">
-                                                            <a class="btn green btn-sm" type="button" title="Buka Draft" id="draft_open" onclick="draft(this)"><i class="icon-book-open"></i></a>
-                                                        </span>
-                                                        <span class="input-group-btn">
-                                                            <a class="btn blue btn-sm" type="button" title="Rename Draft" id="draft_edit" onclick="draft(this)"><i class="fa fa-edit"></i></a>
-                                                        </span>
-                                                        <span class="input-group-btn">
-                                                            <a class="btn purple-soft btn-sm" type="button" title="Finalisasi Draft" id="draft_finalisasi" onclick="draft(this)"><i class="fa fa-magic"></i></a>
-                                                        </span>
-                                                        <span class="input-group-btn">
-                                                            <a class="btn red btn-sm" type="button" title="Delete Draft" id="draft_delete" onclick="draft(this)"><i class="fa fa-remove"></i></a>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                        <?php
-                                    }
-                                    else{
-                                        ?>
-                                    <div class="panel-group accordion" id="lihat">
-                                        <div class="panel panel-info">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="accordion-toggle" data-parent="#lihat" aria-expanded="true"> Lihat Jadwal </a>
-                                                </h4>
-                                            </div>
-                                            <div class="panel-collapse collapse in" aria-expanded="true" style="">
-                                                <div class="panel-body">
-                                                    <form method="POST" action="jadwal_perkuliahan/actions">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control input-sm" readonly="readonly" value="<?=$final[2]?>">
-                                                            <span class="input-group-btn">
-                                                                <button type="submit" class="btn red btn-sm" title="Tutup Jadwal" name="tutup_view" value="<?=$final[0]?>">Tutup Jadwal</button>
-                                                            </span>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                        <?php
-                                    }
-                                    ?>
-                                    
-                                    <div class="panel-group accordion" id="cari">
-                                        <div class="panel panel-info">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#cari" href="#collapse_3_1" aria-expanded="true"> Cari </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapse_3_1" class="panel-collapse collapse in" aria-expanded="true" style="">
-                                                <div class="panel-body">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control input-sm global_filter" id="global_filter">
-                                                        <span class="input-group-btn">
-                                                            <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="panel-group accordion" id="pencarian_lanjutan">
-                                        <div class="panel panel-info">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#pencarian_lanjutan" href="#collapse_3_2" aria-expanded="false"> Pencarian Lanjutan </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapse_3_2" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                                <div class="panel-body" style="height:200px; overflow-y:auto;">
-                                                    <table class="table" border="0">
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <button class="btn red btn-sm pull-right clear_search_all" type="button">
-                                                                    <i class="fa fa-remove"></i>
-                                                                    Clear All
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                        <tr data-column="0">
-                                                            <td>Hari</td>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control column_filter input-sm" id="col0_filter">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr data-column="1">
-                                                            <td>Mata Kuliah</td>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control column_filter input-sm" id="col1_filter">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr data-column="2">
-                                                            <td>SKS</td>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control column_filter input-sm" id="col2_filter">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr data-column="3">
-                                                            <td>Semester</td>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control column_filter input-sm" id="col3_filter">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr data-column="4">
-                                                            <td>Waktu</td>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control column_filter input-sm" id="col4_filter">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr data-column="5">
-                                                            <td>Dosen</td>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control column_filter input-sm" id="col5_filter">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr data-column="6">
-                                                            <td>Ruang</td>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control column_filter input-sm" id="col6_filter">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr data-column="7">
-                                                            <td>Peserta</td>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control column_filter input-sm" id="col7_filter">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn red btn-sm clear_search" type="button"><i class="fa fa-remove"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <button class="btn red btn-sm pull-right clear_search_all" type="button">
-                                                                    <i class="fa fa-remove"></i>
-                                                                    Clear All
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <table class="table table-striped table-bordered table-hover" id="sample_2">
                                         <thead>
                                             <tr>

@@ -8,28 +8,36 @@ class Mhs_jp extends MY_Controller {
     	parent::__construct();
 
     	$this->load->library('session');
-    	$this->load->library('algo');
     	if (!$this->session->has_userdata('Login')) {
 			redirect(base_url().'login');
     	}
 
         $this->load->model('jadwal_model');
+        $this->load->model('mahasiswa_model');
     }
 	public function index()
 	{
-		// $data['jp'] = $this->algo->generate_jadwal('2017/2018','GANJIL');
 		// print_r(json_encode($data['jp']));
 		// exit();
-		// $this->check_pass_data_only($this->session->userdata());
+		$this->check_pass_data_only($this->session->userdata());
 		$data['user'] = $this->session->userdata();
 		$data['tahun_ajaran'] 		= $this->session->userdata('TA')['tahun_ajaran'];
 		$data['semester'] 			= $this->session->userdata('TA')['semester'];
 
-		$data['list_draft_jp'] = $this->jadwal_model->get_all_data('draft_jadwal_perkuliahan',array('finalisasi' => 0),'result');
+		$data['opt_jp'] = $this->mahasiswa_model->get_all_data('draft_jadwal_perkuliahan',array(
+			'finalisasi' => 1, 
+			'terbit' => 1,
+			'ta_terbit IS NOT NULL' => NULL,
+			'smstr_terbit IS NOT NULL' => NULL
+			),'result');
 
-		if ($this->session->has_userdata('id_draft')) {
+		if ($this->input->post('tahun_ajar') && $this->input->post('tahun_ajar') != 0) {
 			# code...
-			$data['list_jp'] = $this->jadwal_model->get_all_jadwal_perkuliahan(array('draft_id_jp' => $this->session->userdata('id_draft')));
+			$data['list_jp'] = $this->mahasiswa_model->get_all_jadwal_perkuliahan(array(
+				'draft_id_jp' => $this->input->post('tahun_ajar'),
+				
+				));
+			$data['flash_id_jp'] = $this->input->post('tahun_ajar');
 		}
 
 		$data['all_data'] = array(
@@ -76,6 +84,17 @@ class Mhs_jp extends MY_Controller {
 
 		$this->load->view('mhs_jp',$data);
 		
+	}
+
+	public function buka()
+	{
+		if ($this->input->post('tahun_ajar') != 0) {
+
+			$data_terbuka = $this->mahasiswa_model->get_all_data('draft_jadwal_perkuliahan', array(
+				'draft_id_jp' => $this->input->post('tahun_ajar')
+				), 'row');
+		}
+		$this->check_pass_data_only($data_terbuka);
 	}
 
 	public function generate()
