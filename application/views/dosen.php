@@ -1,5 +1,3 @@
-<!-- <link href="<?=base_url()?>assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
 <?php
 function cmp($a,$b)
@@ -19,27 +17,6 @@ function cmp($a,$b)
                     <!-- END BREADCRUMBS -->
                     <div class="content-header-menu">
                         <!-- BEGIN DROPDOWN AJAX MENU -->
-                        <!-- <div class="dropdown-ajax-menu btn-group">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                            </button>
-                            <ul class="dropdown-menu-v2">
-                                <li>
-                                    <a href="start.html">Application</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Reports</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Templates</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Settings</a>
-                                </li>
-                            </ul>
-                        </div> -->
                         <!-- END DROPDOWN AJAX MENU -->
                         <!-- BEGIN MENU TOGGLER -->
                         <button type="button" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
@@ -104,7 +81,7 @@ function cmp($a,$b)
                                                 $id_hari = explode(';', $row->ketersediaan_hari);
                                                 foreach ($id_hari as $value_id) {
                                                 	foreach ($list_hari as $key => $value) {
-                                                		if ($value->id == $value_id) {
+                                                		if ($value->id_hari == $value_id) {
                                                 			echo $value->nama_hari.'<br>';
                                                 		}
                                                 	}
@@ -216,7 +193,7 @@ function cmp($a,$b)
                                                                         foreach ($list_hari as $key => $value) {
                                                                             ?>
                                                                             <label class="mt-checkbox">
-                                                                                <input type="checkbox" id="<?=$value->id?>" value="<?=$value->id?>" name="ketersediaan_hari[]"> <?=$value->nama_hari?>
+                                                                                <input type="checkbox" id="<?=$value->id_hari?>" value="<?=$value->id_hari?>" name="ketersediaan_hari[]"> <?=$value->nama_hari?>
                                                                                 <span></span>
                                                                             </label>
                                                                             <?php
@@ -335,7 +312,7 @@ function cmp($a,$b)
                                                                         foreach ($list_hari as $key => $value) {
                                                                             ?>
                                                                             <label class="mt-checkbox">
-                                                                                <input type="checkbox" id="<?=$value->id?>" value="<?=$value->id?>" name="upd_ketersediaan_hari[]"> <?=$value->nama_hari?>
+                                                                                <input type="checkbox" id="<?=$value->id_hari?>" value="<?=$value->id_hari?>" name="upd_ketersediaan_hari[]"> <?=$value->nama_hari?>
                                                                                 <span></span>
                                                                             </label>
                                                                             <?php
@@ -557,9 +534,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -569,7 +544,11 @@ jQuery(document).ready(function() {
                         // console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
                     }
                 });
                 return false;
@@ -599,9 +578,7 @@ jQuery(document).ready(function() {
             data: {nid : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
-                    // target: '#form_tambah_dosen',
-                    // overlayColor: 'none',
-                    // animate: true,
+                    boxed : true,
                     zIndex: 20000,
                 });
             },
@@ -631,7 +608,7 @@ jQuery(document).ready(function() {
                 console.log(matkul);
             },
             complete: function(){
-                App.unblockUI();
+                setTimeout(function(){ App.unblockUI(); }, 500);
             }
         });
 
@@ -707,9 +684,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -719,13 +694,9 @@ jQuery(document).ready(function() {
                         // console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
                     }
                 });
-                return false;
-                // success4.show();
-                // error4.hide();
-                //form.submit(); // submit the form
             }
         });
     });
@@ -749,9 +720,7 @@ jQuery(document).ready(function() {
             data: {nid : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
-                    // target: '#form_tambah_dosen',
-                    // overlayColor: 'none',
-                    // animate: true,
+                    boxed : true,
                     zIndex: 20000,
                 });
             },
@@ -765,7 +734,7 @@ jQuery(document).ready(function() {
                 // console.log(data);
             },
             complete: function(){
-                App.unblockUI();
+                setTimeout(function(){ App.unblockUI(); }, 500);
             }
         });
 
@@ -782,6 +751,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -790,7 +760,7 @@ jQuery(document).ready(function() {
                         location.reload();
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
                     }
                 });
             }

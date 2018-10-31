@@ -64,12 +64,6 @@ class Dosen_model extends MY_Model {
         return $matkul;
     }
 
-    // public function get_data()
-    // {
-    //     $query = $this->db->get_where('dosen', array('isDelete' => 0, 'isShow' => 1));
-    //     return $query->result();
-    // }
-
     public function check_nid($nid)
     {
         $query = $this->db->query('SELECT nid FROM dosen WHERE nid = '.$nid);
@@ -86,6 +80,7 @@ class Dosen_model extends MY_Model {
             "gambar_ava" => $this->input->post('gambar_ava'),
             "ketersediaan_hari" => $this->ketersediaan_hari(),
             "wawasan_matkul" => $this->wawasan_matkul(),
+            "created_by" => $this->session_username()
         );
         $this->db->insert('dosen', $data);
         echo "OK";
@@ -124,7 +119,9 @@ class Dosen_model extends MY_Model {
     public function delete_dosen($nid)
     {
         $data = array(
-            'isDelete' => 1
+            "isDelete"      => 1,
+            "modified_date" => date('Y-m-d H:i:s'),
+            "modified_by"   => $this->session_username()
         );
         $this->db->where('nid',$nid);
         $this->db->update('dosen',$data);
