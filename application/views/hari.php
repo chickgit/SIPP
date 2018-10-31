@@ -1,5 +1,3 @@
-<!-- <link href="<?=base_url()?>assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
@@ -13,27 +11,6 @@
                     <!-- END BREADCRUMBS -->
                     <div class="content-header-menu">
                         <!-- BEGIN DROPDOWN AJAX MENU -->
-                        <!-- <div class="dropdown-ajax-menu btn-group">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                            </button>
-                            <ul class="dropdown-menu-v2">
-                                <li>
-                                    <a href="start.html">Application</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Reports</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Templates</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Settings</a>
-                                </li>
-                            </ul>
-                        </div> -->
                         <!-- END DROPDOWN AJAX MENU -->
                         <!-- BEGIN MENU TOGGLER -->
                         <button type="button" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
@@ -68,7 +45,6 @@
                                     <table class="table table-striped table-bordered table-hover order-column" id="sample_2">
                                         <thead>
                                             <tr>
-                                                <th> ID </th>
                                                 <th> Nama Hari </th>
                                                 <th> Created Date </th>
                                                 <th> Created By </th>
@@ -84,7 +60,6 @@
                                             {
                                                 ?>
                                             <tr class="odd gradeX">
-                                                <td> <?=$row->id?> </td>
                                                 <td> <?=$row->nama_hari?> </td>
                                                 <td> <?=$row->created_date?> </td>
                                                 <td> <?=$row->created_by?> </td>
@@ -98,11 +73,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu" style="position: inherit;">
                                                             <li>
-                                                                <a id="update_hr" data-val="<?=$row->id?>">
+                                                                <a id="update_hr" data-val="<?=$row->id_hari?>">
                                                                     <i class="icon-docs"></i> Ubah </a>
                                                             </li>
                                                             <li>
-                                                                <a id="delete_hr" data-val="<?=$row->id?>">
+                                                                <a id="delete_hr" data-val="<?=$row->id_hari?>">
                                                                     <i class="icon-trash"></i> Hapus </a>
                                                             </li>
                                                         </ul>
@@ -130,16 +105,6 @@
                                                                 <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. </div>
                                                             <div class="alert alert-success display-hide">
                                                                 <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
-                                                            <div class="form-group ">
-                                                                <label class="control-label col-md-4">ID Hari
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="id" /> </div>
-                                                                </div>
-                                                            </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Nama Hari
                                                                     <span class="required"> * </span>
@@ -179,18 +144,6 @@
                                                                 <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. </div>
                                                             <div class="alert alert-success display-hide alert-update-success">
                                                                 <button class="close" data-close="alert"></button> Data berhasil di simpan! </div>
-                                                            <div class="form-group ">
-                                                                <label class="control-label col-md-4">ID Hari
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="upd_id_hari" disabled/> 
-                                                                        <input type="hidden" name="upd_id_hari">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Nama Hari
                                                                     <span class="required"> * </span>
@@ -198,7 +151,7 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="upd_nama_hr"/> 
+                                                                        <input type="text" class="form-control" name="upd_nama_hari"/> 
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -206,6 +159,7 @@
                                                         <!-- END FORM-->
                                                     </div>
                                                     <div class="modal-footer">
+                                                        <input type="hidden" name="upd_id_hari" />
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
                                                         <button type="submit" class="btn green">Ubah</button>
                                                     </div>
@@ -229,18 +183,6 @@
                                                         <div class="form-body">
                                                             <div class="alert alert-danger alert-danger-delete">
                                                                 Anda yakin ingin menghapus ? </div>
-                                                            <div class="form-group ">
-                                                                <label class="control-label col-md-4">ID Hari
-                                                                    <span class="required"> * </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="del_id_hari" disabled/> 
-                                                                        <input type="hidden" name="del_id_hari">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">Nama Hari
                                                                     <span class="required"> * </span>
@@ -256,6 +198,7 @@
                                                         <!-- END FORM-->
                                                     </div>
                                                     <div class="modal-footer">
+                                                        <input type="hidden" name="del_id_hari" />
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
                                                         <button type="submit" class="btn green">Hapus</button>
                                                     </div>
@@ -273,17 +216,12 @@
                     <!-- END PAGE BASE CONTENT -->
                 </div>
 <?=$footer?>
-<script src="<?=base_url()?>assets/global/scripts/datatable.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/pages/scripts/table-datatables-managed.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-<script src="<?=base_url()?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
     jQuery.validator.addMethod("notEqual", function(value, element, param) {
       return this.optional(element) || value != $(param).val();
     }, "Please specify a different (non-default) value");
+
     $('#tambah_hr').on('click', function(){
         //console.log('clicked');
         // validation using icons
@@ -297,19 +235,11 @@ jQuery(document).ready(function() {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
             rules: {
-                id: {
-                    required    : true,
-                    remote      : "<?=base_url()?>hari/check_kode_hr",
-                },
                 nama_hari: {
                     required    : true,
                 },
             },
             messages: {
-                id: {
-                    required    : "ID harus di isi",
-                    remote      : "ID sudah terpakai",
-                },
                 nama_hari: {
                     required    : "Nama hari harus di isi",
                 },
@@ -353,9 +283,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -365,17 +293,13 @@ jQuery(document).ready(function() {
                         // console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         alert(xhr.status);
                         alert(thrownError);
                     }
                 });
-                return false;
-                // success4.show();
-                // error4.hide();
-                //form.submit(); // submit the form
             }
         });
     });
@@ -395,24 +319,26 @@ jQuery(document).ready(function() {
             url: "<?=base_url()?>hari/get_hr", 
             type: "POST",
             dataType: "json",
-            data: {id : $(this).data('val')},
+            data: {id_hari : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
-                    // target: '#form_tambah_dosen',
-                    // overlayColor: 'none',
-                    // animate: true,
+                    boxed : true,
                     zIndex: 20000,
                 });
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="upd_id_hari"]').val(data.id);
-                $('input[name="upd_nama_hr"]').val(data.nama_hari);
+                $('input[name="upd_id_hari"]').val(data.id_hari);
+                $('input[name="upd_nama_hari"]').val(data.nama_hari);
                 $('#modal_update_hr').modal('show');
                 // console.log(data);
             },
             complete: function(){
-                App.unblockUI();
+                setTimeout(function(){ App.unblockUI(); }, 500);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
             }
         });
 
@@ -474,25 +400,23 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
                     success: function(data) {
                         success4.show();
                         location.reload();
-                        // console.log(data);
+                        console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
                     }
                 });
-                return false;
-                // success4.show();
-                // error4.hide();
-                //form.submit(); // submit the form
             }
         });
     });
@@ -512,24 +436,26 @@ jQuery(document).ready(function() {
             url: "<?=base_url()?>hari/get_hr", 
             type: "POST",
             dataType: "json",
-            data: {id : $(this).data('val')},
+            data: {id_hari : $(this).data('val')},
             beforeSend: function(){
                 App.blockUI({
-                    // target: '#form_tambah_dosen',
-                    // overlayColor: 'none',
-                    // animate: true,
+                    boxed : true,
                     zIndex: 20000,
                 });
             },
             success: function(data) {
                 // success4.show();
-                $('input[name="del_id_hari"]').val(data.id);
+                $('input[name="del_id_hari"]').val(data.id_hari);
                 $('input[name="del_nama_hari"]').val(data.nama_hari);
                 $('#modal_delete_hr').modal('show');
                 // console.log(data);
             },
             complete: function(){
-                App.unblockUI();
+                setTimeout(function(){ App.unblockUI(); }, 500);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
             }
         });
 
@@ -546,9 +472,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -558,7 +482,11 @@ jQuery(document).ready(function() {
                         // console.log(data);
                     },
                     complete: function(){
-                        App.unblockUI();
+                        setTimeout(function(){ App.unblockUI(); }, 2000);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
                     }
                 });
             }

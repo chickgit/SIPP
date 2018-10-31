@@ -1,5 +1,5 @@
 <?php
-class Hari_model extends CI_Model {
+class Hari_model extends MY_Model {
 
     public function __construct()
     {
@@ -13,47 +13,38 @@ class Hari_model extends CI_Model {
         return $this->session->userdata('Login')['username'];
     }
 
-    public function get_data()
-    {
-        $query = $this->db->get_where('hari', array('isDelete' => 0, 'isShow' => 1));
-        return $query->result();
-    }
-
-    public function check_kode_hr($kode_hr)
-    {
-        $query = $this->db->query('SELECT id FROM hari WHERE id = "'.$kode_hr.'"');
-        return $query->row();
-    }
-
     public function insert_data($arr = array())
     {
-        $sql = ("INSERT INTO hari(id, nama_hari) VALUES (?, ?)");
-        $this->db->query($sql, array($arr['id'],$arr['nama_hari']));
+        $data = array(
+            "nama_hari"  => $this->input->post('nama_hari'),
+            "created_by" => $this->session_username()
+        );
+        $this->db->insert('hari', $data);
         echo "OK";
     }
 
-    public function get_hr($kode_hr)
-    {
-        $query = $this->db->query('SELECT * FROM hari WHERE id = "'.$kode_hr.'"');
-        return $query->row();
-    }
-
-    public function update_hr($arr = array())
-    {
-        $sql = ("UPDATE hari SET nama_hari = ?, modified_date = ?, modified_by = ? WHERE id = ?");
-        $this->db->query($sql, array($arr['upd_nama_hr'],date('Y-m-d H:i:s'),$this->session_username(),$arr['upd_id_hr']));
-        echo "OK";
-    }
-
-    public function delete_hr($kode_hr)
+    
+    public function update_hr()
     {
         $data = array(
-            'isDelete' => 1
+            "nama_hari"     => $this->input->post('upd_nama_hari'),
+            "modified_date" => date('Y-m-d H:i:s'),
+            "modified_by"   => $this->session_username()
         );
-        $this->db->where('id',$kode_hr);
-        $this->db->update('hari',$data);
-        // $this->db->delete('dosen');
+        $this->db->where("id_hari", $this->input->post('upd_id_hari'));
+        $this->db->update('hari', $data);
         echo "OK";
     }
 
+    public function delete_hr()
+    {
+        $data = array(
+            "isDelete"      => 1,
+            "modified_date" => date('Y-m-d H:i:s'),
+            "modified_by"   => $this->session_username()
+        );
+        $this->db->where('id_hari',$this->input->post('del_id_hari'));
+        $this->db->update('hari',$data);
+        echo "OK";
+    }
 }
