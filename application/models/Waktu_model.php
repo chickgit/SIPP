@@ -13,18 +13,6 @@ class Waktu_model extends MY_Model {
         return $this->session->userdata('Login')['username'];
     }
 
-    // public function get_data()
-    // {
-    //     $query = $this->db->get_where('waktu', array('isDelete' => 0, 'isShow' => 1));
-    //     return $query->result();
-    // }
-
-    // public function check_kode_wk($kode_wk)
-    // {
-    //     $query = $this->db->query('SELECT kode_wk FROM waktu WHERE kode_wk = "'.$kode_wk.'"');
-    //     return $query->row();
-    // }
-
     public function insert_data()
     {
         $data = array(
@@ -37,12 +25,6 @@ class Waktu_model extends MY_Model {
         $this->db->insert('waktu', $data);
         echo "OK";
     }
-
-    // public function get_wk($kode_wk)
-    // {
-    //     $query = $this->db->query('SELECT * FROM waktu WHERE kode_wk = "'.$kode_wk.'"');
-    //     return $query->row();
-    // }
 
     public function update_wk()
     {
