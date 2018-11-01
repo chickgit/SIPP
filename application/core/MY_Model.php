@@ -48,17 +48,17 @@ class MY_Model extends CI_Model {
 
     public function commonGet($options) 
     {
-        $select = false;
-        $table = false;
-        $join = false;
-        $order = false;
-        $limit = false;
-        $offset = false;
-        $where = false;
-        $or_where = false;
-        $single = false;
-        $where_not_in = false;
-        $like = false;
+        $select          = false;
+        $table           = false;
+        $join            = false;
+        $order           = false;
+        $limit           = false;
+        $offset          = false;
+        $where           = false;
+        $or_where        = false;
+        $single          = false;
+        $where_not_in    = false;
+        $like            = false;
 
         extract($options);
 
