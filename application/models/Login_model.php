@@ -1,5 +1,5 @@
 <?php
-class Login_model extends CI_Model {
+class Login_model extends MY_Model {
 
     public function __construct()
     {
@@ -52,7 +52,18 @@ class Login_model extends CI_Model {
 
     public function get_tahun_ajaran()
     {
-        return $this->db->get_where('buka_tahun_ajaran', array('isDelete' => 0, 'isShow' => 1))->row_array();
+        $options = array(
+            'select'    => 'buka_tahun_ajaran.id_bta, buka_tahun_ajaran.id_ta, buka_tahun_ajaran.id_smstr, buka_tahun_ajaran.batas_akhir, tahun_ajaran.tahun_ajaran, semester.semester',
+            'table'     => 'buka_tahun_ajaran',
+            'join'      => array(
+                'tahun_ajaran' => 'tahun_ajaran.id_ta = buka_tahun_ajaran.id_ta',
+                'semester'     => 'semester.id_smstr = buka_tahun_ajaran.id_smstr'
+            ),
+            'single'    => TRUE
+        );
+        $bta = $this->commonGet($options);
+        return $bta;
+        // return $this->db->get_where('buka_tahun_ajaran', array('isDelete' => 0, 'isShow' => 1))->row_array();
     }
 
 }
