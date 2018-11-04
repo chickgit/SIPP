@@ -17,10 +17,9 @@ class Jadwal extends MY_Controller {
     }
 	public function index()
 	{
-		// $data['jp'] = $this->algo->generate_jadwal('2017/2018','GANJIL');
-		// print_r($this->session->userdata());
+		// $data['jp'] = $this->algo->generate_jadwal($this->session->userdata('TA')->id_ta,$this->session->userdata('TA')->id_smstr);
+		// print_r(json_encode($data['jp']));
 		// exit();
-		// $this->check_pass_data_only($this->session->userdata());
 		$data['user'] = $this->session->userdata();
 
 		$data['list_draft_jp'] = $this->jadwal_model->get_all_data('draft_jadwal_perkuliahan',array('finalisasi' => 0),'result');
@@ -32,10 +31,10 @@ class Jadwal extends MY_Controller {
 
 		$data['all_data'] = array(
 			"hari" 			=> $this->jadwal_model->get_all_data('hari'),
-			"matakuliah" 	=> $this->jadwal_model->get_all_data('matakuliah'),
+			"matakuliah" 	=> $this->jadwal_model->get_all_matakuliah(),
 			"waktu" 		=> $this->jadwal_model->get_all_data('waktu'),
 			"dosen" 		=> $this->jadwal_model->get_all_data('dosen'),
-			"ruangan" 		=> $this->jadwal_model->get_all_data('ruangan')
+			"ruangan" 		=> $this->jadwal_model->get_all_ruangan()
 		);
 
 		$data['role'] = $this->get_role_user();
@@ -70,6 +69,7 @@ class Jadwal extends MY_Controller {
 		$data['footer'] = $this->load->view('footer',$data['footer'],TRUE);
 		$data['header'] = $this->load->view('header',$data['header'],TRUE);
 
+		// $this->check_pass_data_only($this->session->userdata());
 		// $data['list_dosen'] = $this->dosen_model->
 
 		$this->load->view('jadwal',$data);
@@ -101,7 +101,7 @@ class Jadwal extends MY_Controller {
 
 	public function update_jw()
 	{
-		// $this->check_pass_data_only($this->input->post());
+		$this->check_pass_data_only($this->input->post());
 		$data['update_jw'] = $this->jadwal_model->update_jw();
 		echo $data['update_jw'];
 		exit();

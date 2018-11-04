@@ -1,5 +1,3 @@
-<!-- <link href="<?=base_url()?>assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
@@ -62,8 +60,8 @@
                                                     <td> <?=$row->draft_nama?> </td>
                                                     <td> <?=($row->finalisasi == 0) ? '<span class="label label-sm label-info"> Belum </span>' : '<span class="label label-sm label-info"> Sudah </span>'?> </td>
                                                     <td> <?=($row->terbit == 0) ? '<span class="label label-sm label-warning"> Belum </span>' : '<span class="label label-sm label-info"> Sudah </span>'?> </td>
-                                                    <td> <?=($row->ta_terbit == NULL) ? '-' : $row->ta_terbit?> </td>
-                                                    <td> <?=($row->smstr_terbit == NULL) ? '-' : $row->smstr_terbit?> </td>
+                                                    <td> <?=($row->tahun_ajaran == NULL) ? '-' : $row->tahun_ajaran?> </td>
+                                                    <td> <?=($row->semester == NULL) ? '-' : $row->semester?> </td>
                                                     <td>
                                                         <div class="btn-group" style="position: relative;">
                                                             <form method="POST" action="jadwal_perkuliahan/actions">
@@ -137,7 +135,8 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="ta_jadwal" placeholder="2017/2018">
+                                                                        <?php echo form_dropdown('ta_jadwal', $drop['ta']['opt'], $drop['ta']['slctd'], $drop['ta']['attr']); ?>
+                                                                        <!-- <input type="text" class="form-control" name="ta_jadwal" placeholder="2017/2018"> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -148,10 +147,11 @@
                                                                 <div class="col-md-8">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <select class="form-control" name="smstr_jadwal">
+                                                                        <?php echo form_dropdown('smstr_jadwal', $drop['smstr']['opt'], $drop['smstr']['slctd'], $drop['smstr']['attr']); ?>
+                                                                        <!-- <select class="form-control" name="smstr_jadwal">
                                                                             <option value="GANJIL">GANJIL</option>
                                                                             <option value="GENAP">GENAP</option>
-                                                                        </select>
+                                                                        </select> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -272,8 +272,6 @@
 <script type="text/javascript">
 
 jQuery(document).ready(function() {
-    var tahun_ajaran = '<?=$user['TA']['semester']?>';
-    console.log(tahun_ajaran);
     var JADWAL = "<?=count($list_jp)?>";
 
     // add the rule here
@@ -328,20 +326,18 @@ jQuery(document).ready(function() {
             ignore: "",  // validate all fields including form hidden input
             rules: {
                 ta_jadwal: {
-                    required: true,
-                    maxlength: 9,
+                    valueNotEquals : '0'
                 },
                 smstr_jadwal: {
-                    required: true,
+                    valueNotEquals : '0'
                 }
             },
             messages: {
                 ta_jadwal: {
-                    required: "Tahun ajaran harus di isi",
-                    maxlength: "Tahun ajaran maksimal 9 karakter | contoh : 2017/2018",
+                    valueNotEquals : "Tahun ajaran harus di pilih"
                 },
                 smstr_jadwal: {
-                    required: "Semester tahun ajaran harus di pilih",
+                    valueNotEquals : "Semester harus di pilih"
                 }
             },
             invalidHandler: function (event, validator) { //display error alert on form submit              
@@ -435,8 +431,8 @@ jQuery(document).ready(function() {
                 // success4.show();
                 $('input[name="id_draft_batal"]').val(data.draft_id_jp);
                 $('input[name="nama_jadwal_batal"]').val(data.draft_nama);
-                $('input[name="ta_jadwal_batal"]').val(data.ta_terbit);
-                $('input[name="smstr_jadwal_batal"]').val(data.smstr_terbit);
+                $('input[name="ta_jadwal_batal"]').val(data.tahun_ajaran);
+                $('input[name="smstr_jadwal_batal"]').val(data.semester);
                 $('#modal_batal_terbit').modal('show');
                 console.log(data);
             },

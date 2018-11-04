@@ -18,8 +18,8 @@ class Jadwal_perkuliahan_model extends MY_Model {
     public function penerbitan()
     {
         $check_data = $this->get_all_data('draft_jadwal_perkuliahan', array(
-            "ta_terbit"     => $this->input->post('ta_jadwal'),
-            "smstr_terbit"  => $this->input->post('smstr_jadwal')
+            "id_ta"     => $this->input->post('ta_jadwal'),
+            "id_smstr"  => $this->input->post('smstr_jadwal')
             ), 'row');
         
         if (!empty($check_data)) {
@@ -30,8 +30,8 @@ class Jadwal_perkuliahan_model extends MY_Model {
 
         $data = array(
             "terbit"        => 1,
-            "ta_terbit"     => $this->input->post('ta_jadwal'),
-            "smstr_terbit"  => $this->input->post('smstr_jadwal'),
+            "id_ta"     => $this->input->post('ta_jadwal'),
+            "id_smstr"  => $this->input->post('smstr_jadwal'),
             "modified_date" => date('Y-m-d H:i:s'),
             "modified_by"   => $this->session_username()
         );
@@ -47,8 +47,8 @@ class Jadwal_perkuliahan_model extends MY_Model {
     {
         $data = array(
             "terbit"        => 0,
-            "ta_terbit"     => NULL,
-            "smstr_terbit"  => NULL,
+            "id_ta"     => NULL,
+            "id_smstr"  => NULL,
             "modified_date" => date('Y-m-d H:i:s'),
             "modified_by"   => $this->session_username()
         );
@@ -65,7 +65,9 @@ class Jadwal_perkuliahan_model extends MY_Model {
         # Proses penghapusan jadwal perkuliahan
         # Hapus data-data jadwal
         $data = array(
-            "isDelete"        => 1,
+            "isDelete"      => 1,
+            "modified_date" => date('Y-m-d H:i:s'),
+            "modified_by"   => $this->session_username()
         );
         $this->db->where('draft_id_jp', $this->input->post('id_draft'));
         $this->db->update('jadwal_perkuliahan', $data);

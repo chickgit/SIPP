@@ -1,5 +1,3 @@
-<!-- <link href="<?=base_url()?>assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
@@ -13,27 +11,6 @@
                     <!-- END BREADCRUMBS -->
                     <div class="content-header-menu">
                         <!-- BEGIN DROPDOWN AJAX MENU -->
-                        <!-- <div class="dropdown-ajax-menu btn-group">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                            </button>
-                            <ul class="dropdown-menu-v2">
-                                <li>
-                                    <a href="start.html">Application</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Reports</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Templates</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Settings</a>
-                                </li>
-                            </ul>
-                        </div> -->
                         <!-- END DROPDOWN AJAX MENU -->
                         <!-- BEGIN MENU TOGGLER -->
                         <button type="button" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
@@ -76,18 +53,10 @@
                                                 <th> Semester </th>
                                                 <th> Program Studi </th>
                                                 <th> Peminatan </th>
-                                                <!-- <th> Created Date </th>
-                                                <th> Created By </th>
-                                                <th> Modified Date </th>
-                                                <th> Modified By </th>
-                                                <th> Show </th>
-                                                <th> Actions </th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            // print_r($list_mk);
-                                            // echo $list_mk->kode_mk;
                                             foreach($list_mk as $row)
                                             {
                                                 ?>
@@ -99,45 +68,7 @@
                                                 <td> <?=$row->sks_mk?> </td>
                                                 <td> <?=$row->semester_mk?> </td>
                                                 <td> <?=$row->program_studi?> </td>
-                                                <td> 
-                                                <?php
-                                                    $peminatan = Array(
-                                                      '0' => 'Umum',
-                                                      '1' => 'EIS',
-                                                      '2' => 'MM',
-                                                      '3' => 'JarKom',
-                                                      '4' => 'MobA',
-                                                    );
-
-                                                    $color_type = null;
-                                                    if (array_key_exists($row->peminatan, $peminatan))
-                                                    {
-                                                      echo $peminatan[$row->peminatan];
-                                                    }
-                                                ?> 
-                                                </td>
-                                                <!-- <td> <?=$row->created_date?> </td>
-                                                <td> <?=$row->created_by?> </td>
-                                                <td> <?=$row->modified_date?> </td>
-                                                <td> <?=$row->modified_by?> </td>
-                                                <td> <?=($row->isShow == 1)? "Ya" : "Tidak"?> </td>
-                                                <td>
-                                                    <div class="btn-group" style="position: relative;">
-                                                        <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
-                                                            <i class="fa fa-angle-down"></i>
-                                                        </button>
-                                                        <ul class="dropdown-menu" role="menu" style="position: inherit;">
-                                                            <li>
-                                                                <a id="update_mk" data-val="<?=$row->kode_mk?>">
-                                                                    <i class="icon-docs"></i> Ubah </a>
-                                                            </li>
-                                                            <li>
-                                                                <a id="delete_mk" data-val="<?=$row->kode_mk?>">
-                                                                    <i class="icon-trash"></i> Hapus </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td> -->
+                                                <td> <?=$row->peminatan?> </td>
                                             </tr>
                                                 <?php
                                             }
@@ -186,23 +117,7 @@
                                                                         <td><?=$row->sks_mk?></td>
                                                                         <td><?=$row->semester_mk?></td>
                                                                         <td><?=$row->program_studi?></td>
-                                                                        <td> 
-                                                                        <?php
-                                                                            $peminatan = Array(
-                                                                              '0' => 'Umum',
-                                                                              '1' => 'EIS',
-                                                                              '2' => 'MM',
-                                                                              '3' => 'JarKom',
-                                                                              '4' => 'MobA',
-                                                                            );
-
-                                                                            $color_type = null;
-                                                                            if (array_key_exists($row->peminatan, $peminatan))
-                                                                            {
-                                                                              echo $peminatan[$row->peminatan];
-                                                                            }
-                                                                        ?> 
-                                                                        </td>
+                                                                        <td><?=$row->peminatan?></td>
                                                                     </tr>
                                                                         <?php
                                                                     // $x+=$row->sks_mk;
@@ -220,8 +135,8 @@
                                                     <div class="modal-footer">
                                                         <p class="btn blue" id="total-sks">Total SKS 0 (Maks 24)</p>
                                                         <input type="hidden" name="nim" value="<?=$nim?>">
-                                                        <input type="hidden" name="tahun_ajaran" value="<?=$tahun_ajaran?>">
-                                                        <input type="hidden" name="semester" value="<?=$semester?>">
+                                                        <input type="hidden" name="tahun_ajaran" value="<?=$id_ta?>">
+                                                        <input type="hidden" name="semester" value="<?=$id_smstr?>">
                                                         <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
                                                         <button type="submit" class="btn green" id="btn-ambil-mk">Ambil</button>
                                                     </div>
@@ -529,7 +444,7 @@ jQuery(document).ready(function() {
                         },
                         success: function(data) {
                             success4.show();
-                            location.reload();
+                            // location.reload();
                             console.log(data);
                         },
                         complete: function(){

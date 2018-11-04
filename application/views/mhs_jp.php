@@ -47,7 +47,7 @@
                                                         # code...
                                                     }
                                                 ?>
-                                                <option value="<?=$value->draft_id_jp?>" <?=(isset($flash_id_jp) && $flash_id_jp == $value->draft_id_jp) ? 'selected' : ''?>><?=$value->ta_terbit?> - <?=$value->smstr_terbit?></option>
+                                                <option value="<?=$value->draft_id_jp?>" <?=(isset($flash_id_jp) && $flash_id_jp == $value->draft_id_jp) ? 'selected' : ''?>><?=$value->tahun_ajaran?> - <?=$value->semester?></option>
                                                 <?php
                                                 }
                                                 ?>
@@ -68,30 +68,23 @@
                                                 <th> Dosen </th>
                                                 <th> Ruang </th>
                                                 <th> Peserta </th>
-                                                <th> Actions </th>
-                                                <!-- <th> Created By </th>
-                                                <th> Modified Date </th>
-                                                <th> Modified By </th>
-                                                <th> Show </th>
-                                                <th> Actions </th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             (isset($list_jp)) ? : $list_jp = array();
                                             foreach ($list_jp as $row) {
+                                                if (
+                                                    # angka 3 menyatakan matakuliah umum u/ program studi si/ti
+                                                    ($row->id_prodi == $this->session->userdata('Detail')['id_prodi'] || $row->id_prodi == 3) 
+                                                    # angka 1 menyatakan matakuliah umum u/ peminatan umum baik dari SI atau TI
+                                                    && ($row->id_peminatan == $this->session->userdata('Detail')['id_peminatan'] || $row->id_peminatan ==1)
+                                                    # matakuliah yang telah diambil
+                                                    && (in_array($row->kode_mk, $matkul_diambil->kode_mk))
+                                                ) {
+                                                    # code...
                                                 ?>
-                                                <tr class="odd gradeX" style="
-                                                    <?php
-                                                    if (isset($row->label)) {
-                                                        if ($row->label == 's_warning') {
-                                                            echo "background-color:tomato;";
-                                                        }
-                                                        if ($row->label == 'a_warning') {
-                                                            echo "outline: thick double gold;";
-                                                        }
-                                                    }
-                                                    ?> ">
+                                                <tr>
                                                     <td> <?=$row->nama_hari?> </td>
                                                     <td> <?=$row->nama_mk?> </td>
                                                     <td> <?=$row->sks_mk?> </td>
@@ -103,423 +96,16 @@
                                                     }
                                                     ?> </td>
                                                     <td> <?=$row->nama?> </td>
-                                                    <td> <?=$row->kode_rg?> </td>
-                                                    <td> <?=$row->peserta?> </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-justified">
-                                                            <a id="update_jw" data-val="<?=$row->id_jadwal_p?>" class="btn btn-sm green">
-                                                                <i class="icon-docs"></i> Ubah</a>
-                                                            <a id="delete_jw" data-val="<?=$row->id_jadwal_p?>" class="btn btn-sm red">
-                                                                <i class="icon-trash"></i> Hapus</a>
-                                                        </div>
-                                                    </td>
+                                                    <td> <?=$row->nama_ruangan?> </td>
+                                                    <td> <?=$row->prodi?> | <?=$row->peminatan?> </td>
                                                 </tr>
                                                 <?php
+                                                }
                                             }
                                             ?>
                                         </tbody>
                                         <!-- <button class="btn btn-success mt-sweetalert" data-title="Sweet Alerts with Icons" data-message="Success Icon" data-type="success" data-allow-outside-click="true" data-confirm-button-class="btn-success">Icon Success Alert</button> -->
                                     </table>
-                                    <!-- MODAL DRAFT - OPEN - RENAME - FINALISASI - DELETE -->
-                                    <div class="modal fade " id="modal_draft" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog "> 
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <!-- open -->
-                                                    <h4 id="open" class="modal-title display-hide">Buka Draft</h4>
-                                                    <!-- edit -->
-                                                    <h4 id="edit" class="modal-title display-hide">Edit Draft</h4>
-                                                    <!-- finalisasi -->
-                                                    <h4 id="finalisasi" class="modal-title display-hide">Finalisasi Draft</h4>
-                                                    <!-- delete -->
-                                                    <h4 id="delete" class="modal-title display-hide">Hapus Draft</h4>
-                                                </div>
-                                                <form id="form_draft" class="form-horizontal">
-                                                    <div class="modal-body"> 
-                                                        <!-- BEGIN FORM-->
-                                                        <div class="form-body">
-                                                            <!-- open -->
-                                                            <div id="open" class="alert alert-info display-hide">
-                                                                Anda yakin ingin membuka draft ini ? 
-                                                            </div>
-                                                            <!-- edit -->
-                                                            <div id="edit" class="alert alert-warning display-hide">
-                                                                Anda yakin ingin mengubah nama draft ini ? 
-                                                            </div>
-                                                            <div id="edit" class="form-group display-hide">
-                                                                <label class="control-label col-md-3">Nama
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-9">
-                                                                    <input type="text" class="form-control" id="input_edit_draft" >
-                                                                </div>
-                                                            </div>
-                                                            <!-- finalisasi -->
-                                                            <div id="finalisasi" class="alert alert-success display-hide">
-                                                                Anda yakin ingin memfinalisasi draft ini ? 
-                                                            </div>
-                                                            <div id="finalisasi" class="alert display-hide">
-                                                                Draft yang telah difinalisasi tidak dapat dikembalikan.
-                                                            </div>
-                                                            <!-- delete -->
-                                                            <div id="delete" class="alert alert-danger display-hide">
-                                                                Anda yakin ingin menghapus draft ini ? 
-                                                            </div>
-                                                        </div>
-                                                        <!-- END FORM-->
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
-                                                        <input type="hidden" id="draft" value="">
-                                                        <button type="submit" class="btn green"></button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- /.modal-content -->
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
-                                    <!-- MODAL JADWAL SATUAN - UPDATE -->
-                                    <div class="modal fade bs-modal-lg " id="modal_update_jw" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" id="modal_dialog_update_jw"> 
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Update Jadwal</h4>
-                                                </div>
-                                                <form id="form_update_jw" class="form-horizontal">
-                                                    <div class="modal-body"> 
-                                                        <!-- BEGIN FORM-->
-                                                        <div class="form-body">
-                                                            <div class="alert alert-warning display-hide warning-upd-jw">
-                                                                <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk peringatan
-                                                                <a id="popover-warning-upd-jw" class="btn btn-circle btn-icon-only btn-default" data-toggle="popover" data-content="">
-                                                                    <i class="fa fa-exclamation"></i>
-                                                                </a> 
-                                                            </div>
-                                                            <div class="alert alert-danger display-hide">
-                                                                <button class="close" data-close="alert"></button> Anda memiliki beberapa bentuk kesalahan. Silakan cek di bawah ini. 
-                                                            </div>
-                                                            <div class="alert alert-success display-hide">
-                                                                <button class="close" data-close="alert"></button> Data berhasil di simpan! 
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-3">Hari
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-9">
-                                                                    <select class="form-control select2" name="upd_hari_jw">
-                                                                        <?php
-                                                                            foreach ($all_data['hari'] as $value) {
-                                                                        ?>
-                                                                        <option value="<?=$value['id']?>"><?=$value['nama_hari']?></option>
-                                                                        <?php
-                                                                            }
-                                                                        ?>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-3">Mata Kuliah
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-9">
-                                                                    <select class="form-control select2" name="upd_mk_jw">
-                                                                        <?php
-                                                                            $peminatan = Array(
-                                                                              '0' => 'Umum',
-                                                                              '1' => 'EIS',
-                                                                              '2' => 'MM',
-                                                                              '3' => 'JarKom',
-                                                                              '4' => 'MobA',
-                                                                            );
-                                                                            foreach ($all_data['matakuliah'] as $value) {
-                                                                        ?>
-                                                                        <option value="<?=$value['kode_mk']?>" data-detail="<?=$value['sks_mk']?>_<?=$value['semester_mk']?>_<?=$value['program_studi']?>_<?=$peminatan[$value['peminatan']]?>" data-rg="<?=$value['jenis_rg']?>"><?=$value['nama_mk']?> | <?=$value['sks_mk']?> SKS | Semester <?=$value['semester_mk']?> | <?=$value['program_studi']?> | <?=$peminatan[$value['peminatan']]?></option>
-                                                                        <?php
-                                                                            }
-                                                                        ?>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-3">SKS
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-9">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="upd_sks_jw" readonly title="Mengikuti mata kuliah" /> 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-3">Semester
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-9">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="number" class="form-control" name="upd_semester_jw" readonly title="Mengikuti mata kuliah" /> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-3">Waktu
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-9">
-                                                                    <select class="form-control select2" name="upd_waktu_jw">
-                                                                        <?php
-                                                                            foreach ($all_data['waktu'] as $value) {
-                                                                        ?>
-                                                                        <option value="<?=$value['kode_wk']?>" data-sks="<?=$value['sks']?>"><?=$value['waktu_aw']?> - <?=$value['waktu_ak']?></option>
-                                                                        <?php
-                                                                            }
-                                                                        ?>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-3">Dosen
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-9">
-                                                                    <select class="form-control select2" name="upd_dosen_jw">
-                                                                        <?php
-                                                                            foreach ($all_data['dosen'] as $value) 
-                                                                            {
-                                                                                $hari = explode(';', $value['ketersediaan_hari']);
-                                                                                $ketersediaan_hari = '';
-                                                                                foreach ($hari as $v_hari) {
-                                                                                    # code...
-                                                                                    foreach ($all_data['hari'] as $value_hari) {
-                                                                                        # code...
-                                                                                        if ($v_hari == $value_hari['id']) {
-                                                                                            $ketersediaan_hari .= $value_hari['nama_hari'].', ';
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                        ?>
-                                                                        <option value="<?=$value['nid']?>" data-hari="<?=$value['ketersediaan_hari']?>" data-mk="<?=$value['wawasan_matkul']?>"><?=$value['nama']?> | <?=rtrim($ketersediaan_hari,', ')?></option>
-                                                                        <?php
-                                                                            }
-                                                                        ?>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-3">Ruangan
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-9">
-                                                                    <select class="form-control select2" name="upd_ruangan_jw">
-                                                                        <?php
-                                                                            foreach ($all_data['ruangan'] as $value) {
-                                                                        ?>
-                                                                        <option value="<?=$value['kode_rg']?>" data-rg="<?=$value['jenis_rg']?>"><?=$value['kode_rg']?></option>
-                                                                        <?php
-                                                                            }
-                                                                        ?>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-3">Peserta
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-9">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="upd_peserta_jw" title="Mengikuti mata kuliah" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- END FORM-->
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <input type="hidden" name="upd_kode_jw" value="">
-                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
-                                                        <button type="submit" class="btn green">Ubah</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- /.modal-content -->
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
-                                    <!-- MODAL JADWAL SATUAN - VALIDASI DELETE -->
-                                    <div class="modal fade " id="modal_delete_jw" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog " id="modal_dialog_delete_jw"> 
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Hapus Jadwal</h4>
-                                                </div>
-                                                <form id="form_delete_jw" class="form-horizontal">
-                                                    <div class="modal-body"> 
-                                                        <!-- BEGIN FORM-->
-                                                        <div class="form-body">
-                                                            <div class="alert alert-danger display-block">
-                                                                Anda yakin ingin menghapus data ini? 
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Hari
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="del_hari_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Mata Kuliah
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="del_mk_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">SKS
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="del_sks_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Semester
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="del_semester_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Waktu
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="del_waktu_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Dosen
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="del_dosen_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Ruangan
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="del_ruangan_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Peserta
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-8">
-                                                                    <input type="text" readonly class="form-control" name="del_peserta_jw" value="">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- END FORM-->
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <input type="hidden" name="del_kode_jw" value="">
-                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
-                                                        <button type="submit" class="btn green">Hapus</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- /.modal-content -->
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
-                                    <!-- MODAL VALIDASI GENERATE -->
-                                    <div class="modal fade " id="modal_generate_table_jadwal" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog " id="modal_dialog_delete_mk"> 
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Generate Jadwal</h4>
-                                                </div>
-                                                <form id="form_generate" class="form-horizontal">
-                                                    <div class="modal-body"> 
-                                                        <!-- BEGIN FORM-->
-                                                        <div class="form-body">
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-3">Nama Jadwal
-                                                                    <span class="required"> </span>
-                                                                </label>
-                                                                <div class="col-md-9">
-                                                                    <input type="text" class="form-control" name="draft_nama" value="<?=$user['TA']['tahun_ajaran']?>_<?=$user['TA']['semester']?>_<?=date('d-m-Y')?>">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- END FORM-->
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
-                                                        <button type="submit" class="btn green">Generate</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- /.modal-content -->
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
-                                    <!-- MODAL BANTUAN -->
-                                    <div class="modal fade " id="modal_petunjuk" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog "> 
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h4 class="modal-title">Bantuan</h4>
-                                                </div>
-                                                <h3><b>Membuat Jadwal</b></h3>
-                                                <ul>
-                                                    <li>Pilih "Generate Jadwal"</li>
-                                                    <li>Masukkan nama jadwal yang diinginkan untuk di simpan ke dalam draft</li>
-                                                    <li>Tunggu proses hingga selesai</li>
-                                                    <li>Pilih draft jadwal di select box yang telah di generate</li>
-                                                    <li>Tekan tombol "Buka Draft"</li>
-                                                </ul>
-                                                <h3><b>Finalisasi Jadwal</b></h3>
-                                                <ul>
-                                                    <li>Pilih tombol "Finalisasi Jadwal"</li>
-                                                    <li>Tunggu proses hingga selesai</li>
-                                                </ul>
-                                                <h3><b>Mengeksport Jadwal</b></h3>
-                                                <ul>
-                                                    <li>Telah melakukan <b>Finalisasi Jadwal</b></li>
-                                                    <li>Pilih menu "Jadwal Perkuliahan" > "Data"</li>
-                                                    <li>Pilih draft jadwal yang ingin di eksport</li>
-                                                    <li>Isi data yang dibutuhkan di dalam jadwal</li>
-                                                    <li>Tekan tombol "Eksport ke PDF"</li>
-                                                </ul>
-                                                <h3><b>Menerbitkan Jadwal</b></h3>
-                                                <ul>
-                                                    <li>Telah melakukan <b>Finalisasi Jadwal</b></li>
-                                                    <li>Pilih menu "Jadwal Perkuliahan" > "Data"</li>
-                                                    <li>Pilih draft jadwal yang ingin di terbitkan</li>
-                                                    <li>Isi data yang dibutuhkan di dalam jadwal</li>
-                                                    <li>Tekan tombol "Eksport ke PDF"</li>
-                                                </ul>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Tutup</button>
-                                                </div>
-                                            </div>
-                                            <!-- /.modal-content -->
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
                                 </div>
                             </div>
                             <!-- END EXAMPLE TABLE PORTLET-->

@@ -50,8 +50,8 @@ $isi_tabel .= '<tr>';
     }
     $isi_tabel .= '</td>';
     $isi_tabel .= '<td class="dosen" style="text-align:left;">'.$row->nama.'</td>';
-    $isi_tabel .= '<td class="ruang" style="">'.$row->kode_rg.'</td>';
-    $isi_tabel .= '<td class="peserta" style="">'.$row->peserta.'</td>';
+    $isi_tabel .= '<td class="ruang" style="">'.$row->nama_ruangan.'</td>';
+    $isi_tabel .= '<td class="peserta" style="">'.$row->prodi.' | '.$row->peminatan.'</td>';
 $isi_tabel .= '</tr>';
 }
 $tabel_jadwal = <<<EOD

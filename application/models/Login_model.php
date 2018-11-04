@@ -66,4 +66,8 @@ class Login_model extends MY_Model {
         // return $this->db->get_where('buka_tahun_ajaran', array('isDelete' => 0, 'isShow' => 1))->row_array();
     }
 
+    public function get_ambil_matakuliah()
+    {
+        # code...
+    }
 }

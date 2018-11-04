@@ -17,14 +17,16 @@ class Mhs_ambil_mk extends MY_Controller {
 
 	public function index()
 	{
-		// print_r($this->session->userdata());
-		// exit();
+		// $this->check_pass_data_only($this->session->userdata());
 		$data['list_open_mk'] 		= $this->mahasiswa_model->get_list_open_mk();
 		$data['nim'] 				= $this->session->userdata('Detail')['nim'];
-		$data['tahun_ajaran'] 		= $this->session->userdata('TA')['tahun_ajaran'];
-		$data['semester'] 			= $this->session->userdata('TA')['semester'];
+		$data['id_ta'] 				= $this->session->userdata('TA')->id_ta;
+		$data['tahun_ajaran'] 		= $this->session->userdata('TA')->tahun_ajaran;
+		$data['id_smstr'] 			= $this->session->userdata('TA')->id_smstr;
+		$data['semester'] 			= $this->session->userdata('TA')->semester;
 		$data['list_mk']	 		= $this->mahasiswa_model->get_data();
 
+		// $this->check_pass_data_only($data['list_mk']);
 		$data['role'] 				= $this->get_role_user();
 
 		$data['amk'] 				= 'active open';
@@ -59,12 +61,12 @@ class Mhs_ambil_mk extends MY_Controller {
 
 	public function insert()
 	{
-		// $this->check_pass_data_only($this->input->post('kd_mk'));
+		$this->check_pass_data_only($this->input->post());
 		// CHECK DATA IF EXIST
 		$where = array(
 			'nim'			=> $this->input->post('nim'),
-			'tahun_ajaran'	=> $this->input->post('tahun_ajaran'),
-			'smstr'			=> $this->input->post('semester')
+			'id_ta'			=> $this->input->post('tahun_ajaran'),
+			'id_smstr'		=> $this->input->post('semester')
 		);
 		$check_mhs = $this->mahasiswa_model->get_all_data('ambil_matakuliah', $where, 'row');
 		if ($check_mhs) 

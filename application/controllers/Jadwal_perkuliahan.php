@@ -23,8 +23,10 @@ class Jadwal_perkuliahan extends MY_Controller {
 		// print_r(json_encode($data['list_jp']));
 		// exit();
 		$data['user'] = $this->session->userdata();
+		// $this->check_pass_data_only($this->session->userdata(), 'var_dump');
 
-		$data['list_jp'] = $this->jadwal_perkuliahan_model->get_all_data('draft_jadwal_perkuliahan', array('finalisasi' => 1), 'result');
+		// $data['list_jp'] = $this->jadwal_perkuliahan_model->get_all_data('draft_jadwal_perkuliahan', array('finalisasi' => 1), 'result');
+		$data['list_jp'] = $this->get_draft_all(array('finalisasi' => 1));
 
 		$data['role'] = $this->get_role_user();
 
@@ -56,6 +58,19 @@ class Jadwal_perkuliahan extends MY_Controller {
         	<script src="'.base_url().'assets/pages/scripts/ui-sweetalert.js" type="text/javascript"></script>
 			';
 			// <script src="'.base_url().'assets/pages/scripts/table-datatables-managed.js" type="text/javascript"></script>
+		
+		# FORM-DROPDOWN TAHUN AJARAN
+		$data['drop']['ta'] = $this->dropdown_ta();
+
+		# FORM-DROPDOWN SEMESTER
+		$data['drop']['smstr'] = $this->dropdown_smstr();
+		// $data['tahun_ajaran'] = $this->home_model->get_all_data('tahun_ajaran', array(), 'result');
+		// $data['drop']['ta']['opt'][0] = 'Pilih Tahun Ajaran';
+		// foreach ($data['tahun_ajaran'] as $key => $value) {
+		// 	$data['drop']['ta']['opt'][$value->id_ta] = $value->tahun_ajaran;
+		// }
+		// $data['drop']['ta']['slctd'] = isset($data['bta']->id_ta) ? $data['bta']->id_ta : 0;
+		// $data['drop']['ta']['attr'] = array('class' => 'form-control', 'id' => 'tahun_ajaran');
 			
 		$data['menu'] = $this->load->view('sidebar',$data,TRUE);
 		$data['footer'] = $this->load->view('footer',$data['footer'],TRUE);
@@ -64,6 +79,53 @@ class Jadwal_perkuliahan extends MY_Controller {
 		// $data['list_dosen'] = $this->dosen_model->
 
 		$this->load->view('Jadwal_perkuliahan',$data);
+	}
+
+	public function get_draft_all($where = array(), $single = false)
+	{
+		$options = array(
+			'select'    => 'draft_jadwal_perkuliahan.draft_id_jp, draft_jadwal_perkuliahan.draft_nama, draft_jadwal_perkuliahan.finalisasi, draft_jadwal_perkuliahan.terbit, 
+							tahun_ajaran.id_ta, tahun_ajaran.tahun_ajaran, 
+							semester.id_smstr, semester.semester',
+			'table'     => 'draft_jadwal_perkuliahan',
+			'where'		=> $where,
+			'join'      => array(
+				array('tahun_ajaran', 'tahun_ajaran.id_ta = draft_jadwal_perkuliahan.id_ta', 'left'),
+				array('semester', 'semester.id_smstr = draft_jadwal_perkuliahan.id_smstr', 'left'),
+			),
+			'single'	=> $single
+        );
+        return $this->jadwal_perkuliahan_model->commonGet($options);
+	}
+
+	public function dropdown_ta()
+	{
+		$hasil = array();
+		$ta = $this->jadwal_perkuliahan_model->get_all_data('tahun_ajaran', array(), 'result');
+
+		$hasil['opt'][0] = 'Pilih Tahun Ajaran';
+		foreach ($ta as $key => $value) {
+			$hasil['opt'][$value->id_ta] = $value->tahun_ajaran;
+		}
+		$hasil['slctd'] = '';
+		$hasil['attr'] = array('class' => 'form-control');
+
+		return $hasil;
+	}
+
+	public function dropdown_smstr()
+	{
+		$hasil = array();
+		$ta = $this->jadwal_perkuliahan_model->get_all_data('semester', array(), 'result');
+
+		$hasil['opt'][0] = 'Pilih Semester';
+		foreach ($ta as $key => $value) {
+			$hasil['opt'][$value->id_smstr] = $value->semester;
+		}
+		$hasil['slctd'] = '';
+		$hasil['attr'] = array('class' => 'form-control');
+
+		return $hasil;
 	}
 
 	public function actions()
@@ -82,14 +144,14 @@ class Jadwal_perkuliahan extends MY_Controller {
 
 	public function get_draft()
 	{
-		$data['draft'] = $this->jadwal_perkuliahan_model->get_all_data('draft_jadwal_perkuliahan', array('draft_id_jp' => $this->input->post('id_draft')), 'row_array');
+		$data['draft'] = $this->get_draft_all(array('draft_id_jp' => $this->input->post('id_draft')), true);
 		echo json_encode($data['draft']);
 	}
 
 	public function penerbitan()
 	{
 		# Proses Penerbitan
-		// $this->check_pass_data_only($this->input->post());
+		$this->check_pass_data_only($this->input->post());
 		$data['penerbitan'] = $this->jadwal_perkuliahan_model->penerbitan();
 		echo json_encode($data['penerbitan']);
 	}

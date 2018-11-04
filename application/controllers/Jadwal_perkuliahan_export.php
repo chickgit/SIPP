@@ -25,17 +25,17 @@ class Jadwal_perkuliahan_export extends MY_Controller {
 		$data['user'] = $this->session->userdata();
 
 		$data['list_draft_jp'] = $this->jadwal_perkuliahan_export_model->get_all_data('draft_jadwal_perkuliahan',array(),'result');
-		if ($this->session->has_userdata('id_draft')) {
-			# code...
-			$data['list_jp'] = $this->jadwal_perkuliahan_export_model->get_data_temp(array('draft_id_jp' => $this->session->userdata('id_draft')['draft_id_jp']));
-		}
-		$data['all_data'] = array(
-			"hari" 			=> $this->jadwal_perkuliahan_export_model->get_all_data('hari'),
-			"matakuliah" 	=> $this->jadwal_perkuliahan_export_model->get_all_data('matakuliah'),
-			"waktu" 		=> $this->jadwal_perkuliahan_export_model->get_all_data('waktu'),
-			"dosen" 		=> $this->jadwal_perkuliahan_export_model->get_all_data('dosen'),
-			"ruangan" 		=> $this->jadwal_perkuliahan_export_model->get_all_data('ruangan')
-		);
+		// if ($this->session->has_userdata('id_draft')) {
+		// 	# code...
+		// 	$data['list_jp'] = $this->jadwal_perkuliahan_export_model->get_data_temp(array('draft_id_jp' => $this->session->userdata('id_draft')['draft_id_jp']));
+		// }
+		// $data['all_data'] = array(
+		// 	"hari" 			=> $this->jadwal_perkuliahan_export_model->get_all_data('hari'),
+		// 	"matakuliah" 	=> $this->jadwal_perkuliahan_export_model->get_all_data('matakuliah'),
+		// 	"waktu" 		=> $this->jadwal_perkuliahan_export_model->get_all_data('waktu'),
+		// 	"dosen" 		=> $this->jadwal_perkuliahan_export_model->get_all_data('dosen'),
+		// 	"ruangan" 		=> $this->jadwal_perkuliahan_export_model->get_all_data('ruangan')
+		// );
 
 		$data['role'] = $this->get_role_user();
 
@@ -83,7 +83,7 @@ class Jadwal_perkuliahan_export extends MY_Controller {
 		$data = array(
 			'jadwal_tanggalDiBuat' => date('j F Y'),
 			'jadwal_judul' => $this->input->post('judul'),
-			'jadwal_tabel' => $this->jadwal_perkuliahan_export_model->get_data_temp(array('draft_id_jp' => $this->input->post('draft_jp'))),
+			'jadwal_tabel' => $this->jadwal_perkuliahan_export_model->get_all_jadwal_perkuliahan(array('draft_id_jp' => $this->input->post('draft_jp'))),
 			'jadwal_catatanKaki' => $this->input->post('catatan_kaki'),
 			'jadwal_persetujuan' => array(
 				'mengetahui' => array(

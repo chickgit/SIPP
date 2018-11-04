@@ -1,5 +1,3 @@
-<!-- <link href="<?=base_url()?>assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="<?=base_url()?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
@@ -13,27 +11,6 @@
                     <!-- END BREADCRUMBS -->
                     <div class="content-header-menu">
                         <!-- BEGIN DROPDOWN AJAX MENU -->
-                        <!-- <div class="dropdown-ajax-menu btn-group">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                                <i class="fa fa-circle"></i>
-                            </button>
-                            <ul class="dropdown-menu-v2">
-                                <li>
-                                    <a href="start.html">Application</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Reports</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Templates</a>
-                                </li>
-                                <li>
-                                    <a href="start.html">Settings</a>
-                                </li>
-                            </ul>
-                        </div> -->
                         <!-- END DROPDOWN AJAX MENU -->
                         <!-- BEGIN MENU TOGGLER -->
                         <button type="button" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
@@ -142,7 +119,6 @@
                                         <?php
                                     }
                                     ?>
-                                    
                                     <div class="panel-group accordion" id="cari">
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
@@ -327,8 +303,8 @@
                                                     }
                                                     ?> </td>
                                                     <td> <?=$row->nama?> </td>
-                                                    <td> <?=$row->kode_rg?> </td>
-                                                    <td> <?=$row->peserta?> </td>
+                                                    <td> <?=$row->nama_ruangan?> </td>
+                                                    <td> <?=$row->prodi?> | <?=$row->peminatan?></td>
                                                     <td>
                                                         <div class="btn-group btn-group-justified">
                                                             <a id="update_jw" data-val="<?=$row->id_jadwal_p?>" class="btn btn-sm green">
@@ -437,7 +413,7 @@
                                                                         <?php
                                                                             foreach ($all_data['hari'] as $value) {
                                                                         ?>
-                                                                        <option value="<?=$value['id']?>"><?=$value['nama_hari']?></option>
+                                                                        <option value="<?=$value['id_hari']?>"><?=$value['nama_hari']?></option>
                                                                         <?php
                                                                             }
                                                                         ?>
@@ -451,16 +427,16 @@
                                                                 <div class="col-md-9">
                                                                     <select class="form-control select2" name="upd_mk_jw">
                                                                         <?php
-                                                                            $peminatan = Array(
-                                                                              '0' => 'Umum',
-                                                                              '1' => 'EIS',
-                                                                              '2' => 'MM',
-                                                                              '3' => 'JarKom',
-                                                                              '4' => 'MobA',
-                                                                            );
+                                                                            // $peminatan = Array(
+                                                                            //   '0' => 'Umum',
+                                                                            //   '1' => 'EIS',
+                                                                            //   '2' => 'MM',
+                                                                            //   '3' => 'JarKom',
+                                                                            //   '4' => 'MobA',
+                                                                            // );
                                                                             foreach ($all_data['matakuliah'] as $value) {
                                                                         ?>
-                                                                        <option value="<?=$value['kode_mk']?>" data-detail="<?=$value['sks_mk']?>_<?=$value['semester_mk']?>_<?=$value['program_studi']?>_<?=$peminatan[$value['peminatan']]?>" data-rg="<?=$value['jenis_rg']?>"><?=$value['nama_mk']?> | <?=$value['sks_mk']?> SKS | Semester <?=$value['semester_mk']?> | <?=$value['program_studi']?> | <?=$peminatan[$value['peminatan']]?></option>
+                                                                        <option value="<?=$value->kode_mk?>" data-detail="<?=$value->sks_mk?>_<?=$value->semester_mk?>_<?=$value->program_studi?>_<?=$value->peminatan?>" data-rg="<?=$value->jenis?>"><?=$value->nama_mk?> | <?=$value->sks_mk?> SKS | Semester <?=$value->semester_mk?> | <?=$value->program_studi?> | <?=$value->peminatan?></option>
                                                                         <?php
                                                                             }
                                                                         ?>
@@ -497,7 +473,7 @@
                                                                         <?php
                                                                             foreach ($all_data['waktu'] as $value) {
                                                                         ?>
-                                                                        <option value="<?=$value['kode_wk']?>" data-sks="<?=$value['sks']?>"><?=$value['waktu_aw']?> - <?=$value['waktu_ak']?></option>
+                                                                        <option value="<?=$value['id_waktu']?>" data-sks="<?=$value['sks']?>"><?=$value['waktu_aw']?> - <?=$value['waktu_ak']?></option>
                                                                         <?php
                                                                             }
                                                                         ?>
@@ -519,7 +495,7 @@
                                                                                     # code...
                                                                                     foreach ($all_data['hari'] as $value_hari) {
                                                                                         # code...
-                                                                                        if ($v_hari == $value_hari['id']) {
+                                                                                        if ($v_hari == $value_hari['id_hari']) {
                                                                                             $ketersediaan_hari .= $value_hari['nama_hari'].', ';
                                                                                         }
                                                                                     }
@@ -541,7 +517,7 @@
                                                                         <?php
                                                                             foreach ($all_data['ruangan'] as $value) {
                                                                         ?>
-                                                                        <option value="<?=$value['kode_rg']?>" data-rg="<?=$value['jenis_rg']?>"><?=$value['kode_rg']?></option>
+                                                                        <option value="<?=$value->id_ruangan?>" data-rg="<?=$value->jenis?>"><?=$value->nama_ruangan?></option>
                                                                         <?php
                                                                             }
                                                                         ?>
@@ -555,7 +531,7 @@
                                                                 <div class="col-md-9">
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="upd_peserta_jw" title="Mengikuti mata kuliah" />
+                                                                        <input type="text" class="form-control" name="upd_peserta_jw" title="Mengikuti mata kuliah" disabled/>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -683,7 +659,7 @@
                                                                     <span class="required"> </span>
                                                                 </label>
                                                                 <div class="col-md-9">
-                                                                    <input type="text" class="form-control" name="draft_nama" value="<?=$user['TA']['tahun_ajaran']?>_<?=$user['TA']['semester']?>_<?=date('d-m-Y')?>">
+                                                                    <input type="text" class="form-control" name="draft_nama" value="<?=$user['TA']->tahun_ajaran?>_<?=$user['TA']->semester?>_<?=date('d-m-Y')?>">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -814,7 +790,7 @@
         // console.log(elm_id);
     }
 jQuery(document).ready(function() {
-    var tahun_ajaran = '<?=$user['TA']['semester']?>';
+    var tahun_ajaran = '<?=$user['TA']->semester?>'; // GANJIL/GENAP
     console.log(tahun_ajaran);
     // Tipe-tipe Warning Html Content Popover Update Jadwal
     var twhcpuj = {
@@ -873,9 +849,7 @@ jQuery(document).ready(function() {
                     processData: false,      
                     beforeSend: function(){
                         App.blockUI({
-                            // target: '#form_tambah_dosen',
-                            // overlayColor: 'none',
-                            // animate: true,
+                            boxed : true,
                             zIndex: 20000,
                         });
                     },
@@ -892,6 +866,7 @@ jQuery(document).ready(function() {
                         });
                     },
                     complete: function(){
+                        // setTimeout(function(){ App.unblockUI(); }, 2000);
                         App.unblockUI();
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
@@ -1382,10 +1357,14 @@ jQuery(document).ready(function() {
                     $('input[name="upd_sks_jw"]').val(data.DETAIL.matkul.sks_mk);
                     $('input[name="upd_semester_jw"]').val(data.DETAIL.matkul.semester_mk);
                 }
-                $('select[name="upd_waktu_jw"]').val(data.kode_wk).trigger('change');
+                $('select[name="upd_waktu_jw"]').val(data.id_waktu).trigger('change');
                 $('select[name="upd_dosen_jw"]').val(data.nid).trigger('change');
-                $('select[name="upd_ruangan_jw"]').val(data.kode_rg).trigger('change');
-                $('input[name="upd_peserta_jw"]').val(data.peserta);
+                $('select[name="upd_ruangan_jw"]').val(data.id_ruangan).trigger('change');
+                if (data.DETAIL.matkul_prodi === null || data.DETAIL.matkul_peminatan === null) {
+                    $('input[name="upd_peserta_jw"]').val(null);
+                }else{
+                    $('input[name="upd_peserta_jw"]').val(data.DETAIL.matkul_prodi.panggilan +' | '+ data.DETAIL.matkul_peminatan.panggilan);
+                }
                 $('input[name="upd_kode_jw"]').val(data.id_jadwal_p);
                 $('#modal_update_jw').modal('show');
                 console.log(data);
@@ -1454,7 +1433,7 @@ jQuery(document).ready(function() {
                         });
                     },
                     success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                         $('#modal_update_jw').modal('hide');
                         swal({
                             title : "Berhasil!", 
@@ -1515,11 +1494,15 @@ jQuery(document).ready(function() {
                 }
                 $('input[name="del_waktu_jw"]').val(data.kode_wk_nama);
                 $('input[name="del_dosen_jw"]').val(data.nid_nama);
-                $('input[name="del_ruangan_jw"]').val(data.kode_rg);
-                $('input[name="del_peserta_jw"]').val(data.peserta);
+                $('input[name="del_ruangan_jw"]').val(data.DETAIL.ruangan.nama_ruangan);
+                if (data.DETAIL.matkul_prodi === null || data.DETAIL.matkul_peminatan === null) {
+                    $('input[name="del_peserta_jw"]').val(null);
+                }else{
+                    $('input[name="del_peserta_jw"]').val(data.DETAIL.matkul_prodi.panggilan +' | '+ data.DETAIL.matkul_peminatan.panggilan);
+                }
                 $('input[name="del_kode_jw"]').val(data.id_jadwal_p);
                 $('#modal_delete_jw').modal('show');
-                console.log(data);
+                // console.log(data);
             },
             complete: function(){
                 App.unblockUI();

@@ -61,8 +61,8 @@
                                                     <td> <?=$row->draft_nama?> </td>
                                                     <td> <?=($row->finalisasi == 0) ? '<span class="label label-sm label-info"> Belum </span>' : '<span class="label label-sm label-info"> Sudah </span>'?> </td>
                                                     <td> <?=($row->terbit == 0) ? '<span class="label label-sm label-warning"> Belum </span>' : '<span class="label label-sm label-info"> Sudah </span>'?> </td>
-                                                    <td> <?=($row->ta_terbit == NULL) ? '-' : $row->ta_terbit?> </td>
-                                                    <td> <?=($row->smstr_terbit == NULL) ? '-' : $row->smstr_terbit?> </td>
+                                                    <td> <?=($row->tahun_ajaran == NULL) ? '-' : $row->tahun_ajaran?> </td>
+                                                    <td> <?=($row->semester == NULL) ? '-' : $row->semester?> </td>
                                                     <td>
                                                         <div class="btn-group" style="position: relative;">
                                                             <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
@@ -269,8 +269,8 @@ jQuery(document).ready(function() {
                 $('input[name="restore_draft_nama"]').val(data.draft_nama);
                 $('input[name="restore_finalisasi"]').val(data.finalisasi);
                 $('input[name="restore_terbit"]').val(data.terbit);
-                $('input[name="restore_ta_terbit"]').val(data.ta_terbit);
-                $('input[name="restore_smstr_terbit"]').val(data.smstr_terbit);
+                $('input[name="restore_ta_terbit"]').val(data.tahun_ajaran);
+                $('input[name="restore_smstr_terbit"]').val(data.semester);
                 $('#modal_restore_jadwal_perkuliahan').modal('show');
                 console.log(data);
             },
@@ -332,11 +332,11 @@ jQuery(document).ready(function() {
             success: function(data) {
                 // success4.show();
                 $('input[name="delete_0"]').val(data.draft_id_jp);
-                $('input[name="delete__draft_nama"]').val(data.draft_nama);
+                $('input[name="delete_draft_nama"]').val(data.draft_nama);
                 $('input[name="delete_finalisasi"]').val(data.finalisasi);
                 $('input[name="delete_terbit"]').val(data.terbit);
-                $('input[name="delete_ta_terbit"]').val(data.ta_terbit);
-                $('input[name="delete_smstr_terbit"]').val(data.smstr_terbit);
+                $('input[name="delete_ta_terbit"]').val(data.tahun_ajaran);
+                $('input[name="delete_smstr_terbit"]').val(data.semester);
                 $('#modal_delete_jadwal_perkuliahan').modal('show');
                 console.log(data);
             },

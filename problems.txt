@@ -1,0 +1,39 @@
+I. ALGO
+    Hasil dari New Data 3
+
+    1. Selasa	Pengolahan Citra Digital	            3	3	13:30 - 16:00	Jefri Rahmadian, MKom	    IMAC	SI | MM	
+    2. Selasa	Perancangan Database dan Implementasi	3	3	13:30 - 16:00	Susana Dwi Yulianti, MKom	OCR-1	SI | EIS
+    3. Selasa	Perancangan Database dan Implementasi	3	5	13:30 - 16:00	Susana Dwi Yulianti, MKom	OCR-1	TI | UMUM
+
+    Contoh data diatas, terdapat ambiguitas dalam jadwal perkuliahan dikarenakan:
+    1. Ada data yang memiliki nama sama namun kode berbeda (2&3) sehingga diletakkan sistem berdampingan dengan informasi yang sama,
+    2. Dilain sisi no.1 menganggap bahwa data pada jam 13.30 - 16.00 terdapat matkul untuk semester 3 & 5  dengan informasi yang sama, 
+    sehingga memungkinkan dia untuk tetap masuk ke dalam waktu ini meskipun bentrok dengan semester 3 yg lain.
+
+    Sama seperti ini:
+    (1)
+    Rabu	Data Warehouse & Data Mining	3	5	13:30 - 16:00	Fajar Septian, S.Pd, M.Kom	        LR-3	SI | EIS
+    Rabu	Metode Numerik	                3	7	13:30 - 16:00	Nur Sucahyo, S.Si, MM	            LR-1	TI | UMUM
+    Rabu	Data Warehouse & Data Mining	3	7	13:30 - 16:00	Fajar Septian, S.Pd, M.Kom	        LR-3	TI | UMUM
+
+    (2)
+    Kamis	Teori Bahasa dan Automata	3	5	10:45 - 13:15	Fajar Septian, S.Pd, M.Kom	OCR-1	TI | UMUM
+    Kamis	Komunikasi Data	            3	1	10:45 - 13:15	Juli Yanto, Mkom	        CISCO	TI | UMUM
+    Kamis	Komunikasi Data	            3	5	10:45 - 13:15	Juli Yanto, Mkom	        CISCO	SI | EIS	
+II. HISTORI JADWAL
+    Data yang ditampilkan masih berbentuk umum, seharusnya data yang ditampilkan tetap mempunyai kelompok draft meskipun draft tersebut
+    belum dihapus.
+    Sehingga data yang telah dihapus tidak mempunyai parent(draft jadwal), karena draft jadwal tsb belum dihapus, hanya beberapa anaknya
+    saja dari draft jadwal.
+
+    Draft 1 >   anak 1 (hapus)  anak 4 (hapus)      >   ...     >  anak 1
+                anak 2          anak 5 (hapus)      >              anak 4
+                anak 3          anak 6              >              anak 5
+III. isShow
+    Proses isShow di setiap halaman belum berfungsi
+IV. Relasi antar tabel tidak berfungsi dengan baik
+    Dalam tabel ada PK dan FK(Index), dan setiap tabel yang memiliki FK tidak berfungsi maksimal, dikarenakan fungsi isDelete pada tabel.
+    Ketika sebuah data di hapus, data tsb tdk hilang dr Tbl, akan tetapi merubah isDelete 0 -> 1, sehingga data tsb msh d baca oleh sistem.
+
+    Harus di bikin jika Data 1(PK)-Tbl(1) di hapus, maka Data 1(FK)-Tbl(2) harus tidak bisa terlihat, karena parent(Data 1) sudah dihapus.
+

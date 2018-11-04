@@ -1,5 +1,5 @@
 <?php
-class Jadwal_perkuliahan_export_model extends CI_Model {
+class Jadwal_perkuliahan_export_model extends MY_Model {
 
     public function __construct()
     {
@@ -36,64 +36,6 @@ class Jadwal_perkuliahan_export_model extends CI_Model {
             $data = $query->row_array();
         }
         return $data;
-    }
-
-    public function draft()
-    {
-        $draft = split('_', $this->input->post('draft_id'));
-
-        if ($draft[0] == 'open') 
-        {
-            # code...
-            $open_draft = $this->get_all_data('draft_jadwal_perkuliahan',array('draft_id_jp' => $draft[1]),'row_array');
-            $this->session->set_userdata(array('id_draft' => $open_draft));
-            echo "OK";
-        }
-        else if ($draft[1] == 'edit') 
-        {
-            # code...
-            $data = array(
-                "draft_nama"    => $this->input->post('draft_nama'),
-                "modified_date" => date('Y-m-d H:i:s'),
-                "modified_by"   => $this->session_username()
-            );
-
-            $this->db->where('draft_id_jp', $draft[1]);
-            $this->db->update('draft_jadwal_perkuliahan', $data);
-            echo "OK";
-        }
-        else if ($draft[1] == 'delete') 
-        {
-            # code...
-            $data = array(
-                'isDelete' => 1
-            );
-            $this->db->where('draft_id_jp', $draft[1]);
-            $this->db->update('draft_jadwal_perkuliahan', $data);
-
-            $this->db->where('draft_id_jp', $draft[1]);
-            $this->db->update('jadwal_perkuliahan', $data);
-            // $this->db->delete('dosen');
-            echo "OK";
-        }
-    }
-
-    public function bersih_jadwal()
-    {
-        // MEMBUANG DATA YANG TIDAK DI BUTUHKAN
-        if ($this->input->post('data') === 'BERSIH') {
-            # code...
-            $jadwal_new = array();
-            $jadwal     = $this->get_all_data('jadwal_perkuliahan');
-            foreach ($jadwal as $k_j => $v_j) {
-                if ( ! is_null($v_j['kode_mk'])) {
-                    unset($jadwal[$k_j]['id_jadwal_p']);
-                    $this->db->insert('jadwal_perkuliahan', $jadwal[$k_j]);
-                    $this->delete_jw($v_j['id_jadwal_p']);
-                }
-            }
-            echo "OK";
-        }
     }
 
     public function get_data_temp($where = array())
@@ -156,6 +98,66 @@ class Jadwal_perkuliahan_export_model extends CI_Model {
         }
     	return $hasil;
     }
+
+    public function draft()
+    {
+        $draft = split('_', $this->input->post('draft_id'));
+
+        if ($draft[0] == 'open') 
+        {
+            # code...
+            $open_draft = $this->get_all_data('draft_jadwal_perkuliahan',array('draft_id_jp' => $draft[1]),'row_array');
+            $this->session->set_userdata(array('id_draft' => $open_draft));
+            echo "OK";
+        }
+        else if ($draft[1] == 'edit') 
+        {
+            # code...
+            $data = array(
+                "draft_nama"    => $this->input->post('draft_nama'),
+                "modified_date" => date('Y-m-d H:i:s'),
+                "modified_by"   => $this->session_username()
+            );
+
+            $this->db->where('draft_id_jp', $draft[1]);
+            $this->db->update('draft_jadwal_perkuliahan', $data);
+            echo "OK";
+        }
+        else if ($draft[1] == 'delete') 
+        {
+            # code...
+            $data = array(
+                'isDelete' => 1
+            );
+            $this->db->where('draft_id_jp', $draft[1]);
+            $this->db->update('draft_jadwal_perkuliahan', $data);
+
+            $this->db->where('draft_id_jp', $draft[1]);
+            $this->db->update('jadwal_perkuliahan', $data);
+            // $this->db->delete('dosen');
+            echo "OK";
+        }
+    }
+
+    public function bersih_jadwal()
+    {
+        // MEMBUANG DATA YANG TIDAK DI BUTUHKAN
+        if ($this->input->post('data') === 'BERSIH') {
+            # code...
+            $jadwal_new = array();
+            $jadwal     = $this->get_all_data('jadwal_perkuliahan');
+            foreach ($jadwal as $k_j => $v_j) {
+                if ( ! is_null($v_j['kode_mk'])) {
+                    unset($jadwal[$k_j]['id_jadwal_p']);
+                    $this->db->insert('jadwal_perkuliahan', $jadwal[$k_j]);
+                    $this->delete_jw($v_j['id_jadwal_p']);
+                }
+            }
+            echo "OK";
+        }
+    }
+
+    
 
     public function get_detail_jw($id_jw)
     {

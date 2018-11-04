@@ -19,26 +19,27 @@ class Mhs_jp extends MY_Controller {
 	{
 		// print_r(json_encode($data['jp']));
 		// exit();
-		$this->check_pass_data_only($this->session->userdata());
 		$data['user'] = $this->session->userdata();
-		$data['tahun_ajaran'] 		= $this->session->userdata('TA')['tahun_ajaran'];
-		$data['semester'] 			= $this->session->userdata('TA')['semester'];
+		$data['tahun_ajaran'] 		= $this->session->userdata('TA')->tahun_ajaran;
+		$data['semester'] 			= $this->session->userdata('TA')->semester;
 
-		$data['opt_jp'] = $this->mahasiswa_model->get_all_data('draft_jadwal_perkuliahan',array(
-			'finalisasi' => 1, 
-			'terbit' => 1,
-			'ta_terbit IS NOT NULL' => NULL,
-			'smstr_terbit IS NOT NULL' => NULL
-			),'result');
-
+		$data['opt_jp'] = $this->mahasiswa_model->draft();
+		
+		// $this->check_pass_data_only($this->session->userdata(),'var_dump');
+		# Jika tahun ajaran mata kuliah di pilih, maka akan menampilkan jadwal perkuliahan
+		# sesuai dengan tahun ajaran yang dipilih.
 		if ($this->input->post('tahun_ajar') && $this->input->post('tahun_ajar') != 0) {
-			# code...
+			$data['matkul_diambil'] = $this->matkul_diambil_mahasiswa();
+
+			# list selruh matkul dari draft yang di pilih
 			$data['list_jp'] = $this->mahasiswa_model->get_all_jadwal_perkuliahan(array(
-				'draft_id_jp' => $this->input->post('tahun_ajar'),
-				
+				'draft_jadwal_perkuliahan.draft_id_jp' => $this->input->post('tahun_ajar'),
 				));
+
+			# kirim data tahun ajaran yang di pilih
 			$data['flash_id_jp'] = $this->input->post('tahun_ajar');
 		}
+		// $this->check_pass_data_only($data['matkul_diambil'],'var_dump');
 
 		$data['all_data'] = array(
 			"hari" 			=> $this->jadwal_model->get_all_data('hari'),
@@ -84,6 +85,26 @@ class Mhs_jp extends MY_Controller {
 
 		$this->load->view('mhs_jp',$data);
 		
+	}
+
+	public function matkul_diambil_mahasiswa()
+	{
+		# mengambil matakuliah yang diambil oleh mahasiswa
+		$options = array(
+			'table'     => 'ambil_matakuliah',
+			'where'     => array(
+				'nim'  => $this->session->userdata('Detail')['nim'],
+				'id_ta'    => $this->session->userdata('TA')->id_ta,
+				'id_smstr'    => $this->session->userdata('TA')->id_smstr,
+			),
+			'single'    => true
+		);
+		$data  = $this->mahasiswa_model->commonGet($options);
+		
+		# data matakuliah yang diambil dirubah ke dalam array.
+		$new = explode(';', $data->kode_mk);
+		$data->kode_mk = $new;
+		return $data;
 	}
 
 	public function buka()

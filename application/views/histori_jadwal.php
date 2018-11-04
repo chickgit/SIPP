@@ -1,5 +1,3 @@
-<!-- <link href="assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 <?=$header?>
         <!-- BEGIN CONTAINER -->
         <div class="container-fluid">
@@ -96,6 +94,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $list_histori = isset($list_histori) ? $list_histori : array();
                                             foreach($list_histori as $row)
                                             {
                                                 ?>
@@ -111,8 +110,8 @@
                                                     }
                                                     ?> </td>
                                                     <td> <?=$row->nama?> </td>
-                                                    <td> <?=$row->kode_rg?> </td>
-                                                    <td> <?=$row->peserta?> </td>
+                                                    <td> <?=$row->nama_ruangan?> </td>
+                                                    <td> <?=$row->prodi?> | <?=$row->peminatan?></td>
                                                     <td>
                                                         <div class="btn-group" style="position: relative;">
                                                             <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
@@ -499,8 +498,8 @@ jQuery(document).ready(function() {
                 $('input[name="restore_semester_jw"]').val(data.semester_mk);
                 $('input[name="restore_waktu_jw"]').val(data.waktu_aw+' - '+data.waktu_ak);
                 $('input[name="restore_dosen_jw"]').val(data.nama);
-                $('input[name="restore_ruangan_jw"]').val(data.kode_rg);
-                $('input[name="restore_peserta_jw"]').val(data.peserta);
+                $('input[name="restore_ruangan_jw"]').val(data.nama_ruangan);
+                $('input[name="restore_peserta_jw"]').val(data.prodi +' | '+ data.peminatan);
                 $('#modal_restore_jadwal').modal('show');
                 console.log(data);
             },
@@ -569,8 +568,8 @@ jQuery(document).ready(function() {
                 $('input[name="delete_semester_jw"]').val(data.semester_mk);
                 $('input[name="delete_waktu_jw"]').val(data.waktu_aw+' - '+data.waktu_ak);
                 $('input[name="delete_dosen_jw"]').val(data.nama);
-                $('input[name="delete_ruangan_jw"]').val(data.kode_rg);
-                $('input[name="delete_peserta_jw"]').val(data.peserta);
+                $('input[name="delete_ruangan_jw"]').val(data.nama_ruangan);
+                $('input[name="delete_peserta_jw"]').val(data.prodi +' | '+ data.peminatan);
                 $('#modal_delete_jadwal').modal('show');
                 console.log(data);
             },
