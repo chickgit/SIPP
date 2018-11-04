@@ -22,9 +22,10 @@ class Histori extends MY_Controller {
 
 	public function index()
 	{
-		// $this->check_pass_data_only(base_url());
+		// $this->check_pass_data_only($this->session->userdata());
 		$data['user'] = $this->session->userdata();
 		$data['list_histori'] = $this->histori_model->get_histori($this->segment());
+		// $this->check_pass_data_only($data['list_histori']);
 
 		$data['role'] = $this->get_role_user();
 		$data['histori_'.$this->segment()] = 'active open';
@@ -63,6 +64,7 @@ class Histori extends MY_Controller {
 
 	public function get_data()
 	{
+		// $this->check_pass_data_only($this->input->post());
 		$data['get_data'] = $this->histori_model->get_data($_POST[0], $_POST[1]);
 		echo json_encode($data['get_data']);
 	}
