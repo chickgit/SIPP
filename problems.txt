@@ -36,4 +36,7 @@ IV. Relasi antar tabel tidak berfungsi dengan baik
     Ketika sebuah data di hapus, data tsb tdk hilang dr Tbl, akan tetapi merubah isDelete 0 -> 1, sehingga data tsb msh d baca oleh sistem.
 
     Harus di bikin jika Data 1(PK)-Tbl(1) di hapus, maka Data 1(FK)-Tbl(2) harus tidak bisa terlihat, karena parent(Data 1) sudah dihapus.
-
+V.  Mahasiswa
+    Fungsi eksport jadwal perkuliahan belum ada.
+VI. Dosen
+    Belum ada tampilan untuk dosen
