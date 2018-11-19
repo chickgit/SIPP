@@ -11,6 +11,7 @@ class Mhs_jp extends MY_Controller {
     	if (!$this->session->has_userdata('Login')) {
 			redirect(base_url().'login');
     	}
+    	$this->load->library('Pdf');
 
         $this->load->model('jadwal_model');
         $this->load->model('mahasiswa_model');
@@ -19,13 +20,13 @@ class Mhs_jp extends MY_Controller {
 	{
 		// print_r(json_encode($data['jp']));
 		// exit();
-		$data['user'] = $this->session->userdata();
+		$data['user'] 				= $this->session->userdata();
 		$data['tahun_ajaran'] 		= $this->session->userdata('TA')->tahun_ajaran;
 		$data['semester'] 			= $this->session->userdata('TA')->semester;
-
-		$data['opt_jp'] = $this->mahasiswa_model->draft();
+		$data['opt_jp'] 			= $this->mahasiswa_model->draft();
 		
 		// $this->check_pass_data_only($this->session->userdata(),'var_dump');
+
 		# Jika tahun ajaran mata kuliah di pilih, maka akan menampilkan jadwal perkuliahan
 		# sesuai dengan tahun ajaran yang dipilih.
 		if ($this->input->post('tahun_ajar') && $this->input->post('tahun_ajar') != 0) {
@@ -38,6 +39,11 @@ class Mhs_jp extends MY_Controller {
 
 			# kirim data tahun ajaran yang di pilih
 			$data['flash_id_jp'] = $this->input->post('tahun_ajar');
+		}
+
+		if ($this->input->post('pdf') && $this->input->post('tahun_ajar')) {
+			// $this->check_pass_data_only($this->input->post());
+			return $this->eksportToPDF();
 		}
 		// $this->check_pass_data_only($data['matkul_diambil'],'var_dump');
 
@@ -87,6 +93,46 @@ class Mhs_jp extends MY_Controller {
 		
 	}
 
+	public function eksportToPDF()
+	{
+		$list_jp = $this->dosen_model->get_all_jadwal_perkuliahan(array(
+				'draft_jadwal_perkuliahan.draft_id_jp' => $this->input->post('tahun_ajar'),
+				));
+		$matkul_diambil = $this->matkul_diambil_mahasiswa();
+
+		foreach ($list_jp as $row) {
+			if (
+	            # angka 3 menyatakan matakuliah umum u/ program studi si/ti
+	            ($row->id_prodi == $this->session->userdata('Detail')['id_prodi'] || $row->id_prodi == 3) 
+	            # angka 1 menyatakan matakuliah umum u/ peminatan umum baik dari SI atau TI
+	            && ($row->id_peminatan == $this->session->userdata('Detail')['id_peminatan'] || $row->id_peminatan ==1)
+	            # matakuliah yang telah diambil
+	            && (in_array($row->kode_mk, $matkul_diambil->kode_mk))
+	        ) {
+				$new_list[] = $row;
+	        }
+		}
+		$data = array(
+			'jadwal_tanggalDiBuat' => date('j F Y'),
+			'jadwal_judul' => $this->input->post('judul'),
+			'jadwal_tabel' => $new_list,
+			'jadwal_catatanKaki' => $this->input->post('catatan_kaki'),
+			'jadwal_persetujuan' => array(
+				'mengetahui' => array(
+					'nama' => $this->input->post('mengetahui_nama'),
+					'sebagai' => $this->input->post('mengetahui_sebagai')
+				),
+				'menyetujui' => array(
+					'nama' => $this->input->post('menyetujui_nama'),
+					'sebagai' => $this->input->post('menyetujui_sebagai')
+				)
+			)
+		);
+		// $data['hari'] = $this->jadwal_perkuliahan_export_model->get_all_data('hari');
+
+		$this->load->view('Jadwal_report',$data);
+	}
+
 	public function matkul_diambil_mahasiswa()
 	{
 		# mengambil matakuliah yang diambil oleh mahasiswa
@@ -105,55 +151,6 @@ class Mhs_jp extends MY_Controller {
 		$new = explode(';', $data->kode_mk);
 		$data->kode_mk = $new;
 		return $data;
-	}
-
-	public function buka()
-	{
-		if ($this->input->post('tahun_ajar') != 0) {
-
-			$data_terbuka = $this->mahasiswa_model->get_all_data('draft_jadwal_perkuliahan', array(
-				'draft_id_jp' => $this->input->post('tahun_ajar')
-				), 'row');
-		}
-		$this->check_pass_data_only($data_terbuka);
-	}
-
-	public function generate()
-	{
-		// $this->check_pass_data_only($this->input->post());
-		$data['jp'] = $this->jadwal_model->generate_jadwal();
-		echo json_encode($data['jp']);
-		// echo json_encode($this->input->post('data'));
-	}
-
-	public function draft()
-	{
-		// $this->check_pass_data_only($this->input->post());
-		$data['draft'] = $this->jadwal_model->draft();
-		echo json_encode($data['draft']);
-	}
-
-	public function get_detail_jw()
-	{
-		// $this->check_pass_data_only($this->input->post());
-		$data['get_detail_jw'] = $this->jadwal_model->get_detail_jw($_POST['kode_jw']);
-		echo json_encode($data['get_detail_jw']);
-		// print_r($data['get_dosen']);
-	}
-
-	public function update_jw()
-	{
-		// $this->check_pass_data_only($this->input->post());
-		$data['update_jw'] = $this->jadwal_model->update_jw();
-		echo $data['update_jw'];
-		exit();
-	}
-
-	public function delete_jw()
-	{
-		$data['delete_jw'] = $this->jadwal_model->delete_jw($this->input->post('del_kode_jw'));
-		echo $data['delete_jw'];
-		exit();
 	}
 
 }
