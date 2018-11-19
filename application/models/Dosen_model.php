@@ -12,7 +12,7 @@ class Dosen_model extends MY_Model {
     {
         return $this->session->userdata('Login')['username'];
     }
-
+    # BEGIN PENGELOLAAN DOSEN
     private function ketersediaan_hari()
     {
         if ($this->uri->segment(2) == 'update_dosen') {
@@ -64,6 +64,16 @@ class Dosen_model extends MY_Model {
         return $matkul;
     }
 
+    public function get_all_dosen()
+    {
+        return $this->get_all_data('dosen',array(),'result');
+    }
+
+    public function get_all_hari()
+    {
+        return $this->get_all_data('hari',array(),'result');
+    }
+
     public function check_nid($nid)
     {
         $query = $this->db->query('SELECT nid FROM dosen WHERE nid = '.$nid);
@@ -80,7 +90,8 @@ class Dosen_model extends MY_Model {
             "gambar_ava" => $this->input->post('gambar_ava'),
             "ketersediaan_hari" => $this->ketersediaan_hari(),
             "wawasan_matkul" => $this->wawasan_matkul(),
-            "created_by" => $this->session_username()
+            "created_by" => $this->session_username(),
+            "isShow" => $this->input->post('isShow')
         );
         $this->db->insert('dosen', $data);
         echo "OK";
@@ -105,7 +116,8 @@ class Dosen_model extends MY_Model {
             "ketersediaan_hari" => $this->ketersediaan_hari(),
             "wawasan_matkul" => $this->wawasan_matkul(),
             "modified_date" => date('Y-m-d H:i:s'),
-            "modified_by" => $this->session_username()
+            "modified_by" => $this->session_username(),
+            "isShow" => $this->input->post('upd_isShow')
         );
 
         $this->db->where("nid", $this->input->post('upd_nid'));
@@ -128,5 +140,32 @@ class Dosen_model extends MY_Model {
         // $this->db->delete('dosen');
         echo "OK";
     }
+    # END PENGELOLAAN DOSEN
 
+    # BEGIN DOSEN
+
+    # MHS_JP.PHP
+    # mengambil draft matkul yang sudah difinalisasi dan terbit
+    public function draft()
+    {
+        $options = array(
+            'select'    => 'draft_jadwal_perkuliahan.draft_id_jp, draft_jadwal_perkuliahan.draft_nama, draft_jadwal_perkuliahan.finalisasi, draft_jadwal_perkuliahan.terbit, 
+                            tahun_ajaran.id_ta, tahun_ajaran.tahun_ajaran, 
+                            semester.id_smstr, semester.semester',
+            'table'     => 'draft_jadwal_perkuliahan',
+            'where'     => array(
+                'draft_jadwal_perkuliahan.finalisasi'           => 1,
+                'draft_jadwal_perkuliahan.terbit'               => 1,
+                'draft_jadwal_perkuliahan.id_ta IS NOT NULL'    => NULL,
+                'draft_jadwal_perkuliahan.id_smstr IS NOT NULL' => NULL
+            ),
+            'join'      => array(
+                array('tahun_ajaran', 'tahun_ajaran.id_ta = draft_jadwal_perkuliahan.id_ta', 'left'),
+                array('semester', 'semester.id_smstr = draft_jadwal_perkuliahan.id_smstr', 'left'),
+            )
+        );
+        return $this->commonGet($options);
+    }
+    
+    # END DOSEN
 }
