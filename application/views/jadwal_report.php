@@ -4,9 +4,10 @@
 // Create The PDF
 $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 // Set PDF Identity
-$pdf->SetTitle('Judul Jadwal Report');
-$pdf->SetSubject('Subject Jadwal Report');
-$pdf->SetAuthor('Author Jadwal Report');
+(isset($jadwal_judul)) ? : $jadwal_judul = 'Jadwal Report';
+$pdf->SetTitle($jadwal_judul);
+$pdf->SetSubject('Jadwal Report');
+$pdf->SetAuthor('SIPP');
 $pdf->SetKeywords('TCPDF, PDF, jadwal, report');
 $pdf->SetCreator('Sistem Informasi Penjadwalan Perkuliahan');
 // Set Margin
@@ -114,12 +115,12 @@ $pdf->writeHTML(!(empty($jadwal_catatanKaki)) ? 'Catatan:<br>'.$jadwal_catatanKa
 $pdf->Ln(2);
 // Persetujuan
 $pdf->SetFont('times', 'B', 8); // Set Font
-$mengetahui['nama'] = '<u>Mengetahui Nama</u>';
-$mengetahui['sebagai'] = 'Mengetahui Sebagai';
-$menyetujui['nama'] = 'Mengetahui Nama';
-$menyetujui['sebagai'] = 'Mengetahui Sebagai';
-$pdf->writeHTMLCell(95, '', '', '', '<p>Mengetahui<br><br><br><br><u>'.$jadwal_persetujuan['mengetahui']['nama'].'</u><br>'.$jadwal_persetujuan['mengetahui']['sebagai'].'</p>', 0, 0, 0, true, 'C', true);
-$pdf->writeHTMLCell(95, '', '', '', '<p>Menyetujui<br><br><br><br><u>'.$jadwal_persetujuan['menyetujui']['nama'].'</u><br>'.$jadwal_persetujuan['menyetujui']['sebagai'].'</p>', 0, 0, 0, true, 'C', true);
+if (isset($jadwal_persetujuan['mengetahui']['nama']) || isset($jadwal_persetujuan['mengetahui']['sebagai'])) {
+    $pdf->writeHTMLCell(95, '', '', '', '<p>Mengetahui<br><br><br><br><u>'.$jadwal_persetujuan['mengetahui']['nama'].'</u><br>'.$jadwal_persetujuan['mengetahui']['sebagai'].'</p>', 0, 0, 0, true, 'C', true);
+}
+if (isset($jadwal_persetujuan['menyetujui']['nama']) || isset($jadwal_persetujuan['menyetujui']['sebagai'])) {
+    $pdf->writeHTMLCell(95, '', '', '', '<p>Menyetujui<br><br><br><br><u>'.$jadwal_persetujuan['menyetujui']['nama'].'</u><br>'.$jadwal_persetujuan['menyetujui']['sebagai'].'</p>', 0, 0, 0, true, 'C', true);
+}
 
 $pdf->Output('My-File-Name.pdf', 'I');
  ?>
