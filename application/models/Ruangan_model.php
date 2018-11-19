@@ -32,7 +32,8 @@ class Ruangan_model extends MY_Model {
             "gedung_rg"     => $this->input->post('gedung'),
             "id_jenis"      => $this->input->post('jenis'),
             "kapasitas_rg"  => $this->input->post('kapasitas'),
-            "created_by"    => $this->session_username()
+            "created_by"    => $this->session_username(),
+            "isShow" => $this->input->post('isShow')
         );
         $this->db->insert('ruangan', $data);
         echo "OK";
@@ -60,7 +61,8 @@ class Ruangan_model extends MY_Model {
             "id_jenis"      => $this->input->post('upd_jenis'),
             "kapasitas_rg"  => $this->input->post('upd_kapasitas'),
             "modified_date" => date('Y-m-d H:i:s'),
-            "modified_by"   => $this->session_username()
+            "modified_by"   => $this->session_username(),
+            "isShow" => $this->input->post('upd_isShow')
         );
         $this->db->where("id_ruangan", $this->input->post('upd_id_ruangan'));
         $this->db->update('ruangan', $data);

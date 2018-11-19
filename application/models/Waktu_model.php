@@ -20,7 +20,8 @@ class Waktu_model extends MY_Model {
             "waktu_ak"      => $this->input->post('akhir_wk'),
             "role"          => $this->input->post('role'),
             "sks"           => $this->input->post('sks_wk'),
-            "created_by"    => $this->session_username()
+            "created_by"    => $this->session_username(),
+            "isShow"        => $this->input->post('isShow')
         );
         $this->db->insert('waktu', $data);
         echo "OK";
@@ -34,7 +35,8 @@ class Waktu_model extends MY_Model {
             "role"          => $this->input->post('upd_role'),
             "sks"           => $this->input->post('upd_sks_wk'),
             "modified_date" => date('Y-m-d H:i:s'),
-            "modified_by"   => $this->session_username()
+            "modified_by"   => $this->session_username(),
+            "isShow"        => $this->input->post('upd_isShow')
         );
         $this->db->where("id_waktu", $this->input->post('upd_id_waktu'));
         $this->db->update('waktu', $data);

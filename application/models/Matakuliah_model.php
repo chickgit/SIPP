@@ -29,7 +29,8 @@ class MataKuliah_model extends MY_Model {
             "id_prodi"      => $this->input->post('id_program_studi'),
             "id_peminatan"  => $this->input->post('id_peminatan'),
             "id_jenis"      => $this->input->post('id_jenis_ruangan'),
-            "created_by"    => $this->session_username()
+            "created_by"    => $this->session_username(),
+            "isShow"        => $this->input->post('isShow')
         );
         $this->db->insert('matakuliah', $data);
         echo "OK";
@@ -61,7 +62,8 @@ class MataKuliah_model extends MY_Model {
             "id_peminatan"  => $this->input->post('upd_peminatan'),
             "id_jenis"      => $this->input->post('upd_jenis_ruangan'),
             "modified_date" => date('Y-m-d H:i:s'),
-            "modified_by"   => $this->session_username()
+            "modified_by"   => $this->session_username(),
+            "isShow"        => $this->input->post('upd_isShow')
         );
         $this->db->where("kode_mk", $this->input->post('upd_kode_mk'));
         $this->db->update('matakuliah', $data);
