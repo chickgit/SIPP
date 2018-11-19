@@ -248,7 +248,7 @@ class Histori_model extends MY_Model {
 
     public function draft()
     {
-        $draft = split('_', $this->input->post('draft_id'));
+        $draft = explode('_', $this->input->post('draft_id'));
 
         if ($draft[0] == 'open') 
         {
@@ -274,8 +274,8 @@ class Histori_model extends MY_Model {
             $data = array(
                 'draft_id_jp' => $draft[1]
             );
-            $this->db->delete('draft_jadwal_perkuliahan',$data);
-            $this->db->delete('jadwal_perkuliahan',$data);
+            $this->db->delete('jadwal_perkuliahan',$data); # Child
+            $this->db->delete('draft_jadwal_perkuliahan',$data); # Parent
             echo "OK";
         }
     }
