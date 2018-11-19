@@ -7,7 +7,7 @@ I. ALGO
 
     Contoh data diatas, terdapat ambiguitas dalam jadwal perkuliahan dikarenakan:
     1. Ada data yang memiliki nama sama namun kode berbeda (2&3) sehingga diletakkan sistem berdampingan dengan informasi yang sama,
-    2. Dilain sisi no.1 menganggap bahwa data pada jam 13.30 - 16.00 terdapat matkul untuk semester 3 & 5  dengan informasi yang sama, 
+    2. Dilain sisi, no.1 menganggap bahwa data pada jam 13.30 - 16.00 terdapat matkul untuk semester 3 & 5  dengan informasi yang sama, 
     sehingga memungkinkan dia untuk tetap masuk ke dalam waktu ini meskipun bentrok dengan semester 3 yg lain.
 
     Sama seperti ini:
@@ -36,7 +36,7 @@ IV. Relasi antar tabel tidak berfungsi dengan baik
     Ketika sebuah data di hapus, data tsb tdk hilang dr Tbl, akan tetapi merubah isDelete 0 -> 1, sehingga data tsb msh d baca oleh sistem.
 
     Harus di bikin jika Data 1(PK)-Tbl(1) di hapus, maka Data 1(FK)-Tbl(2) harus tidak bisa terlihat, karena parent(Data 1) sudah dihapus.
-V.  Mahasiswa
-    Fungsi eksport jadwal perkuliahan belum ada.
-VI. Dosen
-    Belum ada tampilan untuk dosen
+VII.Tampilan Jadwal dan Jadwal perkuliahan
+    NANTI. Tampilan Jadwal ikuti tampilan Jadwal Perkuliahan
+VIII. HASIL AKHIR
+    hasil akhir / report / jadwal yang ada pada jadwal perkuliahan. BELUM TERPISAH ANTARA SI DAN TI
