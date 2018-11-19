@@ -26,7 +26,7 @@ class Jadwal extends MY_Controller {
 
 		if ($this->session->has_userdata('id_draft')) {
 			# code...
-			$data['list_jp'] = $this->jadwal_model->get_all_jadwal_perkuliahan(array('draft_id_jp' => $this->session->userdata('id_draft')));
+			$data['list_jp'] = $this->jadwal_model->get_all_jadwal_perkuliahan(array('jadwal_perkuliahan.draft_id_jp' => $this->session->userdata('id_draft')));
 		}
 
 		$data['all_data'] = array(
@@ -78,6 +78,11 @@ class Jadwal extends MY_Controller {
 
 	public function generate()
 	{
+		if (empty($this->input->post('draft_nama'))) {
+			header('HTTP/1.1 432 Nama Jadwal Harus Diisi');
+            header('Content-Type: application/json; charset=UTF-8');
+            die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
+		}
 		// $this->check_pass_data_only($this->input->post());
 		$data['jp'] = $this->jadwal_model->generate_jadwal();
 		echo json_encode($data['jp']);
@@ -101,7 +106,7 @@ class Jadwal extends MY_Controller {
 
 	public function update_jw()
 	{
-		$this->check_pass_data_only($this->input->post());
+		// $this->check_pass_data_only($this->input->post());
 		$data['update_jw'] = $this->jadwal_model->update_jw();
 		echo $data['update_jw'];
 		exit();
