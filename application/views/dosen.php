@@ -232,6 +232,36 @@ function cmp($a,$b)
                                                                     <!-- <div class="help-block" id="help-block-matkul-multiple"> 0 SKS | Min :  9 SKS </div> -->
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Tampilkan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <label class="mt-radio-list">
+                                                                        <div class="input-icon right">
+                                                                            <i class="fa"></i>
+                                                                            <label class="mt-radio">
+                                                                                <input type="radio" name="isShow" value="1" checked/> Ya
+                                                                                <span></span>
+                                                                            </label>
+                                                                            <label class="mt-radio">
+                                                                                <input type="radio" name="isShow" value="0" /> Tidak
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <div class="form-group">
+                                                                <label class="control-label col-md-3">Telepon
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-icon right">
+                                                                        <i class="fa"></i>
+                                                                        <input type="text" class="form-control" name="telepon" placeholder="0821XXXXXXXX" /> </div>
+                                                                </div>
+                                                            </div> -->
                                                         <!-- END FORM-->
                                                         </div>
                                                         <div class="modal-footer">
@@ -348,6 +378,26 @@ function cmp($a,$b)
                                                                         </div>
                                                                     </div>
                                                                     <!-- <div class="help-block" id="help-block-matkul-multiple"> 0 SKS | Min :  9 SKS </div> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Tampilkan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <label class="mt-radio-list">
+                                                                        <div class="input-icon right">
+                                                                            <i class="fa"></i>
+                                                                            <label class="mt-radio">
+                                                                                <input type="radio" name="upd_isShow" value="1"/> Ya
+                                                                                <span></span>
+                                                                            </label>
+                                                                            <label class="mt-radio">
+                                                                                <input type="radio" name="upd_isShow" value="0" /> Tidak
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -584,10 +634,17 @@ jQuery(document).ready(function() {
             },
             success: function(data) {
                 // success4.show();
+                // console.log(data);
                 $('input[name="upd_nid"]').val(data.nid);
                 $('input[name="upd_nama"]').val(data.nama);
                 $('textarea[name="upd_alamat"]').val(data.alamat);
                 $('input[name="upd_telepon"]').val(data.telepon);
+                $.each($('input[name="upd_isShow"]'), function(index_radio,value_radio){
+                    if (data.isShow == value_radio.value) {
+                        $('input[name="upd_isShow"][value='+value_radio.value+']').prop('checked',true);
+                    }
+                })
+                // $('input[name="upd_isShow"]').val(data.isShow);
 
                 var hari = data.ketersediaan_hari.split(';');
                 $.each(hari, function(index_hr,value_hr){
@@ -605,7 +662,7 @@ jQuery(document).ready(function() {
                 // })
 
                 $('#modal_update_dosen').modal('show');
-                console.log(matkul);
+                // console.log(matkul);
             },
             complete: function(){
                 setTimeout(function(){ App.unblockUI(); }, 500);
