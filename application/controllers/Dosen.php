@@ -17,8 +17,8 @@ class Dosen extends MY_Controller {
 
 	public function index()
 	{
-		$data['list_dosen'] = $this->dosen_model->get_all_data('dosen',array(),'result');
-		$data['list_hari'] = $this->dosen_model->get_all_data('hari',array(),'result');
+		$data['list_dosen'] = $this->dosen_model->get_all_dosen();
+		$data['list_hari'] = $this->dosen_model->get_all_hari();
 		$data['list_matakuliah'] = $this->dosen_model->get_all_matakuliah();
 
 		$data['role'] = $this->get_role_user();
@@ -65,6 +65,7 @@ class Dosen extends MY_Controller {
 
 	public function insert_dosen()
 	{
+        // $this->check_pass_data_only($this->input->post());
 		$data['insert_dosen'] = $this->dosen_model->insert_data($_POST);
 		echo $data['insert_dosen'];
 		exit();
