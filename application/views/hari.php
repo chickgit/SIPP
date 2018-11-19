@@ -116,6 +116,26 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="form-group">
+                                                                <label class="control-label col-md-4">Tampilkan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <label class="mt-radio-list">
+                                                                        <div class="input-icon right">
+                                                                            <i class="fa"></i>
+                                                                            <label class="mt-radio">
+                                                                                <input type="radio" name="isShow" value="1" checked/> Ya
+                                                                                <span></span>
+                                                                            </label>
+                                                                            <label class="mt-radio">
+                                                                                <input type="radio" name="isShow" value="0" /> Tidak
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
                                                         <!-- END FORM-->
                                                     </div>
                                                     <div class="modal-footer">
@@ -156,6 +176,26 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="form-group">
+                                                                <label class="control-label col-md-4">Tampilkan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <label class="mt-radio-list">
+                                                                        <div class="input-icon right">
+                                                                            <i class="fa"></i>
+                                                                            <label class="mt-radio">
+                                                                                <input type="radio" name="upd_isShow" value="1"/> Ya
+                                                                                <span></span>
+                                                                            </label>
+                                                                            <label class="mt-radio">
+                                                                                <input type="radio" name="upd_isShow" value="0" /> Tidak
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
                                                         <!-- END FORM-->
                                                     </div>
                                                     <div class="modal-footer">
@@ -330,6 +370,11 @@ jQuery(document).ready(function() {
                 // success4.show();
                 $('input[name="upd_id_hari"]').val(data.id_hari);
                 $('input[name="upd_nama_hari"]').val(data.nama_hari);
+                $.each($('input[name="upd_isShow"]'), function(index_radio,value_radio){
+                    if (data.isShow == value_radio.value) {
+                        $('input[name="upd_isShow"][value='+value_radio.value+']').prop('checked',true);
+                    }
+                })
                 $('#modal_update_hr').modal('show');
                 // console.log(data);
             },

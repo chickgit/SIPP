@@ -158,6 +158,26 @@
                                                                         <input type="number" class="form-control" name="sks_wk" id="sks_wk" /> </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Tampilkan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <label class="mt-radio-list">
+                                                                        <div class="input-icon right">
+                                                                            <i class="fa"></i>
+                                                                            <label class="mt-radio">
+                                                                                <input type="radio" name="isShow" value="1" checked/> Ya
+                                                                                <span></span>
+                                                                            </label>
+                                                                            <label class="mt-radio">
+                                                                                <input type="radio" name="isShow" value="0" /> Tidak
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <!-- END FORM-->
                                                     </div>
@@ -232,6 +252,26 @@
                                                                     <div class="input-icon right">
                                                                         <i class="fa"></i>
                                                                         <input type="number" class="form-control" name="upd_sks_wk" id="upd_sks_wk" /> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Tampilkan
+                                                                    <span class="required"> * </span>
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <label class="mt-radio-list">
+                                                                        <div class="input-icon right">
+                                                                            <i class="fa"></i>
+                                                                            <label class="mt-radio">
+                                                                                <input type="radio" name="upd_isShow" value="1"/> Ya
+                                                                                <span></span>
+                                                                            </label>
+                                                                            <label class="mt-radio">
+                                                                                <input type="radio" name="upd_isShow" value="0" /> Tidak
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -481,6 +521,11 @@ jQuery(document).ready(function() {
                 $('input[name="upd_akhir_wk"]').val(data.waktu_ak);
                 $('select[name="upd_role"]').val(data.role);
                 $('input[name="upd_sks_wk"]').val(data.sks);
+                $.each($('input[name="upd_isShow"]'), function(index_radio,value_radio){
+                    if (data.isShow == value_radio.value) {
+                        $('input[name="upd_isShow"][value='+value_radio.value+']').prop('checked',true);
+                    }
+                })
                 $('#modal_update_wk').modal('show');
                 console.log(data);
             },
