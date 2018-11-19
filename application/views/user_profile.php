@@ -217,8 +217,7 @@
                                                                     <input type="password" class="form-control" name="upd_new_password_conf" /> </div>
                                                                 </div>
                                                             <div class="margin-top-10">
-                                                                <input type="hidden" name="id" value="<?=($session_login['sebagai'] == 1) ? 'nid' : 'nim'?>">
-                                                                <input type="hidden" name="table" value="<?=($session_login['sebagai'] == 1) ? 'dosen' : 'mahasiswa'?>">
+                                                                <input type="hidden" name="sebagai" value="<?=$session_login['sebagai']?>">
                                                                 <input type="hidden" name="upd_id" value="<?=$session_login['id']?>">
                                                                 <button class="btn green" type="submit"> Change Password </button>
                                                                 <button class="btn default" type="reset"> Cancel </button>
