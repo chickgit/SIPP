@@ -49,7 +49,7 @@
                             <li class="nav-item <?=isset($mk) ? $mk : ''?><?=isset($histori_matakuliah) ? $histori_matakuliah : ''?>">
                                 <a href="javascript:;" class="nav-link nav-toggle">
                                     <i class="fa fa-book"></i>
-                                    <span class="title">Mata Kuliah</span>
+                                    <span class="title">Matakuliah</span>
                                     <span class="arrow"></span>
                                 </a>
                                 <ul class="sub-menu">
@@ -209,6 +209,21 @@
                                 
                                 default:
                                     ?>
+                            <li class="nav-item start <?=isset($dashboard) ? $dashboard : ''?>">
+                                <a href="<?=base_url()?>home" class="nav-link nav-toggle">
+                                    <i class="icon-home"></i>
+                                    <span class="title">Beranda</span>
+                                </a>
+                            </li>
+                            <li class="heading">
+                                <h3 class="uppercase">JADWAL</h3>
+                            </li>
+                            <li class="nav-item <?=isset($dosen_jp) ? $dosen_jp : ''?> ">
+                                <a href="dosen_jp" class="nav-link nav-toggle">
+                                    <i class="icon-calendar"></i>
+                                    <span class="title">Jadwal Perkuliahan</span>
+                                </a>
+                            </li>
                                     <?php
                                     break;
                             }
