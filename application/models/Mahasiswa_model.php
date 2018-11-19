@@ -57,8 +57,8 @@ class Mahasiswa_model extends MY_Model {
                 'matakuliah.id_peminatan',
                 array(1, $this->session->userdata('Detail')['id_peminatan'])
             ),
-            'where'     => array(
-                'matakuliah.id_prodi'  => $this->session->userdata('Detail')['id_prodi'],
+            'where_in'     => array(
+                'matakuliah.id_prodi', array(3,$this->session->userdata('Detail')['id_prodi'])
             ),
             'or_where'  => array('matakuliah.semester_mk' => 8),
             'order'  => array(
