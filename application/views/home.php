@@ -92,7 +92,7 @@
                             <h3><b>PENGAMBILAN MATA KULIAH</b></h3>
                             <h3><?=$bta->tahun_ajaran?> - <?=$bta->semester?></h3>
                             <h5>Hingga</h5>
-                            <h3 class="font-red"><?=$bta->batas_akhir?></h3>
+                            <h3 class="font-red"><?=date('d/M/Y',strtotime($bta->batas_akhir))?></h3>
                             <h3 class="font-red" id="batas_ambil_matkul"></h3>
                         </div>
                     </div>
