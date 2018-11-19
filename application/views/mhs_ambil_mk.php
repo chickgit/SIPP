@@ -444,8 +444,8 @@ jQuery(document).ready(function() {
                         },
                         success: function(data) {
                             success4.show();
-                            // location.reload();
-                            console.log(data);
+                            location.reload();
+                            // console.log(data);
                         },
                         complete: function(){
                             App.unblockUI();

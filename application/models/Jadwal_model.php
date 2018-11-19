@@ -116,7 +116,8 @@ class Jadwal_model extends MY_Model {
             echo "OK";
         }
         else if ($draft[0] == 'finalisasi') {
-            # Hapus seluruh data jadwal satuan di dalam tabel jadwal perkuliahan 
+            # Hapus seluruh data jadwal di dalam tabel jadwal perkuliahan yang 
+            # tidak memiliki kode_mk dan memiliki draft_id_jp yang sama dengan $draft[1]
             $this->db->where('kode_mk', NULL);
             $this->db->where('draft_id_jp', $draft[1]);
             $this->db->delete('jadwal_perkuliahan');

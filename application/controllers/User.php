@@ -17,8 +17,7 @@ class User extends MY_Controller {
     
 	public function index()
 	{
-		// print_r($this->session->userdata());
-		// exit();
+		// $this->check_pass_data_only($this->session->userdata());
 		$data['session_detail'] = $this->session->userdata('Detail');
 		$data['session_login'] = $this->session->userdata('Login');
 		$data['role'] = $this->get_role_user();
@@ -45,6 +44,7 @@ class User extends MY_Controller {
 
 	public function update_password()
 	{
+		// $this->check_pass_data_only($this->input->post());
 		$pass_old = $this->session->userdata('Login')['password'];
 
 		if ($_POST['upd_old_password'] == '123456') {

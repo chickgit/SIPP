@@ -151,7 +151,7 @@ class Jadwal_perkuliahan extends MY_Controller {
 	public function penerbitan()
 	{
 		# Proses Penerbitan
-		$this->check_pass_data_only($this->input->post());
+		// $this->check_pass_data_only($this->input->post());
 		$data['penerbitan'] = $this->jadwal_perkuliahan_model->penerbitan();
 		echo json_encode($data['penerbitan']);
 	}

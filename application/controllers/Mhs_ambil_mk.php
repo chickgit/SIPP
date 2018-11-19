@@ -61,7 +61,7 @@ class Mhs_ambil_mk extends MY_Controller {
 
 	public function insert()
 	{
-		$this->check_pass_data_only($this->input->post());
+		// $this->check_pass_data_only($this->input->post());
 		// CHECK DATA IF EXIST
 		$where = array(
 			'nim'			=> $this->input->post('nim'),
