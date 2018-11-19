@@ -11,7 +11,7 @@ class MY_Model extends CI_Model {
     public function get_all_data($table, $array = array(), $result = 'result_array')
     {
         $this->db->where('isDelete', 0);
-        $this->db->where('isShow', 1);
+        // $this->db->where('isShow', 1);
         if (!empty($array)) {
             $this->db->where($array);
         }
@@ -141,13 +141,13 @@ class MY_Model extends CI_Model {
                     $this->db->join($key, $value);
                     $this->db->where(array(
                         $key.'.isDelete' => $isDelete,
-                        $key.'.isShow' => 1
+                        // $key.'.isShow' => 1
                     ));
                 }
             }
             $this->db->where(array(
                 $table.'.isDelete' => $isDelete,
-                $table.'.isShow' => 1
+                // $table.'.isShow' => 1
             ));
         }
 
