@@ -35,8 +35,8 @@ class User_model extends CI_Model {
             "modified_date"     => date('Y-m-d H:i:s'),
             "modified_by"       => $this->session_username()
         );
-        $this->db->where($arr['id'], $arr['upd_id']);
-        $this->db->update($arr['table'], $data);
+        $this->db->where('id', $this->input->post('upd_id'));
+        $this->db->update('user', $data);
         echo "OK";
     }
 
